@@ -1,0 +1,1616 @@
+In archive lib/liblightset.a:
+
+lightsetchain.o:     file format elf32-littlearm
+
+
+Disassembly of section .group:
+
+00000000 <.group>:
+   0:	00000001 	andeq	r0, r0, r1
+   4:	00000008 	andeq	r0, r0, r8
+
+Disassembly of section .group:
+
+00000000 <.group>:
+   0:	00000001 	andeq	r0, r0, r1
+   4:	00000009 	andeq	r0, r0, r9
+
+Disassembly of section .group:
+
+00000000 <.group>:
+   0:	00000001 	andeq	r0, r0, r1
+   4:	0000000a 	andeq	r0, r0, sl
+
+Disassembly of section .text:
+
+00000000 <LightSetChain::SetData(unsigned int, unsigned char const*, unsigned int)>:
+   0:	e92d47f0 	push	{r4, r5, r6, r7, r8, r9, sl, lr}
+   4:	e1a09003 	mov	r9, r3
+   8:	e5d0300c 	ldrb	r3, [r0, #12]
+   c:	e3530000 	cmp	r3, #0
+  10:	08bd87f0 	popeq	{r4, r5, r6, r7, r8, r9, sl, pc}
+  14:	e1a05000 	mov	r5, r0
+  18:	e1a07001 	mov	r7, r1
+  1c:	e1a08002 	mov	r8, r2
+  20:	e3a04000 	mov	r4, #0
+  24:	e5952010 	ldr	r2, [r5, #16]
+  28:	e1a03009 	mov	r3, r9
+  2c:	e7920184 	ldr	r0, [r2, r4, lsl #3]
+  30:	e1a01007 	mov	r1, r7
+  34:	e590c000 	ldr	ip, [r0]
+  38:	e1a02008 	mov	r2, r8
+  3c:	e59c6010 	ldr	r6, [ip, #16]
+  40:	e12fff36 	blx	r6
+  44:	e5d5000c 	ldrb	r0, [r5, #12]
+  48:	e2844001 	add	r4, r4, #1
+  4c:	e1500004 	cmp	r0, r4
+  50:	8afffff3 	bhi	24 <LightSetChain::SetData(unsigned int, unsigned char const*, unsigned int)+0x24>
+  54:	e8bd87f0 	pop	{r4, r5, r6, r7, r8, r9, sl, pc}
+
+00000058 <LightSetChain::Print()>:
+  58:	e5d0300c 	ldrb	r3, [r0, #12]
+  5c:	e3530000 	cmp	r3, #0
+  60:	012fff1e 	bxeq	lr
+  64:	e92d4070 	push	{r4, r5, r6, lr}
+  68:	e1a05000 	mov	r5, r0
+  6c:	e3a04000 	mov	r4, #0
+  70:	e5953010 	ldr	r3, [r5, #16]
+  74:	e7930184 	ldr	r0, [r3, r4, lsl #3]
+  78:	e2844001 	add	r4, r4, #1
+  7c:	e5903000 	ldr	r3, [r0]
+  80:	e5933018 	ldr	r3, [r3, #24]
+  84:	e12fff33 	blx	r3
+  88:	e5d5300c 	ldrb	r3, [r5, #12]
+  8c:	e1530004 	cmp	r3, r4
+  90:	8afffff6 	bhi	70 <LightSetChain::Print()+0x18>
+  94:	e8bd8070 	pop	{r4, r5, r6, pc}
+
+00000098 <LightSetChain::~LightSetChain()>:
+  98:	e92d4010 	push	{r4, lr}
+  9c:	e1a04000 	mov	r4, r0
+  a0:	e5900010 	ldr	r0, [r0, #16]
+  a4:	e59f3014 	ldr	r3, [pc, #20]	; c0 <LightSetChain::~LightSetChain()+0x28>
+  a8:	e3500000 	cmp	r0, #0
+  ac:	e5843000 	str	r3, [r4]
+  b0:	0a000000 	beq	b8 <LightSetChain::~LightSetChain()+0x20>
+  b4:	ebfffffe 	bl	0 <operator delete[](void*)>
+  b8:	e1a00004 	mov	r0, r4
+  bc:	e8bd8010 	pop	{r4, pc}
+  c0:	00000008 	andeq	r0, r0, r8
+
+000000c4 <LightSetChain::~LightSetChain()>:
+  c4:	e92d4010 	push	{r4, lr}
+  c8:	e1a04000 	mov	r4, r0
+  cc:	e5900010 	ldr	r0, [r0, #16]
+  d0:	e59f301c 	ldr	r3, [pc, #28]	; f4 <LightSetChain::~LightSetChain()+0x30>
+  d4:	e3500000 	cmp	r0, #0
+  d8:	e5843000 	str	r3, [r4]
+  dc:	0a000000 	beq	e4 <LightSetChain::~LightSetChain()+0x20>
+  e0:	ebfffffe 	bl	0 <operator delete[](void*)>
+  e4:	e1a00004 	mov	r0, r4
+  e8:	ebfffffe 	bl	0 <operator delete(void*)>
+  ec:	e1a00004 	mov	r0, r4
+  f0:	e8bd8010 	pop	{r4, pc}
+  f4:	00000008 	andeq	r0, r0, r8
+
+000000f8 <LightSetChain::SetDmxStartAddress(unsigned short)>:
+  f8:	e1d031b4 	ldrh	r3, [r0, #20]
+  fc:	e1530001 	cmp	r3, r1
+ 100:	0a000022 	beq	190 <LightSetChain::SetDmxStartAddress(unsigned short)+0x98>
+ 104:	e92d41f0 	push	{r4, r5, r6, r7, r8, lr}
+ 108:	e5d0300c 	ldrb	r3, [r0, #12]
+ 10c:	e1a05000 	mov	r5, r0
+ 110:	e3530000 	cmp	r3, #0
+ 114:	e1a06001 	mov	r6, r1
+ 118:	0a000013 	beq	16c <LightSetChain::SetDmxStartAddress(unsigned short)+0x74>
+ 11c:	e3a04000 	mov	r4, #0
+ 120:	e5953010 	ldr	r3, [r5, #16]
+ 124:	e7930184 	ldr	r0, [r3, r4, lsl #3]
+ 128:	e5903000 	ldr	r3, [r0]
+ 12c:	e5933020 	ldr	r3, [r3, #32]
+ 130:	e12fff33 	blx	r3
+ 134:	e1a03000 	mov	r3, r0
+ 138:	e5951010 	ldr	r1, [r5, #16]
+ 13c:	e1d521b4 	ldrh	r2, [r5, #20]
+ 140:	e7910184 	ldr	r0, [r1, r4, lsl #3]
+ 144:	e0462002 	sub	r2, r6, r2
+ 148:	e5901000 	ldr	r1, [r0]
+ 14c:	e0833002 	add	r3, r3, r2
+ 150:	e591701c 	ldr	r7, [r1, #28]
+ 154:	e6ff1073 	uxth	r1, r3
+ 158:	e12fff37 	blx	r7
+ 15c:	e5d5300c 	ldrb	r3, [r5, #12]
+ 160:	e2844001 	add	r4, r4, #1
+ 164:	e1530004 	cmp	r3, r4
+ 168:	8affffec 	bhi	120 <LightSetChain::SetDmxStartAddress(unsigned short)+0x28>
+ 16c:	e5950004 	ldr	r0, [r5, #4]
+ 170:	e1c561b4 	strh	r6, [r5, #20]
+ 174:	e3500000 	cmp	r0, #0
+ 178:	0a000002 	beq	188 <LightSetChain::SetDmxStartAddress(unsigned short)+0x90>
+ 17c:	e5903000 	ldr	r3, [r0]
+ 180:	e5933008 	ldr	r3, [r3, #8]
+ 184:	e12fff33 	blx	r3
+ 188:	e3a00001 	mov	r0, #1
+ 18c:	e8bd81f0 	pop	{r4, r5, r6, r7, r8, pc}
+ 190:	e3a00001 	mov	r0, #1
+ 194:	e12fff1e 	bx	lr
+
+00000198 <LightSetChain::GetSlotInfo(unsigned short, lightset::SlotInfo&)>:
+ 198:	e1d031b6 	ldrh	r3, [r0, #22]
+ 19c:	e1530001 	cmp	r3, r1
+ 1a0:	3a000032 	bcc	270 <LightSetChain::GetSlotInfo(unsigned short, lightset::SlotInfo&)+0xd8>
+ 1a4:	e92d47f0 	push	{r4, r5, r6, r7, r8, r9, sl, lr}
+ 1a8:	e5d0300c 	ldrb	r3, [r0, #12]
+ 1ac:	e1a07000 	mov	r7, r0
+ 1b0:	e3530000 	cmp	r3, #0
+ 1b4:	0a00002b 	beq	268 <LightSetChain::GetSlotInfo(unsigned short, lightset::SlotInfo&)+0xd0>
+ 1b8:	e1a09001 	mov	r9, r1
+ 1bc:	e1a0a002 	mov	sl, r2
+ 1c0:	e3a06000 	mov	r6, #0
+ 1c4:	e5973010 	ldr	r3, [r7, #16]
+ 1c8:	e1d741b4 	ldrh	r4, [r7, #20]
+ 1cc:	e7930186 	ldr	r0, [r3, r6, lsl #3]
+ 1d0:	e0844009 	add	r4, r4, r9
+ 1d4:	e5903000 	ldr	r3, [r0]
+ 1d8:	e5933020 	ldr	r3, [r3, #32]
+ 1dc:	e12fff33 	blx	r3
+ 1e0:	e1a05000 	mov	r5, r0
+ 1e4:	e5973010 	ldr	r3, [r7, #16]
+ 1e8:	e6ff1074 	uxth	r1, r4
+ 1ec:	e7930186 	ldr	r0, [r3, r6, lsl #3]
+ 1f0:	e0411005 	sub	r1, r1, r5
+ 1f4:	e5903000 	ldr	r3, [r0]
+ 1f8:	e6ff5071 	uxth	r5, r1
+ 1fc:	e5933020 	ldr	r3, [r3, #32]
+ 200:	e12fff33 	blx	r3
+ 204:	e5973010 	ldr	r3, [r7, #16]
+ 208:	e1a08000 	mov	r8, r0
+ 20c:	e7930186 	ldr	r0, [r3, r6, lsl #3]
+ 210:	e5903000 	ldr	r3, [r0]
+ 214:	e5933024 	ldr	r3, [r3, #36]	; 0x24
+ 218:	e12fff33 	blx	r3
+ 21c:	e0880000 	add	r0, r8, r0
+ 220:	e1540000 	cmp	r4, r0
+ 224:	b3a00000 	movlt	r0, #0
+ 228:	a3a00001 	movge	r0, #1
+ 22c:	e19037a5 	orrs	r3, r0, r5, lsr #15
+ 230:	1a000008 	bne	258 <LightSetChain::GetSlotInfo(unsigned short, lightset::SlotInfo&)+0xc0>
+ 234:	e5973010 	ldr	r3, [r7, #16]
+ 238:	e1a0200a 	mov	r2, sl
+ 23c:	e7930186 	ldr	r0, [r3, r6, lsl #3]
+ 240:	e1a01005 	mov	r1, r5
+ 244:	e5903000 	ldr	r3, [r0]
+ 248:	e5933028 	ldr	r3, [r3, #40]	; 0x28
+ 24c:	e12fff33 	blx	r3
+ 250:	e3500000 	cmp	r0, #0
+ 254:	18bd87f0 	popne	{r4, r5, r6, r7, r8, r9, sl, pc}
+ 258:	e5d7300c 	ldrb	r3, [r7, #12]
+ 25c:	e2866001 	add	r6, r6, #1
+ 260:	e1530006 	cmp	r3, r6
+ 264:	8affffd6 	bhi	1c4 <LightSetChain::GetSlotInfo(unsigned short, lightset::SlotInfo&)+0x2c>
+ 268:	e3a00000 	mov	r0, #0
+ 26c:	e8bd87f0 	pop	{r4, r5, r6, r7, r8, r9, sl, pc}
+ 270:	e3a00000 	mov	r0, #0
+ 274:	e12fff1e 	bx	lr
+
+00000278 <LightSetChain::Stop(unsigned int)>:
+ 278:	e92d4ff0 	push	{r4, r5, r6, r7, r8, r9, sl, fp, lr}
+ 27c:	e5d0300c 	ldrb	r3, [r0, #12]
+ 280:	e24dd034 	sub	sp, sp, #52	; 0x34
+ 284:	e3530000 	cmp	r3, #0
+ 288:	e58d0018 	str	r0, [sp, #24]
+ 28c:	0a0000bf 	beq	590 <LightSetChain::Stop(unsigned int)+0x318>
+ 290:	e3a02000 	mov	r2, #0
+ 294:	e58d2008 	str	r2, [sp, #8]
+ 298:	e59d2018 	ldr	r2, [sp, #24]
+ 29c:	e59d0008 	ldr	r0, [sp, #8]
+ 2a0:	e5922010 	ldr	r2, [r2, #16]
+ 2a4:	e792b180 	ldr	fp, [r2, r0, lsl #3]
+ 2a8:	e59f036c 	ldr	r0, [pc, #876]	; 61c <LightSetChain::Stop(unsigned int)+0x3a4>
+ 2ac:	e59b2000 	ldr	r2, [fp]
+ 2b0:	e592200c 	ldr	r2, [r2, #12]
+ 2b4:	e1520000 	cmp	r2, r0
+ 2b8:	1a0000d0 	bne	600 <LightSetChain::Stop(unsigned int)+0x388>
+ 2bc:	e5db200c 	ldrb	r2, [fp, #12]
+ 2c0:	e3520000 	cmp	r2, #0
+ 2c4:	0a0000ac 	beq	57c <LightSetChain::Stop(unsigned int)+0x304>
+ 2c8:	e3a03000 	mov	r3, #0
+ 2cc:	e58db01c 	str	fp, [sp, #28]
+ 2d0:	e58d300c 	str	r3, [sp, #12]
+ 2d4:	e59d301c 	ldr	r3, [sp, #28]
+ 2d8:	e59d000c 	ldr	r0, [sp, #12]
+ 2dc:	e5933010 	ldr	r3, [r3, #16]
+ 2e0:	e793a180 	ldr	sl, [r3, r0, lsl #3]
+ 2e4:	e59f0330 	ldr	r0, [pc, #816]	; 61c <LightSetChain::Stop(unsigned int)+0x3a4>
+ 2e8:	e59a3000 	ldr	r3, [sl]
+ 2ec:	e593300c 	ldr	r3, [r3, #12]
+ 2f0:	e1530000 	cmp	r3, r0
+ 2f4:	1a0000ba 	bne	5e4 <LightSetChain::Stop(unsigned int)+0x36c>
+ 2f8:	e5da000c 	ldrb	r0, [sl, #12]
+ 2fc:	e3500000 	cmp	r0, #0
+ 300:	0a000096 	beq	560 <LightSetChain::Stop(unsigned int)+0x2e8>
+ 304:	e3a03000 	mov	r3, #0
+ 308:	e58da020 	str	sl, [sp, #32]
+ 30c:	e58d3010 	str	r3, [sp, #16]
+ 310:	e59d3020 	ldr	r3, [sp, #32]
+ 314:	e59d2010 	ldr	r2, [sp, #16]
+ 318:	e5933010 	ldr	r3, [r3, #16]
+ 31c:	e7939182 	ldr	r9, [r3, r2, lsl #3]
+ 320:	e59f22f4 	ldr	r2, [pc, #756]	; 61c <LightSetChain::Stop(unsigned int)+0x3a4>
+ 324:	e5993000 	ldr	r3, [r9]
+ 328:	e593300c 	ldr	r3, [r3, #12]
+ 32c:	e1530002 	cmp	r3, r2
+ 330:	1a0000a4 	bne	5c8 <LightSetChain::Stop(unsigned int)+0x350>
+ 334:	e5d9300c 	ldrb	r3, [r9, #12]
+ 338:	e3530000 	cmp	r3, #0
+ 33c:	0a000080 	beq	544 <LightSetChain::Stop(unsigned int)+0x2cc>
+ 340:	e3a02000 	mov	r2, #0
+ 344:	e1a0b009 	mov	fp, r9
+ 348:	e58d2014 	str	r2, [sp, #20]
+ 34c:	e59b2010 	ldr	r2, [fp, #16]
+ 350:	e59d0014 	ldr	r0, [sp, #20]
+ 354:	e7926180 	ldr	r6, [r2, r0, lsl #3]
+ 358:	e59f02bc 	ldr	r0, [pc, #700]	; 61c <LightSetChain::Stop(unsigned int)+0x3a4>
+ 35c:	e5962000 	ldr	r2, [r6]
+ 360:	e592200c 	ldr	r2, [r2, #12]
+ 364:	e1520000 	cmp	r2, r0
+ 368:	1a00008a 	bne	598 <LightSetChain::Stop(unsigned int)+0x320>
+ 36c:	e5d6200c 	ldrb	r2, [r6, #12]
+ 370:	e3520000 	cmp	r2, #0
+ 374:	0a00006b 	beq	528 <LightSetChain::Stop(unsigned int)+0x2b0>
+ 378:	e3a03000 	mov	r3, #0
+ 37c:	e58db024 	str	fp, [sp, #36]	; 0x24
+ 380:	e58d3004 	str	r3, [sp, #4]
+ 384:	e5963010 	ldr	r3, [r6, #16]
+ 388:	e59d0004 	ldr	r0, [sp, #4]
+ 38c:	e7934180 	ldr	r4, [r3, r0, lsl #3]
+ 390:	e59f0284 	ldr	r0, [pc, #644]	; 61c <LightSetChain::Stop(unsigned int)+0x3a4>
+ 394:	e5943000 	ldr	r3, [r4]
+ 398:	e593300c 	ldr	r3, [r3, #12]
+ 39c:	e1530000 	cmp	r3, r0
+ 3a0:	1a000082 	bne	5b0 <LightSetChain::Stop(unsigned int)+0x338>
+ 3a4:	e5d4300c 	ldrb	r3, [r4, #12]
+ 3a8:	e3530000 	cmp	r3, #0
+ 3ac:	0a000056 	beq	50c <LightSetChain::Stop(unsigned int)+0x294>
+ 3b0:	e3a0b000 	mov	fp, #0
+ 3b4:	e58d6028 	str	r6, [sp, #40]	; 0x28
+ 3b8:	ea000007 	b	3dc <LightSetChain::Stop(unsigned int)+0x164>
+ 3bc:	e58d102c 	str	r1, [sp, #44]	; 0x2c
+ 3c0:	e1a00007 	mov	r0, r7
+ 3c4:	e12fff32 	blx	r2
+ 3c8:	e5d4300c 	ldrb	r3, [r4, #12]
+ 3cc:	e59d102c 	ldr	r1, [sp, #44]	; 0x2c
+ 3d0:	e28bb001 	add	fp, fp, #1
+ 3d4:	e153000b 	cmp	r3, fp
+ 3d8:	9a000049 	bls	504 <LightSetChain::Stop(unsigned int)+0x28c>
+ 3dc:	e5942010 	ldr	r2, [r4, #16]
+ 3e0:	e59f0234 	ldr	r0, [pc, #564]	; 61c <LightSetChain::Stop(unsigned int)+0x3a4>
+ 3e4:	e792718b 	ldr	r7, [r2, fp, lsl #3]
+ 3e8:	e5972000 	ldr	r2, [r7]
+ 3ec:	e592200c 	ldr	r2, [r2, #12]
+ 3f0:	e1520000 	cmp	r2, r0
+ 3f4:	1afffff0 	bne	3bc <LightSetChain::Stop(unsigned int)+0x144>
+ 3f8:	e5d7200c 	ldrb	r2, [r7, #12]
+ 3fc:	e3520000 	cmp	r2, #0
+ 400:	0afffff2 	beq	3d0 <LightSetChain::Stop(unsigned int)+0x158>
+ 404:	e3a09000 	mov	r9, #0
+ 408:	ea000007 	b	42c <LightSetChain::Stop(unsigned int)+0x1b4>
+ 40c:	e58d102c 	str	r1, [sp, #44]	; 0x2c
+ 410:	e1a00008 	mov	r0, r8
+ 414:	e12fff33 	blx	r3
+ 418:	e5d7200c 	ldrb	r2, [r7, #12]
+ 41c:	e59d102c 	ldr	r1, [sp, #44]	; 0x2c
+ 420:	e2899001 	add	r9, r9, #1
+ 424:	e1520009 	cmp	r2, r9
+ 428:	9a000031 	bls	4f4 <LightSetChain::Stop(unsigned int)+0x27c>
+ 42c:	e5973010 	ldr	r3, [r7, #16]
+ 430:	e59f01e4 	ldr	r0, [pc, #484]	; 61c <LightSetChain::Stop(unsigned int)+0x3a4>
+ 434:	e7938189 	ldr	r8, [r3, r9, lsl #3]
+ 438:	e5983000 	ldr	r3, [r8]
+ 43c:	e593300c 	ldr	r3, [r3, #12]
+ 440:	e1530000 	cmp	r3, r0
+ 444:	1afffff0 	bne	40c <LightSetChain::Stop(unsigned int)+0x194>
+ 448:	e5d8300c 	ldrb	r3, [r8, #12]
+ 44c:	e3530000 	cmp	r3, #0
+ 450:	0afffff2 	beq	420 <LightSetChain::Stop(unsigned int)+0x1a8>
+ 454:	e3a0a000 	mov	sl, #0
+ 458:	ea000007 	b	47c <LightSetChain::Stop(unsigned int)+0x204>
+ 45c:	e58d102c 	str	r1, [sp, #44]	; 0x2c
+ 460:	e1a00006 	mov	r0, r6
+ 464:	e12fff32 	blx	r2
+ 468:	e5d8300c 	ldrb	r3, [r8, #12]
+ 46c:	e59d102c 	ldr	r1, [sp, #44]	; 0x2c
+ 470:	e28aa001 	add	sl, sl, #1
+ 474:	e153000a 	cmp	r3, sl
+ 478:	9a000019 	bls	4e4 <LightSetChain::Stop(unsigned int)+0x26c>
+ 47c:	e5982010 	ldr	r2, [r8, #16]
+ 480:	e59f0194 	ldr	r0, [pc, #404]	; 61c <LightSetChain::Stop(unsigned int)+0x3a4>
+ 484:	e792618a 	ldr	r6, [r2, sl, lsl #3]
+ 488:	e5962000 	ldr	r2, [r6]
+ 48c:	e592200c 	ldr	r2, [r2, #12]
+ 490:	e1520000 	cmp	r2, r0
+ 494:	1afffff0 	bne	45c <LightSetChain::Stop(unsigned int)+0x1e4>
+ 498:	e5d6200c 	ldrb	r2, [r6, #12]
+ 49c:	e3520000 	cmp	r2, #0
+ 4a0:	0afffff2 	beq	470 <LightSetChain::Stop(unsigned int)+0x1f8>
+ 4a4:	e3a05000 	mov	r5, #0
+ 4a8:	e5963010 	ldr	r3, [r6, #16]
+ 4ac:	e58d102c 	str	r1, [sp, #44]	; 0x2c
+ 4b0:	e7930185 	ldr	r0, [r3, r5, lsl #3]
+ 4b4:	e2855001 	add	r5, r5, #1
+ 4b8:	e5903000 	ldr	r3, [r0]
+ 4bc:	e593300c 	ldr	r3, [r3, #12]
+ 4c0:	e12fff33 	blx	r3
+ 4c4:	e5d6300c 	ldrb	r3, [r6, #12]
+ 4c8:	e59d102c 	ldr	r1, [sp, #44]	; 0x2c
+ 4cc:	e1530005 	cmp	r3, r5
+ 4d0:	8afffff4 	bhi	4a8 <LightSetChain::Stop(unsigned int)+0x230>
+ 4d4:	e5d8300c 	ldrb	r3, [r8, #12]
+ 4d8:	e28aa001 	add	sl, sl, #1
+ 4dc:	e153000a 	cmp	r3, sl
+ 4e0:	8affffe5 	bhi	47c <LightSetChain::Stop(unsigned int)+0x204>
+ 4e4:	e5d7200c 	ldrb	r2, [r7, #12]
+ 4e8:	e2899001 	add	r9, r9, #1
+ 4ec:	e1520009 	cmp	r2, r9
+ 4f0:	8affffcd 	bhi	42c <LightSetChain::Stop(unsigned int)+0x1b4>
+ 4f4:	e5d4300c 	ldrb	r3, [r4, #12]
+ 4f8:	e28bb001 	add	fp, fp, #1
+ 4fc:	e153000b 	cmp	r3, fp
+ 500:	8affffb5 	bhi	3dc <LightSetChain::Stop(unsigned int)+0x164>
+ 504:	e59d6028 	ldr	r6, [sp, #40]	; 0x28
+ 508:	e5d6200c 	ldrb	r2, [r6, #12]
+ 50c:	e59d3004 	ldr	r3, [sp, #4]
+ 510:	e2833001 	add	r3, r3, #1
+ 514:	e1520003 	cmp	r2, r3
+ 518:	e58d3004 	str	r3, [sp, #4]
+ 51c:	8affff98 	bhi	384 <LightSetChain::Stop(unsigned int)+0x10c>
+ 520:	e59db024 	ldr	fp, [sp, #36]	; 0x24
+ 524:	e5db300c 	ldrb	r3, [fp, #12]
+ 528:	e59d2014 	ldr	r2, [sp, #20]
+ 52c:	e2822001 	add	r2, r2, #1
+ 530:	e1530002 	cmp	r3, r2
+ 534:	e58d2014 	str	r2, [sp, #20]
+ 538:	8affff83 	bhi	34c <LightSetChain::Stop(unsigned int)+0xd4>
+ 53c:	e59d3020 	ldr	r3, [sp, #32]
+ 540:	e5d3000c 	ldrb	r0, [r3, #12]
+ 544:	e59d3010 	ldr	r3, [sp, #16]
+ 548:	e2833001 	add	r3, r3, #1
+ 54c:	e1500003 	cmp	r0, r3
+ 550:	e58d3010 	str	r3, [sp, #16]
+ 554:	8affff6d 	bhi	310 <LightSetChain::Stop(unsigned int)+0x98>
+ 558:	e59d301c 	ldr	r3, [sp, #28]
+ 55c:	e5d3200c 	ldrb	r2, [r3, #12]
+ 560:	e59d300c 	ldr	r3, [sp, #12]
+ 564:	e2833001 	add	r3, r3, #1
+ 568:	e1520003 	cmp	r2, r3
+ 56c:	e58d300c 	str	r3, [sp, #12]
+ 570:	8affff57 	bhi	2d4 <LightSetChain::Stop(unsigned int)+0x5c>
+ 574:	e59d3018 	ldr	r3, [sp, #24]
+ 578:	e5d3300c 	ldrb	r3, [r3, #12]
+ 57c:	e59d2008 	ldr	r2, [sp, #8]
+ 580:	e2822001 	add	r2, r2, #1
+ 584:	e1530002 	cmp	r3, r2
+ 588:	e58d2008 	str	r2, [sp, #8]
+ 58c:	8affff41 	bhi	298 <LightSetChain::Stop(unsigned int)+0x20>
+ 590:	e28dd034 	add	sp, sp, #52	; 0x34
+ 594:	e8bd8ff0 	pop	{r4, r5, r6, r7, r8, r9, sl, fp, pc}
+ 598:	e58d1004 	str	r1, [sp, #4]
+ 59c:	e1a00006 	mov	r0, r6
+ 5a0:	e12fff32 	blx	r2
+ 5a4:	e5db300c 	ldrb	r3, [fp, #12]
+ 5a8:	e59d1004 	ldr	r1, [sp, #4]
+ 5ac:	eaffffdd 	b	528 <LightSetChain::Stop(unsigned int)+0x2b0>
+ 5b0:	e58d1028 	str	r1, [sp, #40]	; 0x28
+ 5b4:	e1a00004 	mov	r0, r4
+ 5b8:	e12fff33 	blx	r3
+ 5bc:	e5d6200c 	ldrb	r2, [r6, #12]
+ 5c0:	e59d1028 	ldr	r1, [sp, #40]	; 0x28
+ 5c4:	eaffffd0 	b	50c <LightSetChain::Stop(unsigned int)+0x294>
+ 5c8:	e1a00009 	mov	r0, r9
+ 5cc:	e58d1004 	str	r1, [sp, #4]
+ 5d0:	e12fff33 	blx	r3
+ 5d4:	e59d3020 	ldr	r3, [sp, #32]
+ 5d8:	e59d1004 	ldr	r1, [sp, #4]
+ 5dc:	e5d3000c 	ldrb	r0, [r3, #12]
+ 5e0:	eaffffd7 	b	544 <LightSetChain::Stop(unsigned int)+0x2cc>
+ 5e4:	e58d1004 	str	r1, [sp, #4]
+ 5e8:	e1a0000a 	mov	r0, sl
+ 5ec:	e12fff33 	blx	r3
+ 5f0:	e59d301c 	ldr	r3, [sp, #28]
+ 5f4:	e59d1004 	ldr	r1, [sp, #4]
+ 5f8:	e5d3200c 	ldrb	r2, [r3, #12]
+ 5fc:	eaffffd7 	b	560 <LightSetChain::Stop(unsigned int)+0x2e8>
+ 600:	e58d1004 	str	r1, [sp, #4]
+ 604:	e1a0000b 	mov	r0, fp
+ 608:	e12fff32 	blx	r2
+ 60c:	e59d3018 	ldr	r3, [sp, #24]
+ 610:	e59d1004 	ldr	r1, [sp, #4]
+ 614:	e5d3300c 	ldrb	r3, [r3, #12]
+ 618:	eaffffd7 	b	57c <LightSetChain::Stop(unsigned int)+0x304>
+ 61c:	00000000 	andeq	r0, r0, r0
+
+00000620 <LightSetChain::Start(unsigned int)>:
+ 620:	e92d4ff0 	push	{r4, r5, r6, r7, r8, r9, sl, fp, lr}
+ 624:	e5d0300c 	ldrb	r3, [r0, #12]
+ 628:	e24dd034 	sub	sp, sp, #52	; 0x34
+ 62c:	e3530000 	cmp	r3, #0
+ 630:	e58d0018 	str	r0, [sp, #24]
+ 634:	0a0000bf 	beq	938 <LightSetChain::Start(unsigned int)+0x318>
+ 638:	e3a02000 	mov	r2, #0
+ 63c:	e58d2008 	str	r2, [sp, #8]
+ 640:	e59d2018 	ldr	r2, [sp, #24]
+ 644:	e59d0008 	ldr	r0, [sp, #8]
+ 648:	e5922010 	ldr	r2, [r2, #16]
+ 64c:	e792b180 	ldr	fp, [r2, r0, lsl #3]
+ 650:	e59f036c 	ldr	r0, [pc, #876]	; 9c4 <LightSetChain::Start(unsigned int)+0x3a4>
+ 654:	e59b2000 	ldr	r2, [fp]
+ 658:	e5922008 	ldr	r2, [r2, #8]
+ 65c:	e1520000 	cmp	r2, r0
+ 660:	1a0000d0 	bne	9a8 <LightSetChain::Start(unsigned int)+0x388>
+ 664:	e5db200c 	ldrb	r2, [fp, #12]
+ 668:	e3520000 	cmp	r2, #0
+ 66c:	0a0000ac 	beq	924 <LightSetChain::Start(unsigned int)+0x304>
+ 670:	e3a03000 	mov	r3, #0
+ 674:	e58db01c 	str	fp, [sp, #28]
+ 678:	e58d300c 	str	r3, [sp, #12]
+ 67c:	e59d301c 	ldr	r3, [sp, #28]
+ 680:	e59d000c 	ldr	r0, [sp, #12]
+ 684:	e5933010 	ldr	r3, [r3, #16]
+ 688:	e793a180 	ldr	sl, [r3, r0, lsl #3]
+ 68c:	e59f0330 	ldr	r0, [pc, #816]	; 9c4 <LightSetChain::Start(unsigned int)+0x3a4>
+ 690:	e59a3000 	ldr	r3, [sl]
+ 694:	e5933008 	ldr	r3, [r3, #8]
+ 698:	e1530000 	cmp	r3, r0
+ 69c:	1a0000ba 	bne	98c <LightSetChain::Start(unsigned int)+0x36c>
+ 6a0:	e5da000c 	ldrb	r0, [sl, #12]
+ 6a4:	e3500000 	cmp	r0, #0
+ 6a8:	0a000096 	beq	908 <LightSetChain::Start(unsigned int)+0x2e8>
+ 6ac:	e3a03000 	mov	r3, #0
+ 6b0:	e58da020 	str	sl, [sp, #32]
+ 6b4:	e58d3010 	str	r3, [sp, #16]
+ 6b8:	e59d3020 	ldr	r3, [sp, #32]
+ 6bc:	e59d2010 	ldr	r2, [sp, #16]
+ 6c0:	e5933010 	ldr	r3, [r3, #16]
+ 6c4:	e7939182 	ldr	r9, [r3, r2, lsl #3]
+ 6c8:	e59f22f4 	ldr	r2, [pc, #756]	; 9c4 <LightSetChain::Start(unsigned int)+0x3a4>
+ 6cc:	e5993000 	ldr	r3, [r9]
+ 6d0:	e5933008 	ldr	r3, [r3, #8]
+ 6d4:	e1530002 	cmp	r3, r2
+ 6d8:	1a0000a4 	bne	970 <LightSetChain::Start(unsigned int)+0x350>
+ 6dc:	e5d9300c 	ldrb	r3, [r9, #12]
+ 6e0:	e3530000 	cmp	r3, #0
+ 6e4:	0a000080 	beq	8ec <LightSetChain::Start(unsigned int)+0x2cc>
+ 6e8:	e3a02000 	mov	r2, #0
+ 6ec:	e1a0b009 	mov	fp, r9
+ 6f0:	e58d2014 	str	r2, [sp, #20]
+ 6f4:	e59b2010 	ldr	r2, [fp, #16]
+ 6f8:	e59d0014 	ldr	r0, [sp, #20]
+ 6fc:	e7926180 	ldr	r6, [r2, r0, lsl #3]
+ 700:	e59f02bc 	ldr	r0, [pc, #700]	; 9c4 <LightSetChain::Start(unsigned int)+0x3a4>
+ 704:	e5962000 	ldr	r2, [r6]
+ 708:	e5922008 	ldr	r2, [r2, #8]
+ 70c:	e1520000 	cmp	r2, r0
+ 710:	1a00008a 	bne	940 <LightSetChain::Start(unsigned int)+0x320>
+ 714:	e5d6200c 	ldrb	r2, [r6, #12]
+ 718:	e3520000 	cmp	r2, #0
+ 71c:	0a00006b 	beq	8d0 <LightSetChain::Start(unsigned int)+0x2b0>
+ 720:	e3a03000 	mov	r3, #0
+ 724:	e58db024 	str	fp, [sp, #36]	; 0x24
+ 728:	e58d3004 	str	r3, [sp, #4]
+ 72c:	e5963010 	ldr	r3, [r6, #16]
+ 730:	e59d0004 	ldr	r0, [sp, #4]
+ 734:	e7934180 	ldr	r4, [r3, r0, lsl #3]
+ 738:	e59f0284 	ldr	r0, [pc, #644]	; 9c4 <LightSetChain::Start(unsigned int)+0x3a4>
+ 73c:	e5943000 	ldr	r3, [r4]
+ 740:	e5933008 	ldr	r3, [r3, #8]
+ 744:	e1530000 	cmp	r3, r0
+ 748:	1a000082 	bne	958 <LightSetChain::Start(unsigned int)+0x338>
+ 74c:	e5d4300c 	ldrb	r3, [r4, #12]
+ 750:	e3530000 	cmp	r3, #0
+ 754:	0a000056 	beq	8b4 <LightSetChain::Start(unsigned int)+0x294>
+ 758:	e3a0b000 	mov	fp, #0
+ 75c:	e58d6028 	str	r6, [sp, #40]	; 0x28
+ 760:	ea000007 	b	784 <LightSetChain::Start(unsigned int)+0x164>
+ 764:	e58d102c 	str	r1, [sp, #44]	; 0x2c
+ 768:	e1a00007 	mov	r0, r7
+ 76c:	e12fff32 	blx	r2
+ 770:	e5d4300c 	ldrb	r3, [r4, #12]
+ 774:	e59d102c 	ldr	r1, [sp, #44]	; 0x2c
+ 778:	e28bb001 	add	fp, fp, #1
+ 77c:	e153000b 	cmp	r3, fp
+ 780:	9a000049 	bls	8ac <LightSetChain::Start(unsigned int)+0x28c>
+ 784:	e5942010 	ldr	r2, [r4, #16]
+ 788:	e59f0234 	ldr	r0, [pc, #564]	; 9c4 <LightSetChain::Start(unsigned int)+0x3a4>
+ 78c:	e792718b 	ldr	r7, [r2, fp, lsl #3]
+ 790:	e5972000 	ldr	r2, [r7]
+ 794:	e5922008 	ldr	r2, [r2, #8]
+ 798:	e1520000 	cmp	r2, r0
+ 79c:	1afffff0 	bne	764 <LightSetChain::Start(unsigned int)+0x144>
+ 7a0:	e5d7200c 	ldrb	r2, [r7, #12]
+ 7a4:	e3520000 	cmp	r2, #0
+ 7a8:	0afffff2 	beq	778 <LightSetChain::Start(unsigned int)+0x158>
+ 7ac:	e3a09000 	mov	r9, #0
+ 7b0:	ea000007 	b	7d4 <LightSetChain::Start(unsigned int)+0x1b4>
+ 7b4:	e58d102c 	str	r1, [sp, #44]	; 0x2c
+ 7b8:	e1a00008 	mov	r0, r8
+ 7bc:	e12fff33 	blx	r3
+ 7c0:	e5d7200c 	ldrb	r2, [r7, #12]
+ 7c4:	e59d102c 	ldr	r1, [sp, #44]	; 0x2c
+ 7c8:	e2899001 	add	r9, r9, #1
+ 7cc:	e1520009 	cmp	r2, r9
+ 7d0:	9a000031 	bls	89c <LightSetChain::Start(unsigned int)+0x27c>
+ 7d4:	e5973010 	ldr	r3, [r7, #16]
+ 7d8:	e59f01e4 	ldr	r0, [pc, #484]	; 9c4 <LightSetChain::Start(unsigned int)+0x3a4>
+ 7dc:	e7938189 	ldr	r8, [r3, r9, lsl #3]
+ 7e0:	e5983000 	ldr	r3, [r8]
+ 7e4:	e5933008 	ldr	r3, [r3, #8]
+ 7e8:	e1530000 	cmp	r3, r0
+ 7ec:	1afffff0 	bne	7b4 <LightSetChain::Start(unsigned int)+0x194>
+ 7f0:	e5d8300c 	ldrb	r3, [r8, #12]
+ 7f4:	e3530000 	cmp	r3, #0
+ 7f8:	0afffff2 	beq	7c8 <LightSetChain::Start(unsigned int)+0x1a8>
+ 7fc:	e3a0a000 	mov	sl, #0
+ 800:	ea000007 	b	824 <LightSetChain::Start(unsigned int)+0x204>
+ 804:	e58d102c 	str	r1, [sp, #44]	; 0x2c
+ 808:	e1a00006 	mov	r0, r6
+ 80c:	e12fff32 	blx	r2
+ 810:	e5d8300c 	ldrb	r3, [r8, #12]
+ 814:	e59d102c 	ldr	r1, [sp, #44]	; 0x2c
+ 818:	e28aa001 	add	sl, sl, #1
+ 81c:	e153000a 	cmp	r3, sl
+ 820:	9a000019 	bls	88c <LightSetChain::Start(unsigned int)+0x26c>
+ 824:	e5982010 	ldr	r2, [r8, #16]
+ 828:	e59f0194 	ldr	r0, [pc, #404]	; 9c4 <LightSetChain::Start(unsigned int)+0x3a4>
+ 82c:	e792618a 	ldr	r6, [r2, sl, lsl #3]
+ 830:	e5962000 	ldr	r2, [r6]
+ 834:	e5922008 	ldr	r2, [r2, #8]
+ 838:	e1520000 	cmp	r2, r0
+ 83c:	1afffff0 	bne	804 <LightSetChain::Start(unsigned int)+0x1e4>
+ 840:	e5d6200c 	ldrb	r2, [r6, #12]
+ 844:	e3520000 	cmp	r2, #0
+ 848:	0afffff2 	beq	818 <LightSetChain::Start(unsigned int)+0x1f8>
+ 84c:	e3a05000 	mov	r5, #0
+ 850:	e5963010 	ldr	r3, [r6, #16]
+ 854:	e58d102c 	str	r1, [sp, #44]	; 0x2c
+ 858:	e7930185 	ldr	r0, [r3, r5, lsl #3]
+ 85c:	e2855001 	add	r5, r5, #1
+ 860:	e5903000 	ldr	r3, [r0]
+ 864:	e5933008 	ldr	r3, [r3, #8]
+ 868:	e12fff33 	blx	r3
+ 86c:	e5d6300c 	ldrb	r3, [r6, #12]
+ 870:	e59d102c 	ldr	r1, [sp, #44]	; 0x2c
+ 874:	e1530005 	cmp	r3, r5
+ 878:	8afffff4 	bhi	850 <LightSetChain::Start(unsigned int)+0x230>
+ 87c:	e5d8300c 	ldrb	r3, [r8, #12]
+ 880:	e28aa001 	add	sl, sl, #1
+ 884:	e153000a 	cmp	r3, sl
+ 888:	8affffe5 	bhi	824 <LightSetChain::Start(unsigned int)+0x204>
+ 88c:	e5d7200c 	ldrb	r2, [r7, #12]
+ 890:	e2899001 	add	r9, r9, #1
+ 894:	e1520009 	cmp	r2, r9
+ 898:	8affffcd 	bhi	7d4 <LightSetChain::Start(unsigned int)+0x1b4>
+ 89c:	e5d4300c 	ldrb	r3, [r4, #12]
+ 8a0:	e28bb001 	add	fp, fp, #1
+ 8a4:	e153000b 	cmp	r3, fp
+ 8a8:	8affffb5 	bhi	784 <LightSetChain::Start(unsigned int)+0x164>
+ 8ac:	e59d6028 	ldr	r6, [sp, #40]	; 0x28
+ 8b0:	e5d6200c 	ldrb	r2, [r6, #12]
+ 8b4:	e59d3004 	ldr	r3, [sp, #4]
+ 8b8:	e2833001 	add	r3, r3, #1
+ 8bc:	e1520003 	cmp	r2, r3
+ 8c0:	e58d3004 	str	r3, [sp, #4]
+ 8c4:	8affff98 	bhi	72c <LightSetChain::Start(unsigned int)+0x10c>
+ 8c8:	e59db024 	ldr	fp, [sp, #36]	; 0x24
+ 8cc:	e5db300c 	ldrb	r3, [fp, #12]
+ 8d0:	e59d2014 	ldr	r2, [sp, #20]
+ 8d4:	e2822001 	add	r2, r2, #1
+ 8d8:	e1530002 	cmp	r3, r2
+ 8dc:	e58d2014 	str	r2, [sp, #20]
+ 8e0:	8affff83 	bhi	6f4 <LightSetChain::Start(unsigned int)+0xd4>
+ 8e4:	e59d3020 	ldr	r3, [sp, #32]
+ 8e8:	e5d3000c 	ldrb	r0, [r3, #12]
+ 8ec:	e59d3010 	ldr	r3, [sp, #16]
+ 8f0:	e2833001 	add	r3, r3, #1
+ 8f4:	e1500003 	cmp	r0, r3
+ 8f8:	e58d3010 	str	r3, [sp, #16]
+ 8fc:	8affff6d 	bhi	6b8 <LightSetChain::Start(unsigned int)+0x98>
+ 900:	e59d301c 	ldr	r3, [sp, #28]
+ 904:	e5d3200c 	ldrb	r2, [r3, #12]
+ 908:	e59d300c 	ldr	r3, [sp, #12]
+ 90c:	e2833001 	add	r3, r3, #1
+ 910:	e1520003 	cmp	r2, r3
+ 914:	e58d300c 	str	r3, [sp, #12]
+ 918:	8affff57 	bhi	67c <LightSetChain::Start(unsigned int)+0x5c>
+ 91c:	e59d3018 	ldr	r3, [sp, #24]
+ 920:	e5d3300c 	ldrb	r3, [r3, #12]
+ 924:	e59d2008 	ldr	r2, [sp, #8]
+ 928:	e2822001 	add	r2, r2, #1
+ 92c:	e1530002 	cmp	r3, r2
+ 930:	e58d2008 	str	r2, [sp, #8]
+ 934:	8affff41 	bhi	640 <LightSetChain::Start(unsigned int)+0x20>
+ 938:	e28dd034 	add	sp, sp, #52	; 0x34
+ 93c:	e8bd8ff0 	pop	{r4, r5, r6, r7, r8, r9, sl, fp, pc}
+ 940:	e58d1004 	str	r1, [sp, #4]
+ 944:	e1a00006 	mov	r0, r6
+ 948:	e12fff32 	blx	r2
+ 94c:	e5db300c 	ldrb	r3, [fp, #12]
+ 950:	e59d1004 	ldr	r1, [sp, #4]
+ 954:	eaffffdd 	b	8d0 <LightSetChain::Start(unsigned int)+0x2b0>
+ 958:	e58d1028 	str	r1, [sp, #40]	; 0x28
+ 95c:	e1a00004 	mov	r0, r4
+ 960:	e12fff33 	blx	r3
+ 964:	e5d6200c 	ldrb	r2, [r6, #12]
+ 968:	e59d1028 	ldr	r1, [sp, #40]	; 0x28
+ 96c:	eaffffd0 	b	8b4 <LightSetChain::Start(unsigned int)+0x294>
+ 970:	e1a00009 	mov	r0, r9
+ 974:	e58d1004 	str	r1, [sp, #4]
+ 978:	e12fff33 	blx	r3
+ 97c:	e59d3020 	ldr	r3, [sp, #32]
+ 980:	e59d1004 	ldr	r1, [sp, #4]
+ 984:	e5d3000c 	ldrb	r0, [r3, #12]
+ 988:	eaffffd7 	b	8ec <LightSetChain::Start(unsigned int)+0x2cc>
+ 98c:	e58d1004 	str	r1, [sp, #4]
+ 990:	e1a0000a 	mov	r0, sl
+ 994:	e12fff33 	blx	r3
+ 998:	e59d301c 	ldr	r3, [sp, #28]
+ 99c:	e59d1004 	ldr	r1, [sp, #4]
+ 9a0:	e5d3200c 	ldrb	r2, [r3, #12]
+ 9a4:	eaffffd7 	b	908 <LightSetChain::Start(unsigned int)+0x2e8>
+ 9a8:	e58d1004 	str	r1, [sp, #4]
+ 9ac:	e1a0000b 	mov	r0, fp
+ 9b0:	e12fff32 	blx	r2
+ 9b4:	e59d3018 	ldr	r3, [sp, #24]
+ 9b8:	e59d1004 	ldr	r1, [sp, #4]
+ 9bc:	e5d3300c 	ldrb	r3, [r3, #12]
+ 9c0:	eaffffd7 	b	924 <LightSetChain::Start(unsigned int)+0x304>
+ 9c4:	00000000 	andeq	r0, r0, r0
+
+000009c8 <LightSetChain::LightSetChain()>:
+ 9c8:	e92d4070 	push	{r4, r5, r6, lr}
+ 9cc:	e1a05000 	mov	r5, r0
+ 9d0:	e3a04000 	mov	r4, #0
+ 9d4:	ebfffffe 	bl	0 <LightSet::LightSet()>
+ 9d8:	e59f2044 	ldr	r2, [pc, #68]	; a24 <LightSetChain::LightSetChain()+0x5c>
+ 9dc:	e59f3044 	ldr	r3, [pc, #68]	; a28 <LightSetChain::LightSetChain()+0x60>
+ 9e0:	e5852000 	str	r2, [r5]
+ 9e4:	e5853014 	str	r3, [r5, #20]
+ 9e8:	e3a00080 	mov	r0, #128	; 0x80
+ 9ec:	e5c5400c 	strb	r4, [r5, #12]
+ 9f0:	ebfffffe 	bl	0 <operator new[](unsigned int)>
+ 9f4:	e1a03004 	mov	r3, r4
+ 9f8:	e3e0c000 	mvn	ip, #0
+ 9fc:	e1a01004 	mov	r1, r4
+ a00:	e5850010 	str	r0, [r5, #16]
+ a04:	e2802004 	add	r2, r0, #4
+ a08:	e7801183 	str	r1, [r0, r3, lsl #3]
+ a0c:	e782c183 	str	ip, [r2, r3, lsl #3]
+ a10:	e2833001 	add	r3, r3, #1
+ a14:	e3530010 	cmp	r3, #16
+ a18:	1afffffa 	bne	a08 <LightSetChain::LightSetChain()+0x40>
+ a1c:	e1a00005 	mov	r0, r5
+ a20:	e8bd8070 	pop	{r4, r5, r6, pc}
+ a24:	00000008 	andeq	r0, r0, r8
+ a28:	0000ffff 	strdeq	pc, [r0], -pc	; <UNPREDICTABLE>
+
+00000a2c <LightSetChain::Add(LightSet*, int)>:
+ a2c:	e92d41f0 	push	{r4, r5, r6, r7, r8, lr}
+ a30:	e5d0300c 	ldrb	r3, [r0, #12]
+ a34:	e3530010 	cmp	r3, #16
+ a38:	13510000 	cmpne	r1, #0
+ a3c:	13a07001 	movne	r7, #1
+ a40:	03a07000 	moveq	r7, #0
+ a44:	0a00003e 	beq	b44 <LightSetChain::Add(LightSet*, int)+0x118>
+ a48:	e5913000 	ldr	r3, [r1]
+ a4c:	e1a06000 	mov	r6, r0
+ a50:	e5933020 	ldr	r3, [r3, #32]
+ a54:	e1a00001 	mov	r0, r1
+ a58:	e1a04001 	mov	r4, r1
+ a5c:	e1a08002 	mov	r8, r2
+ a60:	e12fff33 	blx	r3
+ a64:	e3500000 	cmp	r0, #0
+ a68:	0a000035 	beq	b44 <LightSetChain::Add(LightSet*, int)+0x118>
+ a6c:	e5943000 	ldr	r3, [r4]
+ a70:	e1a00004 	mov	r0, r4
+ a74:	e5933024 	ldr	r3, [r3, #36]	; 0x24
+ a78:	e12fff33 	blx	r3
+ a7c:	e5943000 	ldr	r3, [r4]
+ a80:	e1a05000 	mov	r5, r0
+ a84:	e5933020 	ldr	r3, [r3, #32]
+ a88:	e1a00004 	mov	r0, r4
+ a8c:	e12fff33 	blx	r3
+ a90:	e0455000 	sub	r5, r5, r0
+ a94:	e3550c02 	cmp	r5, #512	; 0x200
+ a98:	aa000029 	bge	b44 <LightSetChain::Add(LightSet*, int)+0x118>
+ a9c:	e59f30e8 	ldr	r3, [pc, #232]	; b8c <LightSetChain::Add(LightSet*, int)+0x160>
+ aa0:	e1d621b4 	ldrh	r2, [r6, #20]
+ aa4:	e1520003 	cmp	r2, r3
+ aa8:	e5963010 	ldr	r3, [r6, #16]
+ aac:	0a000027 	beq	b50 <LightSetChain::Add(LightSet*, int)+0x124>
+ ab0:	e5d6100c 	ldrb	r1, [r6, #12]
+ ab4:	e1d651b6 	ldrh	r5, [r6, #22]
+ ab8:	e7834181 	str	r4, [r3, r1, lsl #3]
+ abc:	e0833181 	add	r3, r3, r1, lsl #3
+ ac0:	e2811001 	add	r1, r1, #1
+ ac4:	e5838004 	str	r8, [r3, #4]
+ ac8:	e5c6100c 	strb	r1, [r6, #12]
+ acc:	e5943000 	ldr	r3, [r4]
+ ad0:	e0822005 	add	r2, r2, r5
+ ad4:	e1a00004 	mov	r0, r4
+ ad8:	e5933020 	ldr	r3, [r3, #32]
+ adc:	e6ff5072 	uxth	r5, r2
+ ae0:	e12fff33 	blx	r3
+ ae4:	e1a02000 	mov	r2, r0
+ ae8:	e1d631b4 	ldrh	r3, [r6, #20]
+ aec:	e5941000 	ldr	r1, [r4]
+ af0:	e1530002 	cmp	r3, r2
+ af4:	21a03002 	movcs	r3, r2
+ af8:	e5911020 	ldr	r1, [r1, #32]
+ afc:	e1a00004 	mov	r0, r4
+ b00:	e1c631b4 	strh	r3, [r6, #20]
+ b04:	e12fff31 	blx	r1
+ b08:	e1a03000 	mov	r3, r0
+ b0c:	e5942000 	ldr	r2, [r4]
+ b10:	e1a00004 	mov	r0, r4
+ b14:	e5922024 	ldr	r2, [r2, #36]	; 0x24
+ b18:	e1a04003 	mov	r4, r3
+ b1c:	e12fff32 	blx	r2
+ b20:	e1d631b4 	ldrh	r3, [r6, #20]
+ b24:	e0844000 	add	r4, r4, r0
+ b28:	e6ff4074 	uxth	r4, r4
+ b2c:	e1540005 	cmp	r4, r5
+ b30:	20633004 	rsbcs	r3, r3, r4
+ b34:	30633005 	rsbcc	r3, r3, r5
+ b38:	e1a00007 	mov	r0, r7
+ b3c:	e1c631b6 	strh	r3, [r6, #22]
+ b40:	e8bd81f0 	pop	{r4, r5, r6, r7, r8, pc}
+ b44:	e3a07000 	mov	r7, #0
+ b48:	e1a00007 	mov	r0, r7
+ b4c:	e8bd81f0 	pop	{r4, r5, r6, r7, r8, pc}
+ b50:	e8830110 	stm	r3, {r4, r8}
+ b54:	e3a03001 	mov	r3, #1
+ b58:	e5c6300c 	strb	r3, [r6, #12]
+ b5c:	e5943000 	ldr	r3, [r4]
+ b60:	e1a00004 	mov	r0, r4
+ b64:	e5933020 	ldr	r3, [r3, #32]
+ b68:	e12fff33 	blx	r3
+ b6c:	e1a02000 	mov	r2, r0
+ b70:	e5943000 	ldr	r3, [r4]
+ b74:	e1a00004 	mov	r0, r4
+ b78:	e5933024 	ldr	r3, [r3, #36]	; 0x24
+ b7c:	e1c621b4 	strh	r2, [r6, #20]
+ b80:	e12fff33 	blx	r3
+ b84:	e1c601b6 	strh	r0, [r6, #22]
+ b88:	eaffffee 	b	b48 <LightSetChain::Add(LightSet*, int)+0x11c>
+ b8c:	0000ffff 	strdeq	pc, [r0], -pc	; <UNPREDICTABLE>
+
+00000b90 <LightSetChain::GetSize() const>:
+ b90:	e5d0000c 	ldrb	r0, [r0, #12]
+ b94:	e12fff1e 	bx	lr
+
+00000b98 <LightSetChain::GetType(unsigned char) const>:
+ b98:	e3510010 	cmp	r1, #16
+ b9c:	95903010 	ldrls	r3, [r0, #16]
+ ba0:	90831181 	addls	r1, r3, r1, lsl #3
+ ba4:	95910004 	ldrls	r0, [r1, #4]
+ ba8:	83e00000 	mvnhi	r0, #0
+ bac:	e12fff1e 	bx	lr
+
+00000bb0 <LightSetChain::GetLightSet(unsigned char)>:
+ bb0:	e3510010 	cmp	r1, #16
+ bb4:	95903010 	ldrls	r3, [r0, #16]
+ bb8:	97930181 	ldrls	r0, [r3, r1, lsl #3]
+ bbc:	83a00000 	movhi	r0, #0
+ bc0:	e12fff1e 	bx	lr
+
+00000bc4 <LightSetChain::IsEmpty() const>:
+ bc4:	e5d0000c 	ldrb	r0, [r0, #12]
+ bc8:	e16f0f10 	clz	r0, r0
+ bcc:	e1a002a0 	lsr	r0, r0, #5
+ bd0:	e12fff1e 	bx	lr
+
+00000bd4 <LightSetChain::Exist(LightSet*)>:
+ bd4:	e5d0200c 	ldrb	r2, [r0, #12]
+ bd8:	e3520000 	cmp	r2, #0
+ bdc:	0a000007 	beq	c00 <LightSetChain::Exist(LightSet*)+0x2c>
+ be0:	e3a03000 	mov	r3, #0
+ be4:	e590c010 	ldr	ip, [r0, #16]
+ be8:	e79c0183 	ldr	r0, [ip, r3, lsl #3]
+ bec:	e2833001 	add	r3, r3, #1
+ bf0:	e1510000 	cmp	r1, r0
+ bf4:	0a000003 	beq	c08 <LightSetChain::Exist(LightSet*)+0x34>
+ bf8:	e1530002 	cmp	r3, r2
+ bfc:	1afffff9 	bne	be8 <LightSetChain::Exist(LightSet*)+0x14>
+ c00:	e3a00000 	mov	r0, #0
+ c04:	e12fff1e 	bx	lr
+ c08:	e3a00001 	mov	r0, #1
+ c0c:	e12fff1e 	bx	lr
+
+00000c10 <LightSetChain::Exist(LightSet*, int, bool)>:
+ c10:	e92d4070 	push	{r4, r5, r6, lr}
+ c14:	e5d0500c 	ldrb	r5, [r0, #12]
+ c18:	e3550000 	cmp	r5, #0
+ c1c:	0a000010 	beq	c64 <LightSetChain::Exist(LightSet*, int, bool)+0x54>
+ c20:	e5904010 	ldr	r4, [r0, #16]
+ c24:	e3a0c000 	mov	ip, #0
+ c28:	e2846004 	add	r6, r4, #4
+ c2c:	ea000002 	b	c3c <LightSetChain::Exist(LightSet*, int, bool)+0x2c>
+ c30:	e28cc001 	add	ip, ip, #1
+ c34:	e15c0005 	cmp	ip, r5
+ c38:	0a000009 	beq	c64 <LightSetChain::Exist(LightSet*, int, bool)+0x54>
+ c3c:	e794e18c 	ldr	lr, [r4, ip, lsl #3]
+ c40:	e15e0001 	cmp	lr, r1
+ c44:	1afffff9 	bne	c30 <LightSetChain::Exist(LightSet*, int, bool)+0x20>
+ c48:	e3530000 	cmp	r3, #0
+ c4c:	1a000006 	bne	c6c <LightSetChain::Exist(LightSet*, int, bool)+0x5c>
+ c50:	e796018c 	ldr	r0, [r6, ip, lsl #3]
+ c54:	e1500002 	cmp	r0, r2
+ c58:	1afffff4 	bne	c30 <LightSetChain::Exist(LightSet*, int, bool)+0x20>
+ c5c:	e3a00001 	mov	r0, #1
+ c60:	e8bd8070 	pop	{r4, r5, r6, pc}
+ c64:	e3a00000 	mov	r0, #0
+ c68:	e8bd8070 	pop	{r4, r5, r6, pc}
+ c6c:	e1a00003 	mov	r0, r3
+ c70:	e8bd8070 	pop	{r4, r5, r6, pc}
+
+00000c74 <LightSetChain::Dump(unsigned char)>:
+ c74:	e12fff1e 	bx	lr
+
+00000c78 <LightSetChain::Dump()>:
+ c78:	e12fff1e 	bx	lr
+
+Disassembly of section .text._ZN8LightSet8BlackoutEb:
+
+00000000 <LightSet::Blackout(bool)>:
+   0:	e12fff1e 	bx	lr
+
+Disassembly of section .text._ZN13LightSetChain18GetDmxStartAddressEv:
+
+00000000 <LightSetChain::GetDmxStartAddress()>:
+   0:	e1d001b4 	ldrh	r0, [r0, #20]
+   4:	e12fff1e 	bx	lr
+
+Disassembly of section .text._ZN13LightSetChain15GetDmxFootprintEv:
+
+00000000 <LightSetChain::GetDmxFootprint()>:
+   0:	e1d001b6 	ldrh	r0, [r0, #22]
+   4:	e12fff1e 	bx	lr
+
+Disassembly of section .rodata:
+
+00000000 <vtable for LightSetChain>:
+	...
+
+Disassembly of section .comment:
+
+00000000 <.comment>:
+   0:	43434700 	movtmi	r4, #14080	; 0x3700
+   4:	4728203a 			; <UNDEFINED> instruction: 0x4728203a
+   8:	2029554e 	eorcs	r5, r9, lr, asr #10
+   c:	322e3031 	eorcc	r3, lr, #49	; 0x31
+  10:	Address 0x0000000000000010 is out of bounds.
+
+
+Disassembly of section .ARM.attributes:
+
+00000000 <.ARM.attributes>:
+   0:	00003241 	andeq	r3, r0, r1, asr #4
+   4:	61656100 	cmnvs	r5, r0, lsl #2
+   8:	01006962 	tsteq	r0, r2, ror #18
+   c:	00000028 	andeq	r0, r0, r8, lsr #32
+  10:	4b5a3605 	blmi	168d82c <LightSetChain::Dump()+0x168cbb4>
+  14:	08070600 	stmdaeq	r7, {r9, sl}
+  18:	0a010901 	beq	42424 <LightSetChain::Dump()+0x417ac>
+  1c:	14041202 	strne	r1, [r4], #-514	; 0xfffffdfe
+  20:	17011501 	strne	r1, [r1, -r1, lsl #10]
+  24:	19011803 	stmdbne	r1, {r0, r1, fp, ip}
+  28:	1c011a01 			; <UNDEFINED> instruction: 0x1c011a01
+  2c:	22021e01 	andcs	r1, r2, #1, 28
+  30:	Address 0x0000000000000030 is out of bounds.
+
+
+dmxslotinfo.o:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+
+00000000 <DmxSlotInfo::DmxSlotInfo(lightset::SlotInfo*, unsigned int)>:
+   0:	e92d4030 	push	{r4, r5, lr}
+   4:	e3a05000 	mov	r5, #0
+   8:	e1520005 	cmp	r2, r5
+   c:	e8800026 	stm	r0, {r1, r2, r5}
+  10:	08bd8030 	popeq	{r4, r5, pc}
+  14:	e3520008 	cmp	r2, #8
+  18:	9a000024 	bls	b0 <DmxSlotInfo::DmxSlotInfo(lightset::SlotInfo*, unsigned int)+0xb0>
+  1c:	e3e04000 	mvn	r4, #0
+  20:	e1a0e005 	mov	lr, r5
+  24:	e2423009 	sub	r3, r2, #9
+  28:	e3c33007 	bic	r3, r3, #7
+  2c:	e281c076 	add	ip, r1, #118	; 0x76
+  30:	e2833008 	add	r3, r3, #8
+  34:	e2855008 	add	r5, r5, #8
+  38:	e1550003 	cmp	r5, r3
+  3c:	f5dcf000 	pld	[ip]
+  40:	e54ce076 	strb	lr, [ip, #-118]	; 0xffffff8a
+  44:	e14c47b4 	strh	r4, [ip, #-116]	; 0xffffff8c
+  48:	e54ce072 	strb	lr, [ip, #-114]	; 0xffffff8e
+  4c:	e14c47b0 	strh	r4, [ip, #-112]	; 0xffffff90
+  50:	e54ce06e 	strb	lr, [ip, #-110]	; 0xffffff92
+  54:	e14c46bc 	strh	r4, [ip, #-108]	; 0xffffff94
+  58:	e54ce06a 	strb	lr, [ip, #-106]	; 0xffffff96
+  5c:	e14c46b8 	strh	r4, [ip, #-104]	; 0xffffff98
+  60:	e54ce066 	strb	lr, [ip, #-102]	; 0xffffff9a
+  64:	e14c46b4 	strh	r4, [ip, #-100]	; 0xffffff9c
+  68:	e54ce062 	strb	lr, [ip, #-98]	; 0xffffff9e
+  6c:	e14c46b0 	strh	r4, [ip, #-96]	; 0xffffffa0
+  70:	e54ce05e 	strb	lr, [ip, #-94]	; 0xffffffa2
+  74:	e14c45bc 	strh	r4, [ip, #-92]	; 0xffffffa4
+  78:	e54ce05a 	strb	lr, [ip, #-90]	; 0xffffffa6
+  7c:	e14c45b8 	strh	r4, [ip, #-88]	; 0xffffffa8
+  80:	e28cc020 	add	ip, ip, #32
+  84:	1affffea 	bne	34 <DmxSlotInfo::DmxSlotInfo(lightset::SlotInfo*, unsigned int)+0x34>
+  88:	e3a04000 	mov	r4, #0
+  8c:	e3e0e000 	mvn	lr, #0
+  90:	e081c103 	add	ip, r1, r3, lsl #2
+  94:	e7c14103 	strb	r4, [r1, r3, lsl #2]
+  98:	e2833001 	add	r3, r3, #1
+  9c:	e1520003 	cmp	r2, r3
+  a0:	e1cce0b2 	strh	lr, [ip, #2]
+  a4:	e28cc004 	add	ip, ip, #4
+  a8:	8afffff9 	bhi	94 <DmxSlotInfo::DmxSlotInfo(lightset::SlotInfo*, unsigned int)+0x94>
+  ac:	e8bd8030 	pop	{r4, r5, pc}
+  b0:	e1a03005 	mov	r3, r5
+  b4:	eafffff3 	b	88 <DmxSlotInfo::DmxSlotInfo(lightset::SlotInfo*, unsigned int)+0x88>
+
+000000b8 <DmxSlotInfo::~DmxSlotInfo()>:
+  b8:	e92d4010 	push	{r4, lr}
+  bc:	e1a04000 	mov	r4, r0
+  c0:	e5900008 	ldr	r0, [r0, #8]
+  c4:	e3500000 	cmp	r0, #0
+  c8:	0a000000 	beq	d0 <DmxSlotInfo::~DmxSlotInfo()+0x18>
+  cc:	ebfffffe 	bl	0 <operator delete[](void*)>
+  d0:	e1a00004 	mov	r0, r4
+  d4:	e8bd8010 	pop	{r4, pc}
+
+000000d8 <DmxSlotInfo::ToString(unsigned int)>:
+  d8:	e5903008 	ldr	r3, [r0, #8]
+  dc:	e92d41f0 	push	{r4, r5, r6, r7, r8, lr}
+  e0:	e3530000 	cmp	r3, #0
+  e4:	e1a04000 	mov	r4, r0
+  e8:	e1a08001 	mov	r8, r1
+  ec:	0a00003e 	beq	1ec <DmxSlotInfo::ToString(unsigned int)+0x114>
+  f0:	e3580000 	cmp	r8, #0
+  f4:	0a000039 	beq	1e0 <DmxSlotInfo::ToString(unsigned int)+0x108>
+  f8:	e5942004 	ldr	r2, [r4, #4]
+  fc:	e3520000 	cmp	r2, #0
+ 100:	0a000032 	beq	1d0 <DmxSlotInfo::ToString(unsigned int)+0xf8>
+ 104:	e3a0e000 	mov	lr, #0
+ 108:	e3a0503a 	mov	r5, #58	; 0x3a
+ 10c:	e3a0002c 	mov	r0, #44	; 0x2c
+ 110:	e3180001 	tst	r8, #1
+ 114:	0a000029 	beq	1c0 <DmxSlotInfo::ToString(unsigned int)+0xe8>
+ 118:	e5942000 	ldr	r2, [r4]
+ 11c:	e2833008 	add	r3, r3, #8
+ 120:	e7d2c10e 	ldrb	ip, [r2, lr, lsl #2]
+ 124:	e082210e 	add	r2, r2, lr, lsl #2
+ 128:	e1a0622c 	lsr	r6, ip, #4
+ 12c:	e35c009f 	cmp	ip, #159	; 0x9f
+ 130:	e20cc00f 	and	ip, ip, #15
+ 134:	e1d220b2 	ldrh	r2, [r2, #2]
+ 138:	92866030 	addls	r6, r6, #48	; 0x30
+ 13c:	82866037 	addhi	r6, r6, #55	; 0x37
+ 140:	e35c0009 	cmp	ip, #9
+ 144:	928cc030 	addls	ip, ip, #48	; 0x30
+ 148:	828cc037 	addhi	ip, ip, #55	; 0x37
+ 14c:	e543c007 	strb	ip, [r3, #-7]
+ 150:	e1a0c422 	lsr	ip, r2, #8
+ 154:	e20c700f 	and	r7, ip, #15
+ 158:	e3520a0a 	cmp	r2, #40960	; 0xa000
+ 15c:	e5436008 	strb	r6, [r3, #-8]
+ 160:	e1a06622 	lsr	r6, r2, #12
+ 164:	32866030 	addcc	r6, r6, #48	; 0x30
+ 168:	22866037 	addcs	r6, r6, #55	; 0x37
+ 16c:	e1a0c222 	lsr	ip, r2, #4
+ 170:	e3570009 	cmp	r7, #9
+ 174:	e5436005 	strb	r6, [r3, #-5]
+ 178:	92876030 	addls	r6, r7, #48	; 0x30
+ 17c:	82876037 	addhi	r6, r7, #55	; 0x37
+ 180:	e20c700f 	and	r7, ip, #15
+ 184:	e1a0c007 	mov	ip, r7
+ 188:	e5436004 	strb	r6, [r3, #-4]
+ 18c:	e202600f 	and	r6, r2, #15
+ 190:	e1a02006 	mov	r2, r6
+ 194:	e3570009 	cmp	r7, #9
+ 198:	9287c030 	addls	ip, r7, #48	; 0x30
+ 19c:	828cc037 	addhi	ip, ip, #55	; 0x37
+ 1a0:	e3560009 	cmp	r6, #9
+ 1a4:	92862030 	addls	r2, r6, #48	; 0x30
+ 1a8:	82822037 	addhi	r2, r2, #55	; 0x37
+ 1ac:	e5435006 	strb	r5, [r3, #-6]
+ 1b0:	e543c003 	strb	ip, [r3, #-3]
+ 1b4:	e5432002 	strb	r2, [r3, #-2]
+ 1b8:	e5430001 	strb	r0, [r3, #-1]
+ 1bc:	e5942004 	ldr	r2, [r4, #4]
+ 1c0:	e28ee001 	add	lr, lr, #1
+ 1c4:	e152000e 	cmp	r2, lr
+ 1c8:	e1a080a8 	lsr	r8, r8, #1
+ 1cc:	8affffcf 	bhi	110 <DmxSlotInfo::ToString(unsigned int)+0x38>
+ 1d0:	e3a02000 	mov	r2, #0
+ 1d4:	e5432001 	strb	r2, [r3, #-1]
+ 1d8:	e5940008 	ldr	r0, [r4, #8]
+ 1dc:	e8bd81f0 	pop	{r4, r5, r6, r7, r8, pc}
+ 1e0:	e5c38000 	strb	r8, [r3]
+ 1e4:	e5940008 	ldr	r0, [r4, #8]
+ 1e8:	e8bd81f0 	pop	{r4, r5, r6, r7, r8, pc}
+ 1ec:	e5900004 	ldr	r0, [r0, #4]
+ 1f0:	e0600180 	rsb	r0, r0, r0, lsl #3
+ 1f4:	ebfffffe 	bl	0 <operator new[](unsigned int)>
+ 1f8:	e3a02000 	mov	r2, #0
+ 1fc:	e1a03000 	mov	r3, r0
+ 200:	e5840008 	str	r0, [r4, #8]
+ 204:	e5c02000 	strb	r2, [r0]
+ 208:	eaffffb8 	b	f0 <DmxSlotInfo::ToString(unsigned int)+0x18>
+
+0000020c <DmxSlotInfo::Dump()>:
+ 20c:	e5903004 	ldr	r3, [r0, #4]
+ 210:	e3530000 	cmp	r3, #0
+ 214:	012fff1e 	bxeq	lr
+ 218:	e92d4070 	push	{r4, r5, r6, lr}
+ 21c:	e1a05000 	mov	r5, r0
+ 220:	e3a04000 	mov	r4, #0
+ 224:	e59f602c 	ldr	r6, [pc, #44]	; 258 <DmxSlotInfo::Dump()+0x4c>
+ 228:	e5953000 	ldr	r3, [r5]
+ 22c:	e1a01004 	mov	r1, r4
+ 230:	e083c104 	add	ip, r3, r4, lsl #2
+ 234:	e7d32104 	ldrb	r2, [r3, r4, lsl #2]
+ 238:	e1a00006 	mov	r0, r6
+ 23c:	e1dc30b2 	ldrh	r3, [ip, #2]
+ 240:	ebfffffe 	bl	0 <printf>
+ 244:	e5953004 	ldr	r3, [r5, #4]
+ 248:	e2844001 	add	r4, r4, #1
+ 24c:	e1530004 	cmp	r3, r4
+ 250:	8afffff4 	bhi	228 <DmxSlotInfo::Dump()+0x1c>
+ 254:	e8bd8070 	pop	{r4, r5, r6, pc}
+ 258:	00000000 	andeq	r0, r0, r0
+
+0000025c <DmxSlotInfo::Parse(char*, bool&, lightset::SlotInfo&)>:
+ 25c:	e92d4070 	push	{r4, r5, r6, lr}
+ 260:	e3a05000 	mov	r5, #0
+ 264:	e2816002 	add	r6, r1, #2
+ 268:	e1a04001 	mov	r4, r1
+ 26c:	e4d10001 	ldrb	r0, [r1], #1
+ 270:	e380e020 	orr	lr, r0, #32
+ 274:	e350003a 	cmp	r0, #58	; 0x3a
+ 278:	e240c030 	sub	ip, r0, #48	; 0x30
+ 27c:	e24ee061 	sub	lr, lr, #97	; 0x61
+ 280:	0a00000d 	beq	2bc <DmxSlotInfo::Parse(char*, bool&, lightset::SlotInfo&)+0x60>
+ 284:	e35c0009 	cmp	ip, #9
+ 288:	9a000001 	bls	294 <DmxSlotInfo::Parse(char*, bool&, lightset::SlotInfo&)+0x38>
+ 28c:	e35e0005 	cmp	lr, #5
+ 290:	8a00002e 	bhi	350 <DmxSlotInfo::Parse(char*, bool&, lightset::SlotInfo&)+0xf4>
+ 294:	e380e020 	orr	lr, r0, #32
+ 298:	e3500039 	cmp	r0, #57	; 0x39
+ 29c:	e24ee057 	sub	lr, lr, #87	; 0x57
+ 2a0:	86efc07e 	uxtbhi	ip, lr
+ 2a4:	96efc07c 	uxtbls	ip, ip
+ 2a8:	e18cc205 	orr	ip, ip, r5, lsl #4
+ 2ac:	e1560001 	cmp	r6, r1
+ 2b0:	e1a04001 	mov	r4, r1
+ 2b4:	e6ff507c 	uxth	r5, ip
+ 2b8:	1affffea 	bne	268 <DmxSlotInfo::Parse(char*, bool&, lightset::SlotInfo&)+0xc>
+ 2bc:	e3a00000 	mov	r0, #0
+ 2c0:	e284e001 	add	lr, r4, #1
+ 2c4:	e5c35000 	strb	r5, [r3]
+ 2c8:	e2844005 	add	r4, r4, #5
+ 2cc:	e1a0600e 	mov	r6, lr
+ 2d0:	e4de1001 	ldrb	r1, [lr], #1
+ 2d4:	e351002c 	cmp	r1, #44	; 0x2c
+ 2d8:	13510000 	cmpne	r1, #0
+ 2dc:	e3815020 	orr	r5, r1, #32
+ 2e0:	e241c030 	sub	ip, r1, #48	; 0x30
+ 2e4:	e2455061 	sub	r5, r5, #97	; 0x61
+ 2e8:	0a000018 	beq	350 <DmxSlotInfo::Parse(char*, bool&, lightset::SlotInfo&)+0xf4>
+ 2ec:	e35c0009 	cmp	ip, #9
+ 2f0:	8a000014 	bhi	348 <DmxSlotInfo::Parse(char*, bool&, lightset::SlotInfo&)+0xec>
+ 2f4:	e3815020 	orr	r5, r1, #32
+ 2f8:	e3510039 	cmp	r1, #57	; 0x39
+ 2fc:	e2455057 	sub	r5, r5, #87	; 0x57
+ 300:	86efc075 	uxtbhi	ip, r5
+ 304:	96efc07c 	uxtbls	ip, ip
+ 308:	e18cc200 	orr	ip, ip, r0, lsl #4
+ 30c:	e15e0004 	cmp	lr, r4
+ 310:	e6ff007c 	uxth	r0, ip
+ 314:	1affffec 	bne	2cc <DmxSlotInfo::Parse(char*, bool&, lightset::SlotInfo&)+0x70>
+ 318:	e5de1000 	ldrb	r1, [lr]
+ 31c:	e201c0df 	and	ip, r1, #223	; 0xdf
+ 320:	e351002c 	cmp	r1, #44	; 0x2c
+ 324:	135c0000 	cmpne	ip, #0
+ 328:	1a000008 	bne	350 <DmxSlotInfo::Parse(char*, bool&, lightset::SlotInfo&)+0xf4>
+ 32c:	e1c300b2 	strh	r0, [r3, #2]
+ 330:	e3a03001 	mov	r3, #1
+ 334:	e5c23000 	strb	r3, [r2]
+ 338:	e5de0000 	ldrb	r0, [lr]
+ 33c:	e3500000 	cmp	r0, #0
+ 340:	12860002 	addne	r0, r6, #2
+ 344:	e8bd8070 	pop	{r4, r5, r6, pc}
+ 348:	e3550005 	cmp	r5, #5
+ 34c:	9affffe8 	bls	2f4 <DmxSlotInfo::Parse(char*, bool&, lightset::SlotInfo&)+0x98>
+ 350:	e3a03000 	mov	r3, #0
+ 354:	e1a00003 	mov	r0, r3
+ 358:	e5c23000 	strb	r3, [r2]
+ 35c:	e8bd8070 	pop	{r4, r5, r6, pc}
+
+00000360 <DmxSlotInfo::FromString(char const*, unsigned int&)>:
+ 360:	e92d41f0 	push	{r4, r5, r6, r7, r8, lr}
+ 364:	e3a04000 	mov	r4, #0
+ 368:	e5824000 	str	r4, [r2]
+ 36c:	e5903004 	ldr	r3, [r0, #4]
+ 370:	e24dd008 	sub	sp, sp, #8
+ 374:	e1530004 	cmp	r3, r4
+ 378:	0a00001f 	beq	3fc <DmxSlotInfo::FromString(char const*, unsigned int&)+0x9c>
+ 37c:	e1510004 	cmp	r1, r4
+ 380:	e5cd4003 	strb	r4, [sp, #3]
+ 384:	0a00001c 	beq	3fc <DmxSlotInfo::FromString(char const*, unsigned int&)+0x9c>
+ 388:	e1a06002 	mov	r6, r2
+ 38c:	e1a05000 	mov	r5, r0
+ 390:	e3a08001 	mov	r8, #1
+ 394:	e1a07004 	mov	r7, r4
+ 398:	ea000002 	b	3a8 <DmxSlotInfo::FromString(char const*, unsigned int&)+0x48>
+ 39c:	e3510000 	cmp	r1, #0
+ 3a0:	e5cd7003 	strb	r7, [sp, #3]
+ 3a4:	0a000014 	beq	3fc <DmxSlotInfo::FromString(char const*, unsigned int&)+0x9c>
+ 3a8:	e28d3004 	add	r3, sp, #4
+ 3ac:	e1a00005 	mov	r0, r5
+ 3b0:	e28d2003 	add	r2, sp, #3
+ 3b4:	ebfffffe 	bl	25c <DmxSlotInfo::Parse(char*, bool&, lightset::SlotInfo&)>
+ 3b8:	e5dd3003 	ldrb	r3, [sp, #3]
+ 3bc:	e1a01000 	mov	r1, r0
+ 3c0:	e3530000 	cmp	r3, #0
+ 3c4:	0a000008 	beq	3ec <DmxSlotInfo::FromString(char const*, unsigned int&)+0x8c>
+ 3c8:	e5953000 	ldr	r3, [r5]
+ 3cc:	e5dd0004 	ldrb	r0, [sp, #4]
+ 3d0:	e0832104 	add	r2, r3, r4, lsl #2
+ 3d4:	e7c30104 	strb	r0, [r3, r4, lsl #2]
+ 3d8:	e5963000 	ldr	r3, [r6]
+ 3dc:	e1dd00b6 	ldrh	r0, [sp, #6]
+ 3e0:	e1833418 	orr	r3, r3, r8, lsl r4
+ 3e4:	e1c200b2 	strh	r0, [r2, #2]
+ 3e8:	e5863000 	str	r3, [r6]
+ 3ec:	e5953004 	ldr	r3, [r5, #4]
+ 3f0:	e2844001 	add	r4, r4, #1
+ 3f4:	e1530004 	cmp	r3, r4
+ 3f8:	8affffe7 	bhi	39c <DmxSlotInfo::FromString(char const*, unsigned int&)+0x3c>
+ 3fc:	e28dd008 	add	sp, sp, #8
+ 400:	e8bd81f0 	pop	{r4, r5, r6, r7, r8, pc}
+
+Disassembly of section .rodata.str1.4:
+
+00000000 <.rodata.str1.4>:
+   0:	6c532020 	mrrcvs	0, 2, r2, r3, cr0
+   4:	253a746f 	ldrcs	r7, [sl, #-1135]!	; 0xfffffb91
+   8:	2e252064 	cdpcs	0, 2, cr2, cr5, cr4, {3}
+   c:	253a5832 	ldrcs	r5, [sl, #-2098]!	; 0xfffff7ce
+  10:	0a58342e 	beq	160d0d0 <DmxSlotInfo::FromString(char const*, unsigned int&)+0x160cd70>
+	...
+
+Disassembly of section .comment:
+
+00000000 <.comment>:
+   0:	43434700 	movtmi	r4, #14080	; 0x3700
+   4:	4728203a 			; <UNDEFINED> instruction: 0x4728203a
+   8:	2029554e 	eorcs	r5, r9, lr, asr #10
+   c:	322e3031 	eorcc	r3, lr, #49	; 0x31
+  10:	Address 0x0000000000000010 is out of bounds.
+
+
+Disassembly of section .ARM.attributes:
+
+00000000 <.ARM.attributes>:
+   0:	00003241 	andeq	r3, r0, r1, asr #4
+   4:	61656100 	cmnvs	r5, r0, lsl #2
+   8:	01006962 	tsteq	r0, r2, ror #18
+   c:	00000028 	andeq	r0, r0, r8, lsr #32
+  10:	4b5a3605 	blmi	168d82c <DmxSlotInfo::FromString(char const*, unsigned int&)+0x168d4cc>
+  14:	08070600 	stmdaeq	r7, {r9, sl}
+  18:	0a010901 	beq	42424 <DmxSlotInfo::FromString(char const*, unsigned int&)+0x420c4>
+  1c:	14041202 	strne	r1, [r4], #-514	; 0xfffffdfe
+  20:	17011501 	strne	r1, [r1, -r1, lsl #10]
+  24:	19011803 	stmdbne	r1, {r0, r1, fp, ip}
+  28:	1c011a01 			; <UNDEFINED> instruction: 0x1c011a01
+  2c:	22021e01 	andcs	r1, r2, #1, 28
+  30:	Address 0x0000000000000030 is out of bounds.
+
+
+lightsetgetoutputtype.o:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+
+00000000 <LightSet::GetOutputType(lightset::OutputType)>:
+   0:	e59f3004 	ldr	r3, [pc, #4]	; c <LightSet::GetOutputType(lightset::OutputType)+0xc>
+   4:	e0830100 	add	r0, r3, r0, lsl #2
+   8:	e12fff1e 	bx	lr
+   c:	00000000 	andeq	r0, r0, r0
+
+00000010 <LightSet::GetOutputType(char const*)>:
+  10:	e92d4070 	push	{r4, r5, r6, lr}
+  14:	e3a03064 	mov	r3, #100	; 0x64
+  18:	e3a06000 	mov	r6, #0
+  1c:	e59f506c 	ldr	r5, [pc, #108]	; 90 <LightSet::GetOutputType(char const*)+0x80>
+  20:	e2400001 	sub	r0, r0, #1
+  24:	e1a0e000 	mov	lr, r0
+  28:	e2451002 	sub	r1, r5, #2
+  2c:	ea000000 	b	34 <LightSet::GetOutputType(char const*)+0x24>
+  30:	e4d13001 	ldrb	r3, [r1], #1
+  34:	e1a0c003 	mov	ip, r3
+  38:	e2432041 	sub	r2, r3, #65	; 0x41
+  3c:	e3520019 	cmp	r2, #25
+  40:	e5fe2001 	ldrb	r2, [lr, #1]!
+  44:	9283c020 	addls	ip, r3, #32
+  48:	e2424041 	sub	r4, r2, #65	; 0x41
+  4c:	e3540019 	cmp	r4, #25
+  50:	92822020 	addls	r2, r2, #32
+  54:	e152000c 	cmp	r2, ip
+  58:	1a000005 	bne	74 <LightSet::GetOutputType(char const*)+0x64>
+  5c:	e3530000 	cmp	r3, #0
+  60:	0a000001 	beq	6c <LightSet::GetOutputType(char const*)+0x5c>
+  64:	e1510005 	cmp	r1, r5
+  68:	1afffff0 	bne	30 <LightSet::GetOutputType(char const*)+0x20>
+  6c:	e1a00006 	mov	r0, r6
+  70:	e8bd8070 	pop	{r4, r5, r6, pc}
+  74:	e2866001 	add	r6, r6, #1
+  78:	e3560003 	cmp	r6, #3
+  7c:	e2855004 	add	r5, r5, #4
+  80:	15553003 	ldrbne	r3, [r5, #-3]
+  84:	1affffe6 	bne	24 <LightSet::GetOutputType(char const*)+0x14>
+  88:	e3a00000 	mov	r0, #0
+  8c:	e8bd8070 	pop	{r4, r5, r6, pc}
+  90:	00000003 	andeq	r0, r0, r3
+
+Disassembly of section .rodata:
+
+00000000 <sOutput>:
+   0:	00786d64 	rsbseq	r6, r8, r4, ror #26
+   4:	00697073 	rsbeq	r7, r9, r3, ror r0
+   8:	006e6f6d 	rsbeq	r6, lr, sp, ror #30
+
+Disassembly of section .comment:
+
+00000000 <.comment>:
+   0:	43434700 	movtmi	r4, #14080	; 0x3700
+   4:	4728203a 			; <UNDEFINED> instruction: 0x4728203a
+   8:	2029554e 	eorcs	r5, r9, lr, asr #10
+   c:	322e3031 	eorcc	r3, lr, #49	; 0x31
+  10:	Address 0x0000000000000010 is out of bounds.
+
+
+Disassembly of section .ARM.attributes:
+
+00000000 <.ARM.attributes>:
+   0:	00003241 	andeq	r3, r0, r1, asr #4
+   4:	61656100 	cmnvs	r5, r0, lsl #2
+   8:	01006962 	tsteq	r0, r2, ror #18
+   c:	00000028 	andeq	r0, r0, r8, lsr #32
+  10:	4b5a3605 	blmi	168d82c <LightSet::GetOutputType(char const*)+0x168d81c>
+  14:	08070600 	stmdaeq	r7, {r9, sl}
+  18:	0a010901 	beq	42424 <LightSet::GetOutputType(char const*)+0x42414>
+  1c:	14041202 	strne	r1, [r4], #-514	; 0xfffffdfe
+  20:	17011501 	strne	r1, [r1, -r1, lsl #10]
+  24:	19011803 	stmdbne	r1, {r0, r1, fp, ip}
+  28:	1c011a01 			; <UNDEFINED> instruction: 0x1c011a01
+  2c:	22021e01 	andcs	r1, r2, #1, 28
+  30:	Address 0x0000000000000030 is out of bounds.
+
+
+lightsetgetslotinfo.o:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+
+00000000 <LightSet::GetSlotInfo(unsigned short, lightset::SlotInfo&)>:
+   0:	e3a00001 	mov	r0, #1
+   4:	e3a03000 	mov	r3, #0
+   8:	e1c200b2 	strh	r0, [r2, #2]
+   c:	e5c23000 	strb	r3, [r2]
+  10:	e12fff1e 	bx	lr
+
+Disassembly of section .comment:
+
+00000000 <.comment>:
+   0:	43434700 	movtmi	r4, #14080	; 0x3700
+   4:	4728203a 			; <UNDEFINED> instruction: 0x4728203a
+   8:	2029554e 	eorcs	r5, r9, lr, asr #10
+   c:	322e3031 	eorcc	r3, lr, #49	; 0x31
+  10:	Address 0x0000000000000010 is out of bounds.
+
+
+Disassembly of section .ARM.attributes:
+
+00000000 <.ARM.attributes>:
+   0:	00003241 	andeq	r3, r0, r1, asr #4
+   4:	61656100 	cmnvs	r5, r0, lsl #2
+   8:	01006962 	tsteq	r0, r2, ror #18
+   c:	00000028 	andeq	r0, r0, r8, lsr #32
+  10:	4b5a3605 	blmi	168d82c <LightSet::GetSlotInfo(unsigned short, lightset::SlotInfo&)+0x168d82c>
+  14:	08070600 	stmdaeq	r7, {r9, sl}
+  18:	0a010901 	beq	42424 <LightSet::GetSlotInfo(unsigned short, lightset::SlotInfo&)+0x42424>
+  1c:	14041202 	strne	r1, [r4], #-514	; 0xfffffdfe
+  20:	17011501 	strne	r1, [r1, -r1, lsl #10]
+  24:	19011803 	stmdbne	r1, {r0, r1, fp, ip}
+  28:	1c011a01 			; <UNDEFINED> instruction: 0x1c011a01
+  2c:	22021e01 	andcs	r1, r2, #1, 28
+  30:	Address 0x0000000000000030 is out of bounds.
+
+
+lightsetdmx.o:     file format elf32-littlearm
+
+
+Disassembly of section .group:
+
+00000000 <.group>:
+   0:	00000001 	andeq	r0, r0, r1
+   4:	00000006 	andeq	r0, r0, r6
+
+Disassembly of section .group:
+
+00000000 <.group>:
+   0:	00000001 	andeq	r0, r0, r1
+   4:	00000007 	andeq	r0, r0, r7
+
+Disassembly of section .text:
+
+00000000 <LightSet::GetDmxStartAddress()>:
+   0:	e3a00001 	mov	r0, #1
+   4:	e12fff1e 	bx	lr
+
+00000008 <LightSet::GetDmxFootprint()>:
+   8:	e3a00c02 	mov	r0, #512	; 0x200
+   c:	e12fff1e 	bx	lr
+
+00000010 <LightSet::SetDmxStartAddress(unsigned short)>:
+  10:	e3a00000 	mov	r0, #0
+  14:	e12fff1e 	bx	lr
+
+Disassembly of section .text._ZN8LightSet8BlackoutEb:
+
+00000000 <LightSet::Blackout(bool)>:
+   0:	e12fff1e 	bx	lr
+
+Disassembly of section .text._ZN8LightSet5PrintEv:
+
+00000000 <LightSet::Print()>:
+   0:	e12fff1e 	bx	lr
+
+Disassembly of section .rodata:
+
+00000000 <vtable for LightSet>:
+	...
+
+Disassembly of section .comment:
+
+00000000 <.comment>:
+   0:	43434700 	movtmi	r4, #14080	; 0x3700
+   4:	4728203a 			; <UNDEFINED> instruction: 0x4728203a
+   8:	2029554e 	eorcs	r5, r9, lr, asr #10
+   c:	322e3031 	eorcc	r3, lr, #49	; 0x31
+  10:	Address 0x0000000000000010 is out of bounds.
+
+
+Disassembly of section .ARM.attributes:
+
+00000000 <.ARM.attributes>:
+   0:	00003241 	andeq	r3, r0, r1, asr #4
+   4:	61656100 	cmnvs	r5, r0, lsl #2
+   8:	01006962 	tsteq	r0, r2, ror #18
+   c:	00000028 	andeq	r0, r0, r8, lsr #32
+  10:	4b5a3605 	blmi	168d82c <LightSet::SetDmxStartAddress(unsigned short)+0x168d81c>
+  14:	08070600 	stmdaeq	r7, {r9, sl}
+  18:	0a010901 	beq	42424 <LightSet::SetDmxStartAddress(unsigned short)+0x42414>
+  1c:	14041202 	strne	r1, [r4], #-514	; 0xfffffdfe
+  20:	17011501 	strne	r1, [r1, -r1, lsl #10]
+  24:	19011803 	stmdbne	r1, {r0, r1, fp, ip}
+  28:	1c011a01 			; <UNDEFINED> instruction: 0x1c011a01
+  2c:	22021e01 	andcs	r1, r2, #1, 28
+  30:	Address 0x0000000000000030 is out of bounds.
+
+
+lightsetconst.o:     file format elf32-littlearm
+
+
+Disassembly of section .rodata:
+
+00000000 <LightSetConst::PARAMS_TEST_PATTERN>:
+   0:	74736574 	ldrbtvc	r6, [r3], #-1396	; 0xfffffa8c
+   4:	7461705f 	strbtvc	r7, [r1], #-95	; 0xffffffa1
+   8:	6e726574 	mrcvs	5, 3, r6, cr2, cr4, {3}
+   c:	00000000 	andeq	r0, r0, r0
+
+00000010 <LightSetConst::PARAMS_DMX_SLOT_INFO>:
+  10:	5f786d64 	svcpl	0x00786d64
+  14:	746f6c73 	strbtvc	r6, [pc], #-3187	; 1c <LightSetConst::PARAMS_DMX_SLOT_INFO+0xc>
+  18:	666e695f 			; <UNDEFINED> instruction: 0x666e695f
+  1c:	0000006f 	andeq	r0, r0, pc, rrx
+
+00000020 <LightSetConst::PARAMS_DMX_START_ADDRESS>:
+  20:	5f786d64 	svcpl	0x00786d64
+  24:	72617473 	rsbvc	r7, r1, #1929379840	; 0x73000000
+  28:	64615f74 	strbtvs	r5, [r1], #-3956	; 0xfffff08c
+  2c:	73657264 	cmnvc	r5, #100, 4	; 0x40000006
+  30:	00000073 	andeq	r0, r0, r3, ror r0
+
+00000034 <LightSetConst::PARAMS_ENABLE_NO_CHANGE_UPDATE>:
+  34:	62616e65 	rsbvs	r6, r1, #1616	; 0x650
+  38:	6e5f656c 	cdpvs	5, 5, cr6, cr15, cr12, {3}
+  3c:	68635f6f 	stmdavs	r3!, {r0, r1, r2, r3, r5, r6, r8, r9, sl, fp, ip, lr}^
+  40:	65676e61 	strbvs	r6, [r7, #-3681]!	; 0xfffff19f
+  44:	6470755f 	ldrbtvs	r7, [r0], #-1375	; 0xfffffaa1
+  48:	00657461 	rsbeq	r7, r5, r1, ror #8
+
+0000004c <LightSetConst::PARAMS_START_UNI_PORT>:
+  4c:	72617473 	rsbvc	r7, r1, #1929379840	; 0x73000000
+  50:	6e755f74 	mrcvs	15, 3, r5, cr5, cr4, {3}
+  54:	6f705f69 	svcvs	0x00705f69
+  58:	315f7472 	cmpcc	pc, r2, ror r4	; <UNPREDICTABLE>
+  5c:	74730000 	ldrbtvc	r0, [r3], #-0
+  60:	5f747261 	svcpl	0x00747261
+  64:	5f696e75 	svcpl	0x00696e75
+  68:	74726f70 	ldrbtvc	r6, [r2], #-3952	; 0xfffff090
+  6c:	0000325f 	andeq	r3, r0, pc, asr r2
+  70:	72617473 	rsbvc	r7, r1, #1929379840	; 0x73000000
+  74:	6e755f74 	mrcvs	15, 3, r5, cr5, cr4, {3}
+  78:	6f705f69 	svcvs	0x00705f69
+  7c:	335f7472 	cmpcc	pc, #1912602624	; 0x72000000
+  80:	74730000 	ldrbtvc	r0, [r3], #-0
+  84:	5f747261 	svcpl	0x00747261
+  88:	5f696e75 	svcpl	0x00696e75
+  8c:	74726f70 	ldrbtvc	r6, [r2], #-3952	; 0xfffff090
+  90:	0000345f 	andeq	r3, r0, pc, asr r4
+  94:	72617473 	rsbvc	r7, r1, #1929379840	; 0x73000000
+  98:	6e755f74 	mrcvs	15, 3, r5, cr5, cr4, {3}
+  9c:	6f705f69 	svcvs	0x00705f69
+  a0:	355f7472 	ldrbcc	r7, [pc, #-1138]	; fffffc36 <LightSetConst::PARAMS_OUTPUT+0xfffffaba>
+  a4:	74730000 	ldrbtvc	r0, [r3], #-0
+  a8:	5f747261 	svcpl	0x00747261
+  ac:	5f696e75 	svcpl	0x00696e75
+  b0:	74726f70 	ldrbtvc	r6, [r2], #-3952	; 0xfffff090
+  b4:	0000365f 	andeq	r3, r0, pc, asr r6
+  b8:	72617473 	rsbvc	r7, r1, #1929379840	; 0x73000000
+  bc:	6e755f74 	mrcvs	15, 3, r5, cr5, cr4, {3}
+  c0:	6f705f69 	svcvs	0x00705f69
+  c4:	375f7472 			; <UNDEFINED> instruction: 0x375f7472
+  c8:	74730000 	ldrbtvc	r0, [r3], #-0
+  cc:	5f747261 	svcpl	0x00747261
+  d0:	5f696e75 	svcpl	0x00696e75
+  d4:	74726f70 	ldrbtvc	r6, [r2], #-3952	; 0xfffff090
+  d8:	0000385f 	andeq	r3, r0, pc, asr r8
+
+000000dc <LightSetConst::PARAMS_MERGE_MODE_PORT>:
+  dc:	6772656d 	ldrbvs	r6, [r2, -sp, ror #10]!
+  e0:	6f6d5f65 	svcvs	0x006d5f65
+  e4:	705f6564 	subsvc	r6, pc, r4, ror #10
+  e8:	5f74726f 	svcpl	0x0074726f
+  ec:	656d0061 	strbvs	r0, [sp, #-97]!	; 0xffffff9f
+  f0:	5f656772 	svcpl	0x00656772
+  f4:	65646f6d 	strbvs	r6, [r4, #-3949]!	; 0xfffff093
+  f8:	726f705f 	rsbvc	r7, pc, #95	; 0x5f
+  fc:	00625f74 	rsbeq	r5, r2, r4, ror pc
+ 100:	6772656d 	ldrbvs	r6, [r2, -sp, ror #10]!
+ 104:	6f6d5f65 	svcvs	0x006d5f65
+ 108:	705f6564 	subsvc	r6, pc, r4, ror #10
+ 10c:	5f74726f 	svcpl	0x0074726f
+ 110:	656d0063 	strbvs	r0, [sp, #-99]!	; 0xffffff9d
+ 114:	5f656772 	svcpl	0x00656772
+ 118:	65646f6d 	strbvs	r6, [r4, #-3949]!	; 0xfffff093
+ 11c:	726f705f 	rsbvc	r7, pc, #95	; 0x5f
+ 120:	00645f74 	rsbeq	r5, r4, r4, ror pc
+
+00000124 <LightSetConst::PARAMS_MERGE_MODE>:
+ 124:	6772656d 	ldrbvs	r6, [r2, -sp, ror #10]!
+ 128:	6f6d5f65 	svcvs	0x006d5f65
+ 12c:	00006564 	andeq	r6, r0, r4, ror #10
+
+00000130 <LightSetConst::PARAMS_UNIVERSE_PORT>:
+ 130:	76696e75 			; <UNDEFINED> instruction: 0x76696e75
+ 134:	65737265 	ldrbvs	r7, [r3, #-613]!	; 0xfffffd9b
+ 138:	726f705f 	rsbvc	r7, pc, #95	; 0x5f
+ 13c:	00615f74 	rsbeq	r5, r1, r4, ror pc
+ 140:	76696e75 			; <UNDEFINED> instruction: 0x76696e75
+ 144:	65737265 	ldrbvs	r7, [r3, #-613]!	; 0xfffffd9b
+ 148:	726f705f 	rsbvc	r7, pc, #95	; 0x5f
+ 14c:	00625f74 	rsbeq	r5, r2, r4, ror pc
+ 150:	76696e75 			; <UNDEFINED> instruction: 0x76696e75
+ 154:	65737265 	ldrbvs	r7, [r3, #-613]!	; 0xfffffd9b
+ 158:	726f705f 	rsbvc	r7, pc, #95	; 0x5f
+ 15c:	00635f74 	rsbeq	r5, r3, r4, ror pc
+ 160:	76696e75 			; <UNDEFINED> instruction: 0x76696e75
+ 164:	65737265 	ldrbvs	r7, [r3, #-613]!	; 0xfffffd9b
+ 168:	726f705f 	rsbvc	r7, pc, #95	; 0x5f
+ 16c:	00645f74 	rsbeq	r5, r4, r4, ror pc
+
+00000170 <LightSetConst::PARAMS_UNIVERSE>:
+ 170:	76696e75 			; <UNDEFINED> instruction: 0x76696e75
+ 174:	65737265 	ldrbvs	r7, [r3, #-613]!	; 0xfffffd9b
+ 178:	00000000 	andeq	r0, r0, r0
+
+0000017c <LightSetConst::PARAMS_OUTPUT>:
+ 17c:	7074756f 	rsbsvc	r7, r4, pc, ror #10
+ 180:	Address 0x0000000000000180 is out of bounds.
+
+
+Disassembly of section .comment:
+
+00000000 <.comment>:
+   0:	43434700 	movtmi	r4, #14080	; 0x3700
+   4:	4728203a 			; <UNDEFINED> instruction: 0x4728203a
+   8:	2029554e 	eorcs	r5, r9, lr, asr #10
+   c:	322e3031 	eorcc	r3, lr, #49	; 0x31
+  10:	Address 0x0000000000000010 is out of bounds.
+
+
+Disassembly of section .ARM.attributes:
+
+00000000 <.ARM.attributes>:
+   0:	00003b41 	andeq	r3, r0, r1, asr #22
+   4:	61656100 	cmnvs	r5, r0, lsl #2
+   8:	01006962 	tsteq	r0, r2, ror #18
+   c:	00000031 	andeq	r0, r0, r1, lsr r0
+  10:	4d524105 	ldfmie	f4, [r2, #-20]	; 0xffffffec
+  14:	36373131 			; <UNDEFINED> instruction: 0x36373131
+  18:	2d465a4a 	vstrcs	s11, [r6, #-296]	; 0xfffffed8
+  1c:	07060053 	smlsdeq	r6, r3, r0, r0
+  20:	01090108 	tsteq	r9, r8, lsl #2
+  24:	0412020a 	ldreq	r0, [r2], #-522	; 0xfffffdf6
+  28:	01150114 	tsteq	r5, r4, lsl r1
+  2c:	01180317 	tsteq	r8, r7, lsl r3
+  30:	011a0119 	tsteq	sl, r9, lsl r1
+  34:	021e011c 	andseq	r0, lr, #28, 2
+  38:	01440122 	cmpeq	r4, r2, lsr #2
+
+lightset.o:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+
+00000000 <LightSet::LightSet()>:
+   0:	e3a02000 	mov	r2, #0
+   4:	e59fc014 	ldr	ip, [pc, #20]	; 20 <LightSet::LightSet()+0x20>
+   8:	e59f1014 	ldr	r1, [pc, #20]	; 24 <LightSet::LightSet()+0x24>
+   c:	e580c000 	str	ip, [r0]
+  10:	e5802004 	str	r2, [r0, #4]
+  14:	e5802008 	str	r2, [r0, #8]
+  18:	e5810000 	str	r0, [r1]
+  1c:	e12fff1e 	bx	lr
+  20:	00000008 	andeq	r0, r0, r8
+  24:	00000000 	andeq	r0, r0, r0
+
+Disassembly of section .bss:
+
+00000000 <LightSet::s_pThis>:
+   0:	00000000 	andeq	r0, r0, r0
+
+Disassembly of section .comment:
+
+00000000 <.comment>:
+   0:	43434700 	movtmi	r4, #14080	; 0x3700
+   4:	4728203a 			; <UNDEFINED> instruction: 0x4728203a
+   8:	2029554e 	eorcs	r5, r9, lr, asr #10
+   c:	322e3031 	eorcc	r3, lr, #49	; 0x31
+  10:	Address 0x0000000000000010 is out of bounds.
+
+
+Disassembly of section .ARM.attributes:
+
+00000000 <.ARM.attributes>:
+   0:	00003241 	andeq	r3, r0, r1, asr #4
+   4:	61656100 	cmnvs	r5, r0, lsl #2
+   8:	01006962 	tsteq	r0, r2, ror #18
+   c:	00000028 	andeq	r0, r0, r8, lsr #32
+  10:	4b5a3605 	blmi	168d82c <LightSet::LightSet()+0x168d82c>
+  14:	08070600 	stmdaeq	r7, {r9, sl}
+  18:	0a010901 	beq	42424 <LightSet::LightSet()+0x42424>
+  1c:	14041202 	strne	r1, [r4], #-514	; 0xfffffdfe
+  20:	17011501 	strne	r1, [r1, -r1, lsl #10]
+  24:	19011803 	stmdbne	r1, {r0, r1, fp, ip}
+  28:	1c011a01 			; <UNDEFINED> instruction: 0x1c011a01
+  2c:	22021e01 	andcs	r1, r2, #1, 28
+  30:	Address 0x0000000000000030 is out of bounds.
+

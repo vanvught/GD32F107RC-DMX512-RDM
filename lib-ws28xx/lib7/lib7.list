@@ -1,0 +1,2292 @@
+In archive lib7/libws28xx.a:
+
+pixeltype.o:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+
+00000000 <PixelType::GetType(pixel::Type)>:
+   0:	e350000d 	cmp	r0, #13
+   4:	d59f3008 	ldrle	r3, [pc, #8]	; 14 <PixelType::GetType(pixel::Type)+0x14>
+   8:	d0830180 	addle	r0, r3, r0, lsl #3
+   c:	c59f0004 	ldrgt	r0, [pc, #4]	; 18 <PixelType::GetType(pixel::Type)+0x18>
+  10:	e12fff1e 	bx	lr
+	...
+
+0000001c <PixelType::GetType(char const*)>:
+  1c:	e59f105c 	ldr	r1, [pc, #92]	; 80 <PixelType::GetType(char const*)+0x64>
+  20:	e1a0c000 	mov	ip, r0
+  24:	e3a00000 	mov	r0, #0
+  28:	e92d4070 	push	{r4, r5, r6, lr}
+  2c:	e24c4001 	sub	r4, ip, #1
+  30:	e241e001 	sub	lr, r1, #1
+  34:	e5f43001 	ldrb	r3, [r4, #1]!
+  38:	e2432041 	sub	r2, r3, #65	; 0x41
+  3c:	e1a05003 	mov	r5, r3
+  40:	e3520019 	cmp	r2, #25
+  44:	e5fe2001 	ldrb	r2, [lr, #1]!
+  48:	92835020 	addls	r5, r3, #32
+  4c:	e2426041 	sub	r6, r2, #65	; 0x41
+  50:	e3560019 	cmp	r6, #25
+  54:	92822020 	addls	r2, r2, #32
+  58:	e1520005 	cmp	r2, r5
+  5c:	1a000002 	bne	6c <PixelType::GetType(char const*)+0x50>
+  60:	e3530000 	cmp	r3, #0
+  64:	1afffff2 	bne	34 <PixelType::GetType(char const*)+0x18>
+  68:	e8bd8070 	pop	{r4, r5, r6, pc}
+  6c:	e2800001 	add	r0, r0, #1
+  70:	e2811008 	add	r1, r1, #8
+  74:	e350000e 	cmp	r0, #14
+  78:	1affffeb 	bne	2c <PixelType::GetType(char const*)+0x10>
+  7c:	e8bd8070 	pop	{r4, r5, r6, pc}
+  80:	00000000 	andeq	r0, r0, r0
+
+00000084 <PixelType::GetMap(char const*)>:
+  84:	e59f3068 	ldr	r3, [pc, #104]	; f4 <PixelType::GetMap(char const*)+0x70>
+  88:	e1a0c000 	mov	ip, r0
+  8c:	e3a00000 	mov	r0, #0
+  90:	e92d40f0 	push	{r4, r5, r6, r7, lr}
+  94:	e243e001 	sub	lr, r3, #1
+  98:	e24c4001 	sub	r4, ip, #1
+  9c:	e2836002 	add	r6, r3, #2
+  a0:	e5fe2001 	ldrb	r2, [lr, #1]!
+  a4:	e2421041 	sub	r1, r2, #65	; 0x41
+  a8:	e1a05002 	mov	r5, r2
+  ac:	e3510019 	cmp	r1, #25
+  b0:	e5f41001 	ldrb	r1, [r4, #1]!
+  b4:	92825020 	addls	r5, r2, #32
+  b8:	e2417041 	sub	r7, r1, #65	; 0x41
+  bc:	e3570019 	cmp	r7, #25
+  c0:	92811020 	addls	r1, r1, #32
+  c4:	e1510005 	cmp	r1, r5
+  c8:	0a000004 	beq	e0 <PixelType::GetMap(char const*)+0x5c>
+  cc:	e2800001 	add	r0, r0, #1
+  d0:	e2833004 	add	r3, r3, #4
+  d4:	e3500006 	cmp	r0, #6
+  d8:	1affffed 	bne	94 <PixelType::GetMap(char const*)+0x10>
+  dc:	e8bd80f0 	pop	{r4, r5, r6, r7, pc}
+  e0:	e3520000 	cmp	r2, #0
+  e4:	08bd80f0 	popeq	{r4, r5, r6, r7, pc}
+  e8:	e15e0006 	cmp	lr, r6
+  ec:	1affffeb 	bne	a0 <PixelType::GetMap(char const*)+0x1c>
+  f0:	e8bd80f0 	pop	{r4, r5, r6, r7, pc}
+  f4:	00000070 	andeq	r0, r0, r0, ror r0
+
+000000f8 <PixelType::GetMap(pixel::Map)>:
+  f8:	e3500005 	cmp	r0, #5
+  fc:	d59f3008 	ldrle	r3, [pc, #8]	; 10c <PixelType::GetMap(pixel::Map)+0x14>
+ 100:	d0830100 	addle	r0, r3, r0, lsl #2
+ 104:	c59f0004 	ldrgt	r0, [pc, #4]	; 110 <PixelType::GetMap(pixel::Map)+0x18>
+ 108:	e12fff1e 	bx	lr
+ 10c:	00000070 	andeq	r0, r0, r0, ror r0
+ 110:	00000008 	andeq	r0, r0, r8
+
+00000114 <PixelType::ConvertTxH(unsigned char)>:
+ 114:	e35000f0 	cmp	r0, #240	; 0xf0
+ 118:	0a000011 	beq	164 <PixelType::ConvertTxH(unsigned char)+0x50>
+ 11c:	8a000007 	bhi	140 <PixelType::ConvertTxH(unsigned char)+0x2c>
+ 120:	e35000c0 	cmp	r0, #192	; 0xc0
+ 124:	0a000010 	beq	16c <PixelType::ConvertTxH(unsigned char)+0x58>
+ 128:	e35000e0 	cmp	r0, #224	; 0xe0
+ 12c:	0a000010 	beq	174 <PixelType::ConvertTxH(unsigned char)+0x60>
+ 130:	ed9f0a15 	vldr	s0, [pc, #84]	; 18c <PixelType::ConvertTxH(unsigned char)+0x78>
+ 134:	e3500080 	cmp	r0, #128	; 0x80
+ 138:	eef47a04 	vmov.f32	s15, #68	; 0x3e200000  0.1562500
+ 13c:	ea000006 	b	15c <PixelType::ConvertTxH(unsigned char)+0x48>
+ 140:	e35000fc 	cmp	r0, #252	; 0xfc
+ 144:	0a00000c 	beq	17c <PixelType::ConvertTxH(unsigned char)+0x68>
+ 148:	e35000fe 	cmp	r0, #254	; 0xfe
+ 14c:	0a00000c 	beq	184 <PixelType::ConvertTxH(unsigned char)+0x70>
+ 150:	ed9f0a0d 	vldr	s0, [pc, #52]	; 18c <PixelType::ConvertTxH(unsigned char)+0x78>
+ 154:	e35000f8 	cmp	r0, #248	; 0xf8
+ 158:	eef67a09 	vmov.f32	s15, #105	; 0x3f480000  0.7812500
+ 15c:	0eb00a67 	vmoveq.f32	s0, s15
+ 160:	e12fff1e 	bx	lr
+ 164:	eeb60a04 	vmov.f32	s0, #100	; 0x3f200000  0.625
+ 168:	e12fff1e 	bx	lr
+ 16c:	eeb50a04 	vmov.f32	s0, #84	; 0x3ea00000  0.3125000
+ 170:	e12fff1e 	bx	lr
+ 174:	eeb50a0e 	vmov.f32	s0, #94	; 0x3ef00000  0.4687500
+ 178:	e12fff1e 	bx	lr
+ 17c:	eeb60a0e 	vmov.f32	s0, #110	; 0x3f700000  0.9375000
+ 180:	e12fff1e 	bx	lr
+ 184:	ed9f0a01 	vldr	s0, [pc, #4]	; 190 <PixelType::ConvertTxH(unsigned char)+0x7c>
+ 188:	e12fff1e 	bx	lr
+ 18c:	00000000 	andeq	r0, r0, r0
+ 190:	3f8c0000 	svccc	0x008c0000
+
+00000194 <PixelType::ConvertTxH(float)>:
+ 194:	eddf7a2e 	vldr	s15, [pc, #184]	; 254 <PixelType::ConvertTxH(float)+0xc0>
+ 198:	eeb40ae7 	vcmpe.f32	s0, s15
+ 19c:	eef1fa10 	vmrs	APSR_nzcv, fpscr
+ 1a0:	4a00001d 	bmi	21c <PixelType::ConvertTxH(float)+0x88>
+ 1a4:	eef47a0e 	vmov.f32	s15, #78	; 0x3e700000  0.2343750
+ 1a8:	eeb40ae7 	vcmpe.f32	s0, s15
+ 1ac:	eef1fa10 	vmrs	APSR_nzcv, fpscr
+ 1b0:	4a00001b 	bmi	224 <PixelType::ConvertTxH(float)+0x90>
+ 1b4:	eef57a09 	vmov.f32	s15, #89	; 0x3ec80000  0.3906250
+ 1b8:	eeb40ae7 	vcmpe.f32	s0, s15
+ 1bc:	eef1fa10 	vmrs	APSR_nzcv, fpscr
+ 1c0:	4a000019 	bmi	22c <PixelType::ConvertTxH(float)+0x98>
+ 1c4:	eddf7a23 	vldr	s15, [pc, #140]	; 258 <PixelType::ConvertTxH(float)+0xc4>
+ 1c8:	eeb40ae7 	vcmpe.f32	s0, s15
+ 1cc:	eef1fa10 	vmrs	APSR_nzcv, fpscr
+ 1d0:	4a000017 	bmi	234 <PixelType::ConvertTxH(float)+0xa0>
+ 1d4:	eddf7a20 	vldr	s15, [pc, #128]	; 25c <PixelType::ConvertTxH(float)+0xc8>
+ 1d8:	eeb40ae7 	vcmpe.f32	s0, s15
+ 1dc:	eef1fa10 	vmrs	APSR_nzcv, fpscr
+ 1e0:	4a000015 	bmi	23c <PixelType::ConvertTxH(float)+0xa8>
+ 1e4:	eddf7a1d 	vldr	s15, [pc, #116]	; 260 <PixelType::ConvertTxH(float)+0xcc>
+ 1e8:	eeb40ae7 	vcmpe.f32	s0, s15
+ 1ec:	eef1fa10 	vmrs	APSR_nzcv, fpscr
+ 1f0:	4a000013 	bmi	244 <PixelType::ConvertTxH(float)+0xb0>
+ 1f4:	eddf7a1a 	vldr	s15, [pc, #104]	; 264 <PixelType::ConvertTxH(float)+0xd0>
+ 1f8:	eeb40ae7 	vcmpe.f32	s0, s15
+ 1fc:	eef1fa10 	vmrs	APSR_nzcv, fpscr
+ 200:	4a000011 	bmi	24c <PixelType::ConvertTxH(float)+0xb8>
+ 204:	eddf7a17 	vldr	s15, [pc, #92]	; 268 <PixelType::ConvertTxH(float)+0xd4>
+ 208:	eeb40ae7 	vcmpe.f32	s0, s15
+ 20c:	eef1fa10 	vmrs	APSR_nzcv, fpscr
+ 210:	43a000fe 	movmi	r0, #254	; 0xfe
+ 214:	53a00000 	movpl	r0, #0
+ 218:	e12fff1e 	bx	lr
+ 21c:	e3a00000 	mov	r0, #0
+ 220:	e12fff1e 	bx	lr
+ 224:	e3a00080 	mov	r0, #128	; 0x80
+ 228:	e12fff1e 	bx	lr
+ 22c:	e3a000c0 	mov	r0, #192	; 0xc0
+ 230:	e12fff1e 	bx	lr
+ 234:	e3a000e0 	mov	r0, #224	; 0xe0
+ 238:	e12fff1e 	bx	lr
+ 23c:	e3a000f0 	mov	r0, #240	; 0xf0
+ 240:	e12fff1e 	bx	lr
+ 244:	e3a000f8 	mov	r0, #248	; 0xf8
+ 248:	e12fff1e 	bx	lr
+ 24c:	e3a000fc 	mov	r0, #252	; 0xfc
+ 250:	e12fff1e 	bx	lr
+ 254:	3da00000 	stccc	0, cr0, [r0]
+ 258:	3f0c0000 	svccc	0x000c0000
+ 25c:	3f340000 	svccc	0x00340000
+ 260:	3f5c0000 	svccc	0x005c0000
+ 264:	3f820000 	svccc	0x00820000
+ 268:	3f960000 	svccc	0x00960000
+
+Disassembly of section .rodata.str1.1:
+
+00000000 <.rodata.str1.1>:
+   0:	6e6b6e55 	mcrvs	14, 3, r6, cr11, cr5, {2}
+   4:	006e776f 	rsbeq	r7, lr, pc, ror #14
+   8:	65646e55 	strbvs	r6, [r4, #-3669]!	; 0xfffff1ab
+   c:	656e6966 	strbvs	r6, [lr, #-2406]!	; 0xfffff69a
+  10:	Address 0x0000000000000010 is out of bounds.
+
+
+Disassembly of section .rodata:
+
+00000000 <PixelType::TYPES>:
+   0:	38325357 	ldmdacc	r2!, {r0, r1, r2, r4, r6, r8, r9, ip, lr}
+   4:	00003130 	andeq	r3, r0, r0, lsr r1
+   8:	38325357 	ldmdacc	r2!, {r0, r1, r2, r4, r6, r8, r9, ip, lr}
+   c:	00003131 	andeq	r3, r0, r1, lsr r1
+  10:	38325357 	ldmdacc	r2!, {r0, r1, r2, r4, r6, r8, r9, ip, lr}
+  14:	00003231 	andeq	r3, r0, r1, lsr r2
+  18:	38325357 	ldmdacc	r2!, {r0, r1, r2, r4, r6, r8, r9, ip, lr}
+  1c:	00423231 	subeq	r3, r2, r1, lsr r2
+  20:	38325357 	ldmdacc	r2!, {r0, r1, r2, r4, r6, r8, r9, ip, lr}
+  24:	00003331 	andeq	r3, r0, r1, lsr r3
+  28:	38325357 	ldmdacc	r2!, {r0, r1, r2, r4, r6, r8, r9, ip, lr}
+  2c:	00003531 	andeq	r3, r0, r1, lsr r5
+  30:	38364b53 	ldmdacc	r6!, {r0, r1, r4, r6, r8, r9, fp, lr}
+  34:	00003231 	andeq	r3, r0, r1, lsr r2
+  38:	38364b53 	ldmdacc	r6!, {r0, r1, r4, r6, r8, r9, fp, lr}
+  3c:	00573231 	subseq	r3, r7, r1, lsr r2
+  40:	31534355 	cmpcc	r3, r5, asr r3
+  44:	00333039 	eorseq	r3, r3, r9, lsr r0
+  48:	32534355 	subscc	r4, r3, #1409286145	; 0x54000001
+  4c:	00333039 	eorseq	r3, r3, r9, lsr r0
+  50:	38385343 	ldmdacc	r8!, {r0, r1, r6, r8, r9, ip, lr}
+  54:	00003231 	andeq	r3, r0, r1, lsr r2
+  58:	31415041 	cmpcc	r1, r1, asr #32
+  5c:	00003230 	andeq	r3, r0, r0, lsr r2
+  60:	38394b53 	ldmdacc	r9!, {r0, r1, r4, r6, r8, r9, fp, lr}
+  64:	00003232 	andeq	r3, r0, r2, lsr r2
+  68:	31383950 	teqcc	r8, r0, asr r9
+  6c:	00000033 	andeq	r0, r0, r3, lsr r0
+
+00000070 <PixelType::MAPS>:
+  70:	00424752 	subeq	r4, r2, r2, asr r7
+  74:	00474252 	subeq	r4, r7, r2, asr r2
+  78:	00425247 	subeq	r5, r2, r7, asr #4
+  7c:	00524247 	subseq	r4, r2, r7, asr #4
+  80:	00475242 	subeq	r5, r7, r2, asr #4
+  84:	00524742 	subseq	r4, r2, r2, asr #14
+
+Disassembly of section .comment:
+
+00000000 <.comment>:
+   0:	43434700 	movtmi	r4, #14080	; 0x3700
+   4:	4728203a 			; <UNDEFINED> instruction: 0x4728203a
+   8:	2029554e 	eorcs	r5, r9, lr, asr #10
+   c:	322e3031 	eorcc	r3, lr, #49	; 0x31
+  10:	Address 0x0000000000000010 is out of bounds.
+
+
+Disassembly of section .ARM.attributes:
+
+00000000 <.ARM.attributes>:
+   0:	00003441 	andeq	r3, r0, r1, asr #8
+   4:	61656100 	cmnvs	r5, r0, lsl #2
+   8:	01006962 	tsteq	r0, r2, ror #18
+   c:	0000002a 	andeq	r0, r0, sl, lsr #32
+  10:	412d3705 			; <UNDEFINED> instruction: 0x412d3705
+  14:	070a0600 	streq	r0, [sl, -r0, lsl #12]
+  18:	09010841 	stmdbeq	r1, {r0, r6, fp}
+  1c:	0c050a02 			; <UNDEFINED> instruction: 0x0c050a02
+  20:	14041202 	strne	r1, [r4], #-514	; 0xfffffdfe
+  24:	17011501 	strne	r1, [r1, -r1, lsl #10]
+  28:	19011803 	stmdbne	r1, {r0, r1, fp, ip}
+  2c:	1c011a01 			; <UNDEFINED> instruction: 0x1c011a01
+  30:	22021e01 	andcs	r1, r2, #1, 28
+  34:	Address 0x0000000000000034 is out of bounds.
+
+
+pixelpatterns.o:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+
+00000000 <PixelPatterns::PixelPatterns(unsigned int)>:
+   0:	e3003000 	movw	r3, #0
+   4:	e3510001 	cmp	r1, #1
+   8:	e3403000 	movt	r3, #0
+   c:	23a01001 	movcs	r1, #1
+  10:	e92d4070 	push	{r4, r5, r6, lr}
+  14:	e3a05000 	mov	r5, #0
+  18:	e5933000 	ldr	r3, [r3]
+  1c:	e1a04000 	mov	r4, r0
+  20:	e580502c 	str	r5, [r0, #44]	; 0x2c
+  24:	e5932004 	ldr	r2, [r3, #4]
+  28:	e5803000 	str	r3, [r0]
+  2c:	e9800006 	stmib	r0, {r1, r2}
+  30:	ebfffffe 	bl	0 <millis>
+  34:	e584000c 	str	r0, [r4, #12]
+  38:	e1a00004 	mov	r0, r4
+  3c:	e5845028 	str	r5, [r4, #40]	; 0x28
+  40:	e5845024 	str	r5, [r4, #36]	; 0x24
+  44:	e8bd8070 	pop	{r4, r5, r6, pc}
+
+00000048 <PixelPatterns::GetName(pixelpatterns::Pattern)>:
+  48:	e3500005 	cmp	r0, #5
+  4c:	d3003000 	movwle	r3, #0
+  50:	d3a0200e 	movle	r2, #14
+  54:	d3403000 	movtle	r3, #0
+  58:	d0203092 	mlale	r0, r2, r0, r3
+  5c:	c3000000 	movwgt	r0, #0
+  60:	c3400000 	movtgt	r0, #0
+  64:	e12fff1e 	bx	lr
+
+00000068 <PixelPatterns::RainbowCycle(unsigned int, unsigned int, pixelpatterns::Direction)>:
+  68:	e0801281 	add	r1, r0, r1, lsl #5
+  6c:	e3a00001 	mov	r0, #1
+  70:	e5810028 	str	r0, [r1, #40]	; 0x28
+  74:	e3a000ff 	mov	r0, #255	; 0xff
+  78:	e5812010 	str	r2, [r1, #16]
+  7c:	e3a02000 	mov	r2, #0
+  80:	e581001c 	str	r0, [r1, #28]
+  84:	e1c122f0 	strd	r2, [r1, #32]
+  88:	e12fff1e 	bx	lr
+
+0000008c <PixelPatterns::TheaterChase(unsigned int, unsigned int, unsigned int, unsigned int, pixelpatterns::Direction)>:
+  8c:	e52de004 	push	{lr}		; (str lr, [sp, #-4]!)
+  90:	e0801281 	add	r1, r0, r1, lsl #5
+  94:	e59de004 	ldr	lr, [sp, #4]
+  98:	e59dc008 	ldr	ip, [sp, #8]
+  9c:	e581e010 	str	lr, [r1, #16]
+  a0:	e3a0e002 	mov	lr, #2
+  a4:	e581e028 	str	lr, [r1, #40]	; 0x28
+  a8:	e5900008 	ldr	r0, [r0, #8]
+  ac:	e5812014 	str	r2, [r1, #20]
+  b0:	e3a02000 	mov	r2, #0
+  b4:	e581001c 	str	r0, [r1, #28]
+  b8:	e5813018 	str	r3, [r1, #24]
+  bc:	e5812020 	str	r2, [r1, #32]
+  c0:	e581c024 	str	ip, [r1, #36]	; 0x24
+  c4:	e49df004 	pop	{pc}		; (ldr pc, [sp], #4)
+
+000000c8 <PixelPatterns::ColourWipe(unsigned int, unsigned int, unsigned int, pixelpatterns::Direction)>:
+  c8:	e0801281 	add	r1, r0, r1, lsl #5
+  cc:	e52de004 	push	{lr}		; (str lr, [sp, #-4]!)
+  d0:	e3a0e000 	mov	lr, #0
+  d4:	e5813010 	str	r3, [r1, #16]
+  d8:	e3a03003 	mov	r3, #3
+  dc:	e59dc004 	ldr	ip, [sp, #4]
+  e0:	e5813028 	str	r3, [r1, #40]	; 0x28
+  e4:	e5903008 	ldr	r3, [r0, #8]
+  e8:	e5812014 	str	r2, [r1, #20]
+  ec:	e581e020 	str	lr, [r1, #32]
+  f0:	e581301c 	str	r3, [r1, #28]
+  f4:	e581c024 	str	ip, [r1, #36]	; 0x24
+  f8:	e49df004 	pop	{pc}		; (ldr pc, [sp], #4)
+
+000000fc <PixelPatterns::Scanner(unsigned int, unsigned int, unsigned int)>:
+  fc:	e92d4070 	push	{r4, r5, r6, lr}
+ 100:	e1a04000 	mov	r4, r0
+ 104:	e080e281 	add	lr, r0, r1, lsl #5
+ 108:	e3a05004 	mov	r5, #4
+ 10c:	e594c02c 	ldr	ip, [r4, #44]	; 0x2c
+ 110:	e5900008 	ldr	r0, [r0, #8]
+ 114:	e58e3010 	str	r3, [lr, #16]
+ 118:	e35c0000 	cmp	ip, #0
+ 11c:	e58e5028 	str	r5, [lr, #40]	; 0x28
+ 120:	e240c001 	sub	ip, r0, #1
+ 124:	e58e2014 	str	r2, [lr, #20]
+ 128:	e3a03000 	mov	r3, #0
+ 12c:	e1a0c08c 	lsl	ip, ip, #1
+ 130:	e58e3020 	str	r3, [lr, #32]
+ 134:	e6ffc07c 	uxth	ip, ip
+ 138:	e58ec01c 	str	ip, [lr, #28]
+ 13c:	18bd8070 	popne	{r4, r5, r6, pc}
+ 140:	e370022e 	cmn	r0, #-536870910	; 0xe0000002
+ 144:	91a00100 	lslls	r0, r0, #2
+ 148:	83e00000 	mvnhi	r0, #0
+ 14c:	ebfffffe 	bl	0 <operator new[](unsigned int)>
+ 150:	e5941008 	ldr	r1, [r4, #8]
+ 154:	e584002c 	str	r0, [r4, #44]	; 0x2c
+ 158:	e3510000 	cmp	r1, #0
+ 15c:	08bd8070 	popeq	{r4, r5, r6, pc}
+ 160:	e3510008 	cmp	r1, #8
+ 164:	9a000019 	bls	1d0 <PixelPatterns::Scanner(unsigned int, unsigned int, unsigned int)+0xd4>
+ 168:	e2413009 	sub	r3, r1, #9
+ 16c:	e3a0e000 	mov	lr, #0
+ 170:	e3c33007 	bic	r3, r3, #7
+ 174:	e2802088 	add	r2, r0, #136	; 0x88
+ 178:	e2833008 	add	r3, r3, #8
+ 17c:	e1a0c00e 	mov	ip, lr
+ 180:	f5d2f000 	pld	[r2]
+ 184:	e28ee008 	add	lr, lr, #8
+ 188:	e15e0003 	cmp	lr, r3
+ 18c:	e2822020 	add	r2, r2, #32
+ 190:	e502c0a8 	str	ip, [r2, #-168]	; 0xffffff58
+ 194:	e502c0a4 	str	ip, [r2, #-164]	; 0xffffff5c
+ 198:	e502c0a0 	str	ip, [r2, #-160]	; 0xffffff60
+ 19c:	e502c09c 	str	ip, [r2, #-156]	; 0xffffff64
+ 1a0:	e502c098 	str	ip, [r2, #-152]	; 0xffffff68
+ 1a4:	e502c094 	str	ip, [r2, #-148]	; 0xffffff6c
+ 1a8:	e502c090 	str	ip, [r2, #-144]	; 0xffffff70
+ 1ac:	e502c08c 	str	ip, [r2, #-140]	; 0xffffff74
+ 1b0:	1afffff2 	bne	180 <PixelPatterns::Scanner(unsigned int, unsigned int, unsigned int)+0x84>
+ 1b4:	e0802103 	add	r2, r0, r3, lsl #2
+ 1b8:	e3a00000 	mov	r0, #0
+ 1bc:	e4820004 	str	r0, [r2], #4
+ 1c0:	e2833001 	add	r3, r3, #1
+ 1c4:	e1510003 	cmp	r1, r3
+ 1c8:	8afffffb 	bhi	1bc <PixelPatterns::Scanner(unsigned int, unsigned int, unsigned int)+0xc0>
+ 1cc:	e8bd8070 	pop	{r4, r5, r6, pc}
+ 1d0:	e3a03000 	mov	r3, #0
+ 1d4:	eafffff6 	b	1b4 <PixelPatterns::Scanner(unsigned int, unsigned int, unsigned int)+0xb8>
+
+000001d8 <PixelPatterns::Fade(unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, pixelpatterns::Direction)>:
+ 1d8:	e0801281 	add	r1, r0, r1, lsl #5
+ 1dc:	e52de004 	push	{lr}		; (str lr, [sp, #-4]!)
+ 1e0:	e5812014 	str	r2, [r1, #20]
+ 1e4:	e3a02000 	mov	r2, #0
+ 1e8:	e99d5000 	ldmib	sp, {ip, lr}
+ 1ec:	e5813018 	str	r3, [r1, #24]
+ 1f0:	e59d300c 	ldr	r3, [sp, #12]
+ 1f4:	e5812020 	str	r2, [r1, #32]
+ 1f8:	e3a02005 	mov	r2, #5
+ 1fc:	e581e010 	str	lr, [r1, #16]
+ 200:	e581c01c 	str	ip, [r1, #28]
+ 204:	e5812028 	str	r2, [r1, #40]	; 0x28
+ 208:	e5813024 	str	r3, [r1, #36]	; 0x24
+ 20c:	e49df004 	pop	{pc}		; (ldr pc, [sp], #4)
+
+00000210 <PixelPatterns::Wheel(unsigned char)>:
+ 210:	e1e01001 	mvn	r1, r1
+ 214:	e6ef1071 	uxtb	r1, r1
+ 218:	e3510054 	cmp	r1, #84	; 0x54
+ 21c:	8a000008 	bhi	244 <PixelPatterns::Wheel(unsigned char)+0x34>
+ 220:	e1a03101 	lsl	r3, r1, #2
+ 224:	e1a00081 	lsl	r0, r1, #1
+ 228:	e0413003 	sub	r3, r1, r3
+ 22c:	e0810000 	add	r0, r1, r0
+ 230:	e2431001 	sub	r1, r3, #1
+ 234:	e6ef1071 	uxtb	r1, r1
+ 238:	e6ef0070 	uxtb	r0, r0
+ 23c:	e1800801 	orr	r0, r0, r1, lsl #16
+ 240:	e12fff1e 	bx	lr
+ 244:	e35100a9 	cmp	r1, #169	; 0xa9
+ 248:	8a00000a 	bhi	278 <PixelPatterns::Wheel(unsigned char)+0x68>
+ 24c:	e2411055 	sub	r1, r1, #85	; 0x55
+ 250:	e6ef1071 	uxtb	r1, r1
+ 254:	e1a03081 	lsl	r3, r1, #1
+ 258:	e1a00101 	lsl	r0, r1, #2
+ 25c:	e0813003 	add	r3, r1, r3
+ 260:	e0410000 	sub	r0, r1, r0
+ 264:	e6ef1073 	uxtb	r1, r3
+ 268:	e2400001 	sub	r0, r0, #1
+ 26c:	e6ef0070 	uxtb	r0, r0
+ 270:	e1800401 	orr	r0, r0, r1, lsl #8
+ 274:	e12fff1e 	bx	lr
+ 278:	e2811056 	add	r1, r1, #86	; 0x56
+ 27c:	e6ef1071 	uxtb	r1, r1
+ 280:	e1a03101 	lsl	r3, r1, #2
+ 284:	e1a00081 	lsl	r0, r1, #1
+ 288:	e0413003 	sub	r3, r1, r3
+ 28c:	e0810000 	add	r0, r1, r0
+ 290:	e2431001 	sub	r1, r3, #1
+ 294:	e6ef0070 	uxtb	r0, r0
+ 298:	e6ef1071 	uxtb	r1, r1
+ 29c:	e1a00800 	lsl	r0, r0, #16
+ 2a0:	e1800401 	orr	r0, r0, r1, lsl #8
+ 2a4:	e12fff1e 	bx	lr
+
+000002a8 <PixelPatterns::Increment(unsigned int)>:
+ 2a8:	e52de004 	push	{lr}		; (str lr, [sp, #-4]!)
+ 2ac:	e1a0e281 	lsl	lr, r1, #5
+ 2b0:	e0801281 	add	r1, r0, r1, lsl #5
+ 2b4:	e1a0c001 	mov	ip, r1
+ 2b8:	e5912024 	ldr	r2, [r1, #36]	; 0x24
+ 2bc:	e5913020 	ldr	r3, [r1, #32]
+ 2c0:	e3520000 	cmp	r2, #0
+ 2c4:	1a000005 	bne	2e0 <PixelPatterns::Increment(unsigned int)+0x38>
+ 2c8:	e591101c 	ldr	r1, [r1, #28]
+ 2cc:	e2833001 	add	r3, r3, #1
+ 2d0:	e1530001 	cmp	r3, r1
+ 2d4:	11a02003 	movne	r2, r3
+ 2d8:	e58c2020 	str	r2, [ip, #32]
+ 2dc:	e49df004 	pop	{pc}		; (ldr pc, [sp], #4)
+ 2e0:	e3530000 	cmp	r3, #0
+ 2e4:	0a000003 	beq	2f8 <PixelPatterns::Increment(unsigned int)+0x50>
+ 2e8:	e2433001 	sub	r3, r3, #1
+ 2ec:	e5813020 	str	r3, [r1, #32]
+ 2f0:	e3530000 	cmp	r3, #0
+ 2f4:	149df004 	popne	{pc}		; (ldrne pc, [sp], #4)
+ 2f8:	e080000e 	add	r0, r0, lr
+ 2fc:	e590301c 	ldr	r3, [r0, #28]
+ 300:	e2433001 	sub	r3, r3, #1
+ 304:	e6ff3073 	uxth	r3, r3
+ 308:	e5803020 	str	r3, [r0, #32]
+ 30c:	e49df004 	pop	{pc}		; (ldr pc, [sp], #4)
+
+00000310 <PixelPatterns::RainbowCycleUpdate(unsigned int)>:
+ 310:	e92d41f0 	push	{r4, r5, r6, r7, r8, lr}
+ 314:	e1a08001 	mov	r8, r1
+ 318:	e5901008 	ldr	r1, [r0, #8]
+ 31c:	e24dd008 	sub	sp, sp, #8
+ 320:	e0803288 	add	r3, r0, r8, lsl #5
+ 324:	e1a05000 	mov	r5, r0
+ 328:	e3510000 	cmp	r1, #0
+ 32c:	e5937020 	ldr	r7, [r3, #32]
+ 330:	13a04000 	movne	r4, #0
+ 334:	11a06004 	movne	r6, r4
+ 338:	16ef7077 	uxtbne	r7, r7
+ 33c:	0a000013 	beq	390 <PixelPatterns::RainbowCycleUpdate(unsigned int)+0x80>
+ 340:	e1a00406 	lsl	r0, r6, #8
+ 344:	e2844001 	add	r4, r4, #1
+ 348:	e6ff4074 	uxth	r4, r4
+ 34c:	ebfffffe 	bl	0 <__aeabi_uidiv>
+ 350:	e0871000 	add	r1, r7, r0
+ 354:	e1a00005 	mov	r0, r5
+ 358:	e6ef1071 	uxtb	r1, r1
+ 35c:	ebfffffe 	bl	210 <PixelPatterns::Wheel(unsigned char)>
+ 360:	e1a02000 	mov	r2, r0
+ 364:	e1a01006 	mov	r1, r6
+ 368:	e5950000 	ldr	r0, [r5]
+ 36c:	e6efc072 	uxtb	ip, r2
+ 370:	e7e73452 	ubfx	r3, r2, #8, #8
+ 374:	e1a06004 	mov	r6, r4
+ 378:	e7e72852 	ubfx	r2, r2, #16, #8
+ 37c:	e58dc000 	str	ip, [sp]
+ 380:	ebfffffe 	bl	0 <WS28xx::SetPixel(unsigned int, unsigned char, unsigned char, unsigned char)>
+ 384:	e5951008 	ldr	r1, [r5, #8]
+ 388:	e1540001 	cmp	r4, r1
+ 38c:	3affffeb 	bcc	340 <PixelPatterns::RainbowCycleUpdate(unsigned int)+0x30>
+ 390:	e1a01008 	mov	r1, r8
+ 394:	e1a00005 	mov	r0, r5
+ 398:	e28dd008 	add	sp, sp, #8
+ 39c:	e8bd41f0 	pop	{r4, r5, r6, r7, r8, lr}
+ 3a0:	eafffffe 	b	2a8 <PixelPatterns::Increment(unsigned int)>
+
+000003a4 <PixelPatterns::TheaterChaseUpdate(unsigned int)>:
+ 3a4:	e0803281 	add	r3, r0, r1, lsl #5
+ 3a8:	e92d4ff0 	push	{r4, r5, r6, r7, r8, r9, sl, fp, lr}
+ 3ac:	e24dd01c 	sub	sp, sp, #28
+ 3b0:	e5936014 	ldr	r6, [r3, #20]
+ 3b4:	e1a05000 	mov	r5, r0
+ 3b8:	e5932018 	ldr	r2, [r3, #24]
+ 3bc:	e5939020 	ldr	r9, [r3, #32]
+ 3c0:	e5903008 	ldr	r3, [r0, #8]
+ 3c4:	e58d1014 	str	r1, [sp, #20]
+ 3c8:	e3530000 	cmp	r3, #0
+ 3cc:	0a000020 	beq	454 <PixelPatterns::TheaterChaseUpdate(unsigned int)+0xb0>
+ 3d0:	e7e73852 	ubfx	r3, r2, #16, #8
+ 3d4:	e3a04000 	mov	r4, #0
+ 3d8:	e58d300c 	str	r3, [sp, #12]
+ 3dc:	e30a8aab 	movw	r8, #43691	; 0xaaab
+ 3e0:	e7e7b452 	ubfx	fp, r2, #8, #8
+ 3e4:	e3057555 	movw	r7, #21845	; 0x5555
+ 3e8:	e7e7a856 	ubfx	sl, r6, #16, #8
+ 3ec:	e6ef3072 	uxtb	r3, r2
+ 3f0:	e34a8aaa 	movt	r8, #43690	; 0xaaaa
+ 3f4:	e1a01004 	mov	r1, r4
+ 3f8:	e3457555 	movt	r7, #21845	; 0x5555
+ 3fc:	e58d3010 	str	r3, [sp, #16]
+ 400:	e7e73456 	ubfx	r3, r6, #8, #8
+ 404:	e58d3008 	str	r3, [sp, #8]
+ 408:	e0893001 	add	r3, r9, r1
+ 40c:	e1a0200a 	mov	r2, sl
+ 410:	e0030398 	mul	r3, r8, r3
+ 414:	e5950000 	ldr	r0, [r5]
+ 418:	e6efc076 	uxtb	ip, r6
+ 41c:	e1530007 	cmp	r3, r7
+ 420:	e1a0300b 	mov	r3, fp
+ 424:	958dc000 	strls	ip, [sp]
+ 428:	e2844001 	add	r4, r4, #1
+ 42c:	859d2010 	ldrhi	r2, [sp, #16]
+ 430:	e6ff4074 	uxth	r4, r4
+ 434:	959d3008 	ldrls	r3, [sp, #8]
+ 438:	858d2000 	strhi	r2, [sp]
+ 43c:	859d200c 	ldrhi	r2, [sp, #12]
+ 440:	ebfffffe 	bl	0 <WS28xx::SetPixel(unsigned int, unsigned char, unsigned char, unsigned char)>
+ 444:	e5953008 	ldr	r3, [r5, #8]
+ 448:	e1a01004 	mov	r1, r4
+ 44c:	e1540003 	cmp	r4, r3
+ 450:	3affffec 	bcc	408 <PixelPatterns::TheaterChaseUpdate(unsigned int)+0x64>
+ 454:	e59d1014 	ldr	r1, [sp, #20]
+ 458:	e1a00005 	mov	r0, r5
+ 45c:	e28dd01c 	add	sp, sp, #28
+ 460:	e8bd4ff0 	pop	{r4, r5, r6, r7, r8, r9, sl, fp, lr}
+ 464:	eafffffe 	b	2a8 <PixelPatterns::Increment(unsigned int)>
+
+00000468 <PixelPatterns::ColourWipeUpdate(unsigned int)>:
+ 468:	e0803281 	add	r3, r0, r1, lsl #5
+ 46c:	e92d4030 	push	{r4, r5, lr}
+ 470:	e24dd00c 	sub	sp, sp, #12
+ 474:	e5932014 	ldr	r2, [r3, #20]
+ 478:	e1a05001 	mov	r5, r1
+ 47c:	e5931020 	ldr	r1, [r3, #32]
+ 480:	e1a04000 	mov	r4, r0
+ 484:	e7e73452 	ubfx	r3, r2, #8, #8
+ 488:	e6efc072 	uxtb	ip, r2
+ 48c:	e5900000 	ldr	r0, [r0]
+ 490:	e7e72852 	ubfx	r2, r2, #16, #8
+ 494:	e58dc000 	str	ip, [sp]
+ 498:	ebfffffe 	bl	0 <WS28xx::SetPixel(unsigned int, unsigned char, unsigned char, unsigned char)>
+ 49c:	e1a01005 	mov	r1, r5
+ 4a0:	e1a00004 	mov	r0, r4
+ 4a4:	e28dd00c 	add	sp, sp, #12
+ 4a8:	e8bd4030 	pop	{r4, r5, lr}
+ 4ac:	eafffffe 	b	2a8 <PixelPatterns::Increment(unsigned int)>
+
+000004b0 <PixelPatterns::ScannerUpdate(unsigned int)>:
+ 4b0:	e0803281 	add	r3, r0, r1, lsl #5
+ 4b4:	e92d4ff0 	push	{r4, r5, r6, r7, r8, r9, sl, fp, lr}
+ 4b8:	e24dd01c 	sub	sp, sp, #28
+ 4bc:	e5932014 	ldr	r2, [r3, #20]
+ 4c0:	e1a06000 	mov	r6, r0
+ 4c4:	e593901c 	ldr	r9, [r3, #28]
+ 4c8:	e5938020 	ldr	r8, [r3, #32]
+ 4cc:	e5903008 	ldr	r3, [r0, #8]
+ 4d0:	e58d1014 	str	r1, [sp, #20]
+ 4d4:	e58d200c 	str	r2, [sp, #12]
+ 4d8:	e3530000 	cmp	r3, #0
+ 4dc:	0a000038 	beq	5c4 <PixelPatterns::ScannerUpdate(unsigned int)+0x114>
+ 4e0:	e59d300c 	ldr	r3, [sp, #12]
+ 4e4:	e3a04000 	mov	r4, #0
+ 4e8:	e0499008 	sub	r9, r9, r8
+ 4ec:	e1a05004 	mov	r5, r4
+ 4f0:	e7e7b853 	ubfx	fp, r3, #16, #8
+ 4f4:	e7e7a453 	ubfx	sl, r3, #8, #8
+ 4f8:	e6ef3073 	uxtb	r3, r3
+ 4fc:	e58d3010 	str	r3, [sp, #16]
+ 500:	ea000013 	b	554 <PixelPatterns::ScannerUpdate(unsigned int)+0xa4>
+ 504:	e596302c 	ldr	r3, [r6, #44]	; 0x2c
+ 508:	e7935007 	ldr	r5, [r3, r7]
+ 50c:	e7e624d5 	ubfx	r2, r5, #9, #7
+ 510:	e7e638d5 	ubfx	r3, r5, #17, #7
+ 514:	e1a02402 	lsl	r2, r2, #8
+ 518:	e1822803 	orr	r2, r2, r3, lsl #16
+ 51c:	e7e650d5 	ubfx	r5, r5, #1, #7
+ 520:	e7e63452 	ubfx	r3, r2, #8, #7
+ 524:	e58d5000 	str	r5, [sp]
+ 528:	e1825005 	orr	r5, r2, r5
+ 52c:	e1a02822 	lsr	r2, r2, #16
+ 530:	ebfffffe 	bl	0 <WS28xx::SetPixel(unsigned int, unsigned char, unsigned char, unsigned char)>
+ 534:	e596302c 	ldr	r3, [r6, #44]	; 0x2c
+ 538:	e7835007 	str	r5, [r3, r7]
+ 53c:	e5963008 	ldr	r3, [r6, #8]
+ 540:	e2844001 	add	r4, r4, #1
+ 544:	e6ff4074 	uxth	r4, r4
+ 548:	e1540003 	cmp	r4, r3
+ 54c:	e1a05004 	mov	r5, r4
+ 550:	2a00001b 	bcs	5c4 <PixelPatterns::ScannerUpdate(unsigned int)+0x114>
+ 554:	e596c000 	ldr	ip, [r6]
+ 558:	e1580005 	cmp	r8, r5
+ 55c:	e1a07105 	lsl	r7, r5, #2
+ 560:	e1a0000c 	mov	r0, ip
+ 564:	0a00000c 	beq	59c <PixelPatterns::ScannerUpdate(unsigned int)+0xec>
+ 568:	e1590005 	cmp	r9, r5
+ 56c:	e1a01005 	mov	r1, r5
+ 570:	1affffe3 	bne	504 <PixelPatterns::ScannerUpdate(unsigned int)+0x54>
+ 574:	e59d3010 	ldr	r3, [sp, #16]
+ 578:	e1a0200b 	mov	r2, fp
+ 57c:	e1a01009 	mov	r1, r9
+ 580:	e58d3000 	str	r3, [sp]
+ 584:	e1a0300a 	mov	r3, sl
+ 588:	ebfffffe 	bl	0 <WS28xx::SetPixel(unsigned int, unsigned char, unsigned char, unsigned char)>
+ 58c:	e596302c 	ldr	r3, [r6, #44]	; 0x2c
+ 590:	e59d200c 	ldr	r2, [sp, #12]
+ 594:	e7832007 	str	r2, [r3, r7]
+ 598:	eaffffe7 	b	53c <PixelPatterns::ScannerUpdate(unsigned int)+0x8c>
+ 59c:	e59d3010 	ldr	r3, [sp, #16]
+ 5a0:	e1a0200b 	mov	r2, fp
+ 5a4:	e1a01008 	mov	r1, r8
+ 5a8:	e58d3000 	str	r3, [sp]
+ 5ac:	e1a0300a 	mov	r3, sl
+ 5b0:	ebfffffe 	bl	0 <WS28xx::SetPixel(unsigned int, unsigned char, unsigned char, unsigned char)>
+ 5b4:	e596302c 	ldr	r3, [r6, #44]	; 0x2c
+ 5b8:	e59d200c 	ldr	r2, [sp, #12]
+ 5bc:	e7832105 	str	r2, [r3, r5, lsl #2]
+ 5c0:	eaffffdd 	b	53c <PixelPatterns::ScannerUpdate(unsigned int)+0x8c>
+ 5c4:	e59d1014 	ldr	r1, [sp, #20]
+ 5c8:	e1a00006 	mov	r0, r6
+ 5cc:	e28dd01c 	add	sp, sp, #28
+ 5d0:	e8bd4ff0 	pop	{r4, r5, r6, r7, r8, r9, sl, fp, lr}
+ 5d4:	eafffffe 	b	2a8 <PixelPatterns::Increment(unsigned int)>
+
+000005d8 <PixelPatterns::FadeUpdate(unsigned int)>:
+ 5d8:	e0803281 	add	r3, r0, r1, lsl #5
+ 5dc:	e92d4ff0 	push	{r4, r5, r6, r7, r8, r9, sl, fp, lr}
+ 5e0:	e1a05000 	mov	r5, r0
+ 5e4:	e5934018 	ldr	r4, [r3, #24]
+ 5e8:	e24dd00c 	sub	sp, sp, #12
+ 5ec:	e593901c 	ldr	r9, [r3, #28]
+ 5f0:	e1a07001 	mov	r7, r1
+ 5f4:	e593b020 	ldr	fp, [r3, #32]
+ 5f8:	e5938014 	ldr	r8, [r3, #20]
+ 5fc:	e1a01009 	mov	r1, r9
+ 600:	e7e73454 	ubfx	r3, r4, #8, #8
+ 604:	e003039b 	mul	r3, fp, r3
+ 608:	e049a00b 	sub	sl, r9, fp
+ 60c:	e7e70458 	ubfx	r0, r8, #8, #8
+ 610:	e020309a 	mla	r0, sl, r0, r3
+ 614:	ebfffffe 	bl	0 <__aeabi_uidiv>
+ 618:	e7e73854 	ubfx	r3, r4, #16, #8
+ 61c:	e1a01009 	mov	r1, r9
+ 620:	e003039b 	mul	r3, fp, r3
+ 624:	e1a06400 	lsl	r6, r0, #8
+ 628:	e6ef4074 	uxtb	r4, r4
+ 62c:	e7e70858 	ubfx	r0, r8, #16, #8
+ 630:	e6ff6076 	uxth	r6, r6
+ 634:	e020309a 	mla	r0, sl, r0, r3
+ 638:	ebfffffe 	bl	0 <__aeabi_uidiv>
+ 63c:	e1a03800 	lsl	r3, r0, #16
+ 640:	e6ef0078 	uxtb	r0, r8
+ 644:	e004049b 	mul	r4, fp, r4
+ 648:	e20338ff 	and	r3, r3, #16711680	; 0xff0000
+ 64c:	e1a01009 	mov	r1, r9
+ 650:	e020409a 	mla	r0, sl, r0, r4
+ 654:	e1866003 	orr	r6, r6, r3
+ 658:	ebfffffe 	bl	0 <__aeabi_uidiv>
+ 65c:	e5953008 	ldr	r3, [r5, #8]
+ 660:	e6ef0070 	uxtb	r0, r0
+ 664:	e1866000 	orr	r6, r6, r0
+ 668:	e3530000 	cmp	r3, #0
+ 66c:	0a00000d 	beq	6a8 <PixelPatterns::FadeUpdate(unsigned int)+0xd0>
+ 670:	e1a09826 	lsr	r9, r6, #16
+ 674:	e3a04000 	mov	r4, #0
+ 678:	e7e78456 	ubfx	r8, r6, #8, #8
+ 67c:	e6ef6076 	uxtb	r6, r6
+ 680:	e5950000 	ldr	r0, [r5]
+ 684:	e1a01004 	mov	r1, r4
+ 688:	e58d6000 	str	r6, [sp]
+ 68c:	e1a03008 	mov	r3, r8
+ 690:	e1a02009 	mov	r2, r9
+ 694:	e2844001 	add	r4, r4, #1
+ 698:	ebfffffe 	bl	0 <WS28xx::SetPixel(unsigned int, unsigned char, unsigned char, unsigned char)>
+ 69c:	e5950008 	ldr	r0, [r5, #8]
+ 6a0:	e1500004 	cmp	r0, r4
+ 6a4:	8afffff5 	bhi	680 <PixelPatterns::FadeUpdate(unsigned int)+0xa8>
+ 6a8:	e1a01007 	mov	r1, r7
+ 6ac:	e1a00005 	mov	r0, r5
+ 6b0:	e28dd00c 	add	sp, sp, #12
+ 6b4:	e8bd4ff0 	pop	{r4, r5, r6, r7, r8, r9, sl, fp, lr}
+ 6b8:	eafffffe 	b	2a8 <PixelPatterns::Increment(unsigned int)>
+
+000006bc <PixelPatterns::PortUpdate(unsigned int, unsigned int)>:
+ 6bc:	e92d4030 	push	{r4, r5, lr}
+ 6c0:	e1a04000 	mov	r4, r0
+ 6c4:	e1a00281 	lsl	r0, r1, #5
+ 6c8:	e1a05001 	mov	r5, r1
+ 6cc:	e0841000 	add	r1, r4, r0
+ 6d0:	e24dd00c 	sub	sp, sp, #12
+ 6d4:	e591300c 	ldr	r3, [r1, #12]
+ 6d8:	e591c010 	ldr	ip, [r1, #16]
+ 6dc:	e0423003 	sub	r3, r2, r3
+ 6e0:	e153000c 	cmp	r3, ip
+ 6e4:	3a00000a 	bcc	714 <PixelPatterns::PortUpdate(unsigned int, unsigned int)+0x58>
+ 6e8:	e5913028 	ldr	r3, [r1, #40]	; 0x28
+ 6ec:	e581200c 	str	r2, [r1, #12]
+ 6f0:	e2433001 	sub	r3, r3, #1
+ 6f4:	e3530004 	cmp	r3, #4
+ 6f8:	979ff103 	ldrls	pc, [pc, r3, lsl #2]
+ 6fc:	ea000004 	b	714 <PixelPatterns::PortUpdate(unsigned int, unsigned int)+0x58>
+ 700:	00000738 	andeq	r0, r0, r8, lsr r7
+ 704:	00000750 	andeq	r0, r0, r0, asr r7
+ 708:	00000768 	andeq	r0, r0, r8, ror #14
+ 70c:	000007a4 	andeq	r0, r0, r4, lsr #15
+ 710:	00000720 	andeq	r0, r0, r0, lsr #14
+ 714:	e3a00000 	mov	r0, #0
+ 718:	e28dd00c 	add	sp, sp, #12
+ 71c:	e8bd8030 	pop	{r4, r5, pc}
+ 720:	e1a00004 	mov	r0, r4
+ 724:	e1a01005 	mov	r1, r5
+ 728:	ebfffffe 	bl	5d8 <PixelPatterns::FadeUpdate(unsigned int)>
+ 72c:	e3a00001 	mov	r0, #1
+ 730:	e28dd00c 	add	sp, sp, #12
+ 734:	e8bd8030 	pop	{r4, r5, pc}
+ 738:	e1a00004 	mov	r0, r4
+ 73c:	e1a01005 	mov	r1, r5
+ 740:	ebfffffe 	bl	310 <PixelPatterns::RainbowCycleUpdate(unsigned int)>
+ 744:	e3a00001 	mov	r0, #1
+ 748:	e28dd00c 	add	sp, sp, #12
+ 74c:	e8bd8030 	pop	{r4, r5, pc}
+ 750:	e1a00004 	mov	r0, r4
+ 754:	e1a01005 	mov	r1, r5
+ 758:	ebfffffe 	bl	3a4 <PixelPatterns::TheaterChaseUpdate(unsigned int)>
+ 75c:	e3a00001 	mov	r0, #1
+ 760:	e28dd00c 	add	sp, sp, #12
+ 764:	e8bd8030 	pop	{r4, r5, pc}
+ 768:	e0840000 	add	r0, r4, r0
+ 76c:	e5902014 	ldr	r2, [r0, #20]
+ 770:	e5901020 	ldr	r1, [r0, #32]
+ 774:	e7e73452 	ubfx	r3, r2, #8, #8
+ 778:	e6efc072 	uxtb	ip, r2
+ 77c:	e5940000 	ldr	r0, [r4]
+ 780:	e7e72852 	ubfx	r2, r2, #16, #8
+ 784:	e58dc000 	str	ip, [sp]
+ 788:	ebfffffe 	bl	0 <WS28xx::SetPixel(unsigned int, unsigned char, unsigned char, unsigned char)>
+ 78c:	e1a00004 	mov	r0, r4
+ 790:	e1a01005 	mov	r1, r5
+ 794:	ebfffffe 	bl	2a8 <PixelPatterns::Increment(unsigned int)>
+ 798:	e3a00001 	mov	r0, #1
+ 79c:	e28dd00c 	add	sp, sp, #12
+ 7a0:	e8bd8030 	pop	{r4, r5, pc}
+ 7a4:	e1a00004 	mov	r0, r4
+ 7a8:	e1a01005 	mov	r1, r5
+ 7ac:	ebfffffe 	bl	4b0 <PixelPatterns::ScannerUpdate(unsigned int)>
+ 7b0:	e3a00001 	mov	r0, #1
+ 7b4:	e28dd00c 	add	sp, sp, #12
+ 7b8:	e8bd8030 	pop	{r4, r5, pc}
+
+000007bc <PixelPatterns::Run()>:
+ 7bc:	e92d41f0 	push	{r4, r5, r6, r7, r8, lr}
+ 7c0:	e1a06000 	mov	r6, r0
+ 7c4:	ebfffffe 	bl	0 <millis>
+ 7c8:	e5963004 	ldr	r3, [r6, #4]
+ 7cc:	e3530000 	cmp	r3, #0
+ 7d0:	08bd81f0 	popeq	{r4, r5, r6, r7, r8, pc}
+ 7d4:	e3a04000 	mov	r4, #0
+ 7d8:	e1a07000 	mov	r7, r0
+ 7dc:	e1a05004 	mov	r5, r4
+ 7e0:	e1a01004 	mov	r1, r4
+ 7e4:	e1a02007 	mov	r2, r7
+ 7e8:	e1a00006 	mov	r0, r6
+ 7ec:	e2844001 	add	r4, r4, #1
+ 7f0:	ebfffffe 	bl	6bc <PixelPatterns::PortUpdate(unsigned int, unsigned int)>
+ 7f4:	e5963004 	ldr	r3, [r6, #4]
+ 7f8:	e6ef4074 	uxtb	r4, r4
+ 7fc:	e1805005 	orr	r5, r0, r5
+ 800:	e1a01004 	mov	r1, r4
+ 804:	e1540003 	cmp	r4, r3
+ 808:	e6ef5075 	uxtb	r5, r5
+ 80c:	3afffff4 	bcc	7e4 <PixelPatterns::Run()+0x28>
+ 810:	e3550000 	cmp	r5, #0
+ 814:	08bd81f0 	popeq	{r4, r5, r6, r7, r8, pc}
+ 818:	e5960000 	ldr	r0, [r6]
+ 81c:	e8bd41f0 	pop	{r4, r5, r6, r7, r8, lr}
+ 820:	eafffffe 	b	0 <WS28xx::Update()>
+
+00000824 <PixelPatterns::Reverse(unsigned int)>:
+ 824:	e0801281 	add	r1, r0, r1, lsl #5
+ 828:	e5913024 	ldr	r3, [r1, #36]	; 0x24
+ 82c:	e3530000 	cmp	r3, #0
+ 830:	13a03000 	movne	r3, #0
+ 834:	03a02001 	moveq	r2, #1
+ 838:	0591301c 	ldreq	r3, [r1, #28]
+ 83c:	05812024 	streq	r2, [r1, #36]	; 0x24
+ 840:	15813024 	strne	r3, [r1, #36]	; 0x24
+ 844:	02433001 	subeq	r3, r3, #1
+ 848:	06ff3073 	uxtheq	r3, r3
+ 84c:	e5813020 	str	r3, [r1, #32]
+ 850:	e12fff1e 	bx	lr
+
+Disassembly of section .rodata.str1.4:
+
+00000000 <.LC0>:
+   0:	6e6b6e55 	mcrvs	14, 3, r6, cr11, cr5, {2}
+   4:	006e776f 	rsbeq	r7, lr, pc, ror #14
+
+Disassembly of section .rodata:
+
+00000000 <s_patternName>:
+   0:	656e6f4e 	strbvs	r6, [lr, #-3918]!	; 0xfffff0b2
+	...
+   c:	61520000 	cmpvs	r2, r0
+  10:	6f626e69 	svcvs	0x00626e69
+  14:	79632077 	stmdbvc	r3!, {r0, r1, r2, r4, r5, r6, sp}^
+  18:	00656c63 	rsbeq	r6, r5, r3, ror #24
+  1c:	61656854 	cmnvs	r5, r4, asr r8
+  20:	20726574 	rsbscs	r6, r2, r4, ror r5
+  24:	73616863 	cmnvc	r1, #6488064	; 0x630000
+  28:	6f430065 	svcvs	0x00430065
+  2c:	72756f6c 	rsbsvc	r6, r5, #108, 30	; 0x1b0
+  30:	70697720 	rsbvc	r7, r9, r0, lsr #14
+  34:	00000065 	andeq	r0, r0, r5, rrx
+  38:	6e616353 	mcrvs	3, 3, r6, cr1, cr3, {2}
+  3c:	0072656e 	rsbseq	r6, r2, lr, ror #10
+  40:	00000000 	andeq	r0, r0, r0
+  44:	61460000 	mrsvs	r0, (UNDEF: 70)
+  48:	00006564 	andeq	r6, r0, r4, ror #10
+	...
+
+Disassembly of section .comment:
+
+00000000 <.comment>:
+   0:	43434700 	movtmi	r4, #14080	; 0x3700
+   4:	4728203a 			; <UNDEFINED> instruction: 0x4728203a
+   8:	2029554e 	eorcs	r5, r9, lr, asr #10
+   c:	322e3031 	eorcc	r3, lr, #49	; 0x31
+  10:	Address 0x0000000000000010 is out of bounds.
+
+
+Disassembly of section .ARM.attributes:
+
+00000000 <.ARM.attributes>:
+   0:	00003441 	andeq	r3, r0, r1, asr #8
+   4:	61656100 	cmnvs	r5, r0, lsl #2
+   8:	01006962 	tsteq	r0, r2, ror #18
+   c:	0000002a 	andeq	r0, r0, sl, lsr #32
+  10:	412d3705 			; <UNDEFINED> instruction: 0x412d3705
+  14:	070a0600 	streq	r0, [sl, -r0, lsl #12]
+  18:	09010841 	stmdbeq	r1, {r0, r6, fp}
+  1c:	0c050a02 			; <UNDEFINED> instruction: 0x0c050a02
+  20:	14041202 	strne	r1, [r4], #-514	; 0xfffffdfe
+  24:	17011501 	strne	r1, [r1, -r1, lsl #10]
+  28:	19011803 	stmdbne	r1, {r0, r1, fp, ip}
+  2c:	1c011a01 			; <UNDEFINED> instruction: 0x1c011a01
+  30:	22021e01 	andcs	r1, r2, #1, 28
+  34:	Address 0x0000000000000034 is out of bounds.
+
+
+pixelconfiguration.o:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+
+00000000 <PixelConfiguration::GetRgbMapping(pixel::Type)>:
+   0:	e3c03008 	bic	r3, r0, #8
+   4:	e3530001 	cmp	r3, #1
+   8:	0a000005 	beq	24 <PixelConfiguration::GetRgbMapping(pixel::Type)+0x24>
+   c:	e3500008 	cmp	r0, #8
+  10:	0a000005 	beq	2c <PixelConfiguration::GetRgbMapping(pixel::Type)+0x2c>
+  14:	e350000a 	cmp	r0, #10
+  18:	13a00002 	movne	r0, #2
+  1c:	03a00005 	moveq	r0, #5
+  20:	e12fff1e 	bx	lr
+  24:	e3a00000 	mov	r0, #0
+  28:	e12fff1e 	bx	lr
+  2c:	e3a00004 	mov	r0, #4
+  30:	e12fff1e 	bx	lr
+
+00000034 <PixelConfiguration::GetTxH(pixel::Type, unsigned char&, unsigned char&)>:
+  34:	e3500003 	cmp	r0, #3
+  38:	e3e0303f 	mvn	r3, #63	; 0x3f
+  3c:	e5c13000 	strb	r3, [r1]
+  40:	03a030f8 	moveq	r3, #248	; 0xf8
+  44:	0a000003 	beq	58 <PixelConfiguration::GetTxH(pixel::Type, unsigned char&, unsigned char&)+0x24>
+  48:	e2400008 	sub	r0, r0, #8
+  4c:	e3500003 	cmp	r0, #3
+  50:	33a030fc 	movcc	r3, #252	; 0xfc
+  54:	23a030f0 	movcs	r3, #240	; 0xf0
+  58:	e5c23000 	strb	r3, [r2]
+  5c:	e12fff1e 	bx	lr
+
+00000060 <PixelConfiguration::Validate(unsigned int&)>:
+  60:	e92d4037 	push	{r0, r1, r2, r4, r5, lr}
+  64:	e1a04000 	mov	r4, r0
+  68:	e5905000 	ldr	r5, [r0]
+  6c:	e5903004 	ldr	r3, [r0, #4]
+  70:	e3550007 	cmp	r5, #7
+  74:	e245200b 	sub	r2, r5, #11
+  78:	1a000005 	bne	94 <PixelConfiguration::Validate(unsigned int&)+0x34>
+  7c:	e3530c02 	cmp	r3, #512	; 0x200
+  80:	23a03c02 	movcs	r3, #512	; 0x200
+  84:	e5803004 	str	r3, [r0, #4]
+  88:	e3a03004 	mov	r3, #4
+  8c:	e5813000 	str	r3, [r1]
+  90:	ea00000c 	b	c8 <PixelConfiguration::Validate(unsigned int&)+0x68>
+  94:	e3530faa 	cmp	r3, #680	; 0x2a8
+  98:	23a03faa 	movcs	r3, #680	; 0x2a8
+  9c:	e3520001 	cmp	r2, #1
+  a0:	e5803004 	str	r3, [r0, #4]
+  a4:	e3a03003 	mov	r3, #3
+  a8:	e5813000 	str	r3, [r1]
+  ac:	8a000005 	bhi	c8 <PixelConfiguration::Validate(unsigned int&)+0x68>
+  b0:	e5d03012 	ldrb	r3, [r0, #18]
+  b4:	e353001f 	cmp	r3, #31
+  b8:	91e03d83 	mvnls	r3, r3, lsl #27
+  bc:	83e03000 	mvnhi	r3, #0
+  c0:	91e03da3 	mvnls	r3, r3, lsr #27
+  c4:	e5c03012 	strb	r3, [r0, #18]
+  c8:	e3550000 	cmp	r5, #0
+  cc:	13520002 	cmpne	r2, #2
+  d0:	e5943008 	ldr	r3, [r4, #8]
+  d4:	8a000014 	bhi	12c <PixelConfiguration::Validate(unsigned int&)+0xcc>
+  d8:	e3530006 	cmp	r3, #6
+  dc:	e3a02000 	mov	r2, #0
+  e0:	05842008 	streq	r2, [r4, #8]
+  e4:	e355000d 	cmp	r5, #13
+  e8:	e594300c 	ldr	r3, [r4, #12]
+  ec:	e3a01cff 	mov	r1, #65280	; 0xff00
+  f0:	e5c42013 	strb	r2, [r4, #19]
+  f4:	e1c411b0 	strh	r1, [r4, #16]
+  f8:	1a000005 	bne	114 <PixelConfiguration::Validate(unsigned int&)+0xb4>
+  fc:	e3530000 	cmp	r3, #0
+ 100:	1a000001 	bne	10c <PixelConfiguration::Validate(unsigned int&)+0xac>
+ 104:	e59f3090 	ldr	r3, [pc, #144]	; 19c <PixelConfiguration::Validate(unsigned int&)+0x13c>
+ 108:	ea000020 	b	190 <PixelConfiguration::Validate(unsigned int&)+0x130>
+ 10c:	e59f208c 	ldr	r2, [pc, #140]	; 1a0 <PixelConfiguration::Validate(unsigned int&)+0x140>
+ 110:	ea000002 	b	120 <PixelConfiguration::Validate(unsigned int&)+0xc0>
+ 114:	e3530000 	cmp	r3, #0
+ 118:	0afffff9 	beq	104 <PixelConfiguration::Validate(unsigned int&)+0xa4>
+ 11c:	e59f2080 	ldr	r2, [pc, #128]	; 1a4 <PixelConfiguration::Validate(unsigned int&)+0x144>
+ 120:	e1530002 	cmp	r3, r2
+ 124:	8584200c 	strhi	r2, [r4, #12]
+ 128:	ea000019 	b	194 <PixelConfiguration::Validate(unsigned int&)+0x134>
+ 12c:	e3530006 	cmp	r3, #6
+ 130:	e3a02001 	mov	r2, #1
+ 134:	e5c42013 	strb	r2, [r4, #19]
+ 138:	1a000002 	bne	148 <PixelConfiguration::Validate(unsigned int&)+0xe8>
+ 13c:	e1a00005 	mov	r0, r5
+ 140:	ebfffffe 	bl	0 <PixelConfiguration::GetRgbMapping(pixel::Type)>
+ 144:	e5840008 	str	r0, [r4, #8]
+ 148:	e5d43011 	ldrb	r3, [r4, #17]
+ 14c:	e28d1006 	add	r1, sp, #6
+ 150:	e5d42010 	ldrb	r2, [r4, #16]
+ 154:	e1a00005 	mov	r0, r5
+ 158:	e1520003 	cmp	r2, r3
+ 15c:	e28d2007 	add	r2, sp, #7
+ 160:	23a03000 	movcs	r3, #0
+ 164:	21c431b0 	strhcs	r3, [r4, #16]
+ 168:	ebfffffe 	bl	34 <PixelConfiguration::GetTxH(pixel::Type, unsigned char&, unsigned char&)>
+ 16c:	e5d43010 	ldrb	r3, [r4, #16]
+ 170:	e3530000 	cmp	r3, #0
+ 174:	05dd3006 	ldrbeq	r3, [sp, #6]
+ 178:	05c43010 	strbeq	r3, [r4, #16]
+ 17c:	e5d43011 	ldrb	r3, [r4, #17]
+ 180:	e3530000 	cmp	r3, #0
+ 184:	05dd3007 	ldrbeq	r3, [sp, #7]
+ 188:	05c43011 	strbeq	r3, [r4, #17]
+ 18c:	e59f3014 	ldr	r3, [pc, #20]	; 1a8 <PixelConfiguration::Validate(unsigned int&)+0x148>
+ 190:	e584300c 	str	r3, [r4, #12]
+ 194:	e28dd00c 	add	sp, sp, #12
+ 198:	e8bd8030 	pop	{r4, r5, pc}
+ 19c:	003d0900 	eorseq	r0, sp, r0, lsl #18
+ 1a0:	00e4e1c0 	rsceq	lr, r4, r0, asr #3
+ 1a4:	017d7840 	cmneq	sp, r0, asr #16
+ 1a8:	0061a800 	rsbeq	sl, r1, r0, lsl #16
+
+000001ac <PixelConfiguration::Dump()>:
+ 1ac:	e12fff1e 	bx	lr
+
+Disassembly of section .comment:
+
+00000000 <.comment>:
+   0:	43434700 	movtmi	r4, #14080	; 0x3700
+   4:	4728203a 			; <UNDEFINED> instruction: 0x4728203a
+   8:	2029554e 	eorcs	r5, r9, lr, asr #10
+   c:	322e3031 	eorcc	r3, lr, #49	; 0x31
+  10:	Address 0x0000000000000010 is out of bounds.
+
+
+Disassembly of section .ARM.attributes:
+
+00000000 <.ARM.attributes>:
+   0:	00003441 	andeq	r3, r0, r1, asr #8
+   4:	61656100 	cmnvs	r5, r0, lsl #2
+   8:	01006962 	tsteq	r0, r2, ror #18
+   c:	0000002a 	andeq	r0, r0, sl, lsr #32
+  10:	412d3705 			; <UNDEFINED> instruction: 0x412d3705
+  14:	070a0600 	streq	r0, [sl, -r0, lsl #12]
+  18:	09010841 	stmdbeq	r1, {r0, r6, fp}
+  1c:	0c050a02 			; <UNDEFINED> instruction: 0x0c050a02
+  20:	14041202 	strne	r1, [r4], #-514	; 0xfffffdfe
+  24:	17011501 	strne	r1, [r1, -r1, lsl #10]
+  28:	19011803 	stmdbne	r1, {r0, r1, fp, ip}
+  2c:	1c011a01 			; <UNDEFINED> instruction: 0x1c011a01
+  30:	22021e01 	andcs	r1, r2, #1, 28
+  34:	Address 0x0000000000000034 is out of bounds.
+
+
+ws28xx.o:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+
+00000000 <WS28xx::~WS28xx()>:
+   0:	e92d4010 	push	{r4, lr}
+   4:	e1a04000 	mov	r4, r0
+   8:	e5900018 	ldr	r0, [r0, #24]
+   c:	e3500000 	cmp	r0, #0
+  10:	0a000002 	beq	20 <WS28xx::~WS28xx()+0x20>
+  14:	ebfffffe 	bl	0 <operator delete[](void*)>
+  18:	e3a03000 	mov	r3, #0
+  1c:	e5843018 	str	r3, [r4, #24]
+  20:	e5940014 	ldr	r0, [r4, #20]
+  24:	e3500000 	cmp	r0, #0
+  28:	0a000000 	beq	30 <WS28xx::~WS28xx()+0x30>
+  2c:	ebfffffe 	bl	0 <operator delete[](void*)>
+  30:	e3003000 	movw	r3, #0
+  34:	e3a02000 	mov	r2, #0
+  38:	e3403000 	movt	r3, #0
+  3c:	e1a00004 	mov	r0, r4
+  40:	e5832000 	str	r2, [r3]
+  44:	e8bd8010 	pop	{r4, pc}
+
+00000048 <WS28xx::Update()>:
+  48:	e590100c 	ldr	r1, [r0, #12]
+  4c:	e5900014 	ldr	r0, [r0, #20]
+  50:	eafffffe 	b	0 <bcm2835_spi_writenb>
+
+00000054 <WS28xx::Blackout()>:
+  54:	e590100c 	ldr	r1, [r0, #12]
+  58:	e5900018 	ldr	r0, [r0, #24]
+  5c:	eafffffe 	b	0 <bcm2835_spi_writenb>
+
+00000060 <WS28xx::Print()>:
+  60:	e92d4010 	push	{r4, lr}
+  64:	e1a04000 	mov	r4, r0
+  68:	e3000000 	movw	r0, #0
+  6c:	e24dd008 	sub	sp, sp, #8
+  70:	e3400000 	movt	r0, #0
+  74:	ebfffffe 	bl	0 <printf>
+  78:	e5940000 	ldr	r0, [r4]
+  7c:	ebfffffe 	bl	0 <PixelType::GetType(pixel::Type)>
+  80:	e5942000 	ldr	r2, [r4]
+  84:	e1a01000 	mov	r1, r0
+  88:	e3000000 	movw	r0, #0
+  8c:	e3400000 	movt	r0, #0
+  90:	ebfffffe 	bl	0 <printf>
+  94:	e5941004 	ldr	r1, [r4, #4]
+  98:	e3000000 	movw	r0, #0
+  9c:	e3400000 	movt	r0, #0
+  a0:	ebfffffe 	bl	0 <printf>
+  a4:	e5d43012 	ldrb	r3, [r4, #18]
+  a8:	e3530000 	cmp	r3, #0
+  ac:	1a000001 	bne	b8 <WS28xx::Print()+0x58>
+  b0:	e28dd008 	add	sp, sp, #8
+  b4:	e8bd8010 	pop	{r4, pc}
+  b8:	e5940008 	ldr	r0, [r4, #8]
+  bc:	ebfffffe 	bl	0 <PixelType::GetMap(pixel::Map)>
+  c0:	e5942008 	ldr	r2, [r4, #8]
+  c4:	e1a01000 	mov	r1, r0
+  c8:	e3000000 	movw	r0, #0
+  cc:	e3400000 	movt	r0, #0
+  d0:	ebfffffe 	bl	0 <printf>
+  d4:	e5d40010 	ldrb	r0, [r4, #16]
+  d8:	ebfffffe 	bl	0 <PixelType::ConvertTxH(unsigned char)>
+  dc:	eef70ac0 	vcvt.f64.f32	d16, s0
+  e0:	e3000000 	movw	r0, #0
+  e4:	e5d41010 	ldrb	r1, [r4, #16]
+  e8:	e3400000 	movt	r0, #0
+  ec:	e58d1000 	str	r1, [sp]
+  f0:	ec532b30 	vmov	r2, r3, d16
+  f4:	ebfffffe 	bl	0 <printf>
+  f8:	e5d40011 	ldrb	r0, [r4, #17]
+  fc:	ebfffffe 	bl	0 <PixelType::ConvertTxH(unsigned char)>
+ 100:	eef70ac0 	vcvt.f64.f32	d16, s0
+ 104:	e3000000 	movw	r0, #0
+ 108:	e5d41011 	ldrb	r1, [r4, #17]
+ 10c:	e3400000 	movt	r0, #0
+ 110:	e58d1000 	str	r1, [sp]
+ 114:	ec532b30 	vmov	r2, r3, d16
+ 118:	ebfffffe 	bl	0 <printf>
+ 11c:	e28dd008 	add	sp, sp, #8
+ 120:	e8bd8010 	pop	{r4, pc}
+
+00000124 <WS28xx::SetPixel(unsigned int, unsigned char, unsigned char, unsigned char)>:
+ 124:	e92d40f0 	push	{r4, r5, r6, r7, lr}
+ 128:	e5d0e012 	ldrb	lr, [r0, #18]
+ 12c:	e5ddc014 	ldrb	ip, [sp, #20]
+ 130:	e35e0000 	cmp	lr, #0
+ 134:	1a000010 	bne	17c <WS28xx::SetPixel(unsigned int, unsigned char, unsigned char, unsigned char)+0x58>
+ 138:	e590e000 	ldr	lr, [r0]
+ 13c:	e24e400b 	sub	r4, lr, #11
+ 140:	e3540001 	cmp	r4, #1
+ 144:	9a000030 	bls	20c <WS28xx::SetPixel(unsigned int, unsigned char, unsigned char, unsigned char)+0xe8>
+ 148:	e35e0000 	cmp	lr, #0
+ 14c:	1a000017 	bne	1b0 <WS28xx::SetPixel(unsigned int, unsigned char, unsigned char, unsigned char)+0x8c>
+ 150:	e5904014 	ldr	r4, [r0, #20]
+ 154:	e3a0e003 	mov	lr, #3
+ 158:	e001019e 	mul	r1, lr, r1
+ 15c:	e7c42001 	strb	r2, [r4, r1]
+ 160:	e5902014 	ldr	r2, [r0, #20]
+ 164:	e0822001 	add	r2, r2, r1
+ 168:	e5c23001 	strb	r3, [r2, #1]
+ 16c:	e5903014 	ldr	r3, [r0, #20]
+ 170:	e0831001 	add	r1, r3, r1
+ 174:	e5c1c002 	strb	ip, [r1, #2]
+ 178:	e8bd80f0 	pop	{r4, r5, r6, r7, pc}
+ 17c:	e5904008 	ldr	r4, [r0, #8]
+ 180:	e3a0e018 	mov	lr, #24
+ 184:	e00e019e 	mul	lr, lr, r1
+ 188:	e28e1001 	add	r1, lr, #1
+ 18c:	e3540005 	cmp	r4, #5
+ 190:	979ff104 	ldrls	pc, [pc, r4, lsl #2]
+ 194:	ea0000f7 	b	578 <WS28xx::SetPixel(unsigned int, unsigned char, unsigned char, unsigned char)+0x454>
+ 198:	000002d0 	ldrdeq	r0, [r0], -r0	; <UNPREDICTABLE>
+ 19c:	00000358 	andeq	r0, r0, r8, asr r3
+ 1a0:	00000468 	andeq	r0, r0, r8, ror #8
+ 1a4:	000003e0 	andeq	r0, r0, r0, ror #7
+ 1a8:	000004f0 	strdeq	r0, [r0], -r0	; <UNPREDICTABLE>
+ 1ac:	00000248 	andeq	r0, r0, r8, asr #4
+ 1b0:	e1e0e12c 	mvn	lr, ip, lsr #2
+ 1b4:	e22240c0 	eor	r4, r2, #192	; 0xc0
+ 1b8:	e5905014 	ldr	r5, [r0, #20]
+ 1bc:	e20ee030 	and	lr, lr, #48	; 0x30
+ 1c0:	e18ee324 	orr	lr, lr, r4, lsr #6
+ 1c4:	e2811001 	add	r1, r1, #1
+ 1c8:	e1e04223 	mvn	r4, r3, lsr #4
+ 1cc:	e204400c 	and	r4, r4, #12
+ 1d0:	e18ee004 	orr	lr, lr, r4
+ 1d4:	e1e0ed0e 	mvn	lr, lr, lsl #26
+ 1d8:	e1e0ed2e 	mvn	lr, lr, lsr #26
+ 1dc:	e7c5e101 	strb	lr, [r5, r1, lsl #2]
+ 1e0:	e590e014 	ldr	lr, [r0, #20]
+ 1e4:	e1a01101 	lsl	r1, r1, #2
+ 1e8:	e08ee001 	add	lr, lr, r1
+ 1ec:	e5cec001 	strb	ip, [lr, #1]
+ 1f0:	e590c014 	ldr	ip, [r0, #20]
+ 1f4:	e08cc001 	add	ip, ip, r1
+ 1f8:	e5cc3002 	strb	r3, [ip, #2]
+ 1fc:	e5903014 	ldr	r3, [r0, #20]
+ 200:	e0831001 	add	r1, r3, r1
+ 204:	e5c12003 	strb	r2, [r1, #3]
+ 208:	e8bd80f0 	pop	{r4, r5, r6, r7, pc}
+ 20c:	e590e014 	ldr	lr, [r0, #20]
+ 210:	e2811001 	add	r1, r1, #1
+ 214:	e5d04013 	ldrb	r4, [r0, #19]
+ 218:	e7ce4101 	strb	r4, [lr, r1, lsl #2]
+ 21c:	e590e014 	ldr	lr, [r0, #20]
+ 220:	e1a01101 	lsl	r1, r1, #2
+ 224:	e08ee001 	add	lr, lr, r1
+ 228:	e5ce2001 	strb	r2, [lr, #1]
+ 22c:	e5902014 	ldr	r2, [r0, #20]
+ 230:	e0822001 	add	r2, r2, r1
+ 234:	e5c23002 	strb	r3, [r2, #2]
+ 238:	e5903014 	ldr	r3, [r0, #20]
+ 23c:	e0831001 	add	r1, r3, r1
+ 240:	e5c1c003 	strb	ip, [r1, #3]
+ 244:	e8bd80f0 	pop	{r4, r5, r6, r7, pc}
+ 248:	e28e4009 	add	r4, lr, #9
+ 24c:	e3a05080 	mov	r5, #128	; 0x80
+ 250:	e11c0005 	tst	ip, r5
+ 254:	e5906014 	ldr	r6, [r0, #20]
+ 258:	15d07011 	ldrbne	r7, [r0, #17]
+ 25c:	05d07010 	ldrbeq	r7, [r0, #16]
+ 260:	e1a050a5 	lsr	r5, r5, #1
+ 264:	e7c67001 	strb	r7, [r6, r1]
+ 268:	e2811001 	add	r1, r1, #1
+ 26c:	e1540001 	cmp	r4, r1
+ 270:	1afffff6 	bne	250 <WS28xx::SetPixel(unsigned int, unsigned char, unsigned char, unsigned char)+0x12c>
+ 274:	e28ec011 	add	ip, lr, #17
+ 278:	e3a01080 	mov	r1, #128	; 0x80
+ 27c:	e1130001 	tst	r3, r1
+ 280:	e5905014 	ldr	r5, [r0, #20]
+ 284:	15d06011 	ldrbne	r6, [r0, #17]
+ 288:	05d06010 	ldrbeq	r6, [r0, #16]
+ 28c:	e1a010a1 	lsr	r1, r1, #1
+ 290:	e7c56004 	strb	r6, [r5, r4]
+ 294:	e2844001 	add	r4, r4, #1
+ 298:	e15c0004 	cmp	ip, r4
+ 29c:	1afffff6 	bne	27c <WS28xx::SetPixel(unsigned int, unsigned char, unsigned char, unsigned char)+0x158>
+ 2a0:	e28e1019 	add	r1, lr, #25
+ 2a4:	e3a03080 	mov	r3, #128	; 0x80
+ 2a8:	e1120003 	tst	r2, r3
+ 2ac:	e5904014 	ldr	r4, [r0, #20]
+ 2b0:	15d0e011 	ldrbne	lr, [r0, #17]
+ 2b4:	05d0e010 	ldrbeq	lr, [r0, #16]
+ 2b8:	e1a030a3 	lsr	r3, r3, #1
+ 2bc:	e7c4e00c 	strb	lr, [r4, ip]
+ 2c0:	e28cc001 	add	ip, ip, #1
+ 2c4:	e151000c 	cmp	r1, ip
+ 2c8:	1afffff6 	bne	2a8 <WS28xx::SetPixel(unsigned int, unsigned char, unsigned char, unsigned char)+0x184>
+ 2cc:	e8bd80f0 	pop	{r4, r5, r6, r7, pc}
+ 2d0:	e28e4009 	add	r4, lr, #9
+ 2d4:	e3a05080 	mov	r5, #128	; 0x80
+ 2d8:	e1120005 	tst	r2, r5
+ 2dc:	e5906014 	ldr	r6, [r0, #20]
+ 2e0:	15d07011 	ldrbne	r7, [r0, #17]
+ 2e4:	05d07010 	ldrbeq	r7, [r0, #16]
+ 2e8:	e1a050a5 	lsr	r5, r5, #1
+ 2ec:	e7c67001 	strb	r7, [r6, r1]
+ 2f0:	e2811001 	add	r1, r1, #1
+ 2f4:	e1540001 	cmp	r4, r1
+ 2f8:	1afffff6 	bne	2d8 <WS28xx::SetPixel(unsigned int, unsigned char, unsigned char, unsigned char)+0x1b4>
+ 2fc:	e28e2011 	add	r2, lr, #17
+ 300:	e3a01080 	mov	r1, #128	; 0x80
+ 304:	e1130001 	tst	r3, r1
+ 308:	e5905014 	ldr	r5, [r0, #20]
+ 30c:	15d06011 	ldrbne	r6, [r0, #17]
+ 310:	05d06010 	ldrbeq	r6, [r0, #16]
+ 314:	e1a010a1 	lsr	r1, r1, #1
+ 318:	e7c56004 	strb	r6, [r5, r4]
+ 31c:	e2844001 	add	r4, r4, #1
+ 320:	e1520004 	cmp	r2, r4
+ 324:	1afffff6 	bne	304 <WS28xx::SetPixel(unsigned int, unsigned char, unsigned char, unsigned char)+0x1e0>
+ 328:	e28e1019 	add	r1, lr, #25
+ 32c:	e3a03080 	mov	r3, #128	; 0x80
+ 330:	e11c0003 	tst	ip, r3
+ 334:	e5904014 	ldr	r4, [r0, #20]
+ 338:	15d0e011 	ldrbne	lr, [r0, #17]
+ 33c:	05d0e010 	ldrbeq	lr, [r0, #16]
+ 340:	e1a030a3 	lsr	r3, r3, #1
+ 344:	e7c4e002 	strb	lr, [r4, r2]
+ 348:	e2822001 	add	r2, r2, #1
+ 34c:	e1510002 	cmp	r1, r2
+ 350:	1afffff6 	bne	330 <WS28xx::SetPixel(unsigned int, unsigned char, unsigned char, unsigned char)+0x20c>
+ 354:	e8bd80f0 	pop	{r4, r5, r6, r7, pc}
+ 358:	e28e4009 	add	r4, lr, #9
+ 35c:	e3a05080 	mov	r5, #128	; 0x80
+ 360:	e1120005 	tst	r2, r5
+ 364:	e5906014 	ldr	r6, [r0, #20]
+ 368:	15d07011 	ldrbne	r7, [r0, #17]
+ 36c:	05d07010 	ldrbeq	r7, [r0, #16]
+ 370:	e1a050a5 	lsr	r5, r5, #1
+ 374:	e7c67001 	strb	r7, [r6, r1]
+ 378:	e2811001 	add	r1, r1, #1
+ 37c:	e1510004 	cmp	r1, r4
+ 380:	1afffff6 	bne	360 <WS28xx::SetPixel(unsigned int, unsigned char, unsigned char, unsigned char)+0x23c>
+ 384:	e28e2011 	add	r2, lr, #17
+ 388:	e3a01080 	mov	r1, #128	; 0x80
+ 38c:	e11c0001 	tst	ip, r1
+ 390:	e5905014 	ldr	r5, [r0, #20]
+ 394:	15d06011 	ldrbne	r6, [r0, #17]
+ 398:	05d06010 	ldrbeq	r6, [r0, #16]
+ 39c:	e1a010a1 	lsr	r1, r1, #1
+ 3a0:	e7c56004 	strb	r6, [r5, r4]
+ 3a4:	e2844001 	add	r4, r4, #1
+ 3a8:	e1520004 	cmp	r2, r4
+ 3ac:	1afffff6 	bne	38c <WS28xx::SetPixel(unsigned int, unsigned char, unsigned char, unsigned char)+0x268>
+ 3b0:	e28e1019 	add	r1, lr, #25
+ 3b4:	e3a0c080 	mov	ip, #128	; 0x80
+ 3b8:	e113000c 	tst	r3, ip
+ 3bc:	e5904014 	ldr	r4, [r0, #20]
+ 3c0:	15d0e011 	ldrbne	lr, [r0, #17]
+ 3c4:	05d0e010 	ldrbeq	lr, [r0, #16]
+ 3c8:	e1a0c0ac 	lsr	ip, ip, #1
+ 3cc:	e7c4e002 	strb	lr, [r4, r2]
+ 3d0:	e2822001 	add	r2, r2, #1
+ 3d4:	e1510002 	cmp	r1, r2
+ 3d8:	1afffff6 	bne	3b8 <WS28xx::SetPixel(unsigned int, unsigned char, unsigned char, unsigned char)+0x294>
+ 3dc:	e8bd80f0 	pop	{r4, r5, r6, r7, pc}
+ 3e0:	e28e4009 	add	r4, lr, #9
+ 3e4:	e3a05080 	mov	r5, #128	; 0x80
+ 3e8:	e1130005 	tst	r3, r5
+ 3ec:	e5906014 	ldr	r6, [r0, #20]
+ 3f0:	15d07011 	ldrbne	r7, [r0, #17]
+ 3f4:	05d07010 	ldrbeq	r7, [r0, #16]
+ 3f8:	e1a050a5 	lsr	r5, r5, #1
+ 3fc:	e7c67001 	strb	r7, [r6, r1]
+ 400:	e2811001 	add	r1, r1, #1
+ 404:	e1510004 	cmp	r1, r4
+ 408:	1afffff6 	bne	3e8 <WS28xx::SetPixel(unsigned int, unsigned char, unsigned char, unsigned char)+0x2c4>
+ 40c:	e28e3011 	add	r3, lr, #17
+ 410:	e3a01080 	mov	r1, #128	; 0x80
+ 414:	e11c0001 	tst	ip, r1
+ 418:	e5905014 	ldr	r5, [r0, #20]
+ 41c:	15d06011 	ldrbne	r6, [r0, #17]
+ 420:	05d06010 	ldrbeq	r6, [r0, #16]
+ 424:	e1a010a1 	lsr	r1, r1, #1
+ 428:	e7c56004 	strb	r6, [r5, r4]
+ 42c:	e2844001 	add	r4, r4, #1
+ 430:	e1540003 	cmp	r4, r3
+ 434:	1afffff6 	bne	414 <WS28xx::SetPixel(unsigned int, unsigned char, unsigned char, unsigned char)+0x2f0>
+ 438:	e28e1019 	add	r1, lr, #25
+ 43c:	e3a0c080 	mov	ip, #128	; 0x80
+ 440:	e112000c 	tst	r2, ip
+ 444:	e5904014 	ldr	r4, [r0, #20]
+ 448:	15d0e011 	ldrbne	lr, [r0, #17]
+ 44c:	05d0e010 	ldrbeq	lr, [r0, #16]
+ 450:	e1a0c0ac 	lsr	ip, ip, #1
+ 454:	e7c4e003 	strb	lr, [r4, r3]
+ 458:	e2833001 	add	r3, r3, #1
+ 45c:	e1530001 	cmp	r3, r1
+ 460:	1afffff6 	bne	440 <WS28xx::SetPixel(unsigned int, unsigned char, unsigned char, unsigned char)+0x31c>
+ 464:	e8bd80f0 	pop	{r4, r5, r6, r7, pc}
+ 468:	e28e4009 	add	r4, lr, #9
+ 46c:	e3a05080 	mov	r5, #128	; 0x80
+ 470:	e1130005 	tst	r3, r5
+ 474:	e5906014 	ldr	r6, [r0, #20]
+ 478:	15d07011 	ldrbne	r7, [r0, #17]
+ 47c:	05d07010 	ldrbeq	r7, [r0, #16]
+ 480:	e1a050a5 	lsr	r5, r5, #1
+ 484:	e7c67001 	strb	r7, [r6, r1]
+ 488:	e2811001 	add	r1, r1, #1
+ 48c:	e1510004 	cmp	r1, r4
+ 490:	1afffff6 	bne	470 <WS28xx::SetPixel(unsigned int, unsigned char, unsigned char, unsigned char)+0x34c>
+ 494:	e28e3011 	add	r3, lr, #17
+ 498:	e3a01080 	mov	r1, #128	; 0x80
+ 49c:	e1120001 	tst	r2, r1
+ 4a0:	e5905014 	ldr	r5, [r0, #20]
+ 4a4:	15d06011 	ldrbne	r6, [r0, #17]
+ 4a8:	05d06010 	ldrbeq	r6, [r0, #16]
+ 4ac:	e1a010a1 	lsr	r1, r1, #1
+ 4b0:	e7c56004 	strb	r6, [r5, r4]
+ 4b4:	e2844001 	add	r4, r4, #1
+ 4b8:	e1540003 	cmp	r4, r3
+ 4bc:	1afffff6 	bne	49c <WS28xx::SetPixel(unsigned int, unsigned char, unsigned char, unsigned char)+0x378>
+ 4c0:	e28e1019 	add	r1, lr, #25
+ 4c4:	e3a02080 	mov	r2, #128	; 0x80
+ 4c8:	e11c0002 	tst	ip, r2
+ 4cc:	e5904014 	ldr	r4, [r0, #20]
+ 4d0:	15d0e011 	ldrbne	lr, [r0, #17]
+ 4d4:	05d0e010 	ldrbeq	lr, [r0, #16]
+ 4d8:	e1a020a2 	lsr	r2, r2, #1
+ 4dc:	e7c4e003 	strb	lr, [r4, r3]
+ 4e0:	e2833001 	add	r3, r3, #1
+ 4e4:	e1530001 	cmp	r3, r1
+ 4e8:	1afffff6 	bne	4c8 <WS28xx::SetPixel(unsigned int, unsigned char, unsigned char, unsigned char)+0x3a4>
+ 4ec:	e8bd80f0 	pop	{r4, r5, r6, r7, pc}
+ 4f0:	e28e4009 	add	r4, lr, #9
+ 4f4:	e3a05080 	mov	r5, #128	; 0x80
+ 4f8:	e11c0005 	tst	ip, r5
+ 4fc:	e5906014 	ldr	r6, [r0, #20]
+ 500:	15d07011 	ldrbne	r7, [r0, #17]
+ 504:	05d07010 	ldrbeq	r7, [r0, #16]
+ 508:	e1a050a5 	lsr	r5, r5, #1
+ 50c:	e7c67001 	strb	r7, [r6, r1]
+ 510:	e2811001 	add	r1, r1, #1
+ 514:	e1510004 	cmp	r1, r4
+ 518:	1afffff6 	bne	4f8 <WS28xx::SetPixel(unsigned int, unsigned char, unsigned char, unsigned char)+0x3d4>
+ 51c:	e28ec011 	add	ip, lr, #17
+ 520:	e3a01080 	mov	r1, #128	; 0x80
+ 524:	e1120001 	tst	r2, r1
+ 528:	e5905014 	ldr	r5, [r0, #20]
+ 52c:	15d06011 	ldrbne	r6, [r0, #17]
+ 530:	05d06010 	ldrbeq	r6, [r0, #16]
+ 534:	e1a010a1 	lsr	r1, r1, #1
+ 538:	e7c56004 	strb	r6, [r5, r4]
+ 53c:	e2844001 	add	r4, r4, #1
+ 540:	e154000c 	cmp	r4, ip
+ 544:	1afffff6 	bne	524 <WS28xx::SetPixel(unsigned int, unsigned char, unsigned char, unsigned char)+0x400>
+ 548:	e28e1019 	add	r1, lr, #25
+ 54c:	e3a02080 	mov	r2, #128	; 0x80
+ 550:	e1130002 	tst	r3, r2
+ 554:	e5904014 	ldr	r4, [r0, #20]
+ 558:	15d0e011 	ldrbne	lr, [r0, #17]
+ 55c:	05d0e010 	ldrbeq	lr, [r0, #16]
+ 560:	e1a020a2 	lsr	r2, r2, #1
+ 564:	e7c4e00c 	strb	lr, [r4, ip]
+ 568:	e28cc001 	add	ip, ip, #1
+ 56c:	e15c0001 	cmp	ip, r1
+ 570:	1afffff6 	bne	550 <WS28xx::SetPixel(unsigned int, unsigned char, unsigned char, unsigned char)+0x42c>
+ 574:	e8bd80f0 	pop	{r4, r5, r6, r7, pc}
+ 578:	e28e4009 	add	r4, lr, #9
+ 57c:	e3a05080 	mov	r5, #128	; 0x80
+ 580:	e1120005 	tst	r2, r5
+ 584:	e5906014 	ldr	r6, [r0, #20]
+ 588:	15d07011 	ldrbne	r7, [r0, #17]
+ 58c:	05d07010 	ldrbeq	r7, [r0, #16]
+ 590:	e1a050a5 	lsr	r5, r5, #1
+ 594:	e7c67001 	strb	r7, [r6, r1]
+ 598:	e2811001 	add	r1, r1, #1
+ 59c:	e1540001 	cmp	r4, r1
+ 5a0:	1afffff6 	bne	580 <WS28xx::SetPixel(unsigned int, unsigned char, unsigned char, unsigned char)+0x45c>
+ 5a4:	e28e2011 	add	r2, lr, #17
+ 5a8:	e3a01080 	mov	r1, #128	; 0x80
+ 5ac:	e1130001 	tst	r3, r1
+ 5b0:	e5905014 	ldr	r5, [r0, #20]
+ 5b4:	15d06011 	ldrbne	r6, [r0, #17]
+ 5b8:	05d06010 	ldrbeq	r6, [r0, #16]
+ 5bc:	e1a010a1 	lsr	r1, r1, #1
+ 5c0:	e7c56004 	strb	r6, [r5, r4]
+ 5c4:	e2844001 	add	r4, r4, #1
+ 5c8:	e1520004 	cmp	r2, r4
+ 5cc:	1afffff6 	bne	5ac <WS28xx::SetPixel(unsigned int, unsigned char, unsigned char, unsigned char)+0x488>
+ 5d0:	e28e1019 	add	r1, lr, #25
+ 5d4:	e3a03080 	mov	r3, #128	; 0x80
+ 5d8:	e11c0003 	tst	ip, r3
+ 5dc:	e590e014 	ldr	lr, [r0, #20]
+ 5e0:	15d04011 	ldrbne	r4, [r0, #17]
+ 5e4:	05d04010 	ldrbeq	r4, [r0, #16]
+ 5e8:	e1a030a3 	lsr	r3, r3, #1
+ 5ec:	e7ce4002 	strb	r4, [lr, r2]
+ 5f0:	e2822001 	add	r2, r2, #1
+ 5f4:	e1510002 	cmp	r1, r2
+ 5f8:	1afffff6 	bne	5d8 <WS28xx::SetPixel(unsigned int, unsigned char, unsigned char, unsigned char)+0x4b4>
+ 5fc:	e8bd80f0 	pop	{r4, r5, r6, r7, pc}
+
+00000600 <WS28xx::SetupBuffers()>:
+ 600:	e92d4070 	push	{r4, r5, r6, lr}
+ 604:	e1a05000 	mov	r5, r0
+ 608:	e590000c 	ldr	r0, [r0, #12]
+ 60c:	e24dd008 	sub	sp, sp, #8
+ 610:	ebfffffe 	bl	0 <operator new[](unsigned int)>
+ 614:	e5850014 	str	r0, [r5, #20]
+ 618:	e595000c 	ldr	r0, [r5, #12]
+ 61c:	ebfffffe 	bl	0 <operator new[](unsigned int)>
+ 620:	e5953000 	ldr	r3, [r5]
+ 624:	e5850018 	str	r0, [r5, #24]
+ 628:	e243300b 	sub	r3, r3, #11
+ 62c:	e3530002 	cmp	r3, #2
+ 630:	e5953014 	ldr	r3, [r5, #20]
+ 634:	8a00002e 	bhi	6f4 <WS28xx::SetupBuffers()+0xf4>
+ 638:	e3a04000 	mov	r4, #0
+ 63c:	e5c34000 	strb	r4, [r3]
+ 640:	e5c34001 	strb	r4, [r3, #1]
+ 644:	e5c34002 	strb	r4, [r3, #2]
+ 648:	e5c34003 	strb	r4, [r3, #3]
+ 64c:	e5953004 	ldr	r3, [r5, #4]
+ 650:	e1530004 	cmp	r3, r4
+ 654:	11a01004 	movne	r1, r4
+ 658:	11a06004 	movne	r6, r4
+ 65c:	0a00000a 	beq	68c <WS28xx::SetupBuffers()+0x8c>
+ 660:	e58d6000 	str	r6, [sp]
+ 664:	e3a03000 	mov	r3, #0
+ 668:	e1a02003 	mov	r2, r3
+ 66c:	e1a00005 	mov	r0, r5
+ 670:	e2844001 	add	r4, r4, #1
+ 674:	ebfffffe 	bl	124 <WS28xx::SetPixel(unsigned int, unsigned char, unsigned char, unsigned char)>
+ 678:	e5953004 	ldr	r3, [r5, #4]
+ 67c:	e6ff4074 	uxth	r4, r4
+ 680:	e1a01004 	mov	r1, r4
+ 684:	e1540003 	cmp	r4, r3
+ 688:	3afffff4 	bcc	660 <WS28xx::SetupBuffers()+0x60>
+ 68c:	e5952000 	ldr	r2, [r5]
+ 690:	e595300c 	ldr	r3, [r5, #12]
+ 694:	e5950014 	ldr	r0, [r5, #20]
+ 698:	e242200b 	sub	r2, r2, #11
+ 69c:	e3520001 	cmp	r2, #1
+ 6a0:	e2433004 	sub	r3, r3, #4
+ 6a4:	e0801003 	add	r1, r0, r3
+ 6a8:	9a00004c 	bls	7e0 <WS28xx::SetupBuffers()+0x1e0>
+ 6ac:	e3a02000 	mov	r2, #0
+ 6b0:	e7c02003 	strb	r2, [r0, r3]
+ 6b4:	e5c12001 	strb	r2, [r1, #1]
+ 6b8:	e5c12002 	strb	r2, [r1, #2]
+ 6bc:	e5c12003 	strb	r2, [r1, #3]
+ 6c0:	e595000c 	ldr	r0, [r5, #12]
+ 6c4:	e5952018 	ldr	r2, [r5, #24]
+ 6c8:	e5953014 	ldr	r3, [r5, #20]
+ 6cc:	e3500000 	cmp	r0, #0
+ 6d0:	0a000005 	beq	6ec <WS28xx::SetupBuffers()+0xec>
+ 6d4:	e0830000 	add	r0, r3, r0
+ 6d8:	e2422001 	sub	r2, r2, #1
+ 6dc:	e4d31001 	ldrb	r1, [r3], #1
+ 6e0:	e1530000 	cmp	r3, r0
+ 6e4:	e5e21001 	strb	r1, [r2, #1]!
+ 6e8:	1afffffb 	bne	6dc <WS28xx::SetupBuffers()+0xdc>
+ 6ec:	e28dd008 	add	sp, sp, #8
+ 6f0:	e8bd8070 	pop	{r4, r5, r6, pc}
+ 6f4:	e3a02000 	mov	r2, #0
+ 6f8:	e5c32000 	strb	r2, [r3]
+ 6fc:	e5952000 	ldr	r2, [r5]
+ 700:	e595100c 	ldr	r1, [r5, #12]
+ 704:	e5950014 	ldr	r0, [r5, #20]
+ 708:	e3520000 	cmp	r2, #0
+ 70c:	15d52010 	ldrbne	r2, [r5, #16]
+ 710:	e3510000 	cmp	r1, #0
+ 714:	e2803001 	add	r3, r0, #1
+ 718:	e2411001 	sub	r1, r1, #1
+ 71c:	0afffff2 	beq	6ec <WS28xx::SetupBuffers()+0xec>
+ 720:	e351001f 	cmp	r1, #31
+ 724:	e6ef2072 	uxtb	r2, r2
+ 728:	9a000026 	bls	7c8 <WS28xx::SetupBuffers()+0x1c8>
+ 72c:	e2800021 	add	r0, r0, #33	; 0x21
+ 730:	f5d0f008 	pld	[r0, #8]
+ 734:	e2411020 	sub	r1, r1, #32
+ 738:	e5402020 	strb	r2, [r0, #-32]	; 0xffffffe0
+ 73c:	e351001f 	cmp	r1, #31
+ 740:	e540201f 	strb	r2, [r0, #-31]	; 0xffffffe1
+ 744:	e1a03000 	mov	r3, r0
+ 748:	e540201e 	strb	r2, [r0, #-30]	; 0xffffffe2
+ 74c:	e2800020 	add	r0, r0, #32
+ 750:	e540203d 	strb	r2, [r0, #-61]	; 0xffffffc3
+ 754:	e540203c 	strb	r2, [r0, #-60]	; 0xffffffc4
+ 758:	e540203b 	strb	r2, [r0, #-59]	; 0xffffffc5
+ 75c:	e540203a 	strb	r2, [r0, #-58]	; 0xffffffc6
+ 760:	e5402039 	strb	r2, [r0, #-57]	; 0xffffffc7
+ 764:	e5402038 	strb	r2, [r0, #-56]	; 0xffffffc8
+ 768:	e5402037 	strb	r2, [r0, #-55]	; 0xffffffc9
+ 76c:	e5402036 	strb	r2, [r0, #-54]	; 0xffffffca
+ 770:	e5402035 	strb	r2, [r0, #-53]	; 0xffffffcb
+ 774:	e5402034 	strb	r2, [r0, #-52]	; 0xffffffcc
+ 778:	e5402033 	strb	r2, [r0, #-51]	; 0xffffffcd
+ 77c:	e5402032 	strb	r2, [r0, #-50]	; 0xffffffce
+ 780:	e5402031 	strb	r2, [r0, #-49]	; 0xffffffcf
+ 784:	e5402030 	strb	r2, [r0, #-48]	; 0xffffffd0
+ 788:	e540202f 	strb	r2, [r0, #-47]	; 0xffffffd1
+ 78c:	e540202e 	strb	r2, [r0, #-46]	; 0xffffffd2
+ 790:	e540202d 	strb	r2, [r0, #-45]	; 0xffffffd3
+ 794:	e540202c 	strb	r2, [r0, #-44]	; 0xffffffd4
+ 798:	e540202b 	strb	r2, [r0, #-43]	; 0xffffffd5
+ 79c:	e540202a 	strb	r2, [r0, #-42]	; 0xffffffd6
+ 7a0:	e5402029 	strb	r2, [r0, #-41]	; 0xffffffd7
+ 7a4:	e5402028 	strb	r2, [r0, #-40]	; 0xffffffd8
+ 7a8:	e5402027 	strb	r2, [r0, #-39]	; 0xffffffd9
+ 7ac:	e5402026 	strb	r2, [r0, #-38]	; 0xffffffda
+ 7b0:	e5402025 	strb	r2, [r0, #-37]	; 0xffffffdb
+ 7b4:	e5402024 	strb	r2, [r0, #-36]	; 0xffffffdc
+ 7b8:	e5402023 	strb	r2, [r0, #-35]	; 0xffffffdd
+ 7bc:	e5402022 	strb	r2, [r0, #-34]	; 0xffffffde
+ 7c0:	e5402021 	strb	r2, [r0, #-33]	; 0xffffffdf
+ 7c4:	8affffd9 	bhi	730 <WS28xx::SetupBuffers()+0x130>
+ 7c8:	e2811001 	add	r1, r1, #1
+ 7cc:	e0831001 	add	r1, r3, r1
+ 7d0:	e4c32001 	strb	r2, [r3], #1
+ 7d4:	e1530001 	cmp	r3, r1
+ 7d8:	1afffffc 	bne	7d0 <WS28xx::SetupBuffers()+0x1d0>
+ 7dc:	eaffffb7 	b	6c0 <WS28xx::SetupBuffers()+0xc0>
+ 7e0:	e3e02000 	mvn	r2, #0
+ 7e4:	e7c02003 	strb	r2, [r0, r3]
+ 7e8:	e5c12001 	strb	r2, [r1, #1]
+ 7ec:	e5c12002 	strb	r2, [r1, #2]
+ 7f0:	e5c12003 	strb	r2, [r1, #3]
+ 7f4:	eaffffb1 	b	6c0 <WS28xx::SetupBuffers()+0xc0>
+
+000007f8 <WS28xx::WS28xx(PixelConfiguration&)>:
+ 7f8:	e3003000 	movw	r3, #0
+ 7fc:	e3a0c006 	mov	ip, #6
+ 800:	e3403000 	movt	r3, #0
+ 804:	e3a020aa 	mov	r2, #170	; 0xaa
+ 808:	e92d4030 	push	{r4, r5, lr}
+ 80c:	e1a05001 	mov	r5, r1
+ 810:	e5830000 	str	r0, [r3]
+ 814:	e3a01003 	mov	r1, #3
+ 818:	e24dd00c 	sub	sp, sp, #12
+ 81c:	e3a03000 	mov	r3, #0
+ 820:	e8801006 	stm	r0, {r1, r2, ip}
+ 824:	e5803014 	str	r3, [r0, #20]
+ 828:	e3a02cff 	mov	r2, #65280	; 0xff00
+ 82c:	e1c021b2 	strh	r2, [r0, #18]
+ 830:	e1a04000 	mov	r4, r0
+ 834:	e5803018 	str	r3, [r0, #24]
+ 838:	e28d1004 	add	r1, sp, #4
+ 83c:	e1a00005 	mov	r0, r5
+ 840:	ebfffffe 	bl	0 <PixelConfiguration::Validate(unsigned int&)>
+ 844:	e1a00005 	mov	r0, r5
+ 848:	ebfffffe 	bl	0 <PixelConfiguration::Dump()>
+ 84c:	e5d53013 	ldrb	r3, [r5, #19]
+ 850:	e5951004 	ldr	r1, [r5, #4]
+ 854:	e5c43012 	strb	r3, [r4, #18]
+ 858:	e3530000 	cmp	r3, #0
+ 85c:	e5d53012 	ldrb	r3, [r5, #18]
+ 860:	e5952000 	ldr	r2, [r5]
+ 864:	e5c43013 	strb	r3, [r4, #19]
+ 868:	e59d3004 	ldr	r3, [sp, #4]
+ 86c:	e5842000 	str	r2, [r4]
+ 870:	e242200b 	sub	r2, r2, #11
+ 874:	e0030193 	mul	r3, r3, r1
+ 878:	e5950008 	ldr	r0, [r5, #8]
+ 87c:	11a03183 	lslne	r3, r3, #3
+ 880:	e5841004 	str	r1, [r4, #4]
+ 884:	12833001 	addne	r3, r3, #1
+ 888:	e584300c 	str	r3, [r4, #12]
+ 88c:	e3520002 	cmp	r2, #2
+ 890:	e5840008 	str	r0, [r4, #8]
+ 894:	92811008 	addls	r1, r1, #8
+ 898:	9594300c 	ldrls	r3, [r4, #12]
+ 89c:	e1d501b0 	ldrh	r0, [r5, #16]
+ 8a0:	90831001 	addls	r1, r3, r1
+ 8a4:	9584100c 	strls	r1, [r4, #12]
+ 8a8:	e1c401b0 	strh	r0, [r4, #16]
+ 8ac:	ebfffffe 	bl	0 <bcm2835_spi_begin>
+ 8b0:	e595100c 	ldr	r1, [r5, #12]
+ 8b4:	e30b0280 	movw	r0, #45696	; 0xb280
+ 8b8:	e3400ee6 	movt	r0, #3814	; 0xee6
+ 8bc:	ebfffffe 	bl	0 <__aeabi_uidiv>
+ 8c0:	e3a02901 	mov	r2, #16384	; 0x4000
+ 8c4:	e30f3ffe 	movw	r3, #65534	; 0xfffe
+ 8c8:	e3432f20 	movt	r2, #16160	; 0x3f20
+ 8cc:	e0033000 	and	r3, r3, r0
+ 8d0:	e1a00004 	mov	r0, r4
+ 8d4:	e5823008 	str	r3, [r2, #8]
+ 8d8:	ebfffffe 	bl	600 <WS28xx::SetupBuffers()>
+ 8dc:	e1a00004 	mov	r0, r4
+ 8e0:	e28dd00c 	add	sp, sp, #12
+ 8e4:	e8bd8030 	pop	{r4, r5, pc}
+
+000008e8 <WS28xx::SetPixel(unsigned int, unsigned char, unsigned char, unsigned char, unsigned char)>:
+ 8e8:	e590c000 	ldr	ip, [r0]
+ 8ec:	e92d41f0 	push	{r4, r5, r6, r7, r8, lr}
+ 8f0:	e35c0007 	cmp	ip, #7
+ 8f4:	e5dd5018 	ldrb	r5, [sp, #24]
+ 8f8:	e5dd401c 	ldrb	r4, [sp, #28]
+ 8fc:	18bd81f0 	popne	{r4, r5, r6, r7, r8, pc}
+ 900:	e1a0e281 	lsl	lr, r1, #5
+ 904:	e3a06080 	mov	r6, #128	; 0x80
+ 908:	e28e1001 	add	r1, lr, #1
+ 90c:	e28ec009 	add	ip, lr, #9
+ 910:	e1130006 	tst	r3, r6
+ 914:	e5907014 	ldr	r7, [r0, #20]
+ 918:	15d08011 	ldrbne	r8, [r0, #17]
+ 91c:	05d08010 	ldrbeq	r8, [r0, #16]
+ 920:	e1a060a6 	lsr	r6, r6, #1
+ 924:	e7c78001 	strb	r8, [r7, r1]
+ 928:	e2811001 	add	r1, r1, #1
+ 92c:	e15c0001 	cmp	ip, r1
+ 930:	1afffff6 	bne	910 <WS28xx::SetPixel(unsigned int, unsigned char, unsigned char, unsigned char, unsigned char)+0x28>
+ 934:	e28e1011 	add	r1, lr, #17
+ 938:	e3a03080 	mov	r3, #128	; 0x80
+ 93c:	e1120003 	tst	r2, r3
+ 940:	e5906014 	ldr	r6, [r0, #20]
+ 944:	15d07011 	ldrbne	r7, [r0, #17]
+ 948:	05d07010 	ldrbeq	r7, [r0, #16]
+ 94c:	e1a030a3 	lsr	r3, r3, #1
+ 950:	e7c6700c 	strb	r7, [r6, ip]
+ 954:	e28cc001 	add	ip, ip, #1
+ 958:	e151000c 	cmp	r1, ip
+ 95c:	1afffff6 	bne	93c <WS28xx::SetPixel(unsigned int, unsigned char, unsigned char, unsigned char, unsigned char)+0x54>
+ 960:	e28e3019 	add	r3, lr, #25
+ 964:	e3a02080 	mov	r2, #128	; 0x80
+ 968:	e1150002 	tst	r5, r2
+ 96c:	e590c014 	ldr	ip, [r0, #20]
+ 970:	15d06011 	ldrbne	r6, [r0, #17]
+ 974:	05d06010 	ldrbeq	r6, [r0, #16]
+ 978:	e1a020a2 	lsr	r2, r2, #1
+ 97c:	e7cc6001 	strb	r6, [ip, r1]
+ 980:	e2811001 	add	r1, r1, #1
+ 984:	e1530001 	cmp	r3, r1
+ 988:	1afffff6 	bne	968 <WS28xx::SetPixel(unsigned int, unsigned char, unsigned char, unsigned char, unsigned char)+0x80>
+ 98c:	e28ee021 	add	lr, lr, #33	; 0x21
+ 990:	e3a02080 	mov	r2, #128	; 0x80
+ 994:	e1140002 	tst	r4, r2
+ 998:	e590c014 	ldr	ip, [r0, #20]
+ 99c:	15d01011 	ldrbne	r1, [r0, #17]
+ 9a0:	05d01010 	ldrbeq	r1, [r0, #16]
+ 9a4:	e1a020a2 	lsr	r2, r2, #1
+ 9a8:	e7cc1003 	strb	r1, [ip, r3]
+ 9ac:	e2833001 	add	r3, r3, #1
+ 9b0:	e15e0003 	cmp	lr, r3
+ 9b4:	1afffff6 	bne	994 <WS28xx::SetPixel(unsigned int, unsigned char, unsigned char, unsigned char, unsigned char)+0xac>
+ 9b8:	e8bd81f0 	pop	{r4, r5, r6, r7, r8, pc}
+
+000009bc <WS28xx::SetColorWS28xx(unsigned int, unsigned char)>:
+ 9bc:	e2813001 	add	r3, r1, #1
+ 9c0:	e92d4010 	push	{r4, lr}
+ 9c4:	e281e009 	add	lr, r1, #9
+ 9c8:	e3a01080 	mov	r1, #128	; 0x80
+ 9cc:	e1120001 	tst	r2, r1
+ 9d0:	e590c014 	ldr	ip, [r0, #20]
+ 9d4:	15d04011 	ldrbne	r4, [r0, #17]
+ 9d8:	05d04010 	ldrbeq	r4, [r0, #16]
+ 9dc:	e1a010a1 	lsr	r1, r1, #1
+ 9e0:	e7cc4003 	strb	r4, [ip, r3]
+ 9e4:	e2833001 	add	r3, r3, #1
+ 9e8:	e15e0003 	cmp	lr, r3
+ 9ec:	1afffff6 	bne	9cc <WS28xx::SetColorWS28xx(unsigned int, unsigned char)+0x10>
+ 9f0:	e8bd8010 	pop	{r4, pc}
+
+Disassembly of section .bss:
+
+00000000 <WS28xx::s_pThis>:
+   0:	00000000 	andeq	r0, r0, r0
+
+Disassembly of section .rodata.str1.4:
+
+00000000 <.LC0>:
+   0:	65786950 	ldrbvs	r6, [r8, #-2384]!	; 0xfffff6b0
+   4:	6170206c 	cmnvs	r0, ip, rrx
+   8:	656d6172 	strbvs	r6, [sp, #-370]!	; 0xfffffe8e
+   c:	73726574 	cmnvc	r2, #116, 10	; 0x1d000000
+  10:	0000000a 	andeq	r0, r0, sl
+
+00000014 <.LC1>:
+  14:	70795420 	rsbsvc	r5, r9, r0, lsr #8
+  18:	20202065 	eorcs	r2, r0, r5, rrx
+  1c:	25203a20 	strcs	r3, [r0, #-2592]!	; 0xfffff5e0
+  20:	255b2073 	ldrbcs	r2, [fp, #-115]	; 0xffffff8d
+  24:	000a5d64 	andeq	r5, sl, r4, ror #26
+
+00000028 <.LC2>:
+  28:	756f4320 	strbvc	r4, [pc, #-800]!	; fffffd10 <WS28xx::SetColorWS28xx(unsigned int, unsigned char)+0xfffff354>
+  2c:	2020746e 	eorcs	r7, r0, lr, ror #8
+  30:	25203a20 	strcs	r3, [r0, #-2592]!	; 0xfffff5e0
+  34:	00000a64 	andeq	r0, r0, r4, ror #20
+
+00000038 <.LC3>:
+  38:	70614d20 	rsbvc	r4, r1, r0, lsr #26
+  3c:	676e6970 			; <UNDEFINED> instruction: 0x676e6970
+  40:	25203a20 	strcs	r3, [r0, #-2592]!	; 0xfffff5e0
+  44:	255b2073 	ldrbcs	r2, [fp, #-115]	; 0xffffff8d
+  48:	000a5d64 	andeq	r5, sl, r4, ror #26
+
+0000004c <.LC4>:
+  4c:	48305420 	ldmdami	r0!, {r5, sl, ip, lr}
+  50:	20202020 	eorcs	r2, r0, r0, lsr #32
+  54:	25203a20 	strcs	r3, [r0, #-2592]!	; 0xfffff5e0
+  58:	2066322e 	rsbcs	r3, r6, lr, lsr #4
+  5c:	2578305b 	ldrbcs	r3, [r8, #-91]!	; 0xffffffa5
+  60:	000a5d58 	andeq	r5, sl, r8, asr sp
+
+00000064 <.LC5>:
+  64:	48315420 	ldmdami	r1!, {r5, sl, ip, lr}
+  68:	20202020 	eorcs	r2, r0, r0, lsr #32
+  6c:	25203a20 	strcs	r3, [r0, #-2592]!	; 0xfffff5e0
+  70:	2066322e 	rsbcs	r3, r6, lr, lsr #4
+  74:	2578305b 	ldrbcs	r3, [r8, #-91]!	; 0xffffffa5
+  78:	000a5d58 	andeq	r5, sl, r8, asr sp
+
+Disassembly of section .comment:
+
+00000000 <.comment>:
+   0:	43434700 	movtmi	r4, #14080	; 0x3700
+   4:	4728203a 			; <UNDEFINED> instruction: 0x4728203a
+   8:	2029554e 	eorcs	r5, r9, lr, asr #10
+   c:	322e3031 	eorcc	r3, lr, #49	; 0x31
+  10:	Address 0x0000000000000010 is out of bounds.
+
+
+Disassembly of section .ARM.attributes:
+
+00000000 <.ARM.attributes>:
+   0:	00003441 	andeq	r3, r0, r1, asr #8
+   4:	61656100 	cmnvs	r5, r0, lsl #2
+   8:	01006962 	tsteq	r0, r2, ror #18
+   c:	0000002a 	andeq	r0, r0, sl, lsr #32
+  10:	412d3705 			; <UNDEFINED> instruction: 0x412d3705
+  14:	070a0600 	streq	r0, [sl, -r0, lsl #12]
+  18:	09010841 	stmdbeq	r1, {r0, r6, fp}
+  1c:	0c050a02 			; <UNDEFINED> instruction: 0x0c050a02
+  20:	14041202 	strne	r1, [r4], #-514	; 0xfffffdfe
+  24:	17011501 	strne	r1, [r1, -r1, lsl #10]
+  28:	19011803 	stmdbne	r1, {r0, r1, fp, ip}
+  2c:	1c011a01 			; <UNDEFINED> instruction: 0x1c011a01
+  30:	22021e01 	andcs	r1, r2, #1, 28
+  34:	Address 0x0000000000000034 is out of bounds.
+
+
+ws28xxmulti.o:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+
+00000000 <WS28xxMulti::~WS28xxMulti()>:
+   0:	e3003000 	movw	r3, #0
+   4:	e3a02000 	mov	r2, #0
+   8:	e3403000 	movt	r3, #0
+   c:	e5832000 	str	r2, [r3]
+  10:	e12fff1e 	bx	lr
+
+00000014 <WS28xxMulti::Print()>:
+  14:	e92d4070 	push	{r4, r5, r6, lr}
+  18:	e1a04000 	mov	r4, r0
+  1c:	e3000000 	movw	r0, #0
+  20:	e24dd008 	sub	sp, sp, #8
+  24:	e3400000 	movt	r0, #0
+  28:	ebfffffe 	bl	0 <printf>
+  2c:	e5940004 	ldr	r0, [r4, #4]
+  30:	ebfffffe 	bl	0 <PixelType::GetType(pixel::Type)>
+  34:	e5946004 	ldr	r6, [r4, #4]
+  38:	e1a05000 	mov	r5, r0
+  3c:	e594000c 	ldr	r0, [r4, #12]
+  40:	ebfffffe 	bl	0 <PixelType::GetMap(pixel::Map)>
+  44:	e594200c 	ldr	r2, [r4, #12]
+  48:	e1a03000 	mov	r3, r0
+  4c:	e3000000 	movw	r0, #0
+  50:	e1a01005 	mov	r1, r5
+  54:	e58d2000 	str	r2, [sp]
+  58:	e1a02006 	mov	r2, r6
+  5c:	e3400000 	movt	r0, #0
+  60:	ebfffffe 	bl	0 <printf>
+  64:	e5941008 	ldr	r1, [r4, #8]
+  68:	e3000000 	movw	r0, #0
+  6c:	e3400000 	movt	r0, #0
+  70:	ebfffffe 	bl	0 <printf>
+  74:	e5d41000 	ldrb	r1, [r4]
+  78:	e3002000 	movw	r2, #0
+  7c:	e3402000 	movt	r2, #0
+  80:	e3003000 	movw	r3, #0
+  84:	e3403000 	movt	r3, #0
+  88:	e3510000 	cmp	r1, #0
+  8c:	e3000000 	movw	r0, #0
+  90:	11a01002 	movne	r1, r2
+  94:	e3400000 	movt	r0, #0
+  98:	01a01003 	moveq	r1, r3
+  9c:	e28dd008 	add	sp, sp, #8
+  a0:	e8bd4070 	pop	{r4, r5, r6, lr}
+  a4:	eafffffe 	b	0 <printf>
+
+000000a8 <WS28xxMulti::SetupHC595(unsigned char, unsigned char)>:
+  a8:	e92d41f0 	push	{r4, r5, r6, r7, r8, lr}
+  ac:	e3a07000 	mov	r7, #0
+  b0:	e3437f20 	movt	r7, #16160	; 0x3f20
+  b4:	e3a00007 	mov	r0, #7
+  b8:	e3a06080 	mov	r6, #128	; 0x80
+  bc:	e1a05001 	mov	r5, r1
+  c0:	e3a01001 	mov	r1, #1
+  c4:	e1a04002 	mov	r4, r2
+  c8:	ebfffffe 	bl	0 <bcm2835_gpio_fsel>
+  cc:	e587601c 	str	r6, [r7, #28]
+  d0:	e1a04484 	lsl	r4, r4, #9
+  d4:	ebfffffe 	bl	0 <bcm2835_spi_begin>
+  d8:	e3a03901 	mov	r3, #16384	; 0x4000
+  dc:	e2044cfe 	and	r4, r4, #65024	; 0xfe00
+  e0:	e3433f20 	movt	r3, #16160	; 0x3f20
+  e4:	e1a00085 	lsl	r0, r5, #1
+  e8:	e5932000 	ldr	r2, [r3]
+  ec:	e6ef0070 	uxtb	r0, r0
+  f0:	e1800004 	orr	r0, r0, r4
+  f4:	e3822003 	orr	r2, r2, #3
+  f8:	e5832000 	str	r2, [r3]
+  fc:	e3a020fa 	mov	r2, #250	; 0xfa
+ 100:	e5832008 	str	r2, [r3, #8]
+ 104:	e5876028 	str	r6, [r7, #40]	; 0x28
+ 108:	ebfffffe 	bl	0 <bcm2835_spi_write>
+ 10c:	e587601c 	str	r6, [r7, #28]
+ 110:	e8bd81f0 	pop	{r4, r5, r6, r7, r8, pc}
+
+00000114 <WS28xxMulti::SetupSPI(unsigned int)>:
+ 114:	e92d4070 	push	{r4, r5, r6, lr}
+ 118:	e3a04901 	mov	r4, #16384	; 0x4000
+ 11c:	e3434f20 	movt	r4, #16160	; 0x3f20
+ 120:	e1a05001 	mov	r5, r1
+ 124:	ebfffffe 	bl	0 <bcm2835_spi_begin>
+ 128:	e5943000 	ldr	r3, [r4]
+ 12c:	e30b0280 	movw	r0, #45696	; 0xb280
+ 130:	e3400ee6 	movt	r0, #3814	; 0xee6
+ 134:	e1a01005 	mov	r1, r5
+ 138:	e3c33003 	bic	r3, r3, #3
+ 13c:	e5843000 	str	r3, [r4]
+ 140:	ebfffffe 	bl	0 <__aeabi_uidiv>
+ 144:	e30f3ffe 	movw	r3, #65534	; 0xfffe
+ 148:	e0033000 	and	r3, r3, r0
+ 14c:	e5843008 	str	r3, [r4, #8]
+ 150:	e8bd8070 	pop	{r4, r5, r6, pc}
+
+00000154 <WS28xxMulti::SetupCPLD()>:
+ 154:	e92d4030 	push	{r4, r5, lr}
+ 158:	e24dd034 	sub	sp, sp, #52	; 0x34
+ 15c:	e1a05000 	mov	r5, r0
+ 160:	ebfffffe 	bl	0 <getPIXEL8X4_SIZE>
+ 164:	e58d0008 	str	r0, [sp, #8]
+ 168:	e3003000 	movw	r3, #0
+ 16c:	e3403000 	movt	r3, #0
+ 170:	e3a02000 	mov	r2, #0
+ 174:	e58d3004 	str	r3, [sp, #4]
+ 178:	e3a04001 	mov	r4, #1
+ 17c:	e1cd20bc 	strh	r2, [sp, #12]
+ 180:	e3a03002 	mov	r3, #2
+ 184:	e58d202c 	str	r2, [sp, #44]	; 0x2c
+ 188:	e3e02000 	mvn	r2, #0
+ 18c:	e58d4010 	str	r4, [sp, #16]
+ 190:	e1a01004 	mov	r1, r4
+ 194:	e1cd21f8 	strd	r2, [sp, #24]
+ 198:	e28d0004 	add	r0, sp, #4
+ 19c:	e3a03018 	mov	r3, #24
+ 1a0:	e58d3020 	str	r3, [sp, #32]
+ 1a4:	ebfffffe 	bl	0 <JamSTAPL::PlatformInit(bool)>
+ 1a8:	e5953020 	ldr	r3, [r5, #32]
+ 1ac:	e28d0004 	add	r0, sp, #4
+ 1b0:	e58d302c 	str	r3, [sp, #44]	; 0x2c
+ 1b4:	ebfffffe 	bl	0 <JamSTAPL::PrintInfo()>
+ 1b8:	e2501000 	subs	r1, r0, #0
+ 1bc:	0a000002 	beq	1cc <WS28xxMulti::SetupCPLD()+0x78>
+ 1c0:	e3a00000 	mov	r0, #0
+ 1c4:	e28dd034 	add	sp, sp, #52	; 0x34
+ 1c8:	e8bd8030 	pop	{r4, r5, pc}
+ 1cc:	e28d0004 	add	r0, sp, #4
+ 1d0:	ebfffffe 	bl	0 <JamSTAPL::CheckCRC(bool)>
+ 1d4:	e3500000 	cmp	r0, #0
+ 1d8:	1afffff8 	bne	1c0 <WS28xxMulti::SetupCPLD()+0x6c>
+ 1dc:	e1dd20bc 	ldrh	r2, [sp, #12]
+ 1e0:	e3013d3c 	movw	r3, #7484	; 0x1d3c
+ 1e4:	e1520003 	cmp	r2, r3
+ 1e8:	1afffff4 	bne	1c0 <WS28xxMulti::SetupCPLD()+0x6c>
+ 1ec:	e28d0004 	add	r0, sp, #4
+ 1f0:	ebfffffe 	bl	0 <JamSTAPL::CheckIdCode()>
+ 1f4:	e59d3018 	ldr	r3, [sp, #24]
+ 1f8:	e3530000 	cmp	r3, #0
+ 1fc:	1affffef 	bne	1c0 <WS28xxMulti::SetupCPLD()+0x6c>
+ 200:	e28d0004 	add	r0, sp, #4
+ 204:	ebfffffe 	bl	0 <JamSTAPL::ReadUsercode()>
+ 208:	e59d3018 	ldr	r3, [sp, #24]
+ 20c:	e3530000 	cmp	r3, #0
+ 210:	1a000008 	bne	238 <WS28xxMulti::SetupCPLD()+0xe4>
+ 214:	e59d2028 	ldr	r2, [sp, #40]	; 0x28
+ 218:	e30a3d81 	movw	r3, #44417	; 0xad81
+ 21c:	e3403018 	movt	r3, #24
+ 220:	e1520003 	cmp	r2, r3
+ 224:	0a000003 	beq	238 <WS28xxMulti::SetupCPLD()+0xe4>
+ 228:	e28d0004 	add	r0, sp, #4
+ 22c:	ebfffffe 	bl	0 <JamSTAPL::Program()>
+ 230:	e1a00004 	mov	r0, r4
+ 234:	eaffffe2 	b	1c4 <WS28xxMulti::SetupCPLD()+0x70>
+ 238:	e1a00004 	mov	r0, r4
+ 23c:	eaffffe0 	b	1c4 <WS28xxMulti::SetupCPLD()+0x70>
+
+00000240 <WS28xxMulti::WS28xxMulti(PixelConfiguration&)>:
+ 240:	e3003000 	movw	r3, #0
+ 244:	e3a02006 	mov	r2, #6
+ 248:	e3403000 	movt	r3, #0
+ 24c:	e92d47f0 	push	{r4, r5, r6, r7, r8, r9, sl, lr}
+ 250:	e1a04000 	mov	r4, r0
+ 254:	e580200c 	str	r2, [r0, #12]
+ 258:	e1a05001 	mov	r5, r1
+ 25c:	e5830000 	str	r0, [r3]
+ 260:	e24dd008 	sub	sp, sp, #8
+ 264:	e3a03000 	mov	r3, #0
+ 268:	e3e020fe 	mvn	r2, #254	; 0xfe
+ 26c:	e5c03000 	strb	r3, [r0]
+ 270:	e3a06003 	mov	r6, #3
+ 274:	e1c021b0 	strh	r2, [r0, #16]
+ 278:	e3a070aa 	mov	r7, #170	; 0xaa
+ 27c:	e1c060f4 	strd	r6, [r0, #4]
+ 280:	e5803014 	str	r3, [r0, #20]
+ 284:	e28d1004 	add	r1, sp, #4
+ 288:	e5843018 	str	r3, [r4, #24]
+ 28c:	e1a00005 	mov	r0, r5
+ 290:	e584301c 	str	r3, [r4, #28]
+ 294:	e3a09000 	mov	r9, #0
+ 298:	e5843020 	str	r3, [r4, #32]
+ 29c:	e3a0a080 	mov	sl, #128	; 0x80
+ 2a0:	e3439f20 	movt	r9, #16160	; 0x3f20
+ 2a4:	ebfffffe 	bl	0 <PixelConfiguration::Validate(unsigned int&)>
+ 2a8:	e1a00005 	mov	r0, r5
+ 2ac:	ebfffffe 	bl	0 <PixelConfiguration::Dump()>
+ 2b0:	e5953000 	ldr	r3, [r5]
+ 2b4:	e1a00004 	mov	r0, r4
+ 2b8:	e5952004 	ldr	r2, [r5, #4]
+ 2bc:	e5843004 	str	r3, [r4, #4]
+ 2c0:	e243300b 	sub	r3, r3, #11
+ 2c4:	e5842008 	str	r2, [r4, #8]
+ 2c8:	e3530002 	cmp	r3, #2
+ 2cc:	e5d53012 	ldrb	r3, [r5, #18]
+ 2d0:	e5951008 	ldr	r1, [r5, #8]
+ 2d4:	e5c43011 	strb	r3, [r4, #17]
+ 2d8:	e59d3004 	ldr	r3, [sp, #4]
+ 2dc:	e584100c 	str	r1, [r4, #12]
+ 2e0:	e0030293 	mul	r3, r3, r2
+ 2e4:	e5d51013 	ldrb	r1, [r5, #19]
+ 2e8:	92822008 	addls	r2, r2, #8
+ 2ec:	90833002 	addls	r3, r3, r2
+ 2f0:	e5d57010 	ldrb	r7, [r5, #16]
+ 2f4:	e1a03183 	lsl	r3, r3, #3
+ 2f8:	e5843014 	str	r3, [r4, #20]
+ 2fc:	e5c41010 	strb	r1, [r4, #16]
+ 300:	e5d56011 	ldrb	r6, [r5, #17]
+ 304:	ebfffffe 	bl	154 <WS28xxMulti::SetupCPLD()>
+ 308:	e5c40000 	strb	r0, [r4]
+ 30c:	e1a01007 	mov	r1, r7
+ 310:	e1a00004 	mov	r0, r4
+ 314:	ebfffffe 	bl	0 <WS28xxMulti::ReverseBits(unsigned char)>
+ 318:	e1a08000 	mov	r8, r0
+ 31c:	e1a01006 	mov	r1, r6
+ 320:	e1a00004 	mov	r0, r4
+ 324:	e3a06901 	mov	r6, #16384	; 0x4000
+ 328:	e3436f20 	movt	r6, #16160	; 0x3f20
+ 32c:	ebfffffe 	bl	0 <WS28xxMulti::ReverseBits(unsigned char)>
+ 330:	e1a07000 	mov	r7, r0
+ 334:	e3a01001 	mov	r1, #1
+ 338:	e3a00007 	mov	r0, #7
+ 33c:	e1a07487 	lsl	r7, r7, #9
+ 340:	ebfffffe 	bl	0 <bcm2835_gpio_fsel>
+ 344:	e589a01c 	str	sl, [r9, #28]
+ 348:	e2077cfe 	and	r7, r7, #65024	; 0xfe00
+ 34c:	ebfffffe 	bl	0 <bcm2835_spi_begin>
+ 350:	e5963000 	ldr	r3, [r6]
+ 354:	e1a00088 	lsl	r0, r8, #1
+ 358:	e3833003 	orr	r3, r3, #3
+ 35c:	e6ef0070 	uxtb	r0, r0
+ 360:	e5863000 	str	r3, [r6]
+ 364:	e3a030fa 	mov	r3, #250	; 0xfa
+ 368:	e5863008 	str	r3, [r6, #8]
+ 36c:	e1800007 	orr	r0, r0, r7
+ 370:	e589a028 	str	sl, [r9, #40]	; 0x28
+ 374:	ebfffffe 	bl	0 <bcm2835_spi_write>
+ 378:	e5d53013 	ldrb	r3, [r5, #19]
+ 37c:	e589a01c 	str	sl, [r9, #28]
+ 380:	e3530000 	cmp	r3, #0
+ 384:	1a00001d 	bne	400 <WS28xxMulti::WS28xxMulti(PixelConfiguration&)+0x1c0>
+ 388:	e5d43000 	ldrb	r3, [r4]
+ 38c:	e595500c 	ldr	r5, [r5, #12]
+ 390:	e3530000 	cmp	r3, #0
+ 394:	1a000012 	bne	3e4 <WS28xxMulti::WS28xxMulti(PixelConfiguration&)+0x1a4>
+ 398:	ebfffffe 	bl	0 <bcm2835_spi_begin>
+ 39c:	e5963000 	ldr	r3, [r6]
+ 3a0:	e30b0280 	movw	r0, #45696	; 0xb280
+ 3a4:	e1a01105 	lsl	r1, r5, #2
+ 3a8:	e3c33003 	bic	r3, r3, #3
+ 3ac:	e3400ee6 	movt	r0, #3814	; 0xee6
+ 3b0:	e5863000 	str	r3, [r6]
+ 3b4:	ebfffffe 	bl	0 <__aeabi_uidiv>
+ 3b8:	e30f3ffe 	movw	r3, #65534	; 0xfffe
+ 3bc:	e0033000 	and	r3, r3, r0
+ 3c0:	e1a00004 	mov	r0, r4
+ 3c4:	e5863008 	str	r3, [r6, #8]
+ 3c8:	e5943014 	ldr	r3, [r4, #20]
+ 3cc:	e2833001 	add	r3, r3, #1
+ 3d0:	e5843014 	str	r3, [r4, #20]
+ 3d4:	ebfffffe 	bl	0 <WS28xxMulti::SetupBuffers()>
+ 3d8:	e1a00004 	mov	r0, r4
+ 3dc:	e28dd008 	add	sp, sp, #8
+ 3e0:	e8bd87f0 	pop	{r4, r5, r6, r7, r8, r9, sl, pc}
+ 3e4:	ebfffffe 	bl	0 <bcm2835_spi_begin>
+ 3e8:	e5963000 	ldr	r3, [r6]
+ 3ec:	e3a01006 	mov	r1, #6
+ 3f0:	e0010591 	mul	r1, r1, r5
+ 3f4:	e3c33003 	bic	r3, r3, #3
+ 3f8:	e30b0280 	movw	r0, #45696	; 0xb280
+ 3fc:	eaffffea 	b	3ac <WS28xxMulti::WS28xxMulti(PixelConfiguration&)+0x16c>
+ 400:	e595500c 	ldr	r5, [r5, #12]
+ 404:	ebfffffe 	bl	0 <bcm2835_spi_begin>
+ 408:	e5963000 	ldr	r3, [r6]
+ 40c:	e30b0280 	movw	r0, #45696	; 0xb280
+ 410:	e3400ee6 	movt	r0, #3814	; 0xee6
+ 414:	e1a01005 	mov	r1, r5
+ 418:	e3c33003 	bic	r3, r3, #3
+ 41c:	eaffffe3 	b	3b0 <WS28xxMulti::WS28xxMulti(PixelConfiguration&)+0x170>
+
+00000420 <WS28xxMulti::SetColour(unsigned int, unsigned int, unsigned char, unsigned char, unsigned char)>:
+ 420:	e92d43f0 	push	{r4, r5, r6, r7, r8, r9, lr}
+ 424:	e3a0e001 	mov	lr, #1
+ 428:	e5dd401c 	ldrb	r4, [sp, #28]
+ 42c:	e1a0e11e 	lsl	lr, lr, r1
+ 430:	e3a01018 	mov	r1, #24
+ 434:	e0020291 	mul	r2, r1, r2
+ 438:	e5dd5020 	ldrb	r5, [sp, #32]
+ 43c:	e6efe07e 	uxtb	lr, lr
+ 440:	e1e0600e 	mvn	r6, lr
+ 444:	e2828008 	add	r8, r2, #8
+ 448:	e6ef6076 	uxtb	r6, r6
+ 44c:	e3a01080 	mov	r1, #128	; 0x80
+ 450:	e1a07008 	mov	r7, r8
+ 454:	e5909018 	ldr	r9, [r0, #24]
+ 458:	e1130001 	tst	r3, r1
+ 45c:	e7d9c002 	ldrb	ip, [r9, r2]
+ 460:	118ec00c 	orrne	ip, lr, ip
+ 464:	000cc006 	andeq	ip, ip, r6
+ 468:	e7c9c002 	strb	ip, [r9, r2]
+ 46c:	e5909018 	ldr	r9, [r0, #24]
+ 470:	e1140001 	tst	r4, r1
+ 474:	e7d9c008 	ldrb	ip, [r9, r8]
+ 478:	118ec00c 	orrne	ip, lr, ip
+ 47c:	000cc006 	andeq	ip, ip, r6
+ 480:	e7c9c008 	strb	ip, [r9, r8]
+ 484:	e2828010 	add	r8, r2, #16
+ 488:	e5909018 	ldr	r9, [r0, #24]
+ 48c:	e2822001 	add	r2, r2, #1
+ 490:	e1150001 	tst	r5, r1
+ 494:	e7d9c008 	ldrb	ip, [r9, r8]
+ 498:	e1a010a1 	lsr	r1, r1, #1
+ 49c:	118ec00c 	orrne	ip, lr, ip
+ 4a0:	000cc006 	andeq	ip, ip, r6
+ 4a4:	e1520007 	cmp	r2, r7
+ 4a8:	e7c9c008 	strb	ip, [r9, r8]
+ 4ac:	08bd83f0 	popeq	{r4, r5, r6, r7, r8, r9, pc}
+ 4b0:	e2828008 	add	r8, r2, #8
+ 4b4:	eaffffe6 	b	454 <WS28xxMulti::SetColour(unsigned int, unsigned int, unsigned char, unsigned char, unsigned char)+0x34>
+
+000004b8 <WS28xxMulti::SetPixel(unsigned int, unsigned int, unsigned char, unsigned char, unsigned char, unsigned char)>:
+ 4b8:	e92d47f0 	push	{r4, r5, r6, r7, r8, r9, sl, lr}
+ 4bc:	e3a05001 	mov	r5, #1
+ 4c0:	e1a02282 	lsl	r2, r2, #5
+ 4c4:	e1a05115 	lsl	r5, r5, r1
+ 4c8:	e282e008 	add	lr, r2, #8
+ 4cc:	e5dd7020 	ldrb	r7, [sp, #32]
+ 4d0:	e6ef5075 	uxtb	r5, r5
+ 4d4:	e1e06005 	mvn	r6, r5
+ 4d8:	e1a0a00e 	mov	sl, lr
+ 4dc:	e5dd8024 	ldrb	r8, [sp, #36]	; 0x24
+ 4e0:	e6ef6076 	uxtb	r6, r6
+ 4e4:	e5dd9028 	ldrb	r9, [sp, #40]	; 0x28
+ 4e8:	e3a01080 	mov	r1, #128	; 0x80
+ 4ec:	e5904018 	ldr	r4, [r0, #24]
+ 4f0:	e1170001 	tst	r7, r1
+ 4f4:	e7d4c002 	ldrb	ip, [r4, r2]
+ 4f8:	1185c00c 	orrne	ip, r5, ip
+ 4fc:	000cc006 	andeq	ip, ip, r6
+ 500:	e7c4c002 	strb	ip, [r4, r2]
+ 504:	e5904018 	ldr	r4, [r0, #24]
+ 508:	e1130001 	tst	r3, r1
+ 50c:	e7d4c00e 	ldrb	ip, [r4, lr]
+ 510:	1185c00c 	orrne	ip, r5, ip
+ 514:	000cc006 	andeq	ip, ip, r6
+ 518:	e7c4c00e 	strb	ip, [r4, lr]
+ 51c:	e282e010 	add	lr, r2, #16
+ 520:	e5904018 	ldr	r4, [r0, #24]
+ 524:	e1180001 	tst	r8, r1
+ 528:	e7d4c00e 	ldrb	ip, [r4, lr]
+ 52c:	1185c00c 	orrne	ip, r5, ip
+ 530:	000cc006 	andeq	ip, ip, r6
+ 534:	e7c4c00e 	strb	ip, [r4, lr]
+ 538:	e282e018 	add	lr, r2, #24
+ 53c:	e5904018 	ldr	r4, [r0, #24]
+ 540:	e2822001 	add	r2, r2, #1
+ 544:	e1190001 	tst	r9, r1
+ 548:	e7d4c00e 	ldrb	ip, [r4, lr]
+ 54c:	e1a010a1 	lsr	r1, r1, #1
+ 550:	1185c00c 	orrne	ip, r5, ip
+ 554:	000cc006 	andeq	ip, ip, r6
+ 558:	e152000a 	cmp	r2, sl
+ 55c:	e7c4c00e 	strb	ip, [r4, lr]
+ 560:	08bd87f0 	popeq	{r4, r5, r6, r7, r8, r9, sl, pc}
+ 564:	e282e008 	add	lr, r2, #8
+ 568:	eaffffdf 	b	4ec <WS28xxMulti::SetPixel(unsigned int, unsigned int, unsigned char, unsigned char, unsigned char, unsigned char)+0x34>
+
+0000056c <WS28xxMulti::SetPixel(unsigned int, unsigned int, unsigned char, unsigned char, unsigned char)>:
+ 56c:	e92d40f0 	push	{r4, r5, r6, r7, lr}
+ 570:	e24dd014 	sub	sp, sp, #20
+ 574:	e5d04010 	ldrb	r4, [r0, #16]
+ 578:	e1a0c000 	mov	ip, r0
+ 57c:	e5dd5028 	ldrb	r5, [sp, #40]	; 0x28
+ 580:	e1a06001 	mov	r6, r1
+ 584:	e5dde02c 	ldrb	lr, [sp, #44]	; 0x2c
+ 588:	e3540000 	cmp	r4, #0
+ 58c:	e1a04003 	mov	r4, r3
+ 590:	1a000014 	bne	5e8 <WS28xxMulti::SetPixel(unsigned int, unsigned int, unsigned char, unsigned char, unsigned char)+0x7c>
+ 594:	e5907004 	ldr	r7, [r0, #4]
+ 598:	e3570000 	cmp	r7, #0
+ 59c:	0a000011 	beq	5e8 <WS28xxMulti::SetPixel(unsigned int, unsigned int, unsigned char, unsigned char, unsigned char)+0x7c>
+ 5a0:	e247700b 	sub	r7, r7, #11
+ 5a4:	e3570001 	cmp	r7, #1
+ 5a8:	9a000033 	bls	67c <WS28xxMulti::SetPixel(unsigned int, unsigned int, unsigned char, unsigned char, unsigned char)+0x110>
+ 5ac:	e58de008 	str	lr, [sp, #8]
+ 5b0:	e22340c0 	eor	r4, r3, #192	; 0xc0
+ 5b4:	e1e0e12e 	mvn	lr, lr, lsr #2
+ 5b8:	e2822001 	add	r2, r2, #1
+ 5bc:	e58d5004 	str	r5, [sp, #4]
+ 5c0:	e20ee030 	and	lr, lr, #48	; 0x30
+ 5c4:	e1e05225 	mvn	r5, r5, lsr #4
+ 5c8:	e18ee324 	orr	lr, lr, r4, lsr #6
+ 5cc:	e205500c 	and	r5, r5, #12
+ 5d0:	e18ee005 	orr	lr, lr, r5
+ 5d4:	e38ee0c0 	orr	lr, lr, #192	; 0xc0
+ 5d8:	e58de000 	str	lr, [sp]
+ 5dc:	ebfffffe 	bl	4b8 <WS28xxMulti::SetPixel(unsigned int, unsigned int, unsigned char, unsigned char, unsigned char, unsigned char)>
+ 5e0:	e28dd014 	add	sp, sp, #20
+ 5e4:	e8bd80f0 	pop	{r4, r5, r6, r7, pc}
+ 5e8:	e59c300c 	ldr	r3, [ip, #12]
+ 5ec:	e3530005 	cmp	r3, #5
+ 5f0:	979ff103 	ldrls	pc, [pc, r3, lsl #2]
+ 5f4:	ea00001c 	b	66c <WS28xxMulti::SetPixel(unsigned int, unsigned int, unsigned char, unsigned char, unsigned char)+0x100>
+ 5f8:	00000630 	andeq	r0, r0, r0, lsr r6
+ 5fc:	0000063c 	andeq	r0, r0, ip, lsr r6
+ 600:	0000066c 	andeq	r0, r0, ip, ror #12
+ 604:	0000064c 	andeq	r0, r0, ip, asr #12
+ 608:	0000065c 	andeq	r0, r0, ip, asr r6
+ 60c:	00000610 	andeq	r0, r0, r0, lsl r6
+ 610:	e58d402c 	str	r4, [sp, #44]	; 0x2c
+ 614:	e1a0300e 	mov	r3, lr
+ 618:	e58d5028 	str	r5, [sp, #40]	; 0x28
+ 61c:	e1a01006 	mov	r1, r6
+ 620:	e1a0000c 	mov	r0, ip
+ 624:	e28dd014 	add	sp, sp, #20
+ 628:	e8bd40f0 	pop	{r4, r5, r6, r7, lr}
+ 62c:	eafffffe 	b	420 <WS28xxMulti::SetColour(unsigned int, unsigned int, unsigned char, unsigned char, unsigned char)>
+ 630:	e58de02c 	str	lr, [sp, #44]	; 0x2c
+ 634:	e1a03004 	mov	r3, r4
+ 638:	eafffff6 	b	618 <WS28xxMulti::SetPixel(unsigned int, unsigned int, unsigned char, unsigned char, unsigned char)+0xac>
+ 63c:	e58d502c 	str	r5, [sp, #44]	; 0x2c
+ 640:	e1a03004 	mov	r3, r4
+ 644:	e58de028 	str	lr, [sp, #40]	; 0x28
+ 648:	eafffff3 	b	61c <WS28xxMulti::SetPixel(unsigned int, unsigned int, unsigned char, unsigned char, unsigned char)+0xb0>
+ 64c:	e58d402c 	str	r4, [sp, #44]	; 0x2c
+ 650:	e1a03005 	mov	r3, r5
+ 654:	e58de028 	str	lr, [sp, #40]	; 0x28
+ 658:	eaffffef 	b	61c <WS28xxMulti::SetPixel(unsigned int, unsigned int, unsigned char, unsigned char, unsigned char)+0xb0>
+ 65c:	e58d502c 	str	r5, [sp, #44]	; 0x2c
+ 660:	e1a0300e 	mov	r3, lr
+ 664:	e58d4028 	str	r4, [sp, #40]	; 0x28
+ 668:	eaffffeb 	b	61c <WS28xxMulti::SetPixel(unsigned int, unsigned int, unsigned char, unsigned char, unsigned char)+0xb0>
+ 66c:	e58de02c 	str	lr, [sp, #44]	; 0x2c
+ 670:	e1a03005 	mov	r3, r5
+ 674:	e58d4028 	str	r4, [sp, #40]	; 0x28
+ 678:	eaffffe7 	b	61c <WS28xxMulti::SetPixel(unsigned int, unsigned int, unsigned char, unsigned char, unsigned char)+0xb0>
+ 67c:	e58d3008 	str	r3, [sp, #8]
+ 680:	e2822001 	add	r2, r2, #1
+ 684:	e58d5004 	str	r5, [sp, #4]
+ 688:	e1a0300e 	mov	r3, lr
+ 68c:	e5d0c011 	ldrb	ip, [r0, #17]
+ 690:	e58dc000 	str	ip, [sp]
+ 694:	ebfffffe 	bl	4b8 <WS28xxMulti::SetPixel(unsigned int, unsigned int, unsigned char, unsigned char, unsigned char, unsigned char)>
+ 698:	e28dd014 	add	sp, sp, #20
+ 69c:	e8bd80f0 	pop	{r4, r5, r6, r7, pc}
+
+Disassembly of section .bss:
+
+00000000 <WS28xxMulti::s_pThis>:
+   0:	00000000 	andeq	r0, r0, r0
+
+Disassembly of section .rodata.str1.4:
+
+00000000 <.LC0>:
+   0:	444c5043 	strbmi	r5, [ip], #-67	; 0xffffffbd
+   4:	00000000 	andeq	r0, r0, r0
+
+00000008 <.LC1>:
+   8:	6c2d3437 	cfstrsvs	mvf3, [sp], #-220	; 0xffffff24
+   c:	6369676f 	cmnvs	r9, #29097984	; 0x1bc0000
+  10:	00000000 	andeq	r0, r0, r0
+
+00000014 <.LC2>:
+  14:	65786950 	ldrbvs	r6, [r8, #-2384]!	; 0xfffff6b0
+  18:	6170206c 	cmnvs	r0, ip, rrx
+  1c:	656d6172 	strbvs	r6, [sp, #-370]!	; 0xfffffe8e
+  20:	73726574 	cmnvc	r2, #116, 10	; 0x1d000000
+  24:	0000000a 	andeq	r0, r0, sl
+
+00000028 <.LC3>:
+  28:	70795420 	rsbsvc	r5, r9, r0, lsr #8
+  2c:	20202065 	eorcs	r2, r0, r5, rrx
+  30:	25203a20 	strcs	r3, [r0, #-2592]!	; 0xfffff5e0
+  34:	255b2073 	ldrbcs	r2, [fp, #-115]	; 0xffffff8d
+  38:	2d205d64 	stccs	13, cr5, [r0, #-400]!	; 0xfffffe70
+  3c:	20732520 	rsbscs	r2, r3, r0, lsr #10
+  40:	5d64255b 	cfstr64pl	mvdx2, [r4, #-364]!	; 0xfffffe94
+  44:	0000000a 	andeq	r0, r0, sl
+
+00000048 <.LC4>:
+  48:	756f4320 	strbvc	r4, [pc, #-800]!	; fffffd30 <WS28xxMulti::SetPixel(unsigned int, unsigned int, unsigned char, unsigned char, unsigned char)+0xfffff7c4>
+  4c:	2020746e 	eorcs	r7, r0, lr, ror #8
+  50:	25203a20 	strcs	r3, [r0, #-2592]!	; 0xfffff5e0
+  54:	00000a64 	andeq	r0, r0, r4, ror #20
+
+00000058 <.LC5>:
+  58:	616f4220 	cmnvs	pc, r0, lsr #4
+  5c:	20206472 	eorcs	r6, r0, r2, ror r4
+  60:	25203a20 	strcs	r3, [r0, #-2592]!	; 0xfffff5e0
+  64:	Address 0x0000000000000064 is out of bounds.
+
+
+Disassembly of section .comment:
+
+00000000 <.comment>:
+   0:	43434700 	movtmi	r4, #14080	; 0x3700
+   4:	4728203a 			; <UNDEFINED> instruction: 0x4728203a
+   8:	2029554e 	eorcs	r5, r9, lr, asr #10
+   c:	322e3031 	eorcc	r3, lr, #49	; 0x31
+  10:	Address 0x0000000000000010 is out of bounds.
+
+
+Disassembly of section .ARM.attributes:
+
+00000000 <.ARM.attributes>:
+   0:	00003441 	andeq	r3, r0, r1, asr #8
+   4:	61656100 	cmnvs	r5, r0, lsl #2
+   8:	01006962 	tsteq	r0, r2, ror #18
+   c:	0000002a 	andeq	r0, r0, sl, lsr #32
+  10:	412d3705 			; <UNDEFINED> instruction: 0x412d3705
+  14:	070a0600 	streq	r0, [sl, -r0, lsl #12]
+  18:	09010841 	stmdbeq	r1, {r0, r6, fp}
+  1c:	0c050a02 			; <UNDEFINED> instruction: 0x0c050a02
+  20:	14041202 	strne	r1, [r4], #-514	; 0xfffffdfe
+  24:	17011501 	strne	r1, [r1, -r1, lsl #10]
+  28:	19011803 	stmdbne	r1, {r0, r1, fp, ip}
+  2c:	1c011a01 			; <UNDEFINED> instruction: 0x1c011a01
+  30:	22021e01 	andcs	r1, r2, #1, 28
+  34:	Address 0x0000000000000034 is out of bounds.
+
