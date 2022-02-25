@@ -2,7 +2,7 @@
  * @file gd32_gpio.h
  *
  */
-/* Copyright (C) 2021 by Arjan van Vught mailto:info@gd32-dmx.org
+/* Copyright (C) 2021-2022 by Arjan van Vught mailto:info@gd32-dmx.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -44,8 +44,13 @@ typedef enum T_GD32_Port {
 
 #include "gd32.h"
 
-#define GPIO_FSEL_OUTPUT	GPIO_MODE_OUT_PP
-#define GPIO_FSEL_INPUT		GPIO_MODE_IN_FLOATING
+#if defined  (GD32F10X_HD) || defined (GD32F10X_CL) || defined (GD32F20X_CL)
+# define GPIO_FSEL_OUTPUT	GPIO_MODE_OUT_PP
+# define GPIO_FSEL_INPUT	GPIO_MODE_IPU
+#elif  defined (GD32F407)
+# define GPIO_FSEL_OUTPUT	GPIO_MODE_OUTPUT
+# define GPIO_FSEL_INPUT	GPIO_MODE_INPUT
+#endif
 
 #ifdef __cplusplus
 extern "C" {
@@ -54,7 +59,16 @@ extern "C" {
 inline static void gd32_gpio_fsel(const uint32_t gpio, const uint32_t fsel) {
 	const uint32_t gpio_periph = GPIOA + (GD32_GPIO_TO_PORT(gpio) * 0x400);
 	const uint32_t pin = BIT(GD32_GPIO_TO_NUMBER(gpio));
+#if defined  (GD32F10X) || defined (GD32F20X)
 	gpio_init(gpio_periph, fsel, GPIO_OSPEED_50MHZ, pin);
+#elif  defined  (GD32F407)
+	if (fsel == GPIO_FSEL_OUTPUT) {
+		 gpio_mode_set(gpio_periph, GPIO_MODE_OUTPUT, GPIO_PUPD_NONE, pin);
+		 gpio_output_options_set(gpio_periph, GPIO_OTYPE_PP, GPIO_OSPEED_50MHZ, pin);
+	} else {
+		 gpio_mode_set(gpio_periph, GPIO_MODE_INPUT, GPIO_PUPD_PULLUP, pin);
+	}
+#endif
 }
 
 inline static void gd32_gpio_clr(const uint32_t gpio) {

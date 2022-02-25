@@ -34,6 +34,8 @@
 # include "board/gd32f207r.h"
 #elif defined (BOARD_GD32F207C_EVAL)
 # include "board/gd32f207c_eval.h"
+#elif defined (BOARD_GD32F407R)
+# include "board/gd32f407r.h"
 #else
 # error Board is unknown / not defined
 #endif

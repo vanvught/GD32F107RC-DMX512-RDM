@@ -153,13 +153,23 @@ void gd32_i2c_begin(void) {
 	rcu_periph_clock_enable(I2C_GPIO_SCL_CLK);
 	rcu_periph_clock_enable(I2C_GPIO_SDA_CLK);
 
+#if !defined (GD32F4XX)
 	gpio_init(I2C_GPIO_SCL_PORT, GPIO_MODE_AF_OD, GPIO_OSPEED_50MHZ, I2C_SCL_PIN);
 	gpio_init(I2C_GPIO_SDA_PORT, GPIO_MODE_AF_OD, GPIO_OSPEED_50MHZ, I2C_SDA_PIN);
 
-#if defined(I2C_REMAP)
+# if defined (I2C_REMAP)
 	if (I2C_REMAP == GPIO_I2C0_REMAP) {
 		gpio_pin_remap_config(GPIO_I2C0_REMAP, ENABLE);
 	}
+# endif
+#else
+    gpio_af_set(I2C_GPIO_SCL_PORT, GPIO_AF_4, I2C_SCL_PIN);
+    gpio_af_set(I2C_GPIO_SCL_PORT, GPIO_AF_4, I2C_SDA_PIN);
+
+	gpio_mode_set(I2C_GPIO_SCL_PORT, GPIO_MODE_AF, GPIO_PUPD_PULLUP, I2C_SCL_PIN);
+	gpio_output_options_set(I2C_GPIO_SCL_PORT, GPIO_OTYPE_OD, GPIO_OSPEED_50MHZ, I2C_SCL_PIN);
+	gpio_mode_set(I2C_GPIO_SDA_PORT, GPIO_MODE_AF, GPIO_PUPD_PULLUP, I2C_SDA_PIN);
+	gpio_output_options_set(I2C_GPIO_SDA_PORT, GPIO_OTYPE_OD, GPIO_OSPEED_50MHZ, I2C_SDA_PIN);
 #endif
 
 	i2c_clock_config(I2C_PERIPH, GD32_I2C_FULL_SPEED, I2C_DTCY_2);

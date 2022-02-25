@@ -2,7 +2,7 @@
  * @file flashrom.cpp
  *
  */
-/* Copyright (C) 2021 by Arjan van Vught mailto:info@orangepi-dmx.nl
+/* Copyright (C) 2021-2022 by Arjan van Vught mailto:info@orangepi-dmx.nl
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -82,19 +82,19 @@ FlashRom::FlashRom() {
 
 	m_IsDetected = true;
 
-	printf("Detected %s with sector size %d total %d bytes\n", GetName(), GetSectorSize(), GetSize());
+	printf("Detected %s with total %d bytes [%d kB]\n", GetName(), GetSize(), GetSize() / 1024U);
 	DEBUG_EXIT
 }
 
-const char *FlashRom::GetName() {
-	return "GD32";
+const char *FlashRom::GetName() const{
+	return GD32_MCU_NAME;
 }
 
-uint32_t FlashRom::GetSize() {
+uint32_t FlashRom::GetSize() const {
 	return FMC_SIZE * 1024U;
 }
 
-uint32_t FlashRom::GetSectorSize() {
+uint32_t FlashRom::GetSectorSize() const {
 	return FLASH_SECTOR_SIZE;
 }
 

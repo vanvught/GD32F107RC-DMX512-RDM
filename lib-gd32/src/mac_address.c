@@ -29,8 +29,13 @@
 #endif
 
 void mac_address_get(uint8_t paddr[]) {
+#if !defined (GD32F4XX)
 	const uint32_t mac_hi = *(volatile uint32_t *) (0x1FFFF7E8);
 	const uint32_t mac_lo = *(volatile uint32_t *) (0x1FFFF7EC);
+#else
+	const uint32_t mac_hi = *(volatile uint32_t *) (0x1FFF7A10);
+	const uint32_t mac_lo = *(volatile uint32_t *) (0x1FFF7A14);
+#endif
 
 	paddr[0] = 2;
 	paddr[1] = (mac_lo >> 0) & 0xff;

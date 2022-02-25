@@ -29,6 +29,7 @@
 
 void gd32_adc_init(void) {
 	rcu_periph_clock_enable(RCU_ADC0);
+#if !defined (GD32F4XX)
 	rcu_adc_clock_config(RCU_CKADC_CKAPB2_DIV12);
 
 	/* ADC SCAN function enable */
@@ -52,26 +53,56 @@ void gd32_adc_init(void) {
 
 	/* ADC temperature and Vrefint enable */
 	adc_tempsensor_vrefint_enable();
+#else
+    adc_clock_config(ADC_ADCCK_PCLK2_DIV6);
 
+    /* ADC channel length config */
+    adc_channel_length_config(ADC0,ADC_INSERTED_CHANNEL,3);
+
+    /* ADC temperature sensor channel config */
+    adc_inserted_channel_config(ADC0,0,ADC_CHANNEL_16,ADC_SAMPLETIME_144);
+    /* ADC internal reference voltage channel config */
+    adc_inserted_channel_config(ADC0,1,ADC_CHANNEL_17,ADC_SAMPLETIME_144);
+    /* ADC 1/4 voltate of external battery config */
+    adc_inserted_channel_config(ADC0,2,ADC_CHANNEL_18,ADC_SAMPLETIME_144);
+
+    /* ADC external trigger disable */
+    adc_external_trigger_config(ADC0,ADC_INSERTED_CHANNEL,EXTERNAL_TRIGGER_DISABLE);
+    /* ADC data alignment config */
+    adc_data_alignment_config(ADC0,ADC_DATAALIGN_RIGHT);
+    /* ADC SCAN function enable */
+    adc_special_function_config(ADC0,ADC_SCAN_MODE,ENABLE);
+    /* ADC Vbat channel enable */
+    adc_channel_16_to_18(ADC_VBAT_CHANNEL_SWITCH,ENABLE);
+    /* ADC temperature and Vref enable */
+    adc_channel_16_to_18(ADC_TEMP_VREF_CHANNEL_SWITCH,ENABLE);
+#endif
 	/* enable ADC interface */
 	adc_enable(ADC0);
 	udelay(1000);
 	/* ADC calibration and reset calibration */
 	adc_calibration_enable(ADC0);
-
     /* ADC software trigger enable */
     adc_software_trigger_enable(ADC0, ADC_INSERTED_CHANNEL);
 }
 
 float gd32_adc_gettemp(void) {
-    /* value convert  */
-    const float temperature = (1.43 - ADC_IDATA0(ADC0) * 3.3 / 4096) * 1000 / 4.3 + 25;
-    adc_software_trigger_enable(ADC0, ADC_INSERTED_CHANNEL);
-    return temperature;
+	/* value convert  */
+	const float temperature = (1.43 - ADC_IDATA0(ADC0) * 3.3 / 4096) * 1000 / 4.3 + 25;
+	adc_software_trigger_enable(ADC0, ADC_INSERTED_CHANNEL);
+	return temperature;
 }
 
 float gd32_adc_getvref(void) {
 	const float vref_value = (ADC_IDATA1(ADC0) * 3.3 / 4096);
-	 adc_software_trigger_enable(ADC0, ADC_INSERTED_CHANNEL);
+	adc_software_trigger_enable(ADC0, ADC_INSERTED_CHANNEL);
 	return vref_value;
 }
+
+#if defined (GD32F4XX)
+float gd32_adc_getvbat(void) {
+	const float vref_value =  (ADC_IDATA2(ADC0) * 3.3 / 4096) * 4;
+	adc_software_trigger_enable(ADC0, ADC_INSERTED_CHANNEL);
+	return vref_value;
+}
+#endif

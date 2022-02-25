@@ -132,7 +132,7 @@
  * U(S)ART
  */
 
-// #define USART0_REMAP
+#define USART0_REMAP
 // #define USART1_REMAP
 // #define USART2_FULL_REMAP
 #define USART2_PARTIAL_REMAP

@@ -2,7 +2,7 @@
  * @file gd32.h
  *
  */
-/* Copyright (C) 2021 by Arjan van Vught mailto:info@gd32-dmx.org
+/* Copyright (C) 2021-2022 by Arjan van Vught mailto:info@gd32-dmx.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -41,40 +41,20 @@
 extern "C" {
 #endif
 
-#if defined (GD32F20X_CL)
-# include "gd32f20x.h"
-# include "gd32f20x_adc.h"
-# include "gd32f20x_bkp.h"
-# include "gd32f20x_dma.h"
-# include "gd32f20x_enet.h"
-# include "gd32f20x_fmc.h"
-# include "gd32f20x_fwdgt.h"
-# include "gd32f20x_gpio.h"
-# include "gd32f20x_misc.h"
-# include "gd32f20x_pmu.h"
-# include "gd32f20x_rcu.h"
-# include "gd32f20x_rtc.h"
-# include "gd32f20x_timer.h"
-# include "gd32f20x_usart.h"
-#elif defined  (GD32F10X_HD) || defined (GD32F10X_CL)
+#if defined  (GD32F10X_HD) || defined (GD32F10X_CL)
+# define GD32F10X
 # include "gd32f10x.h"
-# include "gd32f10x_adc.h"
-# include "gd32f10x_bkp.h"
-# include "gd32f10x_dma.h"
-# if defined (GD32F10X_CL)
-#  include "gd32f10x_enet.h"
-# endif
-# include "gd32f10x_fmc.h"
-# include "gd32f10x_fwdgt.h"
-# include "gd32f10x_gpio.h"
-# include "gd32f10x_misc.h"
-# include "gd32f10x_pmu.h"
-# include "gd32f10x_rcu.h"
-# include "gd32f10x_rtc.h"
-# include "gd32f10x_timer.h"
-# include "gd32f10x_usart.h"
+# include "gd32f10x_libopt.h"
+#elif defined (GD32F20X_CL)
+# define GD32F20X
+# include "gd32f20x.h"
+# include "gd32f20x_libopt.h"
+#elif defined  (GD32F407)
+# define GD32F4XX
+# include "gd32f4xx.h"
+# include "gd32f4xx_libopt.h"
 #else
-# error
+# error MCU is not supported
 #endif
 
 #ifdef __cplusplus

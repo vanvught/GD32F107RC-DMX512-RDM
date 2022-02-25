@@ -1,7 +1,6 @@
-/* memory map */
 MEMORY
 {
-  FLASH (rx)      : ORIGIN = 0x08007000, LENGTH = 72K
+  FLASH (rx)      : ORIGIN = 0x08007000, LENGTH = 74K
   RAM (xrw)       : ORIGIN = 0x20000000, LENGTH = 96K
 }
 
@@ -11,8 +10,7 @@ SECTIONS
 {
   __heap_size = DEFINED(__heap_size) ? __heap_size : 2K;
   __stack_size = DEFINED(__stack_size) ? __stack_size : 6K;
-  
-/* ISR vectors */
+
   .vectors :
   {
     . = ALIGN(4);
@@ -25,6 +23,8 @@ SECTIONS
   .text :
   {
     . = ALIGN(4);
+    *(.text.unlikely*)
+    *(.text.hot*)
 	*(.text)
 	*(.text*)
 	*(.glue_7)
@@ -82,7 +82,6 @@ SECTIONS
     PROVIDE_HIDDEN (__fini_array_end = .);
   } >FLASH
 
-  /* provide some necessary symbols for startup file to initialize data */
   _sidata = LOADADDR(.data);
   .data :
   {
@@ -90,7 +89,6 @@ SECTIONS
     _sdata = .;
     *(.data)
     *(.data*)
-
     . = ALIGN(4);
     _edata = .;
   } >RAM AT> FLASH
@@ -103,7 +101,6 @@ SECTIONS
     *(.bss)
     *(.bss*)
     *(COMMON)
-    
     . = ALIGN(4);
     _ebss = .;
     __bss_end__ = _ebss;

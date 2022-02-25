@@ -2,7 +2,7 @@
  * @file gd32f10x_mcu.h
  *
  */
-/* Copyright (C) 2021 by Arjan van Vught mailto:info@gd32-dmx.org
+/* Copyright (C) 2021-2022 by Arjan van Vught mailto:info@gd32-dmx.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -122,6 +122,8 @@
 #define I2C1_SCL_GPIO_PINx	GPIO_PIN_10
 #define I2C1_SDA_GPIO_PINx	GPIO_PIN_11
 
+/* There is no I2C1 remapping */
+
 /**
  * SPI
  */
@@ -186,6 +188,20 @@
 /**
  * DMA
  */
+ 
+#define SPI0_DMAx			DMA0
+#define SPI0_TX_DMA_CHx		DMA_CH2
+
+#define SPI1_DMAx			DMA0
+#define SPI1_TX_DMA_CHx		DMA_CH4
+
+#define SPI2_DMAx			DMA1
+#define SPI2_TX_DMA_CHx		DMA_CH1
+
+#define TIMER7_DMAx			DMA1
+#define TIMER7_CH0_DMA_CH	DMA_CH2
+#define TIMER7_CH1_DMA_CH	DMA_CH4
+#define TIMER7_CH2_DMA_CH	DMA_CH0
 
 #define USART0_DMA			DMA0
 #define USART0_TX_DMA_CH	DMA_CH3
@@ -204,14 +220,5 @@
 #define UART3_RX_DMA_CH		DMA_CH2
 
 /* The USART supports DMA function for high-speed data communication, except UART4. */
-
-#define SPI0_DMAx			DMA0
-#define SPI0_TX_DMA_CHx		DMA_CH2
-
-#define SPI1_DMAx			DMA0
-#define SPI1_TX_DMA_CHx		DMA_CH4
-
-#define SPI2_DMAx			DMA1
-#define SPI2_TX_DMA_CHx		DMA_CH1
 
 #endif /* MCU_GD32F10X_H_ */

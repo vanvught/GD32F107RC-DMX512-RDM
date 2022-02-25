@@ -2,7 +2,7 @@
  * @file  hwclockrtc.cpp
  *
  */
-/* Copyright (C) 2021 by Arjan van Vught mailto:info@gd32-dmx.org
+/* Copyright (C) 2021-2022 by Arjan van Vught mailto:info@gd32-dmx.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,10 +23,6 @@
  * THE SOFTWARE.
  */
 
-#ifndef NDEBUG
-#define NDEBUG	//FIXME Remove
-#endif
-
 #include <cassert>
 #include <cstring>
 #include <time.h>
@@ -37,30 +33,17 @@
 #include "debug.h"
 
 bool rtc_configuration(void) {
-	/* enable PMU and BKPI clocks */
-	rcu_periph_clock_enable (RCU_BKPI);
-	rcu_periph_clock_enable (RCU_PMU);
-	/* allow access to BKP domain */
-	pmu_backup_write_enable();
-	/* reset backup domain */
-	bkp_deinit();
-	/* enable LXTAL */
 	rcu_osci_on (RCU_LXTAL);
-	/* wait till LXTAL is ready */
+
 	if (SUCCESS != rcu_osci_stab_wait(RCU_LXTAL)) {
 		return false;
 	}
-	/* select RCU_LXTAL as RTC clock source */
+
 	rcu_rtc_clock_config (RCU_RTCSRC_LXTAL);
-	/* enable RTC Clock */
 	rcu_periph_clock_enable (RCU_RTC);
-	/* wait for RTC registers synchronization */
 	rtc_register_sync_wait();
-	/* wait until last write operation on RTC registers has finished */
 	rtc_lwoff_wait();
-	/* set RTC prescaler: set RTC period to 1s */
 	rtc_prescaler_set(32767);
-	/* wait until last write operation on RTC registers has finished */
 	rtc_lwoff_wait();
 
 	return true;

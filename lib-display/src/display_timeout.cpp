@@ -1,8 +1,8 @@
 /**
- * @file bitbanging595.cpp
+ * @file display_timeout.cpp
  *
  */
-/* Copyright (C) 2021 by Arjan van Vught mailto:info@gd32-dmx.org
+/* Copyright (C) 2022 by Arjan van Vught mailto:info@orangepi-dmx.nl
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,8 +23,9 @@
  * THE SOFTWARE.
  */
 
-#include "gd32/bitbanging595.h"
-
-BitBanging595 *BitBanging595::s_pThis;
-uint32_t BitBanging595::s_nData;
-uint32_t BitBanging595::s_nDataPrevious;
+namespace display {
+namespace timeout {
+void __attribute__((weak)) gpio_init() {}
+bool __attribute__((weak)) gpio_renew() { return false;}
+}  // namespace timeout
+}  // namespace display

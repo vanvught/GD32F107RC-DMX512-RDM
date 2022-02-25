@@ -28,6 +28,9 @@
 
 float gd32_adc_gettemp(void);
 float gd32_adc_getvref(void);
+#if defined (GD32F4XX)
+float gd32_adc_getvbat(void);
+#endif
 
 #ifdef __cplusplus
 extern "C" {

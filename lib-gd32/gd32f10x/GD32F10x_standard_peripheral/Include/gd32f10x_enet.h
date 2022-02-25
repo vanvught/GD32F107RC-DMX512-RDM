@@ -65,9 +65,12 @@ OF SUCH DAMAGE.
 /* #define USE_DELAY */
 
 #ifndef _PHY_H_
-#define DP83848                          0
-#define LAN8700                          1
-#define PHY_TYPE                         DP83848
+#define DP83848	 	0
+#define LAN8700 	1
+#define RTL8201F	2		/** AvV **/
+#ifndef PHY_TYPE			/** AvV **/
+# define PHY_TYPE	DP83848	/** AvV **/
+#endif						/** AvV **/
 
 #define PHY_ADDRESS                      ((uint16_t)1U)                         /*!< phy address determined by the hardware */
 
@@ -108,6 +111,10 @@ OF SUCH DAMAGE.
 #define PHY_SR                           16U                                    /*!< tranceiver status register */
 #define PHY_SPEED_STATUS                 ((uint16_t)0x0002)                     /*!< configured information of speed: 10Mbit/s */
 #define PHY_DUPLEX_STATUS                ((uint16_t)0x0004)                     /*!< configured information of duplex: full-duplex */
+#elif(PHY_TYPE == RTL8201F)	/** AvV **/
+# define PHY_SR                          0U                                     /*!< tranceiver status register */
+# define PHY_SPEED_STATUS                ((uint16_t)0x0000)                     /*!< configured information of speed: 10Mbit/s */
+# define PHY_DUPLEX_STATUS               ((uint16_t)0x0100)                     /*!< configured information of duplex: full-duplex */
 #endif /* PHY_TYPE */
 
 #endif /* _PHY_H_ */

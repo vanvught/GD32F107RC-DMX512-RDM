@@ -45,3 +45,15 @@ jobs:
         make -f Makefile.GD32 clean
         make -f Makefile.GD32
         cd -
+    - name: make gd32_osc_e131_dmx
+      run: |
+        cd gd32_emac_osc_dmx
+        make -f Makefile.GD32 clean
+        make -f Makefile.GD32
+        cd -
+    - name: make gd32_emac_osc_pixel
+      run: |
+        cd gd32_emac_osc_pixel
+        make -f Makefile.GD32 clean
+        make -f Makefile.GD32
+        cd -

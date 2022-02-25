@@ -41,6 +41,37 @@
 
 #include "debug.h"
 
+#if defined (GD32F4XX)
+// GPIO
+static void gpio_mode_output(uint32_t gpio_periph, uint32_t pin) {
+	gpio_af_set(gpio_periph, GPIO_AF_0, pin);
+	gpio_mode_set(gpio_periph, GPIO_MODE_OUTPUT, GPIO_PUPD_NONE, pin);
+//	gpio_output_options_set(gpio_periph, GPIO_OTYPE_PP, GPIO_OSPEED_50MHZ, pin);
+}
+static void gpio_mode_af(uint32_t gpio_periph, uint32_t pin) {
+	gpio_af_set(gpio_periph, GPIO_AF_7, pin);
+	gpio_mode_set(gpio_periph, GPIO_MODE_AF, GPIO_PUPD_PULLUP, pin);
+//	gpio_output_options_set(gpio_periph, GPIO_OTYPE_PP, GPIO_OSPEED_50MHZ, pin);
+}
+// DMA
+# define DMA_PARAMETER_STRUCT				dma_single_data_parameter_struct
+# define DMA_CHMADDR						DMA_CHM0ADDR
+# define DMA_MEMORY_TO_PERIPHERAL			DMA_MEMORY_TO_PERIPH
+# define DMA_PERIPHERAL_WIDTH_8BIT			DMA_PERIPH_WIDTH_8BIT
+# define dma_init							dma_single_data_mode_init
+# define dma_memory_to_memory_disable(x,y)
+#else
+// GPIO
+static void gpio_mode_output(uint32_t gpio_periph, uint32_t pin) {
+	gpio_init(gpio_periph, GPIO_MODE_OUT_PP, GPIO_OSPEED_50MHZ, pin);
+}
+static void gpio_mode_af(uint32_t gpio_periph, uint32_t pin) {
+	gpio_init(gpio_periph, GPIO_MODE_AF_PP, GPIO_OSPEED_50MHZ, pin);
+}
+// DMA
+# define DMA_PARAMETER_STRUCT				dma_parameter_struct
+#endif
+
 #if defined (LOGIC_ANALYZER)
 # define PE0_LOW()	gpio_bit_reset(GPIOE, GPIO_PIN_0)
 # define PE0_HIGH()	gpio_bit_set(GPIOE, GPIO_PIN_0)
@@ -556,137 +587,209 @@ static void timer6_config() {
 }
 
 static void usart_dma_config(void) {
-	dma_parameter_struct dma_init_struct;
+	DMA_PARAMETER_STRUCT dma_init_struct;
 	rcu_periph_clock_enable(RCU_DMA0);
 	rcu_periph_clock_enable(RCU_DMA1);
 
 #if defined (DMX_USE_USART0)
 	dma_deinit(USART0_DMA, USART0_TX_DMA_CH);
 	dma_init_struct.direction = DMA_MEMORY_TO_PERIPHERAL;
-	dma_init_struct.memory_addr = (uint32_t) s_TxBuffer[config::USART0_PORT].data;
+//	dma_init_struct.memory_addr = (uint32_t) s_TxBuffer[config::USART0_PORT].data;
 	dma_init_struct.memory_inc = DMA_MEMORY_INCREASE_ENABLE;
+#if !defined (GD32F4XX)
 	dma_init_struct.memory_width = DMA_MEMORY_WIDTH_8BIT;
-	dma_init_struct.number = s_TxBuffer[config::USART0_PORT].nLength;
+#endif
+//	dma_init_struct.number = s_TxBuffer[config::USART0_PORT].nLength;
 	dma_init_struct.periph_addr = USART0 + 0x04U;
 	dma_init_struct.periph_inc = DMA_PERIPH_INCREASE_DISABLE;
+#if !defined (GD32F4XX)
 	dma_init_struct.periph_width = DMA_PERIPHERAL_WIDTH_8BIT;
+#else
+	dma_init_struct.periph_memory_width = DMA_PERIPHERAL_WIDTH_8BIT;
+#endif
 	dma_init_struct.priority = DMA_PRIORITY_HIGH;
 	dma_init(USART0_DMA, USART0_TX_DMA_CH, &dma_init_struct);
 	/* configure DMA mode */
 	dma_circulation_disable(USART0_DMA, USART0_TX_DMA_CH);
 	dma_memory_to_memory_disable(USART0_DMA, USART0_TX_DMA_CH);
+# if defined (GD32F4XX)
+	dma_channel_subperipheral_select(USART0_DMA, USART0_TX_DMA_CH, USART0_TX_DMA_SUBPERIx);
+# endif
 #endif
 #if defined (DMX_USE_USART1)
 	dma_deinit(USART1_DMA, USART1_TX_DMA_CH);
 	dma_init_struct.direction = DMA_MEMORY_TO_PERIPHERAL;
-	dma_init_struct.memory_addr = (uint32_t) s_TxBuffer[config::USART1_PORT].data;
+//	dma_init_struct.memory_addr = (uint32_t) s_TxBuffer[config::USART1_PORT].data;
 	dma_init_struct.memory_inc = DMA_MEMORY_INCREASE_ENABLE;
+#if !defined (GD32F4XX)
 	dma_init_struct.memory_width = DMA_MEMORY_WIDTH_8BIT;
-	dma_init_struct.number = s_TxBuffer[config::USART1_PORT].nLength;
+#endif
+//	dma_init_struct.number = s_TxBuffer[config::USART1_PORT].nLength;
 	dma_init_struct.periph_addr = USART1 + 0x04U;
 	dma_init_struct.periph_inc = DMA_PERIPH_INCREASE_DISABLE;
+#if !defined (GD32F4XX)
 	dma_init_struct.periph_width = DMA_PERIPHERAL_WIDTH_8BIT;
+#else
+	dma_init_struct.periph_memory_width = DMA_PERIPHERAL_WIDTH_8BIT;
+#endif
 	dma_init_struct.priority = DMA_PRIORITY_HIGH;
 	dma_init(USART1_DMA, USART1_TX_DMA_CH, &dma_init_struct);
 	/* configure DMA mode */
 	dma_circulation_disable(USART1_DMA, USART1_TX_DMA_CH);
 	dma_memory_to_memory_disable(USART1_DMA, USART1_TX_DMA_CH);
+# if defined (GD32F4XX)
+	dma_channel_subperipheral_select(USART1_DMA, USART1_TX_DMA_CH, USART1_TX_DMA_SUBPERIx);
+# endif
 #endif
 #if defined (DMX_USE_USART2)
 	dma_deinit(USART2_DMA, USART2_TX_DMA_CH);
 	dma_init_struct.direction = DMA_MEMORY_TO_PERIPHERAL;
-	dma_init_struct.memory_addr = (uint32_t) s_TxBuffer[config::USART2_PORT].data;
+//	dma_init_struct.memory_addr = (uint32_t) s_TxBuffer[config::USART2_PORT].data;
 	dma_init_struct.memory_inc = DMA_MEMORY_INCREASE_ENABLE;
+#if !defined (GD32F4XX)
 	dma_init_struct.memory_width = DMA_MEMORY_WIDTH_8BIT;
-	dma_init_struct.number = s_TxBuffer[config::USART2_PORT].nLength;
+#endif
+//	dma_init_struct.number = s_TxBuffer[config::USART2_PORT].nLength;
 	dma_init_struct.periph_addr = USART2 + 0x04U;
 	dma_init_struct.periph_inc = DMA_PERIPH_INCREASE_DISABLE;
+#if !defined (GD32F4XX)
 	dma_init_struct.periph_width = DMA_PERIPHERAL_WIDTH_8BIT;
+#else
+	dma_init_struct.periph_memory_width = DMA_PERIPHERAL_WIDTH_8BIT;
+#endif
 	dma_init_struct.priority = DMA_PRIORITY_HIGH;
 	dma_init(USART2_DMA, USART2_TX_DMA_CH, &dma_init_struct);
 	/* configure DMA mode */
 	dma_circulation_disable(USART2_DMA, USART2_TX_DMA_CH);
 	dma_memory_to_memory_disable(USART2_DMA, USART2_TX_DMA_CH);
+# if defined (GD32F4XX)
+	dma_channel_subperipheral_select(USART2_DMA, USART2_TX_DMA_CH, USART2_TX_DMA_SUBPERIx);
+# endif
 #endif
 #if defined (DMX_USE_UART3)
 	dma_deinit(DMA1, DMA_CH4);
 	dma_init_struct.direction = DMA_MEMORY_TO_PERIPHERAL;
-	dma_init_struct.memory_addr = (uint32_t) s_TxBuffer[config::UART3_PORT].data;
+//	dma_init_struct.memory_addr = (uint32_t) s_TxBuffer[config::UART3_PORT].data;
 	dma_init_struct.memory_inc = DMA_MEMORY_INCREASE_ENABLE;
+#if !defined (GD32F4XX)
 	dma_init_struct.memory_width = DMA_MEMORY_WIDTH_8BIT;
-	dma_init_struct.number = s_TxBuffer[config::UART3_PORT].nLength;
+#endif
+//	dma_init_struct.number = s_TxBuffer[config::UART3_PORT].nLength;
 	dma_init_struct.periph_addr = UART3 + 0x04U;
 	dma_init_struct.periph_inc = DMA_PERIPH_INCREASE_DISABLE;
+#if !defined (GD32F4XX)
 	dma_init_struct.periph_width = DMA_PERIPHERAL_WIDTH_8BIT;
+#else
+	dma_init_struct.periph_memory_width = DMA_PERIPHERAL_WIDTH_8BIT;
+#endif
 	dma_init_struct.priority = DMA_PRIORITY_HIGH;
 	dma_init(DMA1, DMA_CH4, &dma_init_struct);
 	/* configure DMA mode */
 	dma_circulation_disable(DMA1, DMA_CH4);
 	dma_memory_to_memory_disable(DMA1, DMA_CH4);
+# if defined (GD32F4XX)
+	dma_channel_subperipheral_select(UART3_DMA, UART3_TX_DMA_CH, UART3_TX_DMA_SUBPERIx);
+# endif
 #endif
 #if defined (DMX_USE_UART4)
 	dma_deinit(DMA1, DMA_CH3);
 	dma_init_struct.direction = DMA_MEMORY_TO_PERIPHERAL;
-	dma_init_struct.memory_addr = (uint32_t) s_TxBuffer[config::UART4_PORT].data;
+//	dma_init_struct.memory_addr = (uint32_t) s_TxBuffer[config::UART4_PORT].data;
 	dma_init_struct.memory_inc = DMA_MEMORY_INCREASE_ENABLE;
+#if !defined (GD32F4XX)
 	dma_init_struct.memory_width = DMA_MEMORY_WIDTH_8BIT;
-	dma_init_struct.number = s_TxBuffer[config::UART4_PORT].nLength;
+#endif
+//	dma_init_struct.number = s_TxBuffer[config::UART4_PORT].nLength;
 	dma_init_struct.periph_addr = UART4 + 0x04U;
 	dma_init_struct.periph_inc = DMA_PERIPH_INCREASE_DISABLE;
+#if !defined (GD32F4XX)
 	dma_init_struct.periph_width = DMA_PERIPHERAL_WIDTH_8BIT;
+#else
+	dma_init_struct.periph_memory_width = DMA_PERIPHERAL_WIDTH_8BIT;
+#endif
 	dma_init_struct.priority = DMA_PRIORITY_HIGH;
 	dma_init(DMA1, DMA_CH3, &dma_init_struct);
 	/* configure DMA mode */
 	dma_circulation_disable(DMA1, DMA_CH3);
 	dma_memory_to_memory_disable(DMA1, DMA_CH3);
+# if defined (GD32F4XX)
+	dma_channel_subperipheral_select(UART4_DMA, UART4_TX_DMA_CH, UART4_TX_DMA_SUBPERIx);
+# endif
 #endif
 #if defined (DMX_USE_USART5)
 	dma_deinit(USART5_DMA, USART5_TX_DMA_CH);
 	dma_init_struct.direction = DMA_MEMORY_TO_PERIPHERAL;
-	dma_init_struct.memory_addr = (uint32_t) s_TxBuffer[config::USART5_PORT].data;
+//	dma_init_struct.memory_addr = (uint32_t) s_TxBuffer[config::USART5_PORT].data;
 	dma_init_struct.memory_inc = DMA_MEMORY_INCREASE_ENABLE;
+#if !defined (GD32F4XX)
 	dma_init_struct.memory_width = DMA_MEMORY_WIDTH_8BIT;
-	dma_init_struct.number = s_TxBuffer[config::USART5_PORT].nLength;
+#endif
+//	dma_init_struct.number = s_TxBuffer[config::USART5_PORT].nLength;
 	dma_init_struct.periph_addr = USART5 + 0x04U;
 	dma_init_struct.periph_inc = DMA_PERIPH_INCREASE_DISABLE;
+#if !defined (GD32F4XX)
 	dma_init_struct.periph_width = DMA_PERIPHERAL_WIDTH_8BIT;
+#else
+	dma_init_struct.periph_memory_width = DMA_PERIPHERAL_WIDTH_8BIT;
+#endif
 	dma_init_struct.priority = DMA_PRIORITY_HIGH;
 	dma_init(USART5_DMA, USART5_TX_DMA_CH, &dma_init_struct);
 	/* configure DMA mode */
 	dma_circulation_disable(USART5_DMA, USART5_TX_DMA_CH);
 	dma_memory_to_memory_disable(USART5_DMA, USART5_TX_DMA_CH);
+# if defined (GD32F4XX)
+	dma_channel_subperipheral_select(USART5_DMA, USART5_TX_DMA_CH, USART5_TX_DMA_SUBPERIx);
+# endif
 #endif
 #if defined (DMX_USE_UART6)
 	dma_deinit(UART6_DMA, UART6_TX_DMA_CH);
 	dma_init_struct.direction = DMA_MEMORY_TO_PERIPHERAL;
-	dma_init_struct.memory_addr = (uint32_t) s_TxBuffer[config::UART6_PORT].data;
+//	dma_init_struct.memory_addr = (uint32_t) s_TxBuffer[config::UART6_PORT].data;
 	dma_init_struct.memory_inc = DMA_MEMORY_INCREASE_ENABLE;
+#if !defined (GD32F4XX)
 	dma_init_struct.memory_width = DMA_MEMORY_WIDTH_8BIT;
-	dma_init_struct.number = s_TxBuffer[config::UART6_PORT].nLength;
+#endif
+//	dma_init_struct.number = s_TxBuffer[config::UART6_PORT].nLength;
 	dma_init_struct.periph_addr = UART6 + 0x04U;
 	dma_init_struct.periph_inc = DMA_PERIPH_INCREASE_DISABLE;
+#if !defined (GD32F4XX)
 	dma_init_struct.periph_width = DMA_PERIPHERAL_WIDTH_8BIT;
+#else
+	dma_init_struct.periph_memory_width = DMA_PERIPHERAL_WIDTH_8BIT;
+#endif
 	dma_init_struct.priority = DMA_PRIORITY_HIGH;
 	dma_init(UART6_DMA, UART6_TX_DMA_CH, &dma_init_struct);
 	/* configure DMA mode */
 	dma_circulation_disable(UART6_DMA, UART6_TX_DMA_CH);
 	dma_memory_to_memory_disable(UART6_DMA, UART6_TX_DMA_CH);
+# if defined (GD32F4XX)
+	dma_channel_subperipheral_select(UART6_DMA, UART6_TX_DMA_CH, UART6_TX_DMA_SUBPERIx);
+# endif
 #endif
 #if defined (DMX_USE_UART7)
 	dma_deinit(UART7_DMA, UART7_TX_DMA_CH);
 	dma_init_struct.direction = DMA_MEMORY_TO_PERIPHERAL;
-	dma_init_struct.memory_addr = (uint32_t) s_TxBuffer[config::UART7_PORT].data;
+//	dma_init_struct.memory_addr = (uint32_t) s_TxBuffer[config::UART7_PORT].data;
 	dma_init_struct.memory_inc = DMA_MEMORY_INCREASE_ENABLE;
+#if !defined (GD32F4XX)
 	dma_init_struct.memory_width = DMA_MEMORY_WIDTH_8BIT;
-	dma_init_struct.number = s_TxBuffer[config::UART7_PORT].nLength;
+#endif
+//	dma_init_struct.number = s_TxBuffer[config::UART7_PORT].nLength;
 	dma_init_struct.periph_addr = UART7 + 0x04U;
 	dma_init_struct.periph_inc = DMA_PERIPH_INCREASE_DISABLE;
+#if !defined (GD32F4XX)
 	dma_init_struct.periph_width = DMA_PERIPHERAL_WIDTH_8BIT;
+#else
+	dma_init_struct.periph_memory_width = DMA_PERIPHERAL_WIDTH_8BIT;
+#endif
 	dma_init_struct.priority = DMA_PRIORITY_HIGH;
 	dma_init(UART7_DMA, UART7_TX_DMA_CH, &dma_init_struct);
 	/* configure DMA mode */
 	dma_circulation_disable(UART7_DMA, UART7_TX_DMA_CH);
 	dma_memory_to_memory_disable(UART7_DMA, UART7_TX_DMA_CH);
+# if defined (GD32F4XX)
+	dma_channel_subperipheral_select(UART7_DMA, UART7_TX_DMA_CH, UART7_TX_DMA_SUBPERIx);
+# endif
 #endif
 }
 
@@ -699,56 +802,56 @@ void TIMER1_IRQHandler() {
 
 	if ((nIntFlag & TIMER_INT_FLAG_CH0) == TIMER_INT_FLAG_CH0) {		// Start break
 #if defined (DMX_USE_USART0)
-		gpio_init(USART0_GPIO_PORT, GPIO_MODE_OUT_PP, GPIO_OSPEED_50MHZ, USART0_TX_PIN);
+		gpio_mode_output(USART0_GPIO_PORT, USART0_TX_PIN);
 		if (nUartsSending & (1U << config::USART0_PORT)) {
 			s_nUartsSending |= (1U << (config::USART0_PORT + 8));
 			GPIO_BC(USART0_GPIO_PORT) = USART0_TX_PIN;
 		}
 #endif
 #if defined (DMX_USE_USART1)
-		gpio_init(USART1_GPIO_PORT, GPIO_MODE_OUT_PP, GPIO_OSPEED_50MHZ, USART1_TX_PIN);
+		gpio_mode_output(USART1_GPIO_PORT, USART1_TX_PIN);
 		if (nUartsSending & (1U << config::USART1_PORT)) {
 			s_nUartsSending |= (1U << (config::USART1_PORT + 8));
 			GPIO_BC(USART1_GPIO_PORT) = USART1_TX_PIN;
 		}
 #endif
 #if defined (DMX_USE_USART2)
-		gpio_init(USART2_GPIO_PORT, GPIO_MODE_OUT_PP, GPIO_OSPEED_50MHZ, USART2_TX_PIN);
+		gpio_mode_output(USART2_GPIO_PORT, USART2_TX_PIN);
 		if (nUartsSending & (1U << config::USART2_PORT)) {
 			s_nUartsSending |= (1U << (config::USART2_PORT + 8));
 			GPIO_BC(USART2_GPIO_PORT) = USART2_TX_PIN;
 		}
 #endif
 #if defined (DMX_USE_UART3)
-		gpio_init(UART3_GPIO_PORT, GPIO_MODE_OUT_PP, GPIO_OSPEED_50MHZ, UART3_TX_PIN);
+		gpio_mode_output(UART3_GPIO_PORT, UART3_TX_PIN);
 		if (nUartsSending & (1U << config::UART3_PORT)) {
 			s_nUartsSending |= (1U << (config::UART3_PORT + 8));
 			GPIO_BC(UART3_GPIO_PORT) = UART3_TX_PIN;
 		}
 #endif
 #if defined (DMX_USE_UART4)
-		gpio_init(UART4_GPIO_TX_PORT, GPIO_MODE_OUT_PP, GPIO_OSPEED_50MHZ, UART4_TX_PIN);
+		gpio_mode_output(UART4_GPIO_TX_PORT, UART4_TX_PIN);
 		if (nUartsSending & (1U << config::UART4_PORT)) {
 			s_nUartsSending |= (1U << (config::UART4_PORT + 8));
 			GPIO_BC(UART4_GPIO_TX_PORT) = UART4_TX_PIN;
 		}
 #endif
 #if defined (DMX_USE_USART5)
-		gpio_init(USART5_GPIO_PORT, GPIO_MODE_OUT_PP, GPIO_OSPEED_50MHZ, USART5_TX_PIN);
+		gpio_mode_output(USART5_GPIO_PORT, USART5_TX_PIN);
 		if (nUartsSending & (1U << config::USART5_PORT)) {
 			s_nUartsSending |= (1U << (config::USART5_PORT + 8));
 			GPIO_BC(USART5_GPIO_PORT) = USART5_TX_PIN;
 		}
 #endif
 #if defined (DMX_USE_UART6)
-		gpio_init(UART6_GPIO_PORT, GPIO_MODE_OUT_PP, GPIO_OSPEED_50MHZ, UART6_TX_PIN);
+		gpio_mode_output(UART6_GPIO_PORT, UART6_TX_PIN);
 		if (nUartsSending & (1U << config::UART6_PORT)) {
 			s_nUartsSending |= (1U << (config::UART6_PORT + 8));
 			GPIO_BC(UART6_GPIO_PORT) = UART6_TX_PIN;
 		}
 #endif
 #if defined (DMX_USE_UART7)
-		gpio_init(UART7_GPIO_PORT, GPIO_MODE_OUT_PP, GPIO_OSPEED_50MHZ, UART7_TX_PIN);
+		gpio_mode_output(UART7_GPIO_PORT, UART7_TX_PIN);
 		if (nUartsSending & (1U << config::UART7_PORT)) {
 			s_nUartsSending |= (1U << (config::UART7_PORT + 8));
 			GPIO_BC(UART7_GPIO_PORT) = UART7_TX_PIN;
@@ -757,42 +860,42 @@ void TIMER1_IRQHandler() {
 	} else if ((nIntFlag & TIMER_INT_FLAG_CH1) == TIMER_INT_FLAG_CH1) {	// Stop break
 #if defined (DMX_USE_USART0)
 		if (nUartsSending & (1U << (config::USART0_PORT + 8))) {
-			gpio_init(USART0_GPIO_PORT, GPIO_MODE_AF_PP, GPIO_OSPEED_50MHZ, USART0_TX_PIN);
+			gpio_mode_af(USART0_GPIO_PORT, USART0_TX_PIN);
 		}
 #endif
 #if defined (DMX_USE_USART1)
 		if (nUartsSending & (1U << (config::USART1_PORT + 8))) {
-			gpio_init(USART1_GPIO_PORT, GPIO_MODE_AF_PP, GPIO_OSPEED_50MHZ, USART1_TX_PIN);
+			gpio_mode_af(USART1_GPIO_PORT, USART1_TX_PIN);
 		}
 #endif
 #if defined (DMX_USE_USART2)
 		if (nUartsSending & (1U << (config::USART2_PORT + 8))) {
-			gpio_init(USART2_GPIO_PORT, GPIO_MODE_AF_PP, GPIO_OSPEED_50MHZ, USART2_TX_PIN);
+			gpio_mode_af(USART2_GPIO_PORT, USART2_TX_PIN);
 		}
 #endif
 #if defined (DMX_USE_UART3)
 		if (nUartsSending & (1U << (config::UART3_PORT + 8))) {
-			gpio_init(UART3_GPIO_PORT, GPIO_MODE_AF_PP, GPIO_OSPEED_50MHZ,  UART3_TX_PIN);
+			gpio_mode_af(UART3_GPIO_PORT, UART3_TX_PIN);
 		}
 #endif
 #if defined (DMX_USE_UART4)
 		if (nUartsSending & (1U << (config::UART4_PORT + 8))) {
-			gpio_init(UART4_GPIO_TX_PORT, GPIO_MODE_AF_PP, GPIO_OSPEED_50MHZ, UART4_TX_PIN);
+			gpio_mode_af(UART4_GPIO_TX_PORT, UART4_TX_PIN);
 		}
 #endif
 #if defined (DMX_USE_USART5)
 		if (nUartsSending & (1U << (config::USART5_PORT + 8))) {
-			gpio_init(USART5_GPIO_PORT, GPIO_MODE_AF_PP, GPIO_OSPEED_50MHZ, USART5_TX_PIN);
+			gpio_mode_af(USART5_GPIO_PORT, USART5_TX_PIN);
 		}
 #endif
 #if defined (DMX_USE_UART6)
 		if (nUartsSending & (1U << (config::UART6_PORT + 8))) {
-			gpio_init(UART6_GPIO_PORT, GPIO_MODE_AF_PP, GPIO_OSPEED_50MHZ, UART6_TX_PIN);
+			gpio_mode_af(UART6_GPIO_PORT, UART6_TX_PIN);
 		}
 #endif
 #if defined (DMX_USE_UART7)
 		if (nUartsSending & (1U << (config::UART7_PORT + 8))) {
-			gpio_init(UART7_GPIO_PORT, GPIO_MODE_AF_PP, GPIO_OSPEED_50MHZ, UART7_TX_PIN);
+			gpio_mode_af(UART7_GPIO_PORT, UART7_TX_PIN);
 		}
 #endif
 	} else if ((nIntFlag & TIMER_INT_FLAG_CH2) == TIMER_INT_FLAG_CH2) {	// Send data
@@ -800,7 +903,7 @@ void TIMER1_IRQHandler() {
 		if (nUartsSending & (1U << (config::USART0_PORT + 8))) {
 			DMA_CHCTL(USART0_DMA, USART0_TX_DMA_CH) &= ~DMA_CHXCTL_CHEN;
 			DMA_CHMADDR(USART0_DMA, USART0_TX_DMA_CH) = (uint32_t) s_TxBuffer[config::USART0_PORT].data;
-			DMA_CHCNT(USART0_DMA, USART0_TX_DMA_CH) = (s_TxBuffer[config::USART0_PORT].nLength & DMA_CHANNEL_CNT_MASK);
+			DMA_CHCNT(USART0_DMA, USART0_TX_DMA_CH) = (s_TxBuffer[config::USART0_PORT].nLength & DMA_CHXCNT_CNT);
 			DMA_CHCTL(USART0_DMA, USART0_TX_DMA_CH) |= DMA_CHXCTL_CHEN;
 			usart_dma_transmit_config(USART0, USART_DENT_ENABLE);
 		}
@@ -809,7 +912,7 @@ void TIMER1_IRQHandler() {
 		if (nUartsSending & (1U << (config::USART1_PORT + 8))) {
 			DMA_CHCTL(USART1_DMA, USART1_TX_DMA_CH) &= ~DMA_CHXCTL_CHEN;
 			DMA_CHMADDR(USART1_DMA, USART1_TX_DMA_CH) = (uint32_t) s_TxBuffer[config::USART1_PORT].data;
-			DMA_CHCNT(USART1_DMA, USART1_TX_DMA_CH) = (s_TxBuffer[config::USART1_PORT].nLength & DMA_CHANNEL_CNT_MASK);
+			DMA_CHCNT(USART1_DMA, USART1_TX_DMA_CH) = (s_TxBuffer[config::USART1_PORT].nLength & DMA_CHXCNT_CNT);
 			DMA_CHCTL(USART1_DMA, USART1_TX_DMA_CH) |= DMA_CHXCTL_CHEN;
 			usart_dma_transmit_config(USART1, USART_DENT_ENABLE);
 		}
@@ -818,7 +921,7 @@ void TIMER1_IRQHandler() {
 		if (nUartsSending & (1U << (config::USART2_PORT + 8))) {
 			DMA_CHCTL(USART2_DMA, USART2_TX_DMA_CH) &= ~DMA_CHXCTL_CHEN;
 			DMA_CHMADDR(USART2_DMA, USART2_TX_DMA_CH) = (uint32_t) s_TxBuffer[config::USART2_PORT].data;
-			DMA_CHCNT(USART2_DMA, USART2_TX_DMA_CH) = (s_TxBuffer[config::USART2_PORT].nLength & DMA_CHANNEL_CNT_MASK);
+			DMA_CHCNT(USART2_DMA, USART2_TX_DMA_CH) = (s_TxBuffer[config::USART2_PORT].nLength & DMA_CHXCNT_CNT);
 			DMA_CHCTL(USART2_DMA, USART2_TX_DMA_CH) |= DMA_CHXCTL_CHEN;
 			usart_dma_transmit_config(USART2, USART_DENT_ENABLE);
 		}
@@ -827,7 +930,7 @@ void TIMER1_IRQHandler() {
 		if (nUartsSending & (1U << (config::UART3_PORT + 8))) {
 			dma_channel_disable(UART3_DMA, UART3_TX_DMA_CH);
 			DMA_CHMADDR(UART3_DMA, UART3_TX_DMA_CH) = (uint32_t) s_TxBuffer[config::UART3_PORT].data;
-			DMA_CHCNT(UART3_DMA, UART3_TX_DMA_CH) = (s_TxBuffer[config::UART3_PORT].nLength & DMA_CHANNEL_CNT_MASK);
+			DMA_CHCNT(UART3_DMA, UART3_TX_DMA_CH) = (s_TxBuffer[config::UART3_PORT].nLength & DMA_CHXCNT_CNT);
 			dma_channel_enable(UART3_DMA, UART3_TX_DMA_CH);
 			usart_dma_transmit_config(UART3, USART_DENT_ENABLE);
 		}
@@ -836,7 +939,7 @@ void TIMER1_IRQHandler() {
 		if (nUartsSending & (1U << (config::UART4_PORT + 8))) {
 			dma_channel_disable(UART4_DMA, UART4_TX_DMA_CH);
 			DMA_CHMADDR(UART4_DMA, UART4_TX_DMA_CH) = (uint32_t) s_TxBuffer[config::UART4_PORT].data;
-			DMA_CHCNT(UART4_DMA, UART4_TX_DMA_CH) = (s_TxBuffer[config::UART4_PORT].nLength & DMA_CHANNEL_CNT_MASK);
+			DMA_CHCNT(UART4_DMA, UART4_TX_DMA_CH) = (s_TxBuffer[config::UART4_PORT].nLength & DMA_CHXCNT_CNT);
 			dma_channel_enable(UART4_DMA, UART4_TX_DMA_CH);
 			usart_dma_transmit_config(UART4, USART_DENT_ENABLE);
 		}
@@ -845,7 +948,7 @@ void TIMER1_IRQHandler() {
 		if (nUartsSending & (1U << (config::USART5_PORT + 8))) {
 			DMA_CHCTL(USART5_DMA, USART5_TX_DMA_CH) &= ~DMA_CHXCTL_CHEN;
 			DMA_CHMADDR(USART5_DMA, USART5_TX_DMA_CH) = (uint32_t) s_TxBuffer[config::USART5_PORT].data;
-			DMA_CHCNT(USART5_DMA, USART5_TX_DMA_CH) = (s_TxBuffer[config::USART5_PORT].nLength & DMA_CHANNEL_CNT_MASK);
+			DMA_CHCNT(USART5_DMA, USART5_TX_DMA_CH) = (s_TxBuffer[config::USART5_PORT].nLength & DMA_CHXCNT_CNT);
 			DMA_CHCTL(USART5_DMA, USART5_TX_DMA_CH) |= DMA_CHXCTL_CHEN;
 			usart_dma_transmit_config(USART5, USART_DENT_ENABLE);
 		}
@@ -854,7 +957,7 @@ void TIMER1_IRQHandler() {
 		if (nUartsSending & (1U << (config::UART6_PORT + 8))) {
 			dma_channel_disable(UART6_DMA, UART6_TX_DMA_CH);
 			DMA_CHMADDR(UART6_DMA, UART6_TX_DMA_CH) = (uint32_t) s_TxBuffer[config::UART6_PORT].data;
-			DMA_CHCNT(UART6_DMA, UART6_TX_DMA_CH) = (s_TxBuffer[config::UART6_PORT].nLength & DMA_CHANNEL_CNT_MASK);
+			DMA_CHCNT(UART6_DMA, UART6_TX_DMA_CH) = (s_TxBuffer[config::UART6_PORT].nLength & DMA_CHXCNT_CNT);
 			dma_channel_enable(UART6_DMA, UART6_TX_DMA_CH);
 			usart_dma_transmit_config(UART6, USART_DENT_ENABLE);
 		}
@@ -863,7 +966,7 @@ void TIMER1_IRQHandler() {
 		if (nUartsSending & (1U << (config::UART7_PORT + 8))) {
 			dma_channel_disable(UART7_DMA, UART7_TX_DMA_CH);
 			DMA_CHMADDR(UART7_DMA, UART7_TX_DMA_CH) = (uint32_t) s_TxBuffer[config::UART6_PORT].data;
-			DMA_CHCNT(UART7_DMA, UART7_TX_DMA_CH) = (s_TxBuffer[config::UART7_PORT].nLength & DMA_CHANNEL_CNT_MASK);
+			DMA_CHCNT(UART7_DMA, UART7_TX_DMA_CH) = (s_TxBuffer[config::UART7_PORT].nLength & DMA_CHXCNT_CNT);
 			dma_channel_enable(UART7_DMA, UART7_TX_DMA_CH);
 			usart_dma_transmit_config(UART7, USART_DENT_ENABLE);
 		}
@@ -986,7 +1089,12 @@ Dmx::Dmx() {
 	s_nUartsSending = 0;
 
 	for (auto i = 0; i < DMX_MAX_PORTS; i++) {
+#if !defined (GD32F4XX)
 		gpio_init(s_DirGpio[i].nPort, GPIO_MODE_OUT_PP, GPIO_OSPEED_50MHZ, s_DirGpio[i].nPin);
+#else
+	    gpio_mode_set(s_DirGpio[i].nPort, GPIO_MODE_OUTPUT, GPIO_PUPD_PULLDOWN, s_DirGpio[i].nPin);
+	    gpio_output_options_set(s_DirGpio[i].nPort, GPIO_OTYPE_PP, GPIO_OSPEED_50MHZ, s_DirGpio[i].nPin);
+#endif
 		ClearData(i);
 		sv_PortState[i] = PortState::IDLE;
 		SetPortDirection(i, PortDirection::INP, false);
@@ -1092,7 +1200,7 @@ void Dmx::StartData(uint32_t nUart, uint32_t nPortIndex) {
 		while (RESET == usart_flag_get(nUart, USART_FLAG_TBE))
 			;
 
-		usart_interrupt_flag_clear(nUart, ~0);
+		usart_interrupt_flag_clear(nUart, USART_INT_FLAG_RBNE);
 	    usart_interrupt_enable(nUart, USART_INT_RBNE);
 
 	    sv_PortState[nPortIndex] = PortState::RX;
@@ -1377,49 +1485,49 @@ void Dmx::RdmSendRaw(uint32_t nPortIndex, const uint8_t* pRdmData, uint32_t nLen
 	switch (nUart) {
 #if defined (DMX_USE_USART0)
 		case USART0:
-			gpio_init(USART0_GPIO_PORT, GPIO_MODE_OUT_PP, GPIO_OSPEED_50MHZ, USART0_TX_PIN);
+			gpio_mode_output(USART0_GPIO_PORT, USART0_TX_PIN);
 			GPIO_BC(USART0_GPIO_PORT) = USART0_TX_PIN;
 			break;
 #endif
 #if defined (DMX_USE_USART1)
 		case USART1:
-			gpio_init(USART1_GPIO_PORT, GPIO_MODE_OUT_PP, GPIO_OSPEED_50MHZ, USART1_TX_PIN);
+			gpio_mode_output(USART1_GPIO_PORT, USART1_TX_PIN);
 			GPIO_BC(USART1_GPIO_PORT) = USART1_TX_PIN;
 			break;
 #endif
 #if defined (DMX_USE_USART2)
 		case USART2:
-			gpio_init(USART2_GPIO_PORT, GPIO_MODE_OUT_PP, GPIO_OSPEED_50MHZ, USART2_TX_PIN);
+			gpio_mode_output(USART2_GPIO_PORT, USART2_TX_PIN);
 			GPIO_BC(USART2_GPIO_PORT) = USART2_TX_PIN;
 			break;
 #endif
 #if defined (DMX_USE_UART3)
 		case UART3:
-			gpio_init(UART3_GPIO_PORT, GPIO_MODE_OUT_PP, GPIO_OSPEED_50MHZ, UART3_TX_PIN);
+			gpio_mode_output(UART3_GPIO_PORT, UART3_TX_PIN);
 			GPIO_BC(UART3_GPIO_PORT) = UART3_TX_PIN;
 			break;
 #endif
 #if defined (DMX_USE_UART4)
 		case UART4:
-			gpio_init(UART4_GPIO_TX_PORT, GPIO_MODE_OUT_PP, GPIO_OSPEED_50MHZ, UART4_TX_PIN);
+			gpio_mode_output(UART4_GPIO_TX_PORT, UART4_TX_PIN);
 			GPIO_BC(UART4_GPIO_TX_PORT) = UART4_TX_PIN;
 			break;
 #endif
 #if defined (DMX_USE_USART5)
 		case USART5:
-			gpio_init(USART5_GPIO_PORT, GPIO_MODE_OUT_PP, GPIO_OSPEED_50MHZ, USART5_TX_PIN);
+			gpio_mode_output(USART5_GPIO_PORT, USART5_TX_PIN);
 			GPIO_BC(USART5_GPIO_PORT) = USART5_TX_PIN;
 			break;
 #endif
 #if defined (DMX_USE_UART6)
 		case UART6:
-			gpio_init(UART6_GPIO_PORT, GPIO_MODE_OUT_PP, GPIO_OSPEED_50MHZ, UART6_TX_PIN);
+			gpio_mode_output(UART6_GPIO_PORT, UART6_TX_PIN);
 			GPIO_BC(UART6_GPIO_PORT) = UART6_TX_PIN;
 			break;
 #endif
 #if defined (DMX_USE_UART7)
 		case UART7:
-			gpio_init(UART7_GPIO_PORT, GPIO_MODE_OUT_PP, GPIO_OSPEED_50MHZ, UART7_TX_PIN);
+			gpio_mode_output(UART7_GPIO_PORT, UART7_TX_PIN);
 			GPIO_BC(UART7_GPIO_PORT) = UART7_TX_PIN;
 			break;
 #endif
@@ -1434,42 +1542,42 @@ void Dmx::RdmSendRaw(uint32_t nPortIndex, const uint8_t* pRdmData, uint32_t nLen
 	switch (nUart) {
 #if defined (DMX_USE_USART0)
 		case USART0:
-			gpio_init(USART0_GPIO_PORT, GPIO_MODE_AF_PP, GPIO_OSPEED_50MHZ, USART0_TX_PIN);
+			gpio_mode_af(USART0_GPIO_PORT, USART0_TX_PIN);
 			break;
 #endif
 #if defined (DMX_USE_USART1)
 		case USART1:
-			gpio_init(USART1_GPIO_PORT, GPIO_MODE_AF_PP, GPIO_OSPEED_50MHZ, USART1_TX_PIN);
+			gpio_mode_af(USART1_GPIO_PORT, USART1_TX_PIN);
 			break;
 #endif
 #if defined (DMX_USE_USART2)
 		case USART2:
-			gpio_init(USART2_GPIO_PORT, GPIO_MODE_AF_PP, GPIO_OSPEED_50MHZ, USART2_TX_PIN);
+			gpio_mode_af(USART2_GPIO_PORT, USART2_TX_PIN);
 			break;
 #endif
 #if defined (DMX_USE_UART3)
 		case UART3:
-			gpio_init(USART5_GPIO_PORT, GPIO_MODE_AF_PP, GPIO_OSPEED_50MHZ, UART3_TX_PIN);
+			gpio_mode_af(USART5_GPIO_PORT, UART3_TX_PIN);
 			break;
 #endif
 #if defined (DMX_USE_UART4)
 		case UART4:
-			gpio_init(UART4_GPIO_TX_PORT, GPIO_MODE_OUT_PP, GPIO_OSPEED_50MHZ, UART4_TX_PIN);
+			gpio_mode_af(UART4_GPIO_TX_PORT, UART4_TX_PIN);
 			break;
 #endif
 #if defined (DMX_USE_USART5)
 		case USART5:
-			gpio_init(USART5_GPIO_PORT, GPIO_MODE_AF_PP, GPIO_OSPEED_50MHZ, USART5_TX_PIN);
+			gpio_mode_af(USART5_GPIO_PORT, USART5_TX_PIN);
 			break;
 #endif
 #if defined (DMX_USE_UART6)
 		case UART6:
-			gpio_init(UART6_GPIO_PORT, GPIO_MODE_AF_PP, GPIO_OSPEED_50MHZ, UART6_TX_PIN);
+			gpio_mode_af(UART6_GPIO_PORT, UART6_TX_PIN);
 			break;
 #endif
 #if defined (DMX_USE_UART7)
 		case UART7:
-			gpio_init(UART7_GPIO_PORT, GPIO_MODE_OUT_PP, GPIO_OSPEED_50MHZ, UART7_TX_PIN);
+			gpio_mode_af(UART7_GPIO_PORT, UART7_TX_PIN);
 			break;
 #endif
 		default:

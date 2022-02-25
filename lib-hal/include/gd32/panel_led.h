@@ -2,7 +2,7 @@
  * @file panel_led.h
  *
  */
-/* Copyright (C) 2021 by Arjan van Vught mailto:info@gd32-dmx.org
+/* Copyright (C) 2021-2022 by Arjan van Vught mailto:info@gd32-dmx.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,10 +28,6 @@
 
 #include <cstdint>
 
-#if defined (USE_LEDBLINK_BITBANGING595)
-# include "gd32/bitbanging595.h"
-#endif
-
 namespace hal {
 namespace panelled {
 static constexpr uint32_t ACTIVITY = 0;
@@ -46,23 +42,17 @@ static constexpr uint32_t OSC_IN = 0;
 static constexpr uint32_t OSC_OUT = 0;
 static constexpr uint32_t TCNET = 0;
 // DMX
-static constexpr uint32_t PORT_A_RX = 0; 
-static constexpr uint32_t PORT_A_TX = 0; 
+static constexpr uint32_t PORT_A_RX = 0;
+static constexpr uint32_t PORT_A_TX = 0;
+//
+static constexpr uint32_t INVERTED = 0;
 }  // namespace panelled
 
-#if defined (USE_LEDBLINK_BITBANGING595)
 inline static void panel_led_on(uint32_t __attribute__((unused)) on) {
 }
 
 inline static void panel_led_off(uint32_t __attribute__((unused)) off) {
 }
-#else
-inline static void panel_led_on(uint32_t __attribute__((unused)) on) {
-}
-
-inline static void panel_led_off(uint32_t __attribute__((unused)) off) {
-}
-#endif
 }  // namespace hal
 
 #endif /* GD32_PANEL_LED_H_ */
