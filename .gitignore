@@ -31,18 +31,37 @@
 *.out
 *.app
 
-.DS_Store
+# Linux 
+.nfs*
+.nfs.*
 
-lib_gd32
-build_gd32
-
+# Apple
+.DS*
+._.DS*
+._*
 ._*.*
+
+# Eclipse
+.tracecompass
+*/.tracecompass
+
+# Build
+*/build_gd32/*
+*/lib_gd32/*
+*.su
+*.list
+
+*.bin
+udp_send
+
 sofware_version_id.h
-*._gd32
 
 gd32f20x*.*
 lib-gd32/gd32f20x/*
-udp_send
+gd32f30x*.*
+lib-gd32/gd32f30x/*
+gd32f4xx*.*
+lib-gd32/gd32f4xx/*
 
 lib-*/src/esp8266/*
 lib-*/include/esp8266/*
@@ -55,7 +74,7 @@ lib-*/include/linux/*
 
 lib-network/src/noemac/*
 
-*.bin
-do-tftp.sh
-udp_send
-
+# RDMNet LLRP Only
+generate_sofware_version_id.sh
+factorydefaults.h
+rdmsoftwareversion.cpp

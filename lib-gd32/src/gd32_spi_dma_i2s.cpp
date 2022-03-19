@@ -45,7 +45,7 @@ void i2s_psc_config_dump(uint32_t spi_periph, uint32_t audiosample, uint32_t fra
 #endif
 
 #if !defined(SPI_BUFFER_SIZE)
-# define SPI_BUFFER_SIZE ((32 * 1024) / 2)
+# define SPI_BUFFER_SIZE ((24 * 1024) / 2)
 #endif
 
 static uint16_t s_TxBuffer[SPI_BUFFER_SIZE] __attribute__ ((aligned (4)));

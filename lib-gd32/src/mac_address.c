@@ -28,6 +28,8 @@
 # include <stdio.h>
 #endif
 
+#include "gd32.h"
+
 void mac_address_get(uint8_t paddr[]) {
 #if !defined (GD32F4XX)
 	const uint32_t mac_hi = *(volatile uint32_t *) (0x1FFFF7E8);

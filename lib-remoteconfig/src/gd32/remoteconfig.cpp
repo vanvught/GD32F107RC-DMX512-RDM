@@ -34,21 +34,6 @@
 
 #include "debug.h"
 
-#if !defined (GD32F4XX)
-#else
-# define BKP_DATA_1	0
-static void bkp_data_write(__attribute__((unused)) int x, uint16_t nData) {
-	auto *pDst = reinterpret_cast<uint16_t *>(BKPSRAM_BASE + 16);
-	DEBUG_PRINTF("*pDst=%u", *pDst);
-	*pDst =  nData;
-}
-static uint16_t bkp_data_read(__attribute__((unused)) int x) {
-	const auto *pSrc = reinterpret_cast<uint16_t *>(BKPSRAM_BASE + 16);
-	DEBUG_PRINTF("*pSrc=%u", *pSrc);
-	return *pSrc;
-}
-#endif
-
 void RemoteConfig::PlatformHandleTftpSet() {
 	DEBUG_ENTRY
 

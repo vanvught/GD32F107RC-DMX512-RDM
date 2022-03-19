@@ -1,8 +1,8 @@
 /**
- * @file config.h
+ * @file dmx_internal.h
  *
  */
-/* Copyright (C) 2021 by Arjan van Vught mailto:info@gd32-dmx.org
+/* Copyright (C) 2021-2022 by Arjan van Vught mailto:info@gd32-dmx.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,7 +32,7 @@
 #include "gd32.h"
 #include "gd32/dmx_config.h"
 
-static uint32_t _port_to_uart(uint32_t nPort) {
+static uint32_t _port_to_uart(const uint32_t nPort) {
 	switch (nPort) {
 #if defined (DMX_USE_USART0)
 	case dmx::config::USART0_PORT:
@@ -84,5 +84,73 @@ static uint32_t _port_to_uart(uint32_t nPort) {
 	__builtin_unreachable();
 	return 0;
 }
+
+#if defined (GD32F4XX)
+// GPIO
+static void _gpio_mode_output(uint32_t gpio_periph, uint32_t pin) {
+	gpio_af_set(gpio_periph, GPIO_AF_0, pin);
+	gpio_mode_set(gpio_periph, GPIO_MODE_OUTPUT, GPIO_PUPD_NONE, pin);
+}
+static void _gpio_mode_af(const uint32_t gpio_periph, uint32_t pin, const uint32_t usart_periph) {
+	gpio_mode_set(gpio_periph, GPIO_MODE_AF, GPIO_PUPD_PULLUP, pin);
+
+	switch (usart_periph) {
+#if defined (DMX_USE_USART0)
+	case USART0:
+#endif
+#if defined (DMX_USE_USART1)
+	case USART1:
+#endif
+#if defined (DMX_USE_USART2)
+	case USART2:
+#endif
+#if defined (DMX_USE_USART0) || defined (DMX_USE_USART1) || defined(DMX_USE_USART2)
+		gpio_af_set(gpio_periph, GPIO_AF_7, pin);
+		break;
+#endif
+#if defined (DMX_USE_UART3)
+	case UART3:
+#endif
+#if defined (DMX_USE_UART4)
+	case UART4:
+#endif
+#if defined (DMX_USE_USART5)
+	case USART5:
+#endif
+#if defined (DMX_USE_UART6)
+	case UART6:
+#endif
+#if defined (DMX_USE_UART7)
+	case UART7:
+#endif
+#if defined (DMX_USE_UART3) || defined (DMX_USE_UART4) || defined(DMX_USE_USART5) || defined (DMX_USE_UART6) || defined (DMX_USE_UART7)
+		gpio_af_set(gpio_periph, GPIO_AF_8, pin);
+		break;
+#endif
+	default:
+		assert(0);
+		__builtin_unreachable();
+		break;
+	}
+}
+// DMA
+# define DMA_PARAMETER_STRUCT				dma_single_data_parameter_struct
+# define DMA_CHMADDR						DMA_CHM0ADDR
+# define DMA_MEMORY_TO_PERIPHERAL			DMA_MEMORY_TO_PERIPH
+# define DMA_PERIPHERAL_WIDTH_8BIT			DMA_PERIPH_WIDTH_8BIT
+# define dma_init							dma_single_data_mode_init
+# define dma_memory_to_memory_disable(x,y)
+#else
+// GPIO
+static void _gpio_mode_output(uint32_t gpio_periph, uint32_t pin) {
+	gpio_init(gpio_periph, GPIO_MODE_OUT_PP, GPIO_OSPEED_50MHZ, pin);
+}
+static void _gpio_mode_af(uint32_t gpio_periph, uint32_t pin, __attribute__((unused)) const uint32_t usart_periph ) {
+	gpio_init(gpio_periph, GPIO_MODE_AF_PP, GPIO_OSPEED_50MHZ, pin);
+}
+// DMA
+# define DMA_PARAMETER_STRUCT				dma_parameter_struct
+# define dma_interrupt_flag_clear(x,y,z)
+#endif
 
 #endif /* GD32_DMX_INTERNAL_H_ */

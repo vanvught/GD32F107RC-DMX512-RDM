@@ -58,7 +58,7 @@ void gd32_spi_begin(void)  {
 	rcu_periph_clock_enable(SPI_NSS_RCU_GPIOx);
 	rcu_periph_clock_enable(SPI_RCU_CLK);
 
-#if defined (GD32F10X) ||  defined (GD32F20X)
+#if !defined (GD32F4XX)
 	rcu_periph_clock_enable(RCU_AF);
 
 	gpio_init(SPI_GPIOx, GPIO_MODE_AF_PP, GPIO_OSPEED_50MHZ, SPI_SCK_PIN | SPI_MISO_PIN | SPI_MOSI_PIN);
@@ -95,7 +95,7 @@ void gd32_spi_begin(void)  {
 
 void gd32_spi_end(void) {
 	spi_i2s_deinit(SPI_PERIPH);
-#if defined (GD32F10X) ||  defined (GD32F20X)
+#if !defined (GD32F4XX)
 	gpio_init(SPI_GPIOx, GPIO_MODE_IPD, GPIO_OSPEED_50MHZ, SPI_SCK_PIN | SPI_MISO_PIN | SPI_MOSI_PIN);
 	gpio_init(SPI_NSS_GPIOx, GPIO_MODE_IPD, GPIO_OSPEED_50MHZ, SPI_NSS_GPIO_PINx);
 #else

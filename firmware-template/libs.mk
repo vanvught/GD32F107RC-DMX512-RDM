@@ -15,7 +15,12 @@ ifeq ($(findstring NODE_OSC_SERVER,$(DEFINES)),NODE_OSC_SERVER)
 endif
 
 ifeq ($(findstring RDM_CONTROLLER,$(DEFINES)),RDM_CONTROLLER)
-	LIBS+=rdmdiscovery rdm
+	LIBS+=rdmdiscovery
+	RDM=1
+endif
+
+ifdef RDM
+	LIBS+=rdm
 endif
 
 ifeq ($(findstring OUTPUT_DMX_SEND,$(DEFINES)),OUTPUT_DMX_SEND)

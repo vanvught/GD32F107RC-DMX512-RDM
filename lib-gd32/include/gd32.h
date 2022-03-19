@@ -49,6 +49,10 @@ extern "C" {
 # define GD32F20X
 # include "gd32f20x.h"
 # include "gd32f20x_libopt.h"
+#elif defined (GD32F30X_HD)
+# define GD32F30X
+# include "gd32f30x.h"
+# include "gd32f30x_libopt.h"
 #elif defined  (GD32F407)
 # define GD32F4XX
 # include "gd32f4xx.h"
@@ -59,6 +63,21 @@ extern "C" {
 
 #ifdef __cplusplus
 }
+#endif
+
+#if defined(GD32F30X)
+# define bkp_data_write		bkp_write_data
+# define bkp_data_read		bkp_read_data
+#endif
+
+#if defined(GD32F4XX) && defined(__cplusplus)
+typedef enum
+{
+    BKP_DATA_0,
+    BKP_DATA_1
+}bkp_data_register_enum;
+void bkp_data_write(bkp_data_register_enum register_number, uint16_t data);
+uint16_t bkp_data_read(bkp_data_register_enum register_number);
 #endif
 
 #include "gd32_board.h"

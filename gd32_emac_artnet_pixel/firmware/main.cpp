@@ -38,6 +38,7 @@
 #include "displayudf.h"
 #include "displayudfparams.h"
 #include "displayhandler.h"
+#include "display_timeout.h"
 
 #include "artnet4node.h"
 #include "artnetparams.h"
@@ -52,6 +53,15 @@
 #include "ws28xxdmx.h"
 #include "ws28xxdmxstartstop.h"
 
+#if defined (NODE_RDMNET_LLRP_ONLY)
+# include "rdmdeviceparams.h"
+# include "rdmnetdevice.h"
+# include "rdmnetconst.h"
+# include "rdmpersonality.h"
+# include "rdm_e120.h"
+# include "factorydefaults.h"
+#endif
+
 #include "remoteconfig.h"
 #include "remoteconfigparams.h"
 
@@ -60,6 +70,9 @@
 #include "storeartnet.h"
 #include "storedisplayudf.h"
 #include "storenetwork.h"
+#if defined (NODE_RDMNET_LLRP_ONLY)
+# include "storerdmdevice.h"
+#endif
 #include "storeremoteconfig.h"
 #include "storews28xxdmx.h"
 
@@ -80,10 +93,11 @@ void main(void) {
 	LedBlink lb;
 	DisplayUdf display;
 	FirmwareVersion fw(SOFTWARE_VERSION, __DATE__, __TIME__);
+
 	FlashRom flashRom;
 	SpiFlashStore spiFlashStore;
 
-	fw.Print("Art-Net 4 Node " "\x1b[32m" "Pixel controller {1x 4 Universes}" "\x1b[37m");
+	fw.Print("Art-Net 4 " "\x1b[32m" "Pixel controller {1x 4 Universes}" "\x1b[37m");
 
 	hw.SetLed(hardware::LedStatus::ON);
 	hw.SetRebootHandler(new Reboot);
@@ -97,6 +111,7 @@ void main(void) {
 	nw.Print();
 
 #if defined (ENABLE_HTTPD)
+	display.TextStatus(NetworkConst::MSG_MDNS_CONFIG, Display7SegmentMessage::INFO_MDNS_CONFIG, CONSOLE_YELLOW);
 	MDNS mDns;
 	mDns.Start();
 	mDns.AddServiceRecord(nullptr, MDNS_SERVICE_CONFIG, 0x2905);
@@ -115,14 +130,16 @@ void main(void) {
 		artnetParams.Set(&node);
 		artnetParams.Dump();
 	}
-
-	DisplayUdfHandler displayUdfHandler;
-	node.SetArtNetDisplay(&displayUdfHandler);
 	
 	node.SetArtNetStore(&storeArtNet);
+	
+	DisplayUdfHandler displayUdfHandler;
+	node.SetArtNetDisplay(&displayUdfHandler);
 
 	PixelDmxConfiguration pixelDmxConfiguration;
-	WS28xxDmxParams ws28xxparms(new StoreWS28xxDmx);
+
+	StoreWS28xxDmx storeWS28xxDmx;
+	WS28xxDmxParams ws28xxparms(&storeWS28xxDmx);
 
 	if (ws28xxparms.Load()) {
 		ws28xxparms.Set(&pixelDmxConfiguration);
@@ -132,19 +149,22 @@ void main(void) {
 	WS28xxDmx pixelDmx(pixelDmxConfiguration);
 	pixelDmx.SetPixelDmxHandler(new PixelDmxStartStop);
 
-	const auto nTestPattern = static_cast<pixelpatterns::Pattern>(ws28xxparms.GetTestPattern());
-	PixelTestPattern pixelTestPattern(nTestPattern);
-
-	auto isPixelUniverseSet = false;
-	const auto nStartUniverse = ws28xxparms.GetStartUniversePort(0, isPixelUniverseSet);
-
-	node.SetUniverse(0, lightset::PortDir::OUTPUT, nStartUniverse);
-
 	const auto nUniverses = pixelDmx.GetUniverses();
 
-	for (auto nPortIndex = 1; nPortIndex < nUniverses; nPortIndex++) {
-		node.SetUniverse(nPortIndex, lightset::PortDir::OUTPUT, static_cast<uint16_t>(nStartUniverse + nPortIndex));
+	uint32_t nPortProtocolIndex = 0;
+
+	bool isPixelUniverseSet;
+	const auto nStartUniverse = ws28xxparms.GetStartUniversePort(0, isPixelUniverseSet);
+
+	for (uint32_t u = 0; u < nUniverses; u++) {
+		if (isPixelUniverseSet) {
+			node.SetUniverse(nPortProtocolIndex, lightset::PortDir::OUTPUT, static_cast<uint16_t>(nStartUniverse + u));
+		}
+		nPortProtocolIndex++;
 	}
+
+	const auto nTestPattern = static_cast<pixelpatterns::Pattern>(ws28xxparms.GetTestPattern());
+	PixelTestPattern pixelTestPattern(nTestPattern, 1);
 
 	if (PixelTestPattern::GetPattern() != pixelpatterns::Pattern::NONE) {
 		node.SetOutput(nullptr);
@@ -154,6 +174,38 @@ void main(void) {
 
 	ArtNetTriggerHandler triggerHandler(&pixelDmx);
 
+#if defined (NODE_RDMNET_LLRP_ONLY)
+	display.TextStatus(RDMNetConst::MSG_CONFIG, Display7SegmentMessage::INFO_RDMNET_CONFIG, CONSOLE_YELLOW);
+	char aDescription[rdm::personality::DESCRIPTION_MAX_LENGTH + 1];
+	snprintf(aDescription, sizeof(aDescription) - 1, "Art-Net Pixel 1-%s:%d", PixelType::GetType(WS28xx::Get()->GetType()), WS28xx::Get()->GetCount());
+
+	char aLabel[RDM_DEVICE_LABEL_MAX_LENGTH + 1];
+	const auto nLength = snprintf(aLabel, sizeof(aLabel) - 1, GD32_BOARD_NAME " Pixel");
+
+	RDMPersonality *pPersonalities[1] = { new RDMPersonality(aDescription, nullptr) };
+	RDMNetDevice llrpOnlyDevice(pPersonalities, 1);
+
+	llrpOnlyDevice.SetLabel(RDM_ROOT_DEVICE, aLabel, static_cast<uint8_t>(nLength));
+	llrpOnlyDevice.SetProductCategory(E120_PRODUCT_CATEGORY_FIXTURE);
+	llrpOnlyDevice.SetProductDetail(E120_PRODUCT_DETAIL_ETHERNET_NODE);
+	llrpOnlyDevice.SetRDMFactoryDefaults(new FactoryDefaults);
+
+	node.SetRdmUID(llrpOnlyDevice.GetUID(), true);
+
+	llrpOnlyDevice.Init();
+
+	StoreRDMDevice storeRdmDevice;
+	RDMDeviceParams rdmDeviceParams(&storeRdmDevice);
+
+	if (rdmDeviceParams.Load()) {
+		rdmDeviceParams.Set(&llrpOnlyDevice);
+		rdmDeviceParams.Dump();
+	}
+
+	llrpOnlyDevice.SetRDMDeviceStore(&storeRdmDevice);
+	llrpOnlyDevice.Print();
+#endif
+
 	node.Print();
 	pixelDmx.Print();
 
@@ -162,12 +214,12 @@ void main(void) {
 	display.Set(3, displayudf::Labels::NODE_NAME);
 	display.Set(4, displayudf::Labels::VERSION);
 	display.Set(5, displayudf::Labels::UNIVERSE_PORT_A);
-	display.Set(6, displayudf::Labels::AP);
+	display.Set(6, displayudf::Labels::BOARDNAME);
 	display.Printf(7, "%s:%d G%d %s",
-			PixelType::GetType(pixelDmxConfiguration.GetType()),
-			pixelDmxConfiguration.GetCount(),
-			pixelDmxConfiguration.GetGroupingCount(),
-			PixelType::GetMap(pixelDmxConfiguration.GetMap()));
+		PixelType::GetType(pixelDmxConfiguration.GetType()),
+		pixelDmxConfiguration.GetCount(),
+		pixelDmxConfiguration.GetGroupingCount(),
+		PixelType::GetMap(pixelDmxConfiguration.GetMap()));
 
 	StoreDisplayUdf storeDisplayUdf;
 	DisplayUdfParams displayUdfParams(&storeDisplayUdf);
@@ -189,13 +241,21 @@ void main(void) {
 	StoreRemoteConfig storeRemoteConfig;
 	RemoteConfigParams remoteConfigParams(&storeRemoteConfig);
 
-	if(remoteConfigParams.Load()) {
+	if (remoteConfigParams.Load()) {
 		remoteConfigParams.Set(&remoteConfig);
 		remoteConfigParams.Dump();
 	}
 
 	while (spiFlashStore.Flash())
 		;
+
+#if defined (NODE_RDMNET_LLRP_ONLY)
+	display.TextStatus(RDMNetConst::MSG_START, Display7SegmentMessage::INFO_RDMNET_START, CONSOLE_YELLOW);
+
+	llrpOnlyDevice.Start();
+
+	display.TextStatus(RDMNetConst::MSG_STARTED, Display7SegmentMessage::INFO_RDMNET_STARTED, CONSOLE_GREEN);
+#endif
 
 	display.TextStatus(ArtNetMsgConst::START, Display7SegmentMessage::INFO_NODE_START, CONSOLE_YELLOW);
 
@@ -210,6 +270,9 @@ void main(void) {
 		nw.Run();
 		node.Run();
 		remoteConfig.Run();
+#if defined (NODE_RDMNET_LLRP_ONLY)
+		llrpOnlyDevice.Run();
+#endif
 		spiFlashStore.Flash();
 		lb.Run();
 		display.Run();

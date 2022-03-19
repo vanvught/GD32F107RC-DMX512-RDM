@@ -16,7 +16,7 @@ Full documentation will be available here -> [https://www.gd32-dmx.org](https://
 
 The ready to use firmware is build to use with the bootloader TFTP server -> [https://github.com/vanvught/GD32F107RC-Bootloader-TFTP](https://github.com/vanvught/GD32F107RC-Bootloader-TFTP)
 
-### Art-Net 4 DMX
+### Art-Net 4 DMX/RDM
 There is a 1x DMX/RDM board from BitWizard -> [https://www.bitwizard.nl/shop/dmx/DMX-interface-for-Raspberry-pi](https://www.bitwizard.nl/shop/dmx/DMX-interface-for-Raspberry-pi)
 ### Art-Net 4 Pixel
 There is an opensource hardware board available here -> [https://github.com/vanvught/h3dmx512-zip/tree/master/eagle/Orange-Pi-Zero/Pixel/P5](https://github.com/vanvught/h3dmx512-zip/tree/master/eagle/Orange-Pi-Zero/Pixel/P5)

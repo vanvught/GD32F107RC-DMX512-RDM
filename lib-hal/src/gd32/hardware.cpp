@@ -61,6 +61,29 @@ Hardware::Hardware() {
     udelay_init();
     micros_init();
 
+#if !defined (GD32F4XX)
+	rcu_periph_clock_enable (RCU_BKPI);
+	rcu_periph_clock_enable (RCU_PMU);
+	pmu_backup_write_enable();
+	bkp_deinit();
+#else
+	rcu_periph_clock_enable(RCU_PMU);
+	pmu_backup_ldo_config(PMU_BLDOON_ON);
+	rcu_periph_clock_enable(RCU_BKPSRAM);
+	pmu_backup_write_enable();
+#endif
+	bkp_data_write(BKP_DATA_1, 0x0);
+
+#if !defined (GD32F4XX)
+	// There is no tightly coupled RAM
+#else
+	// clear TCM SRAM
+	extern unsigned char _stcmsram;
+	extern unsigned char _etcmsram;
+	DEBUG_PRINTF("%p:%u", &_stcmsram, &_etcmsram - &_stcmsram);
+	memset (&_stcmsram, 0, &_etcmsram - &_stcmsram);
+#endif
+
 	rcu_periph_clock_enable(RCU_TIMER5);
 
 	timer_deinit(TIMER5);
@@ -87,16 +110,6 @@ Hardware::Hardware() {
 
 	settimeofday(&tv, nullptr);
 
-#if !defined (GD32F4XX)
-	rcu_periph_clock_enable (RCU_BKPI);
-	rcu_periph_clock_enable (RCU_PMU);
-	pmu_backup_write_enable();
-	bkp_deinit();
-	bkp_data_write(BKP_DATA_1, 0x0);
-#else
-	//TODO F4xx
-#endif
-
 	gd32_i2c_begin();
 
 #ifndef NDEBUG
@@ -118,9 +131,15 @@ typedef union pcast32 {
 void Hardware::GetUuid(uuid_t out) {
 	_pcast32 cast;
 
+#if !defined (GD32F4XX)
 	cast.u32[0] = *(volatile uint32_t*) (0x1FFFF7E8);
 	cast.u32[1] = *(volatile uint32_t*) (0x1FFFF7EC);
 	cast.u32[2] = *(volatile uint32_t*) (0x1FFFF7F0);
+#else
+	cast.u32[0] = *(volatile uint32_t*) (0x1FFF7A10);
+	cast.u32[1] = *(volatile uint32_t*) (0x1FFF7A14);
+	cast.u32[2] = *(volatile uint32_t*) (0x1FFF7A18);
+#endif
 	cast.u32[3] = cast.u32[0] + cast.u32[1] + cast.u32[2];
 
 	memcpy(out, cast.uuid, sizeof(uuid_t));

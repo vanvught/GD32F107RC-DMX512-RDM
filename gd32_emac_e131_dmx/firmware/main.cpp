@@ -24,6 +24,7 @@
  */
 
 #include <cstdint>
+#include <cassert>
 
 #include "hardware.h"
 #include "network.h"
@@ -38,10 +39,11 @@
 #include "displayudf.h"
 #include "displayudfparams.h"
 #include "displayhandler.h"
+#include "display_timeout.h"
 
+#include "e131.h"
 #include "e131bridge.h"
 #include "e131params.h"
-#include "e131.h"
 #include "e131msgconst.h"
 #include "e131reboot.h"
 
@@ -50,6 +52,15 @@
 #include "dmxconfigudp.h"
 
 #include "dmxinput.h"
+
+#if defined (NODE_RDMNET_LLRP_ONLY)
+# include "rdmdeviceparams.h"
+# include "rdmnetdevice.h"
+# include "rdmnetconst.h"
+# include "rdmpersonality.h"
+# include "rdm_e120.h"
+# include "factorydefaults.h"
+#endif
 
 #include "remoteconfig.h"
 #include "remoteconfigparams.h"
@@ -60,6 +71,9 @@
 #include "storedmxsend.h"
 #include "storee131.h"
 #include "storenetwork.h"
+#if defined (NODE_RDMNET_LLRP_ONLY)
+# include "storerdmdevice.h"
+#endif
 #include "storeremoteconfig.h"
 
 #include "firmwareversion.h"
@@ -71,10 +85,11 @@ void main(void) {
 	LedBlink lb;
 	DisplayUdf display;
 	FirmwareVersion fw(SOFTWARE_VERSION, __DATE__, __TIME__);
+	
 	FlashRom flashRom;
 	SpiFlashStore spiFlashStore;
 
-	fw.Print("sACN E1.31 " "\x1b[32m" "DMX controller {1x 4 Universes}" "\x1b[37m");
+	fw.Print("sACN E1.31 " "\x1b[32m" "DMX" "\x1b[37m");
 
 	hw.SetLed(hardware::LedStatus::ON);
 	hw.SetRebootHandler(new E131Reboot);
@@ -88,6 +103,7 @@ void main(void) {
 	nw.Print();
 
 #if defined (ENABLE_HTTPD)
+	display.TextStatus(NetworkConst::MSG_MDNS_CONFIG, Display7SegmentMessage::INFO_MDNS_CONFIG, CONSOLE_YELLOW);
 	MDNS mDns;
 	mDns.Start();
 	mDns.AddServiceRecord(nullptr, MDNS_SERVICE_CONFIG, 0x2905);
@@ -142,39 +158,76 @@ void main(void) {
 		bridge.SetE131Dmx(&dmxInput);
 	}
 
+	const auto nActivePorts = static_cast<uint32_t>(bridge.GetActiveInputPorts() + bridge.GetActiveOutputPorts());
+
+#if defined (NODE_RDMNET_LLRP_ONLY)
+	display.TextStatus(RDMNetConst::MSG_CONFIG, Display7SegmentMessage::INFO_RDMNET_CONFIG, CONSOLE_YELLOW);
+	char aDescription[rdm::personality::DESCRIPTION_MAX_LENGTH + 1];
+	snprintf(aDescription, sizeof(aDescription) - 1, "sACN DMX %d", nActivePorts);
+
+	char aLabel[RDM_DEVICE_LABEL_MAX_LENGTH + 1];
+	const auto nLength = snprintf(aLabel, sizeof(aLabel) - 1, GD32_BOARD_NAME " DMX");
+
+	RDMPersonality *pPersonalities[1] = { new RDMPersonality(aDescription, nullptr) };
+	RDMNetDevice llrpOnlyDevice(pPersonalities, 1);
+
+	llrpOnlyDevice.SetLabel(RDM_ROOT_DEVICE, aLabel, static_cast<uint8_t>(nLength));
+	llrpOnlyDevice.SetProductCategory(E120_PRODUCT_CATEGORY_DATA_DISTRIBUTION);
+	llrpOnlyDevice.SetProductDetail(E120_PRODUCT_DETAIL_ETHERNET_NODE);
+	llrpOnlyDevice.SetRDMFactoryDefaults(new FactoryDefaults);
+	llrpOnlyDevice.Init();
+
+	StoreRDMDevice storeRdmDevice;
+	RDMDeviceParams rdmDeviceParams(&storeRdmDevice);
+
+	if (rdmDeviceParams.Load()) {
+		rdmDeviceParams.Set(&llrpOnlyDevice);
+		rdmDeviceParams.Dump();
+	}
+
+	llrpOnlyDevice.SetRDMDeviceStore(&storeRdmDevice);
+	llrpOnlyDevice.Print();
+#endif
+
 	bridge.Print();
 
-	display.SetTitle("sACN E1.31 DMX %s", e131params.GetDirection() == lightset::PortDir::INPUT ? "Input" : "Output");
+	display.SetTitle("sACN E1.31 DMX %s", e131params.GetDirection(0) == lightset::PortDir::INPUT ? "Input" : "Output");
 	display.Set(2, displayudf::Labels::IP);
 	display.Set(3, displayudf::Labels::HOSTNAME);
 	display.Set(4, displayudf::Labels::VERSION);
 	display.Set(5, displayudf::Labels::UNIVERSE_PORT_A);
-	display.Set(6, displayudf::Labels::AP);
+	display.Set(6, displayudf::Labels::BOARDNAME);
 
 	StoreDisplayUdf storeDisplayUdf;
 	DisplayUdfParams displayUdfParams(&storeDisplayUdf);
 
-	if(displayUdfParams.Load()) {
+	if (displayUdfParams.Load()) {
 		displayUdfParams.Set(&display);
 		displayUdfParams.Dump();
 	}
 
 	display.Show(&bridge);
 
-	const auto nActivePorts = (e131params.GetDirection() == lightset::PortDir::INPUT ? bridge.GetActiveInputPorts() : bridge.GetActiveOutputPorts());
-
 	RemoteConfig remoteConfig(remoteconfig::Node::E131, remoteconfig::Output::DMX, nActivePorts);
 
 	StoreRemoteConfig storeRemoteConfig;
 	RemoteConfigParams remoteConfigParams(&storeRemoteConfig);
 
-	if(remoteConfigParams.Load()) {
+	if (remoteConfigParams.Load()) {
 		remoteConfigParams.Set(&remoteConfig);
 		remoteConfigParams.Dump();
 	}
 
 	while (spiFlashStore.Flash())
 		;
+
+#if defined (NODE_RDMNET_LLRP_ONLY)
+	display.TextStatus(RDMNetConst::MSG_START, Display7SegmentMessage::INFO_RDMNET_START, CONSOLE_YELLOW);
+
+	llrpOnlyDevice.Start();
+
+	display.TextStatus(RDMNetConst::MSG_STARTED, Display7SegmentMessage::INFO_RDMNET_STARTED, CONSOLE_GREEN);
+#endif
 
 	display.TextStatus(E131MsgConst::START, Display7SegmentMessage::INFO_BRIDGE_START, CONSOLE_YELLOW);
 
@@ -189,6 +242,9 @@ void main(void) {
 		nw.Run();
 		bridge.Run();
 		remoteConfig.Run();
+#if defined (NODE_RDMNET_LLRP_ONLY)
+		llrpOnlyDevice.Run();
+#endif
 		spiFlashStore.Flash();
 		lb.Run();
 		display.Run();

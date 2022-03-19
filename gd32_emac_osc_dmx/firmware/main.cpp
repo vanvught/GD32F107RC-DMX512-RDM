@@ -88,6 +88,7 @@ void main(void) {
 	nw.Init(&storeNetwork);
 	nw.Print();
 
+	display.TextStatus(NetworkConst::MSG_MDNS_CONFIG, Display7SegmentMessage::INFO_MDNS_CONFIG, CONSOLE_YELLOW);
 	MDNS mDns;
 	mDns.Start();
 	mDns.AddServiceRecord(nullptr, MDNS_SERVICE_OSC, server.GetPortIncoming(), mdns::Protocol::UDP, "type=server");

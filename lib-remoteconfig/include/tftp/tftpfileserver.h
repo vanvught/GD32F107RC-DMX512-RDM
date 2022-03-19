@@ -31,6 +31,10 @@
 
 #include "tftpdaemon.h"
 
+#if defined (GD32)
+# include "gd32.h"
+#endif
+
 namespace tftpfileserver {
 	bool is_valid(const void *pBuffer);
 #if defined (BARE_METAL)
@@ -41,7 +45,6 @@ namespace tftpfileserver {
 	static constexpr char FILE_NAME[] = "orangepi_one.uImage";
 #  endif
 # elif defined (GD32)
-#  include "gd32.h"
 #  if defined (GD32F10X)
     static constexpr char FILE_NAME[] = "gd32f107.bin";
 #  elif defined (GD32F20X)

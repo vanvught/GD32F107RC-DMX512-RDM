@@ -16,6 +16,11 @@ ifeq ($(findstring gd32f20x,$(FAMILY)), gd32f20x)
 	EXTRA_SRCDIR+=gd32f20x/GD32F20x_standard_peripheral/Source
 endif
 
+ifeq ($(findstring gd32f30x,$(FAMILY)), gd32f30x)
+	EXTRA_SRCDIR=gd32f30x/CMSIS/GD/GD32F30x/Source
+	EXTRA_SRCDIR+=gd32f30x/GD32F30x_standard_peripheral/Source
+endif
+
 ifeq ($(findstring gd32f4xx,$(FAMILY)), gd32f4xx)
 	EXTRA_SRCDIR=gd32f4xx/CMSIS/GD/GD32F4xx/Source
 	EXTRA_SRCDIR+=gd32f4xx/GD32F4xx_standard_peripheral/Source

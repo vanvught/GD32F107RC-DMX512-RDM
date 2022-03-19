@@ -39,16 +39,17 @@
 #include "displayudf.h"
 #include "displayudfparams.h"
 #include "displayhandler.h"
+#include "display_timeout.h"
 
 #include "artnet4node.h"
 #include "artnetparams.h"
 #include "artnetmsgconst.h"
-#include "artnet/displayudfhandler.h"
+#include "artnetdiscovery.h"
 #include "artnetreboot.h"
+#include "artnet/displayudfhandler.h"
 
 #include "dmxparams.h"
 #include "dmxsend.h"
-#include "artnetdiscovery.h"
 #include "rdmdeviceparams.h"
 #include "dmxconfigudp.h"
 
@@ -75,6 +76,7 @@ void main(void) {
 	LedBlink lb;
 	DisplayUdf display;
 	FirmwareVersion fw(SOFTWARE_VERSION, __DATE__, __TIME__);
+
 	FlashRom flashRom;
 	SpiFlashStore spiFlashStore;
 
@@ -92,6 +94,7 @@ void main(void) {
 	nw.Print();
 
 #if defined (ENABLE_HTTPD)
+	display.TextStatus(NetworkConst::MSG_MDNS_CONFIG, Display7SegmentMessage::INFO_MDNS_CONFIG, CONSOLE_YELLOW);
 	MDNS mDns;
 	mDns.Start();
 	mDns.AddServiceRecord(nullptr, MDNS_SERVICE_CONFIG, 0x2905);
@@ -113,7 +116,7 @@ void main(void) {
 
 	DisplayUdfHandler displayUdfHandler;
 	node.SetArtNetDisplay(&displayUdfHandler);
-	
+
 	node.SetArtNetStore(&storeArtNet);
 
 	bool isSet;
@@ -147,14 +150,14 @@ void main(void) {
 		node.SetArtNetDmx(&dmxInput);
 	}
 
-	ArtNetRdmController *pDiscovery;
+	StoreRDMDevice storeRdmDevice;
 
 	if (node.GetActiveOutputPorts() != 0) {
 		if (artnetParams.IsRdm()) {
-			pDiscovery = new ArtNetRdmController(1);
+			auto pDiscovery = new ArtNetRdmController(1);
 			assert(pDiscovery != nullptr);
 
-			RDMDeviceParams rdmDeviceParams(new StoreRDMDevice);
+			RDMDeviceParams rdmDeviceParams(&storeRdmDevice);
 
 			if (rdmDeviceParams.Load()) {
 				rdmDeviceParams.Set(pDiscovery);
@@ -165,7 +168,8 @@ void main(void) {
 			pDiscovery->Print();
 
 			display.TextStatus(ArtNetMsgConst::RDM_RUN, Display7SegmentMessage::INFO_RDM_RUN, CONSOLE_YELLOW);
-			pDiscovery->Full();
+
+			pDiscovery->Full(0);
 
 			node.SetRdmHandler(pDiscovery);
 		}
@@ -173,7 +177,9 @@ void main(void) {
 
 	node.Print();
 
-	display.SetTitle("Art-Net 4 %s", artnetParams.GetDirection() == lightset::PortDir::INPUT ? "DMX Input" : (artnetParams.IsRdm() ? "RDM" : "DMX Output"));
+	const auto nActivePorts = static_cast<uint32_t>(node.GetActiveInputPorts() + node.GetActiveOutputPorts());
+
+	display.SetTitle("Art-Net 4 %s", artnetParams.GetDirection(0) == lightset::PortDir::INPUT ? "DMX Input" : (artnetParams.IsRdm() ? "RDM" : "DMX Output"));
 	display.Set(2, displayudf::Labels::NODE_NAME);
 	display.Set(3, displayudf::Labels::IP);
 	display.Set(4, displayudf::Labels::VERSION);
@@ -190,14 +196,12 @@ void main(void) {
 
 	display.Show(&node);
 
-	const auto nActivePorts = (artnetParams.GetDirection() == lightset::PortDir::INPUT ? node.GetActiveInputPorts() : node.GetActiveOutputPorts());
-
 	RemoteConfig remoteConfig(remoteconfig::Node::ARTNET, artnetParams.IsRdm() ? remoteconfig::Output::RDM : remoteconfig::Output::DMX, nActivePorts);
 
 	StoreRemoteConfig storeRemoteConfig;
 	RemoteConfigParams remoteConfigParams(&storeRemoteConfig);
 
-	if(remoteConfigParams.Load()) {
+	if (remoteConfigParams.Load()) {
 		remoteConfigParams.Set(&remoteConfig);
 		remoteConfigParams.Dump();
 	}

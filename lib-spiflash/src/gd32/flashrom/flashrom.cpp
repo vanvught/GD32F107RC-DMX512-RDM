@@ -82,7 +82,7 @@ FlashRom::FlashRom() {
 
 	m_IsDetected = true;
 
-	printf("Detected %s with total %d bytes [%d kB]\n", GetName(), GetSize(), GetSize() / 1024U);
+	printf("FMC: Detected %s with total %d bytes [%d kB]\n", GetName(), GetSize(), GetSize() / 1024U);
 	DEBUG_EXIT
 }
 

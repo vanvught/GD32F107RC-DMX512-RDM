@@ -23,8 +23,6 @@
  * THE SOFTWARE.
  */
 
-#undef NDEBUG
-
 #include <cstdint>
 #include <stdio.h>
 #include <cassert>
@@ -51,14 +49,9 @@ FlashRom::FlashRom() {
 	assert(s_pThis == nullptr);
 	s_pThis = this;
 
-	rcu_periph_clock_enable(RCU_PMU);
-	pmu_backup_ldo_config(PMU_BLDOON_ON);
-	rcu_periph_clock_enable(RCU_BKPSRAM);
-	pmu_backup_write_enable();
-
 	m_IsDetected = true;
 
-	printf("Detected %s with total %d bytes [%d kB]\n", GetName(), GetSize(), GetSize() / 1024U);
+	printf("BSRAM: Detected %s with total %d bytes [%d kB]\n", GetName(), GetSize(), GetSize() / 1024U);
 	DEBUG_EXIT
 }
 

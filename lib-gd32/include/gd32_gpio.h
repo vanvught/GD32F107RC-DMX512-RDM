@@ -44,7 +44,7 @@ typedef enum T_GD32_Port {
 
 #include "gd32.h"
 
-#if defined  (GD32F10X_HD) || defined (GD32F10X_CL) || defined (GD32F20X_CL)
+#if defined  (GD32F10X) || defined (GD32F20X) || defined (GD32F30X)
 # define GPIO_FSEL_OUTPUT	GPIO_MODE_OUT_PP
 # define GPIO_FSEL_INPUT	GPIO_MODE_IPU
 #elif  defined (GD32F407)
@@ -59,9 +59,9 @@ extern "C" {
 inline static void gd32_gpio_fsel(const uint32_t gpio, const uint32_t fsel) {
 	const uint32_t gpio_periph = GPIOA + (GD32_GPIO_TO_PORT(gpio) * 0x400);
 	const uint32_t pin = BIT(GD32_GPIO_TO_NUMBER(gpio));
-#if defined  (GD32F10X) || defined (GD32F20X)
+#if defined  (GD32F10X) || defined (GD32F20X) || defined (GD32F30X)
 	gpio_init(gpio_periph, fsel, GPIO_OSPEED_50MHZ, pin);
-#elif  defined  (GD32F407)
+#elif  defined  (GD32F4XX)
 	if (fsel == GPIO_FSEL_OUTPUT) {
 		 gpio_mode_set(gpio_periph, GPIO_MODE_OUTPUT, GPIO_PUPD_NONE, pin);
 		 gpio_output_options_set(gpio_periph, GPIO_OTYPE_PP, GPIO_OSPEED_50MHZ, pin);
@@ -83,7 +83,7 @@ inline static void gd32_gpio_set(const uint32_t gpio) {
 	GPIO_BOP(gpio_periph) = (uint32_t) pin;
 }
 
-inline static uint8_t gd32_gpio_lev(uint32_t gpio) {
+inline static uint8_t gd32_gpio_lev(const uint32_t gpio) {
 	const uint32_t gpio_periph = GPIOA + (GD32_GPIO_TO_PORT(gpio) * 0x400);
 	const uint32_t pin = BIT(GD32_GPIO_TO_NUMBER(gpio));
 	return (uint8_t) ((uint32_t) 0 != (GPIO_ISTAT(gpio_periph) & pin));
