@@ -27,7 +27,7 @@
 									<listOptionValue builtIn="false" value="GD32"/>
 									<listOptionValue builtIn="false" value="DISABLE_FS"/>
 									<listOptionValue builtIn="false" value="DISABLE_TFTP"/>
-									<listOptionValue builtIn="false" value="BOARD_GD32F107R"/>
+									<listOptionValue builtIn="false" value="BOARD_GD32F107RC"/>
 									<listOptionValue builtIn="false" value="GD32F10X_CL"/>
 									<listOptionValue builtIn="false" value="OUTPUT_DMX_PIXEL"/>
 									<listOptionValue builtIn="false" value="NODE_ARTNET"/>
@@ -44,7 +44,7 @@
 									<listOptionValue builtIn="false" value="DISABLE_FS"/>
 									<listOptionValue builtIn="false" value="DISABLE_TFTP"/>
 									<listOptionValue builtIn="false" value="GD32F10X_CL"/>
-									<listOptionValue builtIn="false" value="BOARD_GD32F107R"/>
+									<listOptionValue builtIn="false" value="BOARD_GD32F107RC"/>
 									<listOptionValue builtIn="false" value="OUTPUT_DMX_PIXEL"/>
 									<listOptionValue builtIn="false" value="NODE_ARTNET"/>
 								</option>
@@ -94,6 +94,7 @@
 					<sourceEntries>
 						<entry excluding="lib|firmware" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="firmware"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="lib"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

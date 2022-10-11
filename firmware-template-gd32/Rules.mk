@@ -7,7 +7,7 @@ LD	 = $(PREFIX)ld
 AR	 = $(PREFIX)ar
 
 FAMILY?=gd32f10x
-BOARD?=BOARD_GD32F107R
+BOARD?=BOARD_GD32F107RC
 
 FAMILY:=$(shell echo $(FAMILY) | tr A-Z a-z)
 FAMILY_UC=$(shell echo $(FAMILY) | tr a-w A-W)
@@ -16,7 +16,7 @@ $(info $$FAMILY [${FAMILY}])
 $(info $$FAMILY_UC [${FAMILY_UC}])
 
 # Output 
-TARGET=$(FAMILY).bin
+TARGET=gd32f107.bin
 LIST=$(FAMILY).list
 MAP=$(FAMILY).map
 BUILD=build_gd32/
@@ -54,17 +54,17 @@ LIBDEP=$(addprefix ../lib-,$(LIBS))
 $(info $$LIBDEP [${LIBDEP}])
 
 COPS=-DBARE_METAL -DGD32 -DGD32F10X_CL -D$(BOARD) 
-COPS+=-DDISABLE_NETWORKPARAMS_NTP_SERVER
 COPS+=$(DEFINES) $(MAKE_FLAGS) $(INCLUDES)
 COPS+=$(LIBINCDIRS)
 COPS+=-Os -mcpu=cortex-m3 -mthumb
 COPS+=-nostartfiles -ffreestanding -nostdlib
 COPS+=-fstack-usage
-COPS+=-Wstack-usage=6144
+COPS+=-Wstack-usage=8192
 COPS+=-ffunction-sections -fdata-sections
 
 CPPOPS=-std=c++11 
 CPPOPS+=-Wnon-virtual-dtor -Woverloaded-virtual -Wnull-dereference -fno-rtti -fno-exceptions -fno-unwind-tables
+#CPPOPS+=-fno-use-cxa-atexit
 #CPPOPS+=-Wuseless-cast -Wold-style-cast
 CPPOPS+=-fno-threadsafe-statics
 

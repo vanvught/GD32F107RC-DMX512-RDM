@@ -7,7 +7,7 @@ LD	= $(PREFIX)ld
 AR	= $(PREFIX)ar
 
 FAMILY?=gd32f10x
-BOARD?=BOARD_GD32F107R
+BOARD?=BOARD_GD32F107RC
 
 FAMILY:=$(shell echo $(FAMILY) | tr A-Z a-z)
 FAMILY_UC=$(shell echo $(FAMILY) | tr a-w A-W)
@@ -23,7 +23,6 @@ DEFINES:=$(addprefix -D,$(DEFINES))
 DEFINES+=-D_TIME_STAMP_YEAR_=$(shell date  +"%Y") -D_TIME_STAMP_MONTH_=$(shell date  +"%-m") -D_TIME_STAMP_DAY_=$(shell date  +"%-d")
 
 COPS=-DBARE_METAL -DGD32 -DGD32F10X_CL -D$(BOARD) 
-COPS+=-DDISABLE_NETWORKPARAMS_NTP_SERVER
 COPS+=$(DEFINES) $(MAKE_FLAGS) $(INCLUDES)
 COPS+=-Os -mcpu=cortex-m3 -mthumb
 COPS+=-nostartfiles -ffreestanding -nostdlib
@@ -33,6 +32,7 @@ COPS+=-ffunction-sections -fdata-sections
 
 CPPOPS=-std=c++11 
 CPPOPS+=-Wnon-virtual-dtor -Woverloaded-virtual -Wnull-dereference -fno-rtti -fno-exceptions -fno-unwind-tables
+#CPPOPS+=-fno-use-cxa-atexit
 #CPPOPS+=-Wuseless-cast -Wold-style-cast
 CPPOPS+=-fno-threadsafe-statics
 

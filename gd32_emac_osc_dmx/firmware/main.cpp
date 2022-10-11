@@ -32,6 +32,9 @@
 
 #include "mdns.h"
 #include "mdnsservices.h"
+#if defined (ENABLE_HTTPD)
+# include "httpd/httpd.h"
+#endif
 
 #include "display.h"
 #include "displayhandler.h"
@@ -57,7 +60,11 @@
 #include "firmwareversion.h"
 #include "software_version.h"
 
-void main(void) {
+void Hardware::RebootHandler() {
+	Dmx::Get()->Blackout();
+}
+
+void main() {
 	Hardware hw;
 	Network nw;
 	LedBlink lb;
@@ -66,7 +73,7 @@ void main(void) {
 	FlashRom flashRom;
 	SpiFlashStore spiFlashStore;
 
-	fw.Print("OSC Server " "\x1b[32m" "DMX controller {1x Universe}" "\x1b[37m");
+	fw.Print("\x1b[32m" "OSC Server DMX controller {1x Universe}" "\x1b[37m");
 	
 	hw.SetLed(hardware::LedStatus::ON);
 	lb.SetLedBlinkDisplay(new DisplayHandler);
@@ -96,6 +103,10 @@ void main(void) {
 	mDns.AddServiceRecord(nullptr, MDNS_SERVICE_HTTP, 80, mdns::Protocol::TCP, "node=OSC Server");
 #endif
 	mDns.Print();
+#if defined (ENABLE_HTTPD)
+	HttpDaemon httpDaemon;
+	httpDaemon.Start();
+#endif
 
 	display.TextStatus(OscServerMsgConst::PARAMS, Display7SegmentMessage::INFO_BRIDGE_PARMAMS, CONSOLE_YELLOW);
 
@@ -138,8 +149,8 @@ void main(void) {
 	RemoteConfigParams remoteConfigParams(&storeRemoteConfig);
 
 	if(remoteConfigParams.Load()) {
-		remoteConfigParams.Set(&remoteConfig);
 		remoteConfigParams.Dump();
+		remoteConfigParams.Set(&remoteConfig);
 	}
 
 	while (spiFlashStore.Flash())
@@ -159,9 +170,12 @@ void main(void) {
 		server.Run();
 		remoteConfig.Run();
 		spiFlashStore.Flash();
-		lb.Run();
-		display.Run();
 		dmxConfigUdp.Run();
 		mDns.Run();
+#if defined (ENABLE_HTTPD)
+		httpDaemon.Run();
+#endif
+		display.Run();
+		lb.Run();
 	}
 }

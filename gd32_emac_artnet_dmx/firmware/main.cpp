@@ -31,9 +31,10 @@
 #include "networkconst.h"
 #include "ledblink.h"
 
+#include "mdns.h"
+#include "mdnsservices.h"
 #if defined (ENABLE_HTTPD)
-# include "mdns.h"
-# include "mdnsservices.h"
+# include "httpd/httpd.h"
 #endif
 
 #include "displayudf.h"
@@ -45,7 +46,6 @@
 #include "artnetparams.h"
 #include "artnetmsgconst.h"
 #include "artnetdiscovery.h"
-#include "artnetreboot.h"
 #include "artnet/displayudfhandler.h"
 
 #include "dmxparams.h"
@@ -70,7 +70,12 @@
 #include "firmwareversion.h"
 #include "software_version.h"
 
-void main(void) {
+void Hardware::RebootHandler() {
+	Dmx::Get()->Blackout();
+	ArtNet4Node::Get()->Stop();
+}
+
+void main() {
 	Hardware hw;
 	Network nw;
 	LedBlink lb;
@@ -80,10 +85,9 @@ void main(void) {
 	FlashRom flashRom;
 	SpiFlashStore spiFlashStore;
 
-	fw.Print("Art-Net 4 Node " "\x1b[32m" "DMX/RDM controller {1 Universe}" "\x1b[37m");
+	fw.Print("\x1b[32m" "Art-Net 4 DMX/RDM controller {1 Universe}" "\x1b[37m");
 
 	hw.SetLed(hardware::LedStatus::ON);
-	hw.SetRebootHandler(new ArtNetReboot);
 	lb.SetLedBlinkDisplay(new DisplayHandler);
 
 	display.TextStatus(NetworkConst::MSG_NETWORK_INIT, Display7SegmentMessage::INFO_NETWORK_INIT, CONSOLE_YELLOW);
@@ -93,13 +97,18 @@ void main(void) {
 	nw.Init(&storeNetwork);
 	nw.Print();
 
-#if defined (ENABLE_HTTPD)
 	display.TextStatus(NetworkConst::MSG_MDNS_CONFIG, Display7SegmentMessage::INFO_MDNS_CONFIG, CONSOLE_YELLOW);
 	MDNS mDns;
 	mDns.Start();
 	mDns.AddServiceRecord(nullptr, MDNS_SERVICE_CONFIG, 0x2905);
+#if defined (ENABLE_HTTPD)
 	mDns.AddServiceRecord(nullptr, MDNS_SERVICE_HTTP, 80, mdns::Protocol::TCP, "node=Art-Net 4 DMX/RDM");
+#endif
 	mDns.Print();
+
+#if defined (ENABLE_HTTPD)
+	HttpDaemon httpDaemon;
+	httpDaemon.Start();
 #endif
 
 	display.TextStatus(ArtNetMsgConst::PARAMS, Display7SegmentMessage::INFO_NODE_PARMAMS, CONSOLE_YELLOW);
@@ -110,8 +119,8 @@ void main(void) {
 	ArtNet4Node node;
 
 	if (artnetParams.Load()) {
-		artnetParams.Set(&node);
 		artnetParams.Dump();
+		artnetParams.Set();
 	}
 
 	DisplayUdfHandler displayUdfHandler;
@@ -190,8 +199,8 @@ void main(void) {
 	DisplayUdfParams displayUdfParams(&storeDisplayUdf);
 
 	if (displayUdfParams.Load()) {
-		displayUdfParams.Set(&display);
 		displayUdfParams.Dump();
+		displayUdfParams.Set(&display);
 	}
 
 	display.Show(&node);
@@ -202,8 +211,8 @@ void main(void) {
 	RemoteConfigParams remoteConfigParams(&storeRemoteConfig);
 
 	if (remoteConfigParams.Load()) {
-		remoteConfigParams.Set(&remoteConfig);
 		remoteConfigParams.Dump();
+		remoteConfigParams.Set(&remoteConfig);
 	}
 
 	while (spiFlashStore.Flash())
@@ -223,13 +232,14 @@ void main(void) {
 		node.Run();
 		remoteConfig.Run();
 		spiFlashStore.Flash();
-		lb.Run();
-		display.Run();
 		if (pDmxConfigUdp != nullptr) {
 			pDmxConfigUdp->Run();
 		}
-#if defined (ENABLE_HTTPD)
 		mDns.Run();
+#if defined (ENABLE_HTTPD)
+		httpDaemon.Run();
 #endif
+		display.Run();
+		lb.Run();
 	}
 }

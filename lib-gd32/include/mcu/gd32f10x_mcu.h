@@ -23,8 +23,8 @@
  * THE SOFTWARE.
  */
 
-#ifndef MCU_GD32F10X_H_
-#define MCU_GD32F10X_H_
+#ifndef MCU_GD32F10X_MCU_H_
+#define MCU_GD32F10X_MCU_H_
 
 #if !(defined(GD32F10X_HD) || defined (GD32F10X_CL))
 # error This file should not be included
@@ -37,6 +37,8 @@
 #define APB2_CLOCK_FREQ		(uint32_t)(108000000)
 #define TIMER_PSC_1MHZ		(uint16_t)(107)
 #define TIMER_PSC_10KHZ		(uint16_t)(10799)
+
+#include "gd32f10x_libopt.h"
 
 /**
  * U(S)ART
@@ -221,4 +223,4 @@
 
 /* The USART supports DMA function for high-speed data communication, except UART4. */
 
-#endif /* MCU_GD32F10X_H_ */
+#endif /* MCU_GD32F10X_MCU_H_ */

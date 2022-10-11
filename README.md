@@ -28,3 +28,7 @@ There is an opensource hardware board available here -> [https://github.com/vanv
 There is a 1x DMX/RDM board from BitWizard -> [https://www.bitwizard.nl/shop/dmx/DMX-interface-for-Raspberry-pi](https://www.bitwizard.nl/shop/dmx/DMX-interface-for-Raspberry-pi)
 ### OSC Server Pixel
 There is an opensource hardware board available here -> [https://github.com/vanvught/h3dmx512-zip/tree/master/eagle/Orange-Pi-Zero/Pixel/P5](https://github.com/vanvught/h3dmx512-zip/tree/master/eagle/Orange-Pi-Zero/Pixel/P5)
+
+## Remote Configuration Manager
+[https://github.com/vanvught/Remote-Config-UI/releases](https://github.com/vanvught/Remote-Config-UI/releases)<br>
+<img alt="GitHub release" src="https://img.shields.io/github/v/release/vanvught/Remote-Config-UI">

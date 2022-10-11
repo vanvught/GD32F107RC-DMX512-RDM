@@ -30,9 +30,10 @@
 #include "networkconst.h"
 #include "ledblink.h"
 
+#include "mdns.h"
+#include "mdnsservices.h"
 #if defined (ENABLE_HTTPD)
-# include "mdns.h"
-# include "mdnsservices.h"
+# include "httpd/httpd.h"
 #endif
 
 #include "displayudf.h"
@@ -48,9 +49,9 @@
 #include "pixeldmxconfiguration.h"
 #include "pixeltype.h"
 #include "pixeltestpattern.h"
-#include "ws28xxdmxparams.h"
+#include "pixeldmxparams.h"
+#include "pixeldmxstartstop.h"
 #include "ws28xxdmx.h"
-#include "ws28xxdmxstartstop.h"
 
 #if defined (NODE_RDMNET_LLRP_ONLY)
 # include "rdmdeviceparams.h"
@@ -73,20 +74,17 @@
 # include "storerdmdevice.h"
 #endif
 #include "storeremoteconfig.h"
-#include "storews28xxdmx.h"
+#include "storepixeldmx.h"
 
 #include "firmwareversion.h"
 #include "software_version.h"
 
-class Reboot final: public RebootHandler {
-public:
-	void Run() override {
-		E131Bridge::Get()->Stop();
-		WS28xx::Get()->Blackout();
-	}
-};
+void Hardware::RebootHandler() {
+	WS28xx::Get()->Blackout();
+	E131Bridge::Get()->Stop();
+}
 
-void main(void) {
+void main() {
 	Hardware hw;
 	Network nw;
 	LedBlink lb;
@@ -96,10 +94,9 @@ void main(void) {
 	FlashRom flashRom;
 	SpiFlashStore spiFlashStore;
 
-	fw.Print("sACN E1.31 " "\x1b[32m" "Pixel controller {1x 4 Universes}" "\x1b[37m");
+	fw.Print("\x1b[32m" "sACN E1.31 Pixel controller {1x 4 Universes}" "\x1b[37m");
 
 	hw.SetLed(hardware::LedStatus::ON);
-	hw.SetRebootHandler(new Reboot);
 	lb.SetLedBlinkDisplay(new DisplayHandler);
 
 	display.TextStatus(NetworkConst::MSG_NETWORK_INIT, Display7SegmentMessage::INFO_NETWORK_INIT, CONSOLE_YELLOW);
@@ -109,13 +106,18 @@ void main(void) {
 	nw.Init(&storeNetwork);
 	nw.Print();
 
-#if defined (ENABLE_HTTPD)
 	display.TextStatus(NetworkConst::MSG_MDNS_CONFIG, Display7SegmentMessage::INFO_MDNS_CONFIG, CONSOLE_YELLOW);
 	MDNS mDns;
 	mDns.Start();
 	mDns.AddServiceRecord(nullptr, MDNS_SERVICE_CONFIG, 0x2905);
+#if defined (ENABLE_HTTPD)
 	mDns.AddServiceRecord(nullptr, MDNS_SERVICE_HTTP, 80, mdns::Protocol::TCP, "node=sACN E1.31 Pixel");
+#endif
 	mDns.Print();
+
+#if defined (ENABLE_HTTPD)
+	HttpDaemon httpDaemon;
+	httpDaemon.Start();
 #endif
 
 	display.TextStatus(E131MsgConst::PARAMS, Display7SegmentMessage::INFO_BRIDGE_PARMAMS, CONSOLE_YELLOW);
@@ -126,18 +128,18 @@ void main(void) {
 	E131Bridge bridge;
 
 	if (e131params.Load()) {
-		e131params.Set(&bridge);
+		e131params.Set();
 		e131params.Dump();
 	}
 
 	PixelDmxConfiguration pixelDmxConfiguration;
 
-	StoreWS28xxDmx storeWS28xxDmx;
-	WS28xxDmxParams ws28xxparms(&storeWS28xxDmx);
+	StorePixelDmx storePixelDmx;
+	PixelDmxParams pixelDmxParams(&storePixelDmx);
 
-	if (ws28xxparms.Load()) {
-		ws28xxparms.Set(&pixelDmxConfiguration);
-		ws28xxparms.Dump();
+	if (pixelDmxParams.Load()) {
+		pixelDmxParams.Dump();
+		pixelDmxParams.Set(&pixelDmxConfiguration);
 	}
 
 	WS28xxDmx pixelDmx(pixelDmxConfiguration);
@@ -148,7 +150,7 @@ void main(void) {
 	uint32_t nPortProtocolIndex = 0;
 
 	bool isPixelUniverseSet;
-	const auto nStartUniverse = ws28xxparms.GetStartUniversePort(0, isPixelUniverseSet);
+	const auto nStartUniverse = pixelDmxParams.GetStartUniversePort(0, isPixelUniverseSet);
 
 	for (uint32_t u = 0; u < nUniverses; u++) {
 		if (isPixelUniverseSet) {
@@ -157,7 +159,7 @@ void main(void) {
 		nPortProtocolIndex++;
 	}
 
-	const auto nTestPattern = static_cast<pixelpatterns::Pattern>(ws28xxparms.GetTestPattern());
+	const auto nTestPattern = static_cast<pixelpatterns::Pattern>(pixelDmxParams.GetTestPattern());
 	PixelTestPattern pixelTestPattern(nTestPattern, 1);
 
 	if (PixelTestPattern::GetPattern() != pixelpatterns::Pattern::NONE) {
@@ -187,8 +189,8 @@ void main(void) {
 	RDMDeviceParams rdmDeviceParams(&storeRdmDevice);
 
 	if (rdmDeviceParams.Load()) {
-		rdmDeviceParams.Set(&llrpOnlyDevice);
 		rdmDeviceParams.Dump();
+		rdmDeviceParams.Set(&llrpOnlyDevice);
 	}
 
 	llrpOnlyDevice.SetRDMDeviceStore(&storeRdmDevice);
@@ -214,8 +216,8 @@ void main(void) {
 	DisplayUdfParams displayUdfParams(&storeDisplayUdf);
 
 	if (displayUdfParams.Load()) {
-		displayUdfParams.Set(&display);
 		displayUdfParams.Dump();
+		displayUdfParams.Set(&display);
 	}
 
 	display.Show(&bridge);
@@ -231,8 +233,8 @@ void main(void) {
 	RemoteConfigParams remoteConfigParams(&storeRemoteConfig);
 
 	if (remoteConfigParams.Load()) {
-		remoteConfigParams.Set(&remoteConfig);
 		remoteConfigParams.Dump();
+		remoteConfigParams.Set(&remoteConfig);
 	}
 
 	while (spiFlashStore.Flash())
@@ -259,17 +261,18 @@ void main(void) {
 		nw.Run();
 		bridge.Run();
 		remoteConfig.Run();
-#if defined (NODE_RDMNET_LLRP_ONLY)
-		llrpOnlyDevice.Run();
-#endif
 		spiFlashStore.Flash();
-		lb.Run();
-		display.Run();
 		if (__builtin_expect((PixelTestPattern::GetPattern() != pixelpatterns::Pattern::NONE), 0)) {
 			pixelTestPattern.Run();
 		}
-#if defined (ENABLE_HTTPD)
 		mDns.Run();
+#if defined (NODE_RDMNET_LLRP_ONLY)
+		llrpOnlyDevice.Run();
 #endif
+#if defined (ENABLE_HTTPD)
+		httpDaemon.Run();
+#endif
+		display.Run();
+		lb.Run();
 	}
 }

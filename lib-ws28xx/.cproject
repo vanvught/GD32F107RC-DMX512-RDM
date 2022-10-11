@@ -28,7 +28,7 @@
 									<listOptionValue builtIn="false" value="GD32"/>
 									<listOptionValue builtIn="false" value="DISABLE_FS"/>
 									<listOptionValue builtIn="false" value="DISABLE_TFTP"/>
-									<listOptionValue builtIn="false" value="BOARD_GD32F107R"/>
+									<listOptionValue builtIn="false" value="BOARD_GD32F107RC"/>
 									<listOptionValue builtIn="false" value="GD32F10X_CL"/>
 									<listOptionValue builtIn="false" value="H3"/>
 									<listOptionValue builtIn="false" value="USE_SPI_DMA"/>
@@ -56,7 +56,7 @@
 									<listOptionValue builtIn="false" value="DISABLE_FS"/>
 									<listOptionValue builtIn="false" value="DISABLE_TFTP"/>
 									<listOptionValue builtIn="false" value="GD32F10X_CL"/>
-									<listOptionValue builtIn="false" value="BOARD_GD32F107R"/>
+									<listOptionValue builtIn="false" value="BOARD_GD32F107RC"/>
 									<listOptionValue builtIn="false" value="USE_SPI_DMA"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.768408636" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>

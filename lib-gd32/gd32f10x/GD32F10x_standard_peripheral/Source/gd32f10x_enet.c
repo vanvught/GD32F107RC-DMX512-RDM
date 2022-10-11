@@ -323,19 +323,19 @@ ErrStatus enet_init(enet_mediamode_enum mediamode, enet_chksumconf_enum checksum
     uint32_t reg_value=0U, reg_temp = 0U, temp = 0U;
     uint32_t media_temp = 0U;
     uint32_t timeout = 0U;
-    uint16_t phy_value = 0U;  
+    uint16_t phy_value = 0U;
     ErrStatus phy_state= ERROR, enet_state = ERROR;
-  
+
     /* PHY interface configuration, configure SMI clock and reset PHY chip */
     if(ERROR == enet_phy_config()){
         _ENET_DELAY_(PHY_RESETDELAY);
         if(ERROR == enet_phy_config()){
             return enet_state;
-        }  
+        }
     }
     /* initialize ENET peripheral with generally concerned parameters */
     enet_default_init();
-  
+
     /* 1st, configure mediamode */
     media_temp = (uint32_t)mediamode;
     /* if is PHY auto negotiation */
@@ -350,9 +350,10 @@ ErrStatus enet_init(enet_mediamode_enum mediamode, enet_chksumconf_enum checksum
         if(PHY_READ_TO == timeout){
             return enet_state;
         }
+
         /* reset timeout counter */
         timeout = 0U;
-        
+
         /* enable auto-negotiation */
         phy_value = PHY_AUTONEGOTIATION;
         phy_state = enet_phy_write_read(ENET_PHY_WRITE, PHY_ADDRESS, PHY_REG_BCR, &phy_value);
@@ -360,7 +361,7 @@ ErrStatus enet_init(enet_mediamode_enum mediamode, enet_chksumconf_enum checksum
             /* return ERROR due to write timeout */
             return enet_state;
         }
-    
+
         /* wait for the PHY_AUTONEGO_COMPLETE bit be set */
         do{
             enet_phy_write_read(ENET_PHY_READ, PHY_ADDRESS, PHY_REG_BSR, &phy_value);
@@ -371,9 +372,10 @@ ErrStatus enet_init(enet_mediamode_enum mediamode, enet_chksumconf_enum checksum
         if(PHY_READ_TO == timeout){
             return enet_state;
         }
+
         /* reset timeout counter */
         timeout = 0U;
-    
+
         /* read the result of the auto-negotiation */
         enet_phy_write_read(ENET_PHY_READ, PHY_ADDRESS, PHY_SR, &phy_value);  
         /* configure the duplex mode of MAC following the auto-negotiation result */
@@ -382,12 +384,17 @@ ErrStatus enet_init(enet_mediamode_enum mediamode, enet_chksumconf_enum checksum
         }else{
             media_temp = ENET_MODE_HALFDUPLEX;
         }
+
         /* configure the communication speed of MAC following the auto-negotiation result */
-        if((uint16_t)RESET !=(phy_value & PHY_SPEED_STATUS)){
-            media_temp |= ENET_SPEEDMODE_10M;
-        }else{
-            media_temp |= ENET_SPEEDMODE_100M;
-        }    
+#if(PHY_TYPE == RTL8201F)	/** AvV **/
+		if ((uint16_t) RESET == (phy_value & PHY_SPEED_STATUS)) {
+#else
+        if ((uint16_t) RESET != (phy_value & PHY_SPEED_STATUS)) {
+#endif
+			media_temp |= ENET_SPEEDMODE_10M;
+		} else {
+			media_temp |= ENET_SPEEDMODE_100M;
+		}
     }else{
         phy_value = (uint16_t)((media_temp & ENET_MAC_CFG_DPM) >> 3);
         phy_value |= (uint16_t)((media_temp & ENET_MAC_CFG_SPD) >> 1);

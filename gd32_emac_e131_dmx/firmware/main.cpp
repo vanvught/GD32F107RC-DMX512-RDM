@@ -31,9 +31,10 @@
 #include "networkconst.h"
 #include "ledblink.h"
 
+#include "mdns.h"
+#include "mdnsservices.h"
 #if defined (ENABLE_HTTPD)
-# include "mdns.h"
-# include "mdnsservices.h"
+# include "httpd/httpd.h"
 #endif
 
 #include "displayudf.h"
@@ -45,7 +46,6 @@
 #include "e131bridge.h"
 #include "e131params.h"
 #include "e131msgconst.h"
-#include "e131reboot.h"
 
 #include "dmxparams.h"
 #include "dmxsend.h"
@@ -79,7 +79,12 @@
 #include "firmwareversion.h"
 #include "software_version.h"
 
-void main(void) {
+void Hardware::RebootHandler() {
+	Dmx::Get()->Blackout();
+	E131Bridge::Get()->Stop();
+}
+
+void main() {
 	Hardware hw;
 	Network nw;
 	LedBlink lb;
@@ -89,10 +94,9 @@ void main(void) {
 	FlashRom flashRom;
 	SpiFlashStore spiFlashStore;
 
-	fw.Print("sACN E1.31 " "\x1b[32m" "DMX" "\x1b[37m");
+	fw.Print("\x1b[32m" "sACN E1.31 DMX {1 Universe}" "\x1b[37m");
 
 	hw.SetLed(hardware::LedStatus::ON);
-	hw.SetRebootHandler(new E131Reboot);
 	lb.SetLedBlinkDisplay(new DisplayHandler);
 
 	display.TextStatus(NetworkConst::MSG_NETWORK_INIT, Display7SegmentMessage::INFO_NETWORK_INIT, CONSOLE_YELLOW);
@@ -102,13 +106,18 @@ void main(void) {
 	nw.Init(&storeNetwork);
 	nw.Print();
 
-#if defined (ENABLE_HTTPD)
 	display.TextStatus(NetworkConst::MSG_MDNS_CONFIG, Display7SegmentMessage::INFO_MDNS_CONFIG, CONSOLE_YELLOW);
 	MDNS mDns;
 	mDns.Start();
 	mDns.AddServiceRecord(nullptr, MDNS_SERVICE_CONFIG, 0x2905);
+#if defined (ENABLE_HTTPD)
 	mDns.AddServiceRecord(nullptr, MDNS_SERVICE_HTTP, 80, mdns::Protocol::TCP, "node=sACN E1.31 DMX");
+#endif
 	mDns.Print();
+
+#if defined (ENABLE_HTTPD)
+	HttpDaemon httpDaemon;
+	httpDaemon.Start();
 #endif
 
 	display.TextStatus(E131MsgConst::PARAMS, Display7SegmentMessage::INFO_BRIDGE_PARMAMS, CONSOLE_YELLOW);
@@ -119,16 +128,12 @@ void main(void) {
 	E131Bridge bridge;
 
 	if (e131params.Load()) {
-		e131params.Set(&bridge);
 		e131params.Dump();
+		e131params.Set();
 	}
 
 	bool bIsSet;
-	auto const nUniverse = e131params.GetUniverse(0, bIsSet);
-
-	if (bIsSet) {
-		bridge.SetUniverse(0, e131params.GetDirection(0), nUniverse);
-	}
+	bridge.SetUniverse(0, e131params.GetDirection(0), e131params.GetUniverse(0, bIsSet));
 
 	StoreDmxSend storeDmxSend;
 	DmxParams dmxparams(&storeDmxSend);
@@ -214,8 +219,8 @@ void main(void) {
 	RemoteConfigParams remoteConfigParams(&storeRemoteConfig);
 
 	if (remoteConfigParams.Load()) {
-		remoteConfigParams.Set(&remoteConfig);
 		remoteConfigParams.Dump();
+		remoteConfigParams.Set(&remoteConfig);
 	}
 
 	while (spiFlashStore.Flash())
@@ -242,17 +247,18 @@ void main(void) {
 		nw.Run();
 		bridge.Run();
 		remoteConfig.Run();
-#if defined (NODE_RDMNET_LLRP_ONLY)
-		llrpOnlyDevice.Run();
-#endif
 		spiFlashStore.Flash();
-		lb.Run();
-		display.Run();
 		if (pDmxConfigUdp != nullptr) {
 			pDmxConfigUdp->Run();
 		}
-#if defined (ENABLE_HTTPD)
 		mDns.Run();
+#if defined (NODE_RDMNET_LLRP_ONLY)
+		llrpOnlyDevice.Run();
 #endif
+#if defined (ENABLE_HTTPD)
+		httpDaemon.Run();
+#endif
+		display.Run();
+		lb.Run();
 	}
 }

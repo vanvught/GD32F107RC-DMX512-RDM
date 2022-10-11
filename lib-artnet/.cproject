@@ -30,7 +30,7 @@
 									<listOptionValue builtIn="false" value="GD32"/>
 									<listOptionValue builtIn="false" value="DISABLE_FS"/>
 									<listOptionValue builtIn="false" value="DISABLE_TFTP"/>
-									<listOptionValue builtIn="false" value="BOARD_GD32F107R"/>
+									<listOptionValue builtIn="false" value="BOARD_GD32F107RC"/>
 									<listOptionValue builtIn="false" value="GD32F10X_CL"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1546486573" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
@@ -57,7 +57,7 @@
 									<listOptionValue builtIn="false" value="DISABLE_FS"/>
 									<listOptionValue builtIn="false" value="DISABLE_TFTP"/>
 									<listOptionValue builtIn="false" value="GD32F10X_CL"/>
-									<listOptionValue builtIn="false" value="BOARD_GD32F107R"/>
+									<listOptionValue builtIn="false" value="BOARD_GD32F107RC"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.879501400" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>

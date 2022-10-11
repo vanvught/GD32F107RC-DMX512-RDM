@@ -6,28 +6,28 @@ Archive member included to satisfy reference by file (symbol)
                               ../lib-c/lib_gd32/libc.a(time.o) (__assert_func)
 ../lib-c/lib_gd32/libc.a(printf.o)
                               ../lib-c/lib_gd32/libc.a(assert.o) (printf)
-/Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_mulsf3.o)
+/Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_mulsf3.o)
                               ../lib-c/lib_gd32/libc.a(printf.o) (__aeabi_fmul)
-/Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_truncdfsf2.o)
+/Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_truncdfsf2.o)
                               ../lib-c/lib_gd32/libc.a(printf.o) (__aeabi_d2f)
-/Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubsf3.o)
+/Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubsf3.o)
                               ../lib-c/lib_gd32/libc.a(printf.o) (__aeabi_fsub)
-/Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_cmpsf2.o)
+/Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_cmpsf2.o)
                               ../lib-c/lib_gd32/libc.a(printf.o) (__aeabi_fcmplt)
-/Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_fixsfsi.o)
+/Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_fixsfsi.o)
                               ../lib-c/lib_gd32/libc.a(printf.o) (__aeabi_f2iz)
-/Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_aeabi_uldivmod.o)
+/Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_aeabi_uldivmod.o)
                               ../lib-c/lib_gd32/libc.a(time.o) (__aeabi_uldivmod)
-/Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_udivmoddi4.o)
-                              /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_aeabi_uldivmod.o) (__udivmoddi4)
-/Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_dvmd_tls.o)
-                              /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_aeabi_uldivmod.o) (__aeabi_ldiv0)
+/Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_udivmoddi4.o)
+                              /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_aeabi_uldivmod.o) (__udivmoddi4)
+/Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_dvmd_tls.o)
+                              /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_aeabi_uldivmod.o) (__aeabi_ldiv0)
 ../lib-display/lib_gd32/libdisplay.a(display.o)
                               build_gd32/firmware/main.o (Display::Display())
-../lib-display/lib_gd32/libdisplay.a(display_timeout.o)
-                              ../lib-display/lib_gd32/libdisplay.a(display.o) (display::timeout::gpio_init())
 ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
                               ../lib-display/lib_gd32/libdisplay.a(display.o) (Ssd1306::Ssd1306(TOledPanel))
+../lib-display/lib_gd32/libdisplay.a(display_timeout.o)
+                              ../lib-display/lib_gd32/libdisplay.a(display.o) (display::timeout::gpio_init())
 ../lib-hal/lib_gd32/libhal.a(console_uart0.o)
                               ../lib-c/lib_gd32/libc.a(printf.o) (console_putc)
 ../lib-hal/lib_gd32/libhal.a(hardware.o)
@@ -53,7 +53,7 @@ Archive member included to satisfy reference by file (symbol)
 ../lib-gd32/lib_gd32/libgd32.a(system_gd32f10x.o)
                               build_gd32/startup_gd32f10x_cl.o (SystemInit)
 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_bkp.o)
-                              ../lib-hal/lib_gd32/libhal.a(hardware.o) (bkp_deinit)
+                              ../lib-hal/lib_gd32/libhal.a(hardware.o) (bkp_data_write)
 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_fwdgt.o)
                               ../lib-hal/lib_gd32/libhal.a(hardware.o) (fwdgt_enable)
 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_gpio.o)
@@ -69,7 +69,7 @@ Archive member included to satisfy reference by file (symbol)
 ../lib-gd32/lib_gd32/libgd32.a(gd32_adc.o)
                               ../lib-hal/lib_gd32/libhal.a(hardware.o) (gd32_adc_init())
 ../lib-gd32/lib_gd32/libgd32.a(gd32_i2c.o)
-                              ../lib-hal/lib_gd32/libhal.a(hardware.o) (gd32_i2c_begin())
+                              ../lib-hal/lib_gd32/libhal.a(hardware.o) (gd32_i2c_begin)
 ../lib-gd32/lib_gd32/libgd32.a(gd32_uart.o)
                               ../lib-gd32/lib_gd32/libgd32.a(gd32_uart0.o) (gd32_uart_begin)
 ../lib-gd32/lib_gd32/libgd32.a(micros.o)
@@ -80,11 +80,11 @@ Archive member included to satisfy reference by file (symbol)
                               ../lib-gd32/lib_gd32/libgd32.a(gd32_adc.o) (adc_mode_config)
 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_i2c.o)
                               ../lib-gd32/lib_gd32/libgd32.a(gd32_i2c.o) (i2c_clock_config)
-/Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_muldf3.o)
+/Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_muldf3.o)
                               ../lib-gd32/lib_gd32/libgd32.a(gd32_adc.o) (__aeabi_dmul)
-/Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubdf3.o)
+/Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubdf3.o)
                               ../lib-gd32/lib_gd32/libgd32.a(gd32_adc.o) (__aeabi_dsub)
-/Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_muldivdf3.o)
+/Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_muldivdf3.o)
                               ../lib-gd32/lib_gd32/libgd32.a(gd32_adc.o) (__aeabi_ddiv)
 
 Discarded input sections
@@ -95,15 +95,15 @@ Discarded input sections
  .text          0x0000000000000000        0x0 build_gd32/firmware/main.o
  .data          0x0000000000000000        0x0 build_gd32/firmware/main.o
  .bss           0x0000000000000000        0x0 build_gd32/firmware/main.o
- .comment       0x0000000000000000       0x58 build_gd32/firmware/main.o
+ .comment       0x0000000000000000       0x34 build_gd32/firmware/main.o
  .text          0x0000000000000000        0x0 ../lib-c/lib_gd32/libc.a(time.o)
  .data          0x0000000000000000        0x0 ../lib-c/lib_gd32/libc.a(time.o)
  .bss           0x0000000000000000        0x0 ../lib-c/lib_gd32/libc.a(time.o)
- .comment       0x0000000000000000       0x58 ../lib-c/lib_gd32/libc.a(time.o)
+ .comment       0x0000000000000000       0x34 ../lib-c/lib_gd32/libc.a(time.o)
  .text          0x0000000000000000        0x0 ../lib-c/lib_gd32/libc.a(assert.o)
  .data          0x0000000000000000        0x0 ../lib-c/lib_gd32/libc.a(assert.o)
  .bss           0x0000000000000000        0x0 ../lib-c/lib_gd32/libc.a(assert.o)
- .comment       0x0000000000000000       0x58 ../lib-c/lib_gd32/libc.a(assert.o)
+ .comment       0x0000000000000000       0x34 ../lib-c/lib_gd32/libc.a(assert.o)
  .text          0x0000000000000000        0x0 ../lib-c/lib_gd32/libc.a(printf.o)
  .data          0x0000000000000000        0x0 ../lib-c/lib_gd32/libc.a(printf.o)
  .bss           0x0000000000000000        0x0 ../lib-c/lib_gd32/libc.a(printf.o)
@@ -115,100 +115,100 @@ Discarded input sections
                 0x0000000000000000       0x30 ../lib-c/lib_gd32/libc.a(printf.o)
  .text.vsnprintf
                 0x0000000000000000       0x20 ../lib-c/lib_gd32/libc.a(printf.o)
- .comment       0x0000000000000000       0x58 ../lib-c/lib_gd32/libc.a(printf.o)
- .data          0x0000000000000000        0x0 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_mulsf3.o)
- .bss           0x0000000000000000        0x0 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_mulsf3.o)
- .debug_line    0x0000000000000000       0xbd /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_mulsf3.o)
+ .comment       0x0000000000000000       0x34 ../lib-c/lib_gd32/libc.a(printf.o)
+ .data          0x0000000000000000        0x0 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_mulsf3.o)
+ .bss           0x0000000000000000        0x0 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_mulsf3.o)
+ .debug_line    0x0000000000000000       0xbd /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_mulsf3.o)
  .debug_line_str
-                0x0000000000000000       0xb8 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_mulsf3.o)
- .debug_info    0x0000000000000000       0x25 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_mulsf3.o)
- .debug_abbrev  0x0000000000000000       0x14 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_mulsf3.o)
+                0x0000000000000000       0xe0 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_mulsf3.o)
+ .debug_info    0x0000000000000000       0x25 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_mulsf3.o)
+ .debug_abbrev  0x0000000000000000       0x14 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_mulsf3.o)
  .debug_aranges
-                0x0000000000000000       0x20 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_mulsf3.o)
- .debug_str     0x0000000000000000       0x90 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_mulsf3.o)
- .debug_frame   0x0000000000000000       0x24 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_mulsf3.o)
- .data          0x0000000000000000        0x0 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_truncdfsf2.o)
- .bss           0x0000000000000000        0x0 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_truncdfsf2.o)
- .debug_line    0x0000000000000000       0x76 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_truncdfsf2.o)
+                0x0000000000000000       0x20 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_mulsf3.o)
+ .debug_str     0x0000000000000000       0xdf /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_mulsf3.o)
+ .debug_frame   0x0000000000000000       0x24 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_mulsf3.o)
+ .data          0x0000000000000000        0x0 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_truncdfsf2.o)
+ .bss           0x0000000000000000        0x0 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_truncdfsf2.o)
+ .debug_line    0x0000000000000000       0x76 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_truncdfsf2.o)
  .debug_line_str
-                0x0000000000000000       0xb8 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_truncdfsf2.o)
- .debug_info    0x0000000000000000       0x25 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_truncdfsf2.o)
- .debug_abbrev  0x0000000000000000       0x14 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_truncdfsf2.o)
+                0x0000000000000000       0xe0 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_truncdfsf2.o)
+ .debug_info    0x0000000000000000       0x25 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_truncdfsf2.o)
+ .debug_abbrev  0x0000000000000000       0x14 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_truncdfsf2.o)
  .debug_aranges
-                0x0000000000000000       0x20 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_truncdfsf2.o)
- .debug_str     0x0000000000000000       0x90 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_truncdfsf2.o)
- .debug_frame   0x0000000000000000       0x24 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_truncdfsf2.o)
- .data          0x0000000000000000        0x0 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubsf3.o)
- .bss           0x0000000000000000        0x0 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubsf3.o)
- .debug_line    0x0000000000000000      0x103 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubsf3.o)
+                0x0000000000000000       0x20 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_truncdfsf2.o)
+ .debug_str     0x0000000000000000       0xdf /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_truncdfsf2.o)
+ .debug_frame   0x0000000000000000       0x24 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_truncdfsf2.o)
+ .data          0x0000000000000000        0x0 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubsf3.o)
+ .bss           0x0000000000000000        0x0 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubsf3.o)
+ .debug_line    0x0000000000000000      0x103 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubsf3.o)
  .debug_line_str
-                0x0000000000000000       0xb8 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubsf3.o)
- .debug_info    0x0000000000000000       0x25 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubsf3.o)
- .debug_abbrev  0x0000000000000000       0x14 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubsf3.o)
+                0x0000000000000000       0xe0 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubsf3.o)
+ .debug_info    0x0000000000000000       0x25 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubsf3.o)
+ .debug_abbrev  0x0000000000000000       0x14 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubsf3.o)
  .debug_aranges
-                0x0000000000000000       0x20 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubsf3.o)
- .debug_str     0x0000000000000000       0x90 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubsf3.o)
- .debug_frame   0x0000000000000000       0x4c /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubsf3.o)
- .data          0x0000000000000000        0x0 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_cmpsf2.o)
- .bss           0x0000000000000000        0x0 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_cmpsf2.o)
- .debug_line    0x0000000000000000       0x9a /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_cmpsf2.o)
+                0x0000000000000000       0x20 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubsf3.o)
+ .debug_str     0x0000000000000000       0xdf /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubsf3.o)
+ .debug_frame   0x0000000000000000       0x4c /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubsf3.o)
+ .data          0x0000000000000000        0x0 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_cmpsf2.o)
+ .bss           0x0000000000000000        0x0 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_cmpsf2.o)
+ .debug_line    0x0000000000000000       0x9a /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_cmpsf2.o)
  .debug_line_str
-                0x0000000000000000       0xb8 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_cmpsf2.o)
- .debug_info    0x0000000000000000       0x25 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_cmpsf2.o)
- .debug_abbrev  0x0000000000000000       0x14 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_cmpsf2.o)
+                0x0000000000000000       0xe0 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_cmpsf2.o)
+ .debug_info    0x0000000000000000       0x25 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_cmpsf2.o)
+ .debug_abbrev  0x0000000000000000       0x14 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_cmpsf2.o)
  .debug_aranges
-                0x0000000000000000       0x20 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_cmpsf2.o)
- .debug_str     0x0000000000000000       0x90 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_cmpsf2.o)
- .debug_frame   0x0000000000000000       0xc8 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_cmpsf2.o)
- .data          0x0000000000000000        0x0 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_fixsfsi.o)
- .bss           0x0000000000000000        0x0 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_fixsfsi.o)
- .debug_line    0x0000000000000000       0x62 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_fixsfsi.o)
+                0x0000000000000000       0x20 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_cmpsf2.o)
+ .debug_str     0x0000000000000000       0xdf /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_cmpsf2.o)
+ .debug_frame   0x0000000000000000       0xc8 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_cmpsf2.o)
+ .data          0x0000000000000000        0x0 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_fixsfsi.o)
+ .bss           0x0000000000000000        0x0 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_fixsfsi.o)
+ .debug_line    0x0000000000000000       0x62 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_fixsfsi.o)
  .debug_line_str
-                0x0000000000000000       0xb8 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_fixsfsi.o)
- .debug_info    0x0000000000000000       0x24 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_fixsfsi.o)
- .debug_abbrev  0x0000000000000000       0x14 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_fixsfsi.o)
+                0x0000000000000000       0xe0 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_fixsfsi.o)
+ .debug_info    0x0000000000000000       0x24 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_fixsfsi.o)
+ .debug_abbrev  0x0000000000000000       0x14 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_fixsfsi.o)
  .debug_aranges
-                0x0000000000000000       0x20 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_fixsfsi.o)
- .debug_str     0x0000000000000000       0x90 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_fixsfsi.o)
- .debug_frame   0x0000000000000000       0x24 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_fixsfsi.o)
- .data          0x0000000000000000        0x0 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_aeabi_uldivmod.o)
- .bss           0x0000000000000000        0x0 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_aeabi_uldivmod.o)
- .debug_line    0x0000000000000000       0x4e /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_aeabi_uldivmod.o)
+                0x0000000000000000       0x20 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_fixsfsi.o)
+ .debug_str     0x0000000000000000       0xdf /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_fixsfsi.o)
+ .debug_frame   0x0000000000000000       0x24 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_fixsfsi.o)
+ .data          0x0000000000000000        0x0 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_aeabi_uldivmod.o)
+ .bss           0x0000000000000000        0x0 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_aeabi_uldivmod.o)
+ .debug_line    0x0000000000000000       0x4e /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_aeabi_uldivmod.o)
  .debug_line_str
-                0x0000000000000000       0xae /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_aeabi_uldivmod.o)
- .debug_info    0x0000000000000000       0x24 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_aeabi_uldivmod.o)
- .debug_abbrev  0x0000000000000000       0x14 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_aeabi_uldivmod.o)
+                0x0000000000000000       0xd6 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_aeabi_uldivmod.o)
+ .debug_info    0x0000000000000000       0x24 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_aeabi_uldivmod.o)
+ .debug_abbrev  0x0000000000000000       0x14 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_aeabi_uldivmod.o)
  .debug_aranges
-                0x0000000000000000       0x20 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_aeabi_uldivmod.o)
- .debug_str     0x0000000000000000       0x8b /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_aeabi_uldivmod.o)
- .debug_frame   0x0000000000000000       0x2c /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_aeabi_uldivmod.o)
- .text          0x0000000000000000        0x0 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_udivmoddi4.o)
- .data          0x0000000000000000        0x0 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_udivmoddi4.o)
- .bss           0x0000000000000000        0x0 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_udivmoddi4.o)
+                0x0000000000000000       0x20 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_aeabi_uldivmod.o)
+ .debug_str     0x0000000000000000       0xda /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_aeabi_uldivmod.o)
+ .debug_frame   0x0000000000000000       0x2c /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_aeabi_uldivmod.o)
+ .text          0x0000000000000000        0x0 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_udivmoddi4.o)
+ .data          0x0000000000000000        0x0 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_udivmoddi4.o)
+ .bss           0x0000000000000000        0x0 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_udivmoddi4.o)
  .ARM.extab.text.__udivmoddi4
-                0x0000000000000000        0x0 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_udivmoddi4.o)
- .debug_info    0x0000000000000000      0x6e3 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_udivmoddi4.o)
- .debug_abbrev  0x0000000000000000      0x16a /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_udivmoddi4.o)
+                0x0000000000000000        0x0 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_udivmoddi4.o)
+ .debug_info    0x0000000000000000      0x6e3 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_udivmoddi4.o)
+ .debug_abbrev  0x0000000000000000      0x16a /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_udivmoddi4.o)
  .debug_loclists
-                0x0000000000000000      0xb88 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_udivmoddi4.o)
+                0x0000000000000000      0xb88 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_udivmoddi4.o)
  .debug_aranges
-                0x0000000000000000       0x20 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_udivmoddi4.o)
+                0x0000000000000000       0x20 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_udivmoddi4.o)
  .debug_rnglists
-                0x0000000000000000       0x96 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_udivmoddi4.o)
- .debug_line    0x0000000000000000      0x5d3 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_udivmoddi4.o)
- .debug_str     0x0000000000000000      0x6a5 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_udivmoddi4.o)
- .comment       0x0000000000000000       0x58 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_udivmoddi4.o)
- .debug_frame   0x0000000000000000       0x34 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_udivmoddi4.o)
- .data          0x0000000000000000        0x0 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_dvmd_tls.o)
- .bss           0x0000000000000000        0x0 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_dvmd_tls.o)
- .debug_line    0x0000000000000000       0x4a /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_dvmd_tls.o)
+                0x0000000000000000       0x96 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_udivmoddi4.o)
+ .debug_line    0x0000000000000000      0x5d3 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_udivmoddi4.o)
+ .debug_str     0x0000000000000000      0x6a5 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_udivmoddi4.o)
+ .comment       0x0000000000000000       0x34 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_udivmoddi4.o)
+ .debug_frame   0x0000000000000000       0x34 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_udivmoddi4.o)
+ .data          0x0000000000000000        0x0 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_dvmd_tls.o)
+ .bss           0x0000000000000000        0x0 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_dvmd_tls.o)
+ .debug_line    0x0000000000000000       0x4a /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_dvmd_tls.o)
  .debug_line_str
-                0x0000000000000000       0xb6 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_dvmd_tls.o)
- .debug_info    0x0000000000000000       0x24 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_dvmd_tls.o)
- .debug_abbrev  0x0000000000000000       0x14 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_dvmd_tls.o)
+                0x0000000000000000       0xde /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_dvmd_tls.o)
+ .debug_info    0x0000000000000000       0x24 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_dvmd_tls.o)
+ .debug_abbrev  0x0000000000000000       0x14 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_dvmd_tls.o)
  .debug_aranges
-                0x0000000000000000       0x20 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_dvmd_tls.o)
- .debug_str     0x0000000000000000       0x8f /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_dvmd_tls.o)
+                0x0000000000000000       0x20 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_dvmd_tls.o)
+ .debug_str     0x0000000000000000       0xde /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_dvmd_tls.o)
  .group         0x0000000000000000        0xc ../lib-display/lib_gd32/libdisplay.a(display.o)
  .group         0x0000000000000000        0xc ../lib-display/lib_gd32/libdisplay.a(display.o)
  .group         0x0000000000000000        0xc ../lib-display/lib_gd32/libdisplay.a(display.o)
@@ -220,19 +220,13 @@ Discarded input sections
                 0x0000000000000000       0x38 ../lib-display/lib_gd32/libdisplay.a(display.o)
  .text._ZN7DisplayC2EN7display4TypeE
                 0x0000000000000000       0x50 ../lib-display/lib_gd32/libdisplay.a(display.o)
- .rodata._ZN7Display6DetectEhh.str1.1
+ .rodata._ZN7Display6DetectEj.str1.1
                 0x0000000000000000        0x8 ../lib-display/lib_gd32/libdisplay.a(display.o)
- .text._ZN7Display6DetectEhh
+ .text._ZN7Display6DetectEj
                 0x0000000000000000       0x58 ../lib-display/lib_gd32/libdisplay.a(display.o)
- .text._ZN7DisplayC2Ehh
+ .text._ZN7DisplayC2Ej
                 0x0000000000000000       0x50 ../lib-display/lib_gd32/libdisplay.a(display.o)
- .comment       0x0000000000000000       0x58 ../lib-display/lib_gd32/libdisplay.a(display.o)
- .text          0x0000000000000000        0x0 ../lib-display/lib_gd32/libdisplay.a(display_timeout.o)
- .data          0x0000000000000000        0x0 ../lib-display/lib_gd32/libdisplay.a(display_timeout.o)
- .bss           0x0000000000000000        0x0 ../lib-display/lib_gd32/libdisplay.a(display_timeout.o)
- .text._ZN7display7timeout10gpio_renewEv
-                0x0000000000000000        0x4 ../lib-display/lib_gd32/libdisplay.a(display_timeout.o)
- .comment       0x0000000000000000       0x58 ../lib-display/lib_gd32/libdisplay.a(display_timeout.o)
+ .comment       0x0000000000000000       0x34 ../lib-display/lib_gd32/libdisplay.a(display.o)
  .group         0x0000000000000000       0x10 ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
  .group         0x0000000000000000        0xc ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
  .text          0x0000000000000000        0x0 ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
@@ -254,7 +248,13 @@ Discarded input sections
                 0x0000000000000000        0x2 ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
  .text._ZN7Ssd130613DumpShadowRamEv
                 0x0000000000000000        0x2 ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
- .comment       0x0000000000000000       0x58 ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
+ .comment       0x0000000000000000       0x34 ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
+ .text          0x0000000000000000        0x0 ../lib-display/lib_gd32/libdisplay.a(display_timeout.o)
+ .data          0x0000000000000000        0x0 ../lib-display/lib_gd32/libdisplay.a(display_timeout.o)
+ .bss           0x0000000000000000        0x0 ../lib-display/lib_gd32/libdisplay.a(display_timeout.o)
+ .text._ZN7display7timeout10gpio_renewEv
+                0x0000000000000000        0x4 ../lib-display/lib_gd32/libdisplay.a(display_timeout.o)
+ .comment       0x0000000000000000       0x34 ../lib-display/lib_gd32/libdisplay.a(display_timeout.o)
  .text          0x0000000000000000        0x0 ../lib-hal/lib_gd32/libhal.a(console_uart0.o)
  .data          0x0000000000000000        0x0 ../lib-hal/lib_gd32/libhal.a(console_uart0.o)
  .bss           0x0000000000000000        0x0 ../lib-hal/lib_gd32/libhal.a(console_uart0.o)
@@ -272,7 +272,7 @@ Discarded input sections
                 0x0000000000000000       0x24 ../lib-hal/lib_gd32/libhal.a(console_uart0.o)
  .text.console_status
                 0x0000000000000000       0x30 ../lib-hal/lib_gd32/libhal.a(console_uart0.o)
- .comment       0x0000000000000000       0x58 ../lib-hal/lib_gd32/libhal.a(console_uart0.o)
+ .comment       0x0000000000000000       0x34 ../lib-hal/lib_gd32/libhal.a(console_uart0.o)
  .text          0x0000000000000000        0x0 ../lib-hal/lib_gd32/libhal.a(hardware.o)
  .data          0x0000000000000000        0x0 ../lib-hal/lib_gd32/libhal.a(hardware.o)
  .bss           0x0000000000000000        0x0 ../lib-hal/lib_gd32/libhal.a(hardware.o)
@@ -285,12 +285,12 @@ Discarded input sections
  .text._ZN8Hardware7GetTimeEP2tm
                 0x0000000000000000       0x2e ../lib-hal/lib_gd32/libhal.a(hardware.o)
  .text._ZN8Hardware6RebootEv
-                0x0000000000000000       0x7c ../lib-hal/lib_gd32/libhal.a(hardware.o)
- .comment       0x0000000000000000       0x58 ../lib-hal/lib_gd32/libhal.a(hardware.o)
+                0x0000000000000000       0x78 ../lib-hal/lib_gd32/libhal.a(hardware.o)
+ .comment       0x0000000000000000       0x34 ../lib-hal/lib_gd32/libhal.a(hardware.o)
  .text          0x0000000000000000        0x0 ../lib-hal/lib_gd32/libhal.a(i2cdetect.o)
  .data          0x0000000000000000        0x0 ../lib-hal/lib_gd32/libhal.a(i2cdetect.o)
  .bss           0x0000000000000000        0x0 ../lib-hal/lib_gd32/libhal.a(i2cdetect.o)
- .comment       0x0000000000000000       0x58 ../lib-hal/lib_gd32/libhal.a(i2cdetect.o)
+ .comment       0x0000000000000000       0x34 ../lib-hal/lib_gd32/libhal.a(i2cdetect.o)
  .text          0x0000000000000000        0x0 ../lib-hal/lib_gd32/libhal.a(ledblink.o)
  .data          0x0000000000000000        0x0 ../lib-hal/lib_gd32/libhal.a(ledblink.o)
  .bss           0x0000000000000000        0x0 ../lib-hal/lib_gd32/libhal.a(ledblink.o)
@@ -304,19 +304,19 @@ Discarded input sections
                 0x0000000000000000       0x8c ../lib-hal/lib_gd32/libhal.a(ledblink.o)
  .bss._ZN8LedBlink7s_pThisE
                 0x0000000000000000        0x4 ../lib-hal/lib_gd32/libhal.a(ledblink.o)
- .comment       0x0000000000000000       0x58 ../lib-hal/lib_gd32/libhal.a(ledblink.o)
+ .comment       0x0000000000000000       0x34 ../lib-hal/lib_gd32/libhal.a(ledblink.o)
  .ARM.attributes
                 0x0000000000000000       0x2d ../lib-hal/lib_gd32/libhal.a(ledblink.o)
  .text          0x0000000000000000        0x0 ../lib-c++/lib_gd32/libc++.a(delete.o)
  .data          0x0000000000000000        0x0 ../lib-c++/lib_gd32/libc++.a(delete.o)
  .bss           0x0000000000000000        0x0 ../lib-c++/lib_gd32/libc++.a(delete.o)
  .text._ZdaPv   0x0000000000000000        0x4 ../lib-c++/lib_gd32/libc++.a(delete.o)
- .comment       0x0000000000000000       0x58 ../lib-c++/lib_gd32/libc++.a(delete.o)
+ .comment       0x0000000000000000       0x34 ../lib-c++/lib_gd32/libc++.a(delete.o)
  .text          0x0000000000000000        0x0 ../lib-c++/lib_gd32/libc++.a(new.o)
  .data          0x0000000000000000        0x0 ../lib-c++/lib_gd32/libc++.a(new.o)
  .bss           0x0000000000000000        0x0 ../lib-c++/lib_gd32/libc++.a(new.o)
  .text._Znaj    0x0000000000000000        0x4 ../lib-c++/lib_gd32/libc++.a(new.o)
- .comment       0x0000000000000000       0x58 ../lib-c++/lib_gd32/libc++.a(new.o)
+ .comment       0x0000000000000000       0x34 ../lib-c++/lib_gd32/libc++.a(new.o)
  .text          0x0000000000000000        0x0 ../lib-c/lib_gd32/libc.a(malloc.o)
  .data          0x0000000000000000        0x0 ../lib-c/lib_gd32/libc.a(malloc.o)
  .bss           0x0000000000000000        0x0 ../lib-c/lib_gd32/libc.a(malloc.o)
@@ -339,39 +339,41 @@ Discarded input sections
                 0x0000000000000000        0x7 ../lib-c/lib_gd32/libc.a(malloc.o)
  .rodata.__func__.4
                 0x0000000000000000        0xe ../lib-c/lib_gd32/libc.a(malloc.o)
- .comment       0x0000000000000000       0x58 ../lib-c/lib_gd32/libc.a(malloc.o)
+ .comment       0x0000000000000000       0x34 ../lib-c/lib_gd32/libc.a(malloc.o)
  .text          0x0000000000000000        0x0 ../lib-c/lib_gd32/libc.a(puts.o)
  .data          0x0000000000000000        0x0 ../lib-c/lib_gd32/libc.a(puts.o)
  .bss           0x0000000000000000        0x0 ../lib-c/lib_gd32/libc.a(puts.o)
- .comment       0x0000000000000000       0x58 ../lib-c/lib_gd32/libc.a(puts.o)
+ .comment       0x0000000000000000       0x34 ../lib-c/lib_gd32/libc.a(puts.o)
  .text          0x0000000000000000        0x0 ../lib-c/lib_gd32/libc.a(time.o)
  .data          0x0000000000000000        0x0 ../lib-c/lib_gd32/libc.a(time.o)
  .bss           0x0000000000000000        0x0 ../lib-c/lib_gd32/libc.a(time.o)
  .text.localtime
                 0x0000000000000000       0x88 ../lib-c/lib_gd32/libc.a(time.o)
  .bss.Tm        0x0000000000000000       0x24 ../lib-c/lib_gd32/libc.a(time.o)
- .comment       0x0000000000000000       0x58 ../lib-c/lib_gd32/libc.a(time.o)
+ .comment       0x0000000000000000       0x34 ../lib-c/lib_gd32/libc.a(time.o)
  .text          0x0000000000000000        0x0 ../lib-gd32/lib_gd32/libgd32.a(gd32_uart0.o)
  .data          0x0000000000000000        0x0 ../lib-gd32/lib_gd32/libgd32.a(gd32_uart0.o)
  .bss           0x0000000000000000        0x0 ../lib-gd32/lib_gd32/libgd32.a(gd32_uart0.o)
  .text.uart0_printf
                 0x0000000000000000       0x44 ../lib-gd32/lib_gd32/libgd32.a(gd32_uart0.o)
  .bss.s_buffer  0x0000000000000000       0x80 ../lib-gd32/lib_gd32/libgd32.a(gd32_uart0.o)
- .comment       0x0000000000000000       0x58 ../lib-gd32/lib_gd32/libgd32.a(gd32_uart0.o)
+ .comment       0x0000000000000000       0x34 ../lib-gd32/lib_gd32/libgd32.a(gd32_uart0.o)
  .text          0x0000000000000000        0x0 ../lib-gd32/lib_gd32/libgd32.a(systick.o)
  .data          0x0000000000000000        0x0 ../lib-gd32/lib_gd32/libgd32.a(systick.o)
  .bss           0x0000000000000000        0x0 ../lib-gd32/lib_gd32/libgd32.a(systick.o)
- .comment       0x0000000000000000       0x58 ../lib-gd32/lib_gd32/libgd32.a(systick.o)
+ .comment       0x0000000000000000       0x34 ../lib-gd32/lib_gd32/libgd32.a(systick.o)
  .text          0x0000000000000000        0x0 ../lib-gd32/lib_gd32/libgd32.a(system_gd32f10x.o)
  .data          0x0000000000000000        0x0 ../lib-gd32/lib_gd32/libgd32.a(system_gd32f10x.o)
  .bss           0x0000000000000000        0x0 ../lib-gd32/lib_gd32/libgd32.a(system_gd32f10x.o)
  .text.SystemCoreClockUpdate
                 0x0000000000000000       0xd4 ../lib-gd32/lib_gd32/libgd32.a(system_gd32f10x.o)
  .rodata        0x0000000000000000       0x10 ../lib-gd32/lib_gd32/libgd32.a(system_gd32f10x.o)
- .comment       0x0000000000000000       0x58 ../lib-gd32/lib_gd32/libgd32.a(system_gd32f10x.o)
+ .comment       0x0000000000000000       0x34 ../lib-gd32/lib_gd32/libgd32.a(system_gd32f10x.o)
  .text          0x0000000000000000        0x0 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_bkp.o)
  .data          0x0000000000000000        0x0 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_bkp.o)
  .bss           0x0000000000000000        0x0 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_bkp.o)
+ .text.bkp_deinit
+                0x0000000000000000        0xe ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_bkp.o)
  .text.bkp_data_read
                 0x0000000000000000       0x30 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_bkp.o)
  .text.bkp_rtc_calibration_output_enable
@@ -404,7 +406,7 @@ Discarded input sections
                 0x0000000000000000       0x10 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_bkp.o)
  .text.bkp_interrupt_flag_clear
                 0x0000000000000000       0x14 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_bkp.o)
- .comment       0x0000000000000000       0x58 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_bkp.o)
+ .comment       0x0000000000000000       0x34 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_bkp.o)
  .text          0x0000000000000000        0x0 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_fwdgt.o)
  .data          0x0000000000000000        0x0 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_fwdgt.o)
  .bss           0x0000000000000000        0x0 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_fwdgt.o)
@@ -420,7 +422,7 @@ Discarded input sections
                 0x0000000000000000       0x54 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_fwdgt.o)
  .text.fwdgt_flag_get
                 0x0000000000000000       0x14 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_fwdgt.o)
- .comment       0x0000000000000000       0x58 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_fwdgt.o)
+ .comment       0x0000000000000000       0x34 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_fwdgt.o)
  .ARM.attributes
                 0x0000000000000000       0x2d ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_fwdgt.o)
  .text          0x0000000000000000        0x0 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_gpio.o)
@@ -458,7 +460,7 @@ Discarded input sections
                 0x0000000000000000       0x10 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_gpio.o)
  .text.gpio_ethernet_phy_select
                 0x0000000000000000       0x18 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_gpio.o)
- .comment       0x0000000000000000       0x58 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_gpio.o)
+ .comment       0x0000000000000000       0x34 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_gpio.o)
  .text          0x0000000000000000        0x0 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_pmu.o)
  .data          0x0000000000000000        0x0 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_pmu.o)
  .bss           0x0000000000000000        0x0 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_pmu.o)
@@ -486,7 +488,7 @@ Discarded input sections
                 0x0000000000000000       0x24 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_pmu.o)
  .bss.reg_snap.0
                 0x0000000000000000       0x10 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_pmu.o)
- .comment       0x0000000000000000       0x58 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_pmu.o)
+ .comment       0x0000000000000000       0x34 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_pmu.o)
  .text          0x0000000000000000        0x0 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_rcu.o)
  .data          0x0000000000000000        0x0 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_rcu.o)
  .bss           0x0000000000000000        0x0 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_rcu.o)
@@ -494,6 +496,10 @@ Discarded input sections
                 0x0000000000000000        0x4 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_rcu.o)
  .text.rcu_periph_clock_sleep_disable
                 0x0000000000000000        0x4 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_rcu.o)
+ .text.rcu_bkp_reset_enable
+                0x0000000000000000       0x10 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_rcu.o)
+ .text.rcu_bkp_reset_disable
+                0x0000000000000000       0x10 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_rcu.o)
  .text.rcu_system_clock_source_config
                 0x0000000000000000       0x14 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_rcu.o)
  .text.rcu_system_clock_source_get
@@ -556,7 +562,7 @@ Discarded input sections
                 0x0000000000000000       0x18 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_rcu.o)
  .text.rcu_deepsleep_voltage_set
                 0x0000000000000000       0x10 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_rcu.o)
- .comment       0x0000000000000000       0x58 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_rcu.o)
+ .comment       0x0000000000000000       0x34 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_rcu.o)
  .text          0x0000000000000000        0x0 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_timer.o)
  .data          0x0000000000000000        0x0 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_timer.o)
  .bss           0x0000000000000000        0x0 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_timer.o)
@@ -692,7 +698,7 @@ Discarded input sections
                 0x0000000000000000        0xc ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_timer.o)
  .text.timer_flag_clear
                 0x0000000000000000        0x6 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_timer.o)
- .comment       0x0000000000000000       0x58 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_timer.o)
+ .comment       0x0000000000000000       0x34 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_timer.o)
  .text          0x0000000000000000        0x0 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_usart.o)
  .data          0x0000000000000000        0x0 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_usart.o)
  .bss           0x0000000000000000        0x0 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_usart.o)
@@ -762,7 +768,7 @@ Discarded input sections
                 0x0000000000000000       0x2a ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_usart.o)
  .text.usart_interrupt_flag_clear
                 0x0000000000000000       0x16 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_usart.o)
- .comment       0x0000000000000000       0x58 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_usart.o)
+ .comment       0x0000000000000000       0x34 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_usart.o)
  .text          0x0000000000000000        0x0 ../lib-gd32/lib_gd32/libgd32.a(gd32_adc.o)
  .data          0x0000000000000000        0x0 ../lib-gd32/lib_gd32/libgd32.a(gd32_adc.o)
  .bss           0x0000000000000000        0x0 ../lib-gd32/lib_gd32/libgd32.a(gd32_adc.o)
@@ -770,11 +776,11 @@ Discarded input sections
                 0x0000000000000000       0x84 ../lib-gd32/lib_gd32/libgd32.a(gd32_adc.o)
  .text._Z16gd32_adc_getvrefv
                 0x0000000000000000       0x44 ../lib-gd32/lib_gd32/libgd32.a(gd32_adc.o)
- .comment       0x0000000000000000       0x58 ../lib-gd32/lib_gd32/libgd32.a(gd32_adc.o)
+ .comment       0x0000000000000000       0x34 ../lib-gd32/lib_gd32/libgd32.a(gd32_adc.o)
  .text          0x0000000000000000        0x0 ../lib-gd32/lib_gd32/libgd32.a(gd32_i2c.o)
  .data          0x0000000000000000        0x0 ../lib-gd32/lib_gd32/libgd32.a(gd32_i2c.o)
  .bss           0x0000000000000000        0x0 ../lib-gd32/lib_gd32/libgd32.a(gd32_i2c.o)
- .comment       0x0000000000000000       0x58 ../lib-gd32/lib_gd32/libgd32.a(gd32_i2c.o)
+ .comment       0x0000000000000000       0x34 ../lib-gd32/lib_gd32/libgd32.a(gd32_i2c.o)
  .text          0x0000000000000000        0x0 ../lib-gd32/lib_gd32/libgd32.a(gd32_uart.o)
  .data          0x0000000000000000        0x0 ../lib-gd32/lib_gd32/libgd32.a(gd32_uart.o)
  .bss           0x0000000000000000        0x0 ../lib-gd32/lib_gd32/libgd32.a(gd32_uart.o)
@@ -790,15 +796,15 @@ Discarded input sections
                 0x0000000000000000       0x1a ../lib-gd32/lib_gd32/libgd32.a(gd32_uart.o)
  .text.gd32_uart_transmit_string
                 0x0000000000000000       0x44 ../lib-gd32/lib_gd32/libgd32.a(gd32_uart.o)
- .comment       0x0000000000000000       0x58 ../lib-gd32/lib_gd32/libgd32.a(gd32_uart.o)
+ .comment       0x0000000000000000       0x34 ../lib-gd32/lib_gd32/libgd32.a(gd32_uart.o)
  .text          0x0000000000000000        0x0 ../lib-gd32/lib_gd32/libgd32.a(micros.o)
  .data          0x0000000000000000        0x0 ../lib-gd32/lib_gd32/libgd32.a(micros.o)
  .bss           0x0000000000000000        0x0 ../lib-gd32/lib_gd32/libgd32.a(micros.o)
- .comment       0x0000000000000000       0x58 ../lib-gd32/lib_gd32/libgd32.a(micros.o)
+ .comment       0x0000000000000000       0x34 ../lib-gd32/lib_gd32/libgd32.a(micros.o)
  .text          0x0000000000000000        0x0 ../lib-gd32/lib_gd32/libgd32.a(udelay.o)
  .data          0x0000000000000000        0x0 ../lib-gd32/lib_gd32/libgd32.a(udelay.o)
  .bss           0x0000000000000000        0x0 ../lib-gd32/lib_gd32/libgd32.a(udelay.o)
- .comment       0x0000000000000000       0x58 ../lib-gd32/lib_gd32/libgd32.a(udelay.o)
+ .comment       0x0000000000000000       0x34 ../lib-gd32/lib_gd32/libgd32.a(udelay.o)
  .text          0x0000000000000000        0x0 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_adc.o)
  .data          0x0000000000000000        0x0 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_adc.o)
  .bss           0x0000000000000000        0x0 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_adc.o)
@@ -848,7 +854,7 @@ Discarded input sections
                 0x0000000000000000       0x26 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_adc.o)
  .text.adc_interrupt_disable
                 0x0000000000000000       0x26 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_adc.o)
- .comment       0x0000000000000000       0x58 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_adc.o)
+ .comment       0x0000000000000000       0x34 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_adc.o)
  .text          0x0000000000000000        0x0 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_i2c.o)
  .data          0x0000000000000000        0x0 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_i2c.o)
  .bss           0x0000000000000000        0x0 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_i2c.o)
@@ -892,49 +898,49 @@ Discarded input sections
                 0x0000000000000000       0x54 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_i2c.o)
  .text.i2c_interrupt_flag_clear
                 0x0000000000000000       0x28 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_i2c.o)
- .comment       0x0000000000000000       0x58 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_i2c.o)
- .text          0x0000000000000000      0x254 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_muldf3.o)
- .data          0x0000000000000000        0x0 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_muldf3.o)
- .bss           0x0000000000000000        0x0 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_muldf3.o)
- .debug_line    0x0000000000000000       0xf5 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_muldf3.o)
+ .comment       0x0000000000000000       0x34 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_i2c.o)
+ .text          0x0000000000000000      0x254 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_muldf3.o)
+ .data          0x0000000000000000        0x0 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_muldf3.o)
+ .bss           0x0000000000000000        0x0 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_muldf3.o)
+ .debug_line    0x0000000000000000       0xf5 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_muldf3.o)
  .debug_line_str
-                0x0000000000000000       0xb8 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_muldf3.o)
- .debug_info    0x0000000000000000       0x25 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_muldf3.o)
- .debug_abbrev  0x0000000000000000       0x14 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_muldf3.o)
+                0x0000000000000000       0xe0 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_muldf3.o)
+ .debug_info    0x0000000000000000       0x25 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_muldf3.o)
+ .debug_abbrev  0x0000000000000000       0x14 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_muldf3.o)
  .debug_aranges
-                0x0000000000000000       0x20 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_muldf3.o)
- .debug_str     0x0000000000000000       0x90 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_muldf3.o)
- .debug_frame   0x0000000000000000       0x30 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_muldf3.o)
+                0x0000000000000000       0x20 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_muldf3.o)
+ .debug_str     0x0000000000000000       0xdf /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_muldf3.o)
+ .debug_frame   0x0000000000000000       0x30 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_muldf3.o)
  .ARM.attributes
-                0x0000000000000000       0x1d /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_muldf3.o)
- .text          0x0000000000000000      0x378 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubdf3.o)
- .data          0x0000000000000000        0x0 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubdf3.o)
- .bss           0x0000000000000000        0x0 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubdf3.o)
- .debug_line    0x0000000000000000      0x16f /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubdf3.o)
+                0x0000000000000000       0x1d /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_muldf3.o)
+ .text          0x0000000000000000      0x378 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubdf3.o)
+ .data          0x0000000000000000        0x0 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubdf3.o)
+ .bss           0x0000000000000000        0x0 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubdf3.o)
+ .debug_line    0x0000000000000000      0x16f /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubdf3.o)
  .debug_line_str
-                0x0000000000000000       0xb8 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubdf3.o)
- .debug_info    0x0000000000000000       0x25 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubdf3.o)
- .debug_abbrev  0x0000000000000000       0x14 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubdf3.o)
+                0x0000000000000000       0xe0 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubdf3.o)
+ .debug_info    0x0000000000000000       0x25 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubdf3.o)
+ .debug_abbrev  0x0000000000000000       0x14 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubdf3.o)
  .debug_aranges
-                0x0000000000000000       0x20 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubdf3.o)
- .debug_str     0x0000000000000000       0x90 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubdf3.o)
- .debug_frame   0x0000000000000000       0xac /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubdf3.o)
+                0x0000000000000000       0x20 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubdf3.o)
+ .debug_str     0x0000000000000000       0xdf /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubdf3.o)
+ .debug_frame   0x0000000000000000       0xac /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubdf3.o)
  .ARM.attributes
-                0x0000000000000000       0x1d /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubdf3.o)
- .text          0x0000000000000000      0x424 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_muldivdf3.o)
- .data          0x0000000000000000        0x0 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_muldivdf3.o)
- .bss           0x0000000000000000        0x0 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_muldivdf3.o)
- .debug_line    0x0000000000000000      0x184 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_muldivdf3.o)
+                0x0000000000000000       0x1d /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubdf3.o)
+ .text          0x0000000000000000      0x424 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_muldivdf3.o)
+ .data          0x0000000000000000        0x0 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_muldivdf3.o)
+ .bss           0x0000000000000000        0x0 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_muldivdf3.o)
+ .debug_line    0x0000000000000000      0x184 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_muldivdf3.o)
  .debug_line_str
-                0x0000000000000000       0xb8 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_muldivdf3.o)
- .debug_info    0x0000000000000000       0x25 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_muldivdf3.o)
- .debug_abbrev  0x0000000000000000       0x14 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_muldivdf3.o)
+                0x0000000000000000       0xe0 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_muldivdf3.o)
+ .debug_info    0x0000000000000000       0x25 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_muldivdf3.o)
+ .debug_abbrev  0x0000000000000000       0x14 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_muldivdf3.o)
  .debug_aranges
-                0x0000000000000000       0x20 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_muldivdf3.o)
- .debug_str     0x0000000000000000       0x90 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_muldivdf3.o)
- .debug_frame   0x0000000000000000       0x50 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_muldivdf3.o)
+                0x0000000000000000       0x20 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_muldivdf3.o)
+ .debug_str     0x0000000000000000       0xdf /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_muldivdf3.o)
+ .debug_frame   0x0000000000000000       0x50 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_muldivdf3.o)
  .ARM.attributes
-                0x0000000000000000       0x1d /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_muldivdf3.o)
+                0x0000000000000000       0x1d /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_muldivdf3.o)
 
 Memory Configuration
 
@@ -948,7 +954,7 @@ Linker script and memory map
 LOAD build_gd32/startup_gd32f10x_cl.o
 LOAD build_gd32/firmware/main.o
                 0x0000000000000800                __heap_size = DEFINED (__heap_size)?__heap_size:0x800
-                0x0000000000001800                __stack_size = DEFINED (__stack_size)?__stack_size:0x1800
+                0x0000000000002000                __stack_size = DEFINED (__stack_size)?__stack_size:0x2000
 
 .vectors        0x0000000008007000      0x150
                 0x0000000008007000                . = ALIGN (0x4)
@@ -959,7 +965,7 @@ LOAD build_gd32/firmware/main.o
                 0x0000000008007150                __Vectors_End = .
                 0x0000000008007150                __Vectors_Size = (__Vectors_End - __gVectors)
 
-.text           0x0000000008007150     0x2af8
+.text           0x0000000008007150     0x2b48
                 0x0000000008007150                . = ALIGN (0x4)
  *(.text.unlikely*)
  .text.unlikely.console_init
@@ -967,13 +973,13 @@ LOAD build_gd32/firmware/main.o
                 0x0000000008007150                console_init
  *(.text.hot*)
  *(.text)
- .text          0x0000000008007170      0x168 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_mulsf3.o)
+ .text          0x0000000008007170      0x168 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_mulsf3.o)
                 0x0000000008007170                __mulsf3
                 0x0000000008007170                __aeabi_fmul
- .text          0x00000000080072d8       0xa0 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_truncdfsf2.o)
+ .text          0x00000000080072d8       0xa0 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_truncdfsf2.o)
                 0x00000000080072d8                __aeabi_d2f
                 0x00000000080072d8                __truncdfsf2
- .text          0x0000000008007378      0x21c /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubsf3.o)
+ .text          0x0000000008007378      0x21c /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubsf3.o)
                 0x0000000008007378                __aeabi_frsub
                 0x0000000008007380                __aeabi_fsub
                 0x0000000008007380                __subsf3
@@ -987,7 +993,7 @@ LOAD build_gd32/firmware/main.o
                 0x0000000008007508                __floatundisf
                 0x0000000008007518                __aeabi_l2f
                 0x0000000008007518                __floatdisf
- .text          0x0000000008007594       0xec /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_cmpsf2.o)
+ .text          0x0000000008007594       0xec /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_cmpsf2.o)
                 0x0000000008007594                __gesf2
                 0x0000000008007594                __gtsf2
                 0x000000000800759c                __ltsf2
@@ -1003,12 +1009,12 @@ LOAD build_gd32/firmware/main.o
                 0x0000000008007644                __aeabi_fcmple
                 0x0000000008007658                __aeabi_fcmpge
                 0x000000000800766c                __aeabi_fcmpgt
- .text          0x0000000008007680       0x4c /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_fixsfsi.o)
+ .text          0x0000000008007680       0x4c /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_fixsfsi.o)
                 0x0000000008007680                __fixsfsi
                 0x0000000008007680                __aeabi_f2iz
- .text          0x00000000080076cc       0x30 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_aeabi_uldivmod.o)
+ .text          0x00000000080076cc       0x30 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_aeabi_uldivmod.o)
                 0x00000000080076cc                __aeabi_uldivmod
- .text          0x00000000080076fc        0x4 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_dvmd_tls.o)
+ .text          0x00000000080076fc        0x4 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_dvmd_tls.o)
                 0x00000000080076fc                __aeabi_ldiv0
                 0x00000000080076fc                __aeabi_idiv0
  *(.text*)
@@ -1120,7 +1126,7 @@ LOAD build_gd32/firmware/main.o
                 0x0000000008007fc0                printf
  *fill*         0x0000000008007fde        0x2 
  .text.__udivmoddi4
-                0x0000000008007fe0      0x2cc /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_udivmoddi4.o)
+                0x0000000008007fe0      0x2cc /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_udivmoddi4.o)
                 0x0000000008007fe0                __udivmoddi4
  .text._ZN7Display9PrintInfoEv.isra.0
                 0x00000000080082ac       0x14 ../lib-display/lib_gd32/libdisplay.a(display.o)
@@ -1140,499 +1146,490 @@ LOAD build_gd32/firmware/main.o
                 0x00000000080083ac       0x54 ../lib-display/lib_gd32/libdisplay.a(display.o)
                 0x00000000080083ac                Display::Display()
                 0x00000000080083ac                Display::Display()
- .text._ZN7display7timeout9gpio_initEv
-                0x0000000008008400        0x2 ../lib-display/lib_gd32/libdisplay.a(display_timeout.o)
-                0x0000000008008400                display::timeout::gpio_init()
  .text._ZN7Ssd1306D2Ev
-                0x0000000008008402        0x2 ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
-                0x0000000008008402                Ssd1306::~Ssd1306()
-                0x0000000008008402                Ssd1306::~Ssd1306()
+                0x0000000008008400        0x2 ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
+                0x0000000008008400                Ssd1306::~Ssd1306()
+                0x0000000008008400                Ssd1306::~Ssd1306()
  .text._ZN7Ssd13069SetCursorEj
-                0x0000000008008404        0x2 ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
-                0x0000000008008404                Ssd1306::SetCursor(unsigned int)
- *fill*         0x0000000008008406        0x2 
+                0x0000000008008402        0x2 ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
+                0x0000000008008402                Ssd1306::SetCursor(unsigned int)
  .text._ZN7Ssd13069PrintInfoEv
-                0x0000000008008408       0x28 ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
-                0x0000000008008408                Ssd1306::PrintInfo()
+                0x0000000008008404       0x28 ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
+                0x0000000008008404                Ssd1306::PrintInfo()
  .text._ZN7Ssd1306D0Ev
-                0x0000000008008430        0xc ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
-                0x0000000008008430                Ssd1306::~Ssd1306()
+                0x000000000800842c        0xc ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
+                0x000000000800842c                Ssd1306::~Ssd1306()
  .text._ZN7HAL_I2C5SetupEv
-                0x000000000800843c       0x14 ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
-                0x000000000800843c                HAL_I2C::Setup()
+                0x0000000008008438       0x14 ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
+                0x0000000008008438                HAL_I2C::Setup()
  .text._ZN7Ssd13067PutCharEi
-                0x0000000008008450       0x28 ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
-                0x0000000008008450                Ssd1306::PutChar(int)
+                0x000000000800844c       0x28 ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
+                0x000000000800844c                Ssd1306::PutChar(int)
  .text._ZN7Ssd13069PutStringEPKc
-                0x0000000008008478       0x16 ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
-                0x0000000008008478                Ssd1306::PutString(char const*)
+                0x0000000008008474       0x16 ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
+                0x0000000008008474                Ssd1306::PutString(char const*)
  .text._ZN7Ssd13064TextEPKcj
-                0x000000000800848e       0x22 ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
-                0x000000000800848e                Ssd1306::Text(char const*, unsigned int)
+                0x000000000800848a       0x22 ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
+                0x000000000800848a                Ssd1306::Text(char const*, unsigned int)
  .text._ZN7Ssd130611InitMembersEv
-                0x00000000080084b0       0x22 ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
-                0x00000000080084b0                Ssd1306::InitMembers()
- *fill*         0x00000000080084d2        0x2 
+                0x00000000080084ac       0x22 ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
+                0x00000000080084ac                Ssd1306::InitMembers()
+ *fill*         0x00000000080084ce        0x2 
  .text._ZN7Ssd1306C2E10TOledPanel
-                0x00000000080084d4       0x30 ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
-                0x00000000080084d4                Ssd1306::Ssd1306(TOledPanel)
-                0x00000000080084d4                Ssd1306::Ssd1306(TOledPanel)
+                0x00000000080084d0       0x30 ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
+                0x00000000080084d0                Ssd1306::Ssd1306(TOledPanel)
+                0x00000000080084d0                Ssd1306::Ssd1306(TOledPanel)
  .text._ZN7Ssd130611SendCommandEh
-                0x0000000008008504       0x20 ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
-                0x0000000008008504                Ssd1306::SendCommand(unsigned char)
+                0x0000000008008500       0x20 ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
+                0x0000000008008500                Ssd1306::SendCommand(unsigned char)
  .text._ZN7Ssd130612SetCursorPosEhh
-                0x0000000008008524       0x46 ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
-                0x0000000008008524                Ssd1306::SetCursorPos(unsigned char, unsigned char)
+                0x0000000008008520       0x46 ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
+                0x0000000008008520                Ssd1306::SetCursorPos(unsigned char, unsigned char)
  .text._ZN7Ssd13068TextLineEhPKcj
-                0x000000000800856a       0x2a ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
-                0x000000000800856a                Ssd1306::TextLine(unsigned char, char const*, unsigned int)
+                0x0000000008008566       0x28 ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
+                0x0000000008008566                Ssd1306::TextLine(unsigned char, char const*, unsigned int)
+ *fill*         0x000000000800858e        0x2 
  .text._ZN7Ssd13069ClearLineEh
-                0x0000000008008594       0x3c ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
-                0x0000000008008594                Ssd1306::ClearLine(unsigned char)
+                0x0000000008008590       0x3c ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
+                0x0000000008008590                Ssd1306::ClearLine(unsigned char)
  .text._ZN7Ssd13068SetSleepEb
-                0x00000000080085d0        0xc ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
-                0x00000000080085d0                Ssd1306::SetSleep(bool)
+                0x00000000080085cc        0xc ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
+                0x00000000080085cc                Ssd1306::SetSleep(bool)
  .text._ZN7Ssd130611SetContrastEh
-                0x00000000080085dc       0x1a ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
-                0x00000000080085dc                Ssd1306::SetContrast(unsigned char)
+                0x00000000080085d8       0x1a ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
+                0x00000000080085d8                Ssd1306::SetContrast(unsigned char)
  .text._ZN7Ssd130617SetFlipVerticallyEb
-                0x00000000080085f6       0x24 ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
-                0x00000000080085f6                Ssd1306::SetFlipVertically(bool)
- *fill*         0x000000000800861a        0x2 
+                0x00000000080085f2       0x24 ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
+                0x00000000080085f2                Ssd1306::SetFlipVertically(bool)
+ *fill*         0x0000000008008616        0x2 
  .text._ZN7Ssd130611CheckSH1106Ev
-                0x000000000800861c       0xac ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
-                0x000000000800861c                Ssd1306::CheckSH1106()
+                0x0000000008008618       0xac ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
+                0x0000000008008618                Ssd1306::CheckSH1106()
  .text._ZN7Ssd13063ClsEv
-                0x00000000080086c8       0x78 ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
-                0x00000000080086c8                Ssd1306::Cls()
+                0x00000000080086c4       0x78 ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
+                0x00000000080086c4                Ssd1306::Cls()
  .text._ZN7Ssd13065StartEv
-                0x0000000008008740       0xb4 ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
-                0x0000000008008740                Ssd1306::Start()
+                0x000000000800873c       0xb4 ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
+                0x000000000800873c                Ssd1306::Start()
+ .text._ZN7display7timeout9gpio_initEv
+                0x00000000080087f0        0x2 ../lib-display/lib_gd32/libdisplay.a(display_timeout.o)
+                0x00000000080087f0                display::timeout::gpio_init()
  .text.console_putc
-                0x00000000080087f4        0x4 ../lib-hal/lib_gd32/libhal.a(console_uart0.o)
-                0x00000000080087f4                console_putc
+                0x00000000080087f2        0x4 ../lib-hal/lib_gd32/libhal.a(console_uart0.o)
+                0x00000000080087f2                console_putc
  .text.console_puts
-                0x00000000080087f8        0x4 ../lib-hal/lib_gd32/libhal.a(console_uart0.o)
-                0x00000000080087f8                console_puts
+                0x00000000080087f6        0x4 ../lib-hal/lib_gd32/libhal.a(console_uart0.o)
+                0x00000000080087f6                console_puts
+ *fill*         0x00000000080087fa        0x2 
  .text._ZN8HardwareC2Ev
-                0x00000000080087fc       0xc8 ../lib-hal/lib_gd32/libhal.a(hardware.o)
+                0x00000000080087fc      0x144 ../lib-hal/lib_gd32/libhal.a(hardware.o)
                 0x00000000080087fc                Hardware::Hardware()
                 0x00000000080087fc                Hardware::Hardware()
  .text._ZN9I2cDetectC2Ev
-                0x00000000080088c4       0xb4 ../lib-hal/lib_gd32/libhal.a(i2cdetect.o)
-                0x00000000080088c4                I2cDetect::I2cDetect()
-                0x00000000080088c4                I2cDetect::I2cDetect()
- .text._ZdlPv   0x0000000008008978        0x4 ../lib-c++/lib_gd32/libc++.a(delete.o)
-                0x0000000008008978                operator delete(void*)
- .text._Znwj    0x000000000800897c        0x4 ../lib-c++/lib_gd32/libc++.a(new.o)
-                0x000000000800897c                operator new(unsigned int)
- .text.malloc   0x0000000008008980       0xf0 ../lib-c/lib_gd32/libc.a(malloc.o)
-                0x0000000008008980                malloc
- .text.free     0x0000000008008a70       0x6c ../lib-c/lib_gd32/libc.a(malloc.o)
-                0x0000000008008a70                free
- .text.puts     0x0000000008008adc       0x10 ../lib-c/lib_gd32/libc.a(puts.o)
-                0x0000000008008adc                puts
+                0x0000000008008940       0xb8 ../lib-hal/lib_gd32/libhal.a(i2cdetect.o)
+                0x0000000008008940                I2cDetect::I2cDetect()
+                0x0000000008008940                I2cDetect::I2cDetect()
+ .text._ZdlPv   0x00000000080089f8        0x4 ../lib-c++/lib_gd32/libc++.a(delete.o)
+                0x00000000080089f8                operator delete(void*)
+ .text._Znwj    0x00000000080089fc        0x4 ../lib-c++/lib_gd32/libc++.a(new.o)
+                0x00000000080089fc                operator new(unsigned int)
+ .text.malloc   0x0000000008008a00       0xf0 ../lib-c/lib_gd32/libc.a(malloc.o)
+                0x0000000008008a00                malloc
+ .text.free     0x0000000008008af0       0x6c ../lib-c/lib_gd32/libc.a(malloc.o)
+                0x0000000008008af0                free
+ .text.puts     0x0000000008008b5c       0x10 ../lib-c/lib_gd32/libc.a(puts.o)
+                0x0000000008008b5c                puts
  .text.isleapyear
-                0x0000000008008aec       0x2c ../lib-c/lib_gd32/libc.a(time.o)
+                0x0000000008008b6c       0x2c ../lib-c/lib_gd32/libc.a(time.o)
  .text.getdaysofmonth
-                0x0000000008008b18       0x20 ../lib-c/lib_gd32/libc.a(time.o)
- .text.mktime   0x0000000008008b38       0x98 ../lib-c/lib_gd32/libc.a(time.o)
-                0x0000000008008b38                mktime
+                0x0000000008008b98       0x20 ../lib-c/lib_gd32/libc.a(time.o)
+ .text.mktime   0x0000000008008bb8       0x98 ../lib-c/lib_gd32/libc.a(time.o)
+                0x0000000008008bb8                mktime
  .text.uart0_init
-                0x0000000008008bd0       0x20 ../lib-gd32/lib_gd32/libgd32.a(gd32_uart0.o)
-                0x0000000008008bd0                uart0_init
+                0x0000000008008c50       0x20 ../lib-gd32/lib_gd32/libgd32.a(gd32_uart0.o)
+                0x0000000008008c50                uart0_init
  .text.uart0_putc
-                0x0000000008008bf0       0x40 ../lib-gd32/lib_gd32/libgd32.a(gd32_uart0.o)
-                0x0000000008008bf0                uart0_putc
+                0x0000000008008c70       0x40 ../lib-gd32/lib_gd32/libgd32.a(gd32_uart0.o)
+                0x0000000008008c70                uart0_putc
  .text.uart0_puts
-                0x0000000008008c30       0x1e ../lib-gd32/lib_gd32/libgd32.a(gd32_uart0.o)
-                0x0000000008008c30                uart0_puts
- *fill*         0x0000000008008c4e        0x2 
+                0x0000000008008cb0       0x1e ../lib-gd32/lib_gd32/libgd32.a(gd32_uart0.o)
+                0x0000000008008cb0                uart0_puts
+ *fill*         0x0000000008008cce        0x2 
  .text.systick_config
-                0x0000000008008c50       0x3c ../lib-gd32/lib_gd32/libgd32.a(systick.o)
-                0x0000000008008c50                systick_config
+                0x0000000008008cd0       0x3c ../lib-gd32/lib_gd32/libgd32.a(systick.o)
+                0x0000000008008cd0                systick_config
  .text.SysTick_Handler
-                0x0000000008008c8c       0x10 ../lib-gd32/lib_gd32/libgd32.a(systick.o)
-                0x0000000008008c8c                SysTick_Handler
+                0x0000000008008d0c       0x10 ../lib-gd32/lib_gd32/libgd32.a(systick.o)
+                0x0000000008008d0c                SysTick_Handler
  .text.SystemInit
-                0x0000000008008c9c       0xf0 ../lib-gd32/lib_gd32/libgd32.a(system_gd32f10x.o)
-                0x0000000008008c9c                SystemInit
- .text.bkp_deinit
-                0x0000000008008d8c        0xe ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_bkp.o)
-                0x0000000008008d8c                bkp_deinit
- *fill*         0x0000000008008d9a        0x2 
+                0x0000000008008d1c       0xf0 ../lib-gd32/lib_gd32/libgd32.a(system_gd32f10x.o)
+                0x0000000008008d1c                SystemInit
  .text.bkp_data_write
-                0x0000000008008d9c       0x2c ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_bkp.o)
-                0x0000000008008d9c                bkp_data_write
+                0x0000000008008e0c       0x2c ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_bkp.o)
+                0x0000000008008e0c                bkp_data_write
  .text.gpio_init
-                0x0000000008008dc8       0xa8 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_gpio.o)
-                0x0000000008008dc8                gpio_init
+                0x0000000008008e38       0xa8 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_gpio.o)
+                0x0000000008008e38                gpio_init
  .text.gpio_pin_remap_config
-                0x0000000008008e70       0x60 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_gpio.o)
-                0x0000000008008e70                gpio_pin_remap_config
+                0x0000000008008ee0       0x60 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_gpio.o)
+                0x0000000008008ee0                gpio_pin_remap_config
  .text.pmu_backup_write_enable
-                0x0000000008008ed0       0x10 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_pmu.o)
-                0x0000000008008ed0                pmu_backup_write_enable
+                0x0000000008008f40       0x10 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_pmu.o)
+                0x0000000008008f40                pmu_backup_write_enable
  .text.rcu_periph_clock_enable
-                0x0000000008008ee0       0x1a ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_rcu.o)
-                0x0000000008008ee0                rcu_periph_clock_enable
+                0x0000000008008f50       0x1a ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_rcu.o)
+                0x0000000008008f50                rcu_periph_clock_enable
  .text.rcu_periph_clock_disable
-                0x0000000008008efa       0x1c ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_rcu.o)
-                0x0000000008008efa                rcu_periph_clock_disable
+                0x0000000008008f6a       0x1c ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_rcu.o)
+                0x0000000008008f6a                rcu_periph_clock_disable
  .text.rcu_periph_reset_enable
-                0x0000000008008f16        0x4 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_rcu.o)
-                0x0000000008008f16                rcu_periph_reset_enable
+                0x0000000008008f86        0x4 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_rcu.o)
+                0x0000000008008f86                rcu_periph_reset_enable
  .text.rcu_periph_reset_disable
-                0x0000000008008f1a        0x4 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_rcu.o)
-                0x0000000008008f1a                rcu_periph_reset_disable
- *fill*         0x0000000008008f1e        0x2 
- .text.rcu_bkp_reset_enable
-                0x0000000008008f20       0x10 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_rcu.o)
-                0x0000000008008f20                rcu_bkp_reset_enable
- .text.rcu_bkp_reset_disable
-                0x0000000008008f30       0x10 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_rcu.o)
-                0x0000000008008f30                rcu_bkp_reset_disable
+                0x0000000008008f8a        0x4 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_rcu.o)
+                0x0000000008008f8a                rcu_periph_reset_disable
+ *fill*         0x0000000008008f8e        0x2 
  .text.rcu_adc_clock_config
-                0x0000000008008f40       0x3c ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_rcu.o)
-                0x0000000008008f40                rcu_adc_clock_config
+                0x0000000008008f90       0x3c ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_rcu.o)
+                0x0000000008008f90                rcu_adc_clock_config
  .text.rcu_clock_freq_get
-                0x0000000008008f7c      0x110 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_rcu.o)
-                0x0000000008008f7c                rcu_clock_freq_get
+                0x0000000008008fcc      0x110 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_rcu.o)
+                0x0000000008008fcc                rcu_clock_freq_get
  .text.timer_deinit
-                0x000000000800908c       0xc4 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_timer.o)
-                0x000000000800908c                timer_deinit
+                0x00000000080090dc       0xc4 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_timer.o)
+                0x00000000080090dc                timer_deinit
  .text.timer_init
-                0x0000000008009150       0xb0 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_timer.o)
-                0x0000000008009150                timer_init
+                0x00000000080091a0       0xb0 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_timer.o)
+                0x00000000080091a0                timer_init
  .text.timer_enable
-                0x0000000008009200        0xa ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_timer.o)
-                0x0000000008009200                timer_enable
- *fill*         0x000000000800920a        0x2 
+                0x0000000008009250        0xa ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_timer.o)
+                0x0000000008009250                timer_enable
+ *fill*         0x000000000800925a        0x2 
  .text.usart_deinit
-                0x000000000800920c       0x80 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_usart.o)
-                0x000000000800920c                usart_deinit
+                0x000000000800925c       0x80 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_usart.o)
+                0x000000000800925c                usart_deinit
  .text.usart_baudrate_set
-                0x000000000800928c       0x50 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_usart.o)
-                0x000000000800928c                usart_baudrate_set
+                0x00000000080092dc       0x50 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_usart.o)
+                0x00000000080092dc                usart_baudrate_set
  .text.usart_parity_config
-                0x00000000080092dc       0x10 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_usart.o)
-                0x00000000080092dc                usart_parity_config
+                0x000000000800932c       0x10 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_usart.o)
+                0x000000000800932c                usart_parity_config
  .text.usart_word_length_set
-                0x00000000080092ec       0x10 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_usart.o)
-                0x00000000080092ec                usart_word_length_set
+                0x000000000800933c       0x10 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_usart.o)
+                0x000000000800933c                usart_word_length_set
  .text.usart_stop_bit_set
-                0x00000000080092fc       0x10 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_usart.o)
-                0x00000000080092fc                usart_stop_bit_set
+                0x000000000800934c       0x10 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_usart.o)
+                0x000000000800934c                usart_stop_bit_set
  .text.usart_transmit_config
-                0x000000000800930c        0xc ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_usart.o)
-                0x000000000800930c                usart_transmit_config
+                0x000000000800935c        0xc ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_usart.o)
+                0x000000000800935c                usart_transmit_config
  .text.usart_receive_config
-                0x0000000008009318        0xc ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_usart.o)
-                0x0000000008009318                usart_receive_config
+                0x0000000008009368        0xc ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_usart.o)
+                0x0000000008009368                usart_receive_config
  .text.usart_hardware_flow_rts_config
-                0x0000000008009324        0xc ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_usart.o)
-                0x0000000008009324                usart_hardware_flow_rts_config
+                0x0000000008009374        0xc ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_usart.o)
+                0x0000000008009374                usart_hardware_flow_rts_config
  .text.usart_hardware_flow_cts_config
-                0x0000000008009330        0xc ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_usart.o)
-                0x0000000008009330                usart_hardware_flow_cts_config
+                0x0000000008009380        0xc ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_usart.o)
+                0x0000000008009380                usart_hardware_flow_cts_config
  .text.usart_flag_get
-                0x000000000800933c       0x16 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_usart.o)
-                0x000000000800933c                usart_flag_get
- *fill*         0x0000000008009352        0x2 
+                0x000000000800938c       0x16 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_usart.o)
+                0x000000000800938c                usart_flag_get
+ *fill*         0x00000000080093a2        0x2 
  .text._Z13gd32_adc_initv
-                0x0000000008009354       0x90 ../lib-gd32/lib_gd32/libgd32.a(gd32_adc.o)
-                0x0000000008009354                gd32_adc_init()
+                0x00000000080093a4       0x90 ../lib-gd32/lib_gd32/libgd32.a(gd32_adc.o)
+                0x00000000080093a4                gd32_adc_init()
  .text._ZL5_stopv.isra.0
-                0x00000000080093e4       0x24 ../lib-gd32/lib_gd32/libgd32.a(gd32_i2c.o)
- .text._Z14gd32_i2c_beginv
-                0x0000000008009408       0x68 ../lib-gd32/lib_gd32/libgd32.a(gd32_i2c.o)
-                0x0000000008009408                gd32_i2c_begin()
- .text._Z21gd32_i2c_set_baudratej
-                0x0000000008009470       0x10 ../lib-gd32/lib_gd32/libgd32.a(gd32_i2c.o)
-                0x0000000008009470                gd32_i2c_set_baudrate(unsigned int)
- .text._Z20gd32_i2c_set_addressh
-                0x0000000008009480        0xc ../lib-gd32/lib_gd32/libgd32.a(gd32_i2c.o)
-                0x0000000008009480                gd32_i2c_set_address(unsigned char)
- .text._Z14gd32_i2c_writePKcj
-                0x000000000800948c       0xcc ../lib-gd32/lib_gd32/libgd32.a(gd32_i2c.o)
-                0x000000000800948c                gd32_i2c_write(char const*, unsigned int)
- .text._Z13gd32_i2c_readPcj
-                0x0000000008009558      0x148 ../lib-gd32/lib_gd32/libgd32.a(gd32_i2c.o)
-                0x0000000008009558                gd32_i2c_read(char*, unsigned int)
+                0x0000000008009434       0x24 ../lib-gd32/lib_gd32/libgd32.a(gd32_i2c.o)
+ .text.gd32_i2c_begin
+                0x0000000008009458       0x68 ../lib-gd32/lib_gd32/libgd32.a(gd32_i2c.o)
+                0x0000000008009458                gd32_i2c_begin
+ .text.gd32_i2c_set_baudrate
+                0x00000000080094c0       0x10 ../lib-gd32/lib_gd32/libgd32.a(gd32_i2c.o)
+                0x00000000080094c0                gd32_i2c_set_baudrate
+ .text.gd32_i2c_set_address
+                0x00000000080094d0        0xc ../lib-gd32/lib_gd32/libgd32.a(gd32_i2c.o)
+                0x00000000080094d0                gd32_i2c_set_address
+ .text.gd32_i2c_write
+                0x00000000080094dc       0xcc ../lib-gd32/lib_gd32/libgd32.a(gd32_i2c.o)
+                0x00000000080094dc                gd32_i2c_write
+ .text.gd32_i2c_read
+                0x00000000080095a8      0x148 ../lib-gd32/lib_gd32/libgd32.a(gd32_i2c.o)
+                0x00000000080095a8                gd32_i2c_read
  .text.gd32_uart_begin
-                0x00000000080096a0      0x1f4 ../lib-gd32/lib_gd32/libgd32.a(gd32_uart.o)
-                0x00000000080096a0                gd32_uart_begin
+                0x00000000080096f0      0x1f4 ../lib-gd32/lib_gd32/libgd32.a(gd32_uart.o)
+                0x00000000080096f0                gd32_uart_begin
  .text._Z11micros_initv
-                0x0000000008009894        0x2 ../lib-gd32/lib_gd32/libgd32.a(micros.o)
-                0x0000000008009894                micros_init()
- *fill*         0x0000000008009896        0x2 
+                0x00000000080098e4        0x2 ../lib-gd32/lib_gd32/libgd32.a(micros.o)
+                0x00000000080098e4                micros_init()
+ *fill*         0x00000000080098e6        0x2 
  .text._Z11udelay_initv
-                0x0000000008009898       0x54 ../lib-gd32/lib_gd32/libgd32.a(udelay.o)
-                0x0000000008009898                udelay_init()
+                0x00000000080098e8       0x54 ../lib-gd32/lib_gd32/libgd32.a(udelay.o)
+                0x00000000080098e8                udelay_init()
  .text._Z6udelayjj
-                0x00000000080098ec       0x30 ../lib-gd32/lib_gd32/libgd32.a(udelay.o)
-                0x00000000080098ec                udelay(unsigned int, unsigned int)
+                0x000000000800993c       0x30 ../lib-gd32/lib_gd32/libgd32.a(udelay.o)
+                0x000000000800993c                udelay(unsigned int, unsigned int)
  .text.adc_mode_config
-                0x000000000800991c       0x20 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_adc.o)
-                0x000000000800991c                adc_mode_config
+                0x000000000800996c       0x20 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_adc.o)
+                0x000000000800996c                adc_mode_config
  .text.adc_special_function_config
-                0x000000000800993c       0x50 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_adc.o)
-                0x000000000800993c                adc_special_function_config
+                0x000000000800998c       0x50 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_adc.o)
+                0x000000000800998c                adc_special_function_config
  .text.adc_data_alignment_config
-                0x000000000800998c       0x12 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_adc.o)
-                0x000000000800998c                adc_data_alignment_config
+                0x00000000080099dc       0x12 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_adc.o)
+                0x00000000080099dc                adc_data_alignment_config
  .text.adc_enable
-                0x000000000800999e       0x10 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_adc.o)
-                0x000000000800999e                adc_enable
+                0x00000000080099ee       0x10 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_adc.o)
+                0x00000000080099ee                adc_enable
  .text.adc_calibration_enable
-                0x00000000080099ae       0x22 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_adc.o)
-                0x00000000080099ae                adc_calibration_enable
+                0x00000000080099fe       0x22 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_adc.o)
+                0x00000000080099fe                adc_calibration_enable
  .text.adc_tempsensor_vrefint_enable
-                0x00000000080099d0       0x14 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_adc.o)
-                0x00000000080099d0                adc_tempsensor_vrefint_enable
+                0x0000000008009a20       0x14 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_adc.o)
+                0x0000000008009a20                adc_tempsensor_vrefint_enable
  .text.adc_channel_length_config
-                0x00000000080099e4       0x3a ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_adc.o)
-                0x00000000080099e4                adc_channel_length_config
+                0x0000000008009a34       0x3a ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_adc.o)
+                0x0000000008009a34                adc_channel_length_config
  .text.adc_inserted_channel_config
-                0x0000000008009a1e       0x5c ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_adc.o)
-                0x0000000008009a1e                adc_inserted_channel_config
+                0x0000000008009a6e       0x5c ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_adc.o)
+                0x0000000008009a6e                adc_inserted_channel_config
  .text.adc_external_trigger_source_config
-                0x0000000008009a7a       0x22 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_adc.o)
-                0x0000000008009a7a                adc_external_trigger_source_config
+                0x0000000008009aca       0x22 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_adc.o)
+                0x0000000008009aca                adc_external_trigger_source_config
  .text.adc_external_trigger_config
-                0x0000000008009a9c       0x36 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_adc.o)
-                0x0000000008009a9c                adc_external_trigger_config
+                0x0000000008009aec       0x36 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_adc.o)
+                0x0000000008009aec                adc_external_trigger_config
  .text.adc_software_trigger_enable
-                0x0000000008009ad2       0x1a ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_adc.o)
-                0x0000000008009ad2                adc_software_trigger_enable
+                0x0000000008009b22       0x1a ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_adc.o)
+                0x0000000008009b22                adc_software_trigger_enable
  .text.i2c_clock_config
-                0x0000000008009aec       0xc4 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_i2c.o)
-                0x0000000008009aec                i2c_clock_config
+                0x0000000008009b3c       0xc4 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_i2c.o)
+                0x0000000008009b3c                i2c_clock_config
  .text.i2c_ack_config
-                0x0000000008009bb0       0x12 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_i2c.o)
-                0x0000000008009bb0                i2c_ack_config
+                0x0000000008009c00       0x12 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_i2c.o)
+                0x0000000008009c00                i2c_ack_config
  .text.i2c_ackpos_config
-                0x0000000008009bc2       0x12 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_i2c.o)
-                0x0000000008009bc2                i2c_ackpos_config
+                0x0000000008009c12       0x12 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_i2c.o)
+                0x0000000008009c12                i2c_ackpos_config
  .text.i2c_master_addressing
-                0x0000000008009bd4       0x10 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_i2c.o)
-                0x0000000008009bd4                i2c_master_addressing
+                0x0000000008009c24       0x10 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_i2c.o)
+                0x0000000008009c24                i2c_master_addressing
  .text.i2c_enable
-                0x0000000008009be4        0xa ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_i2c.o)
-                0x0000000008009be4                i2c_enable
+                0x0000000008009c34        0xa ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_i2c.o)
+                0x0000000008009c34                i2c_enable
  .text.i2c_start_on_bus
-                0x0000000008009bee        0xa ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_i2c.o)
-                0x0000000008009bee                i2c_start_on_bus
+                0x0000000008009c3e        0xa ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_i2c.o)
+                0x0000000008009c3e                i2c_start_on_bus
  .text.i2c_stop_on_bus
-                0x0000000008009bf8        0xa ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_i2c.o)
-                0x0000000008009bf8                i2c_stop_on_bus
+                0x0000000008009c48        0xa ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_i2c.o)
+                0x0000000008009c48                i2c_stop_on_bus
  .text.i2c_data_transmit
-                0x0000000008009c02        0x4 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_i2c.o)
-                0x0000000008009c02                i2c_data_transmit
+                0x0000000008009c52        0x4 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_i2c.o)
+                0x0000000008009c52                i2c_data_transmit
  .text.i2c_data_receive
-                0x0000000008009c06        0x6 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_i2c.o)
-                0x0000000008009c06                i2c_data_receive
+                0x0000000008009c56        0x6 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_i2c.o)
+                0x0000000008009c56                i2c_data_receive
  .text.i2c_flag_get
-                0x0000000008009c0c       0x16 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_i2c.o)
-                0x0000000008009c0c                i2c_flag_get
+                0x0000000008009c5c       0x16 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_i2c.o)
+                0x0000000008009c5c                i2c_flag_get
  .text.i2c_flag_clear
-                0x0000000008009c22       0x24 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_i2c.o)
-                0x0000000008009c22                i2c_flag_clear
+                0x0000000008009c72       0x24 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_i2c.o)
+                0x0000000008009c72                i2c_flag_clear
  *(.glue_7)
- .glue_7        0x0000000008009c46        0x0 linker stubs
+ .glue_7        0x0000000008009c96        0x0 linker stubs
  *(.glue_7t)
- .glue_7t       0x0000000008009c46        0x0 linker stubs
+ .glue_7t       0x0000000008009c96        0x0 linker stubs
  *(.eh_frame)
  *(.init)
  *(.fini)
-                0x0000000008009c48                . = ALIGN (0x4)
- *fill*         0x0000000008009c46        0x2 
-                0x0000000008009c48                _etext = .
+                0x0000000008009c98                . = ALIGN (0x4)
+ *fill*         0x0000000008009c96        0x2 
+                0x0000000008009c98                _etext = .
 
-.vfp11_veneer   0x0000000008009c48        0x0
- .vfp11_veneer  0x0000000008009c48        0x0 linker stubs
+.vfp11_veneer   0x0000000008009c98        0x0
+ .vfp11_veneer  0x0000000008009c98        0x0 linker stubs
 
-.v4_bx          0x0000000008009c48        0x0
- .v4_bx         0x0000000008009c48        0x0 linker stubs
+.v4_bx          0x0000000008009c98        0x0
+ .v4_bx         0x0000000008009c98        0x0 linker stubs
 
-.iplt           0x0000000008009c48        0x0
- .iplt          0x0000000008009c48        0x0 build_gd32/startup_gd32f10x_cl.o
+.iplt           0x0000000008009c98        0x0
+ .iplt          0x0000000008009c98        0x0 build_gd32/startup_gd32f10x_cl.o
 
-.rodata         0x0000000008009c48      0x6d0
-                0x0000000008009c48                . = ALIGN (0x4)
+.rodata         0x0000000008009c98      0x744
+                0x0000000008009c98                . = ALIGN (0x4)
  *(.rodata)
- .rodata        0x0000000008009c48       0x18 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_rcu.o)
+ .rodata        0x0000000008009c98       0x18 ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_rcu.o)
  *(.rodata*)
  .rodata.main.str1.1
-                0x0000000008009c60       0x92 build_gd32/firmware/main.o
+                0x0000000008009cb0       0x92 build_gd32/firmware/main.o
  .rodata.gettimeofday.str1.1
-                0x0000000008009cf2       0x18 ../lib-c/lib_gd32/libc.a(time.o)
+                0x0000000008009d42       0x18 ../lib-c/lib_gd32/libc.a(time.o)
  .rodata.__func__.0
-                0x0000000008009d0a        0xd ../lib-c/lib_gd32/libc.a(time.o)
+                0x0000000008009d5a        0xd ../lib-c/lib_gd32/libc.a(time.o)
  .rodata.__func__.1
-                0x0000000008009d17        0xd ../lib-c/lib_gd32/libc.a(time.o)
+                0x0000000008009d67        0xd ../lib-c/lib_gd32/libc.a(time.o)
  .rodata.__assert_func.str1.1
-                0x0000000008009d24       0x3c ../lib-c/lib_gd32/libc.a(assert.o)
+                0x0000000008009d74       0x3c ../lib-c/lib_gd32/libc.a(assert.o)
                                          0x3d (size before relaxing)
  .rodata._ZN7Display9PrintInfoEv.isra.0.str1.1
-                0x0000000008009d60       0x11 ../lib-display/lib_gd32/libdisplay.a(display.o)
+                0x0000000008009db0       0x11 ../lib-display/lib_gd32/libdisplay.a(display.o)
  .rodata._ZN7Ssd13069PrintInfoEv.str1.1
-                0x0000000008009d71       0x1b ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
+                0x0000000008009dc1       0x1b ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
  .rodata._ZN7Ssd130611CheckSH1106Ev.str1.1
-                0x0000000008009d8c        0x6 ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
- *fill*         0x0000000008009d92        0x2 
+                0x0000000008009ddc        0x6 ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
+ *fill*         0x0000000008009de2        0x2 
  .rodata._ZL12_OledFont8x6
-                0x0000000008009d94      0x2a0 ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
+                0x0000000008009de4      0x2a0 ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
  .rodata._ZL16oled_128x32_init
-                0x000000000800a034       0x18 ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
+                0x000000000800a084       0x18 ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
  .rodata._ZL16oled_128x64_init
-                0x000000000800a04c       0x18 ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
+                0x000000000800a09c       0x18 ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
  .rodata._ZTV7Ssd1306
-                0x000000000800a064       0x40 ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
-                0x000000000800a064                vtable for Ssd1306
+                0x000000000800a0b4       0x40 ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
+                0x000000000800a0b4                vtable for Ssd1306
  .rodata.console_init.str1.1
-                0x000000000800a0a4        0xc ../lib-hal/lib_gd32/libhal.a(console_uart0.o)
+                0x000000000800a0f4        0xc ../lib-hal/lib_gd32/libhal.a(console_uart0.o)
  .rodata._ZN8HardwareC2Ev.str1.1
-                0x000000000800a0b0       0x32 ../lib-hal/lib_gd32/libhal.a(hardware.o)
+                0x000000000800a100       0xa6 ../lib-hal/lib_gd32/libhal.a(hardware.o)
  .rodata._ZN9I2cDetectC2Ev.str1.1
-                0x000000000800a0e2       0x4a ../lib-hal/lib_gd32/libhal.a(i2cdetect.o)
+                0x000000000800a1a6       0x4a ../lib-hal/lib_gd32/libhal.a(i2cdetect.o)
                                          0x4b (size before relaxing)
  .rodata.get_allocated.str1.1
-                0x000000000800a12c       0x30 ../lib-c/lib_gd32/libc.a(malloc.o)
+                0x000000000800a1f0       0x30 ../lib-c/lib_gd32/libc.a(malloc.o)
  .rodata.malloc.str1.1
-                0x000000000800a15c       0xe6 ../lib-c/lib_gd32/libc.a(malloc.o)
+                0x000000000800a220       0xe6 ../lib-c/lib_gd32/libc.a(malloc.o)
  .rodata.free.str1.1
-                0x000000000800a242       0x26 ../lib-c/lib_gd32/libc.a(malloc.o)
+                0x000000000800a306       0x26 ../lib-c/lib_gd32/libc.a(malloc.o)
  .rodata.__func__.2
-                0x000000000800a268        0x5 ../lib-c/lib_gd32/libc.a(malloc.o)
+                0x000000000800a32c        0x5 ../lib-c/lib_gd32/libc.a(malloc.o)
  .rodata.__func__.3
-                0x000000000800a26d        0x7 ../lib-c/lib_gd32/libc.a(malloc.o)
+                0x000000000800a331        0x7 ../lib-c/lib_gd32/libc.a(malloc.o)
  .rodata.days_of_month
-                0x000000000800a274       0x30 ../lib-c/lib_gd32/libc.a(time.o)
+                0x000000000800a338       0x30 ../lib-c/lib_gd32/libc.a(time.o)
  .rodata.gd32_uart_begin.str1.1
-                0x000000000800a2a4       0x36 ../lib-gd32/lib_gd32/libgd32.a(gd32_uart.o)
+                0x000000000800a368       0x36 ../lib-gd32/lib_gd32/libgd32.a(gd32_uart.o)
                                          0x38 (size before relaxing)
  .rodata._Z11udelay_initv.str1.1
-                0x000000000800a2da       0x3d ../lib-gd32/lib_gd32/libgd32.a(udelay.o)
-                0x000000000800a318                . = ALIGN (0x4)
- *fill*         0x000000000800a317        0x1 
+                0x000000000800a39e       0x3d ../lib-gd32/lib_gd32/libgd32.a(udelay.o)
+                0x000000000800a3dc                . = ALIGN (0x4)
+ *fill*         0x000000000800a3db        0x1 
 
 .ARM.extab
  *(.ARM.extab* .gnu.linkonce.armextab.*)
 
-.ARM            0x000000000800a318        0x8
-                0x000000000800a318                __exidx_start = .
+.ARM            0x000000000800a3dc        0x8
+                0x000000000800a3dc                __exidx_start = .
  *(.ARM.exidx*)
  .ARM.exidx.text.__udivmoddi4
-                0x000000000800a318        0x8 /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_udivmoddi4.o)
-                0x000000000800a320                __exidx_end = .
+                0x000000000800a3dc        0x8 /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_udivmoddi4.o)
+                0x000000000800a3e4                __exidx_end = .
 
-.rel.dyn        0x000000000800a320        0x0
- .rel.iplt      0x000000000800a320        0x0 build_gd32/startup_gd32f10x_cl.o
+.rel.dyn        0x000000000800a3e4        0x0
+ .rel.iplt      0x000000000800a3e4        0x0 build_gd32/startup_gd32f10x_cl.o
 
 .ARM.attributes
-                0x000000000800a320       0x2f
+                0x000000000800a3e4       0x2f
  *(.ARM.attributes)
  .ARM.attributes
-                0x000000000800a320       0x21 build_gd32/startup_gd32f10x_cl.o
+                0x000000000800a3e4       0x21 build_gd32/startup_gd32f10x_cl.o
  .ARM.attributes
-                0x000000000800a341       0x2d build_gd32/firmware/main.o
+                0x000000000800a405       0x2d build_gd32/firmware/main.o
  .ARM.attributes
-                0x000000000800a36e       0x2d ../lib-c/lib_gd32/libc.a(time.o)
+                0x000000000800a432       0x2d ../lib-c/lib_gd32/libc.a(time.o)
  .ARM.attributes
-                0x000000000800a39b       0x2d ../lib-c/lib_gd32/libc.a(assert.o)
+                0x000000000800a45f       0x2d ../lib-c/lib_gd32/libc.a(assert.o)
  .ARM.attributes
-                0x000000000800a3c8       0x2d ../lib-c/lib_gd32/libc.a(printf.o)
+                0x000000000800a48c       0x2d ../lib-c/lib_gd32/libc.a(printf.o)
  .ARM.attributes
-                0x000000000800a3f5       0x1d /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_mulsf3.o)
+                0x000000000800a4b9       0x1d /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_mulsf3.o)
  .ARM.attributes
-                0x000000000800a412       0x1d /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_truncdfsf2.o)
+                0x000000000800a4d6       0x1d /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_truncdfsf2.o)
  .ARM.attributes
-                0x000000000800a42f       0x1d /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubsf3.o)
+                0x000000000800a4f3       0x1d /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubsf3.o)
  .ARM.attributes
-                0x000000000800a44c       0x1d /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_cmpsf2.o)
+                0x000000000800a510       0x1d /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_cmpsf2.o)
  .ARM.attributes
-                0x000000000800a469       0x1d /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_arm_fixsfsi.o)
+                0x000000000800a52d       0x1d /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_arm_fixsfsi.o)
  .ARM.attributes
-                0x000000000800a486       0x1d /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_aeabi_uldivmod.o)
+                0x000000000800a54a       0x1d /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_aeabi_uldivmod.o)
  .ARM.attributes
-                0x000000000800a4a3       0x2d /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_udivmoddi4.o)
+                0x000000000800a567       0x2d /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_udivmoddi4.o)
  .ARM.attributes
-                0x000000000800a4d0       0x1d /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a(_dvmd_tls.o)
+                0x000000000800a594       0x1d /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a(_dvmd_tls.o)
  .ARM.attributes
-                0x000000000800a4ed       0x2d ../lib-display/lib_gd32/libdisplay.a(display.o)
+                0x000000000800a5b1       0x2d ../lib-display/lib_gd32/libdisplay.a(display.o)
  .ARM.attributes
-                0x000000000800a51a       0x2d ../lib-display/lib_gd32/libdisplay.a(display_timeout.o)
+                0x000000000800a5de       0x2d ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
  .ARM.attributes
-                0x000000000800a547       0x2d ../lib-display/lib_gd32/libdisplay.a(ssd1306.o)
+                0x000000000800a60b       0x2d ../lib-display/lib_gd32/libdisplay.a(display_timeout.o)
  .ARM.attributes
-                0x000000000800a574       0x2d ../lib-hal/lib_gd32/libhal.a(console_uart0.o)
+                0x000000000800a638       0x2d ../lib-hal/lib_gd32/libhal.a(console_uart0.o)
  .ARM.attributes
-                0x000000000800a5a1       0x2d ../lib-hal/lib_gd32/libhal.a(hardware.o)
+                0x000000000800a665       0x2d ../lib-hal/lib_gd32/libhal.a(hardware.o)
  .ARM.attributes
-                0x000000000800a5ce       0x2d ../lib-hal/lib_gd32/libhal.a(i2cdetect.o)
+                0x000000000800a692       0x2d ../lib-hal/lib_gd32/libhal.a(i2cdetect.o)
  .ARM.attributes
-                0x000000000800a5fb       0x2d ../lib-c++/lib_gd32/libc++.a(delete.o)
+                0x000000000800a6bf       0x2d ../lib-c++/lib_gd32/libc++.a(delete.o)
  .ARM.attributes
-                0x000000000800a628       0x2d ../lib-c++/lib_gd32/libc++.a(new.o)
+                0x000000000800a6ec       0x2d ../lib-c++/lib_gd32/libc++.a(new.o)
  .ARM.attributes
-                0x000000000800a655       0x2d ../lib-c/lib_gd32/libc.a(malloc.o)
+                0x000000000800a719       0x2d ../lib-c/lib_gd32/libc.a(malloc.o)
  .ARM.attributes
-                0x000000000800a682       0x2d ../lib-c/lib_gd32/libc.a(puts.o)
+                0x000000000800a746       0x2d ../lib-c/lib_gd32/libc.a(puts.o)
  .ARM.attributes
-                0x000000000800a6af       0x2d ../lib-c/lib_gd32/libc.a(time.o)
+                0x000000000800a773       0x2d ../lib-c/lib_gd32/libc.a(time.o)
  .ARM.attributes
-                0x000000000800a6dc       0x2d ../lib-gd32/lib_gd32/libgd32.a(gd32_uart0.o)
+                0x000000000800a7a0       0x2d ../lib-gd32/lib_gd32/libgd32.a(gd32_uart0.o)
  .ARM.attributes
-                0x000000000800a709       0x2d ../lib-gd32/lib_gd32/libgd32.a(systick.o)
+                0x000000000800a7cd       0x2d ../lib-gd32/lib_gd32/libgd32.a(systick.o)
  .ARM.attributes
-                0x000000000800a736       0x2d ../lib-gd32/lib_gd32/libgd32.a(system_gd32f10x.o)
+                0x000000000800a7fa       0x2d ../lib-gd32/lib_gd32/libgd32.a(system_gd32f10x.o)
  .ARM.attributes
-                0x000000000800a763       0x2d ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_bkp.o)
+                0x000000000800a827       0x2d ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_bkp.o)
  .ARM.attributes
-                0x000000000800a790       0x2d ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_gpio.o)
+                0x000000000800a854       0x2d ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_gpio.o)
  .ARM.attributes
-                0x000000000800a7bd       0x2d ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_pmu.o)
+                0x000000000800a881       0x2d ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_pmu.o)
  .ARM.attributes
-                0x000000000800a7ea       0x2d ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_rcu.o)
+                0x000000000800a8ae       0x2d ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_rcu.o)
  .ARM.attributes
-                0x000000000800a817       0x2d ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_timer.o)
+                0x000000000800a8db       0x2d ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_timer.o)
  .ARM.attributes
-                0x000000000800a844       0x2d ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_usart.o)
+                0x000000000800a908       0x2d ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_usart.o)
  .ARM.attributes
-                0x000000000800a871       0x2d ../lib-gd32/lib_gd32/libgd32.a(gd32_adc.o)
+                0x000000000800a935       0x2d ../lib-gd32/lib_gd32/libgd32.a(gd32_adc.o)
  .ARM.attributes
-                0x000000000800a89e       0x2d ../lib-gd32/lib_gd32/libgd32.a(gd32_i2c.o)
+                0x000000000800a962       0x2d ../lib-gd32/lib_gd32/libgd32.a(gd32_i2c.o)
  .ARM.attributes
-                0x000000000800a8cb       0x2d ../lib-gd32/lib_gd32/libgd32.a(gd32_uart.o)
+                0x000000000800a98f       0x2d ../lib-gd32/lib_gd32/libgd32.a(gd32_uart.o)
  .ARM.attributes
-                0x000000000800a8f8       0x2d ../lib-gd32/lib_gd32/libgd32.a(micros.o)
+                0x000000000800a9bc       0x2d ../lib-gd32/lib_gd32/libgd32.a(micros.o)
  .ARM.attributes
-                0x000000000800a925       0x2d ../lib-gd32/lib_gd32/libgd32.a(udelay.o)
+                0x000000000800a9e9       0x2d ../lib-gd32/lib_gd32/libgd32.a(udelay.o)
  .ARM.attributes
-                0x000000000800a952       0x2d ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_adc.o)
+                0x000000000800aa16       0x2d ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_adc.o)
  .ARM.attributes
-                0x000000000800a97f       0x2d ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_i2c.o)
+                0x000000000800aa43       0x2d ../lib-gd32/lib_gd32/libgd32.a(gd32f10x_i2c.o)
 
-.preinit_array  0x000000000800a320        0x0
+.preinit_array  0x000000000800a3e4        0x0
                 [!provide]                        PROVIDE (__preinit_array_start = .)
  *(.preinit_array*)
                 [!provide]                        PROVIDE (__preinit_array_end = .)
 
-.init_array     0x000000000800a320        0x0
+.init_array     0x000000000800a3e4        0x0
                 [!provide]                        PROVIDE (__init_array_start = .)
  *(SORT_BY_NAME(.init_array.*))
  *(.init_array*)
                 [!provide]                        PROVIDE (__init_array_end = .)
 
-.fini_array     0x000000000800a320        0x0
+.fini_array     0x000000000800a3e4        0x0
                 [!provide]                        PROVIDE (__fini_array_start = .)
  *(.fini_array*)
  *(SORT_BY_NAME(.fini_array.*))
                 [!provide]                        PROVIDE (__fini_array_end = .)
-                0x000000000800a320                _sidata = LOADADDR (.data)
+                0x000000000800a3e4                _sidata = LOADADDR (.data)
 
-.data           0x0000000020000000       0xd8 load address 0x000000000800a320
+.data           0x0000000020000000       0xd8 load address 0x000000000800a3e4
                 0x0000000020000000                . = ALIGN (0x4)
                 0x0000000020000000                _sdata = .
  *(.data)
@@ -1647,11 +1644,11 @@ LOAD build_gd32/firmware/main.o
                 0x00000000200000d8                . = ALIGN (0x4)
                 0x00000000200000d8                _edata = .
 
-.igot.plt       0x00000000200000d8        0x0 load address 0x000000000800a3f8
+.igot.plt       0x00000000200000d8        0x0 load address 0x000000000800a4bc
  .igot.plt      0x00000000200000d8        0x0 build_gd32/startup_gd32f10x_cl.o
                 0x00000000200000d8                . = ALIGN (0x4)
 
-.bss            0x00000000200000d8       0xac load address 0x000000000800a3f8
+.bss            0x00000000200000d8       0xac load address 0x000000000800a4bc
                 0x00000000200000d8                _sbss = .
                 0x00000000200000d8                __bss_start__ = _sbss
  *(.bss)
@@ -1686,19 +1683,19 @@ LOAD build_gd32/firmware/main.o
                 [!provide]                        PROVIDE (end = _ebss)
                 [!provide]                        PROVIDE (_end = _ebss)
 
-.heap           0x0000000020016000      0x800 load address 0x0000000020000184
+.heap           0x0000000020015800      0x800 load address 0x0000000020000184
+                0x0000000020015800                . = ALIGN (0x4)
+                0x0000000020015800                heap_low = .
+                0x0000000020016000                . = (. + __heap_size)
+ *fill*         0x0000000020015800      0x800 
+                0x0000000020016000                heap_top = .
                 0x0000000020016000                . = ALIGN (0x4)
-                0x0000000020016000                heap_low = .
-                0x0000000020016800                . = (. + __heap_size)
- *fill*         0x0000000020016000      0x800 
-                0x0000000020016800                heap_top = .
-                0x0000000020016800                . = ALIGN (0x4)
 
-.stack          0x0000000020016800     0x1800
-                0x0000000020016800                . = ALIGN (0x4)
+.stack          0x0000000020016000     0x2000
+                0x0000000020016000                . = ALIGN (0x4)
                 [!provide]                        PROVIDE (_heap_end = .)
-                0x0000000000001800                . = __stack_size
- *fill*         0x0000000020016800     0x1800 
+                0x0000000000002000                . = __stack_size
+ *fill*         0x0000000020016000     0x2000 
                 0x0000000020018000                PROVIDE (_sp = .)
                 0x0000000020018000                . = ALIGN (0x4)
 
@@ -1707,7 +1704,7 @@ LOAD build_gd32/firmware/main.o
  *(*.comment)
  *(*.debug*)
 START GROUP
-LOAD /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a
+LOAD /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a
 LOAD ../lib-c/lib_gd32/libc.a
 END GROUP
 LOAD ../lib-remoteconfig/lib_gd32/libremoteconfig.a
@@ -1721,6 +1718,6 @@ LOAD ../lib-hal/lib_gd32/libhal.a
 LOAD ../lib-c++/lib_gd32/libc++.a
 LOAD ../lib-c/lib_gd32/libc.a
 LOAD ../lib-gd32/lib_gd32/libgd32.a
-LOAD /Applications/ARM/bin/../lib/gcc/arm-none-eabi/11.2.1/thumb/v7-m/nofp/libgcc.a
+LOAD /Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin/../lib/gcc/arm-none-eabi/11.3.1/thumb/v7-m/nofp/libgcc.a
 OUTPUT(build_gd32/main.elf elf32-littlearm)
 LOAD linker stubs

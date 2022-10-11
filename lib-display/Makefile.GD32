@@ -2,5 +2,6 @@ DEFINES=NDEBUG
 
 EXTRA_INCLUDES=../lib-hal/include
 
+include Rules.mk
 include ../firmware-template-gd32/lib/Rules.mk
 	

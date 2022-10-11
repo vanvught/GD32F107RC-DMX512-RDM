@@ -65,8 +65,8 @@ OF SUCH DAMAGE.
 /* #define USE_DELAY */
 
 #ifndef _PHY_H_
-#define DP83848	 	0
-#define LAN8700 	1
+#define DP83848		0
+#define LAN8700		1
 #define RTL8201F	2		/** AvV **/
 #ifndef PHY_TYPE			/** AvV **/
 # define PHY_TYPE	DP83848	/** AvV **/
@@ -113,7 +113,7 @@ OF SUCH DAMAGE.
 #define PHY_DUPLEX_STATUS                ((uint16_t)0x0004)                     /*!< configured information of duplex: full-duplex */
 #elif(PHY_TYPE == RTL8201F)	/** AvV **/
 # define PHY_SR                          0U                                     /*!< tranceiver status register */
-# define PHY_SPEED_STATUS                ((uint16_t)0x0000)                     /*!< configured information of speed: 10Mbit/s */
+# define PHY_SPEED_STATUS                ((uint16_t)0x2000)                     /*!< configured information of speed: 100Mbit/s */
 # define PHY_DUPLEX_STATUS               ((uint16_t)0x0100)                     /*!< configured information of duplex: full-duplex */
 #endif /* PHY_TYPE */
 
@@ -636,7 +636,7 @@ typedef enum
     ENET_DMA_FLAG_TST               = ENET_REGIDX_BIT(DMA_STAT_REG_OFFSET, 29U),    /*!< timestamp trigger status flag */                        
 }enet_flag_enum;
 
-/* ENET stutus flag clear */
+/* ENET status flag clear */
 typedef enum
 {
     /* ENET_DMA_STAT register */
@@ -888,7 +888,7 @@ typedef struct
     uint32_t interframegap;                                                         /*!< inter frame gap related parameters */
 }enet_initpara_struct;
 
-/* structure for ENET DMA desciptors */ 
+/* structure for ENET DMA descriptors */ 
 typedef struct  
 {
     uint32_t status;                                                                /*!< status */
