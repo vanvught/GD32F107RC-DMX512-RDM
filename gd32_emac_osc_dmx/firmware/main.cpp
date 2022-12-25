@@ -50,8 +50,7 @@
 #include "remoteconfig.h"
 #include "remoteconfigparams.h"
 
-#include "flashrom.h"
-#include "spiflashstore.h"
+#include "configstore.h"
 #include "storedmxsend.h"
 #include "storenetwork.h"
 #include "storeoscserver.h"
@@ -70,8 +69,8 @@ void main() {
 	LedBlink lb;
 	Display display;
 	FirmwareVersion fw(SOFTWARE_VERSION, __DATE__, __TIME__);
-	FlashRom flashRom;
-	SpiFlashStore spiFlashStore;
+
+	ConfigStore configStore;
 
 	fw.Print("\x1b[32m" "OSC Server DMX controller {1x Universe}" "\x1b[37m");
 	
@@ -153,7 +152,7 @@ void main() {
 		remoteConfigParams.Set(&remoteConfig);
 	}
 
-	while (spiFlashStore.Flash())
+	while (configStore.Flash())
 		;
 
 	display.TextStatus(OscServerMsgConst::START, Display7SegmentMessage::INFO_BRIDGE_START, CONSOLE_YELLOW);
@@ -169,7 +168,7 @@ void main() {
 		nw.Run();
 		server.Run();
 		remoteConfig.Run();
-		spiFlashStore.Flash();
+		configStore.Flash();
 		dmxConfigUdp.Run();
 		mDns.Run();
 #if defined (ENABLE_HTTPD)

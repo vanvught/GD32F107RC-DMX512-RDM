@@ -143,8 +143,6 @@ ifeq ($(findstring OUTPUT_DMX_SERIAL,$(DEFINES)),OUTPUT_DMX_SERIAL)
 	LIBS+=dmxserial
 endif
 
-LIBS+=spiflashstore spiflash
-
 ifeq ($(findstring NODE_LTC_SMPTE,$(DEFINES)),NODE_LTC_SMPTE)
 	DEFINES+=ENABLE_SSD1311 ENABLE_TC1602 ENABLE_CURSOR_MODE
 endif
@@ -162,6 +160,6 @@ ifneq ($(findstring network,$(LIBS)),network)
 	LIBS+=network
 endif
 
-LIBS+=properties lightset display hal
+LIBS+=configstore flashcode properties lightset display hal
 
 $(info $$LIBS [${LIBS}])

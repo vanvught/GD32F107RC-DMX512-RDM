@@ -1,0 +1,14 @@
+DEFINES =NDEBUG
+
+ifneq ($(MAKE_FLAGS),)
+	ifeq ($(findstring gd32f4xx,$(FAMILY)), gd32f4xx)
+		EXTRA_SRCDIR=src/gd32/f4xx
+	else
+		EXTRA_SRCDIR=src/gd32/fmc
+	endif
+else
+	EXTRA_SRCDIR=src/gd32/fmc
+endif
+
+include Rules.mk
+include ../firmware-template-gd32/lib/Rules.mk

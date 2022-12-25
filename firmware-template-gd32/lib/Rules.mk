@@ -21,6 +21,7 @@ include ../firmware-template-gd32/Includes.mk
 
 DEFINES:=$(addprefix -D,$(DEFINES))
 DEFINES+=-D_TIME_STAMP_YEAR_=$(shell date  +"%Y") -D_TIME_STAMP_MONTH_=$(shell date  +"%-m") -D_TIME_STAMP_DAY_=$(shell date  +"%-d")
+DEFINES+=-DCONFIG_STORE_USE_ROM
 
 COPS=-DBARE_METAL -DGD32 -DGD32F10X_CL -D$(BOARD) 
 COPS+=$(DEFINES) $(MAKE_FLAGS) $(INCLUDES)
