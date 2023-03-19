@@ -2,7 +2,7 @@
  * @file main.cpp
  *
  */
-/* Copyright (C) 2022 by Arjan van Vught mailto:info@gd32-dmx.org
+/* Copyright (C) 2022-2023 by Arjan van Vught mailto:info@gd32-dmx.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +28,6 @@
 #include "hardware.h"
 #include "network.h"
 #include "networkconst.h"
-#include "ledblink.h"
 
 #include "mdns.h"
 #include "mdnsservices.h"
@@ -70,17 +69,13 @@ void Hardware::RebootHandler() {
 void main() {
 	Hardware hw;
 	Network nw;
-	LedBlink lb;
 	Display display;
 	FirmwareVersion fw(SOFTWARE_VERSION, __DATE__, __TIME__);
 
 	ConfigStore configStore;
 
-	fw.Print("\x1b[32m" "OSC Server Pixel controller {1x Universe}" "\x1b[37m");
+	fw.Print("OSC Server Pixel controller {1x Universe}");
 	
-	hw.SetLed(hardware::LedStatus::ON);
-	lb.SetLedBlinkDisplay(new DisplayHandler);
-
 	StoreOscServer storeOscServer;
 	OSCServerParams params(&storeOscServer);
 	
@@ -109,7 +104,6 @@ void main() {
 
 #if defined (ENABLE_HTTPD)
 	HttpDaemon httpDaemon;
-	httpDaemon.Start();
 #endif
 
 	display.TextStatus(OscServerMsgConst::PARAMS, Display7SegmentMessage::INFO_BRIDGE_PARMAMS, CONSOLE_YELLOW);
@@ -209,6 +203,6 @@ void main() {
 		httpDaemon.Run();
 #endif
 		display.Run();
-		lb.Run();
+		hw.Run();
 	}
 }

@@ -54,6 +54,7 @@
 *.bin
 udp_send
 0/*
+do-tftp.sh
 
 sofware_version_id.h
 

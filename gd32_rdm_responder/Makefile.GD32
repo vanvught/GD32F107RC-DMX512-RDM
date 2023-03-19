@@ -1,0 +1,21 @@
+DEFINES=RDM_RESPONDER 
+
+DEFINES+=ENABLE_RDM_SELF_TEST
+
+DEFINES+=CONFIG_PIXELDMX_MAX_PORTS=1
+DEFINES+=OUTPUT_DMX_PIXEL 
+
+DEFINES+=USE_SPI_DMA
+
+DEFINES+=DISPLAY_UDF
+
+DEFINES+=DISABLE_FS
+
+DEFINES+=NDEBUG
+
+SRCDIR=firmware lib
+
+include ../firmware-template-gd32/Rules.mk
+
+prerequisites:
+	./generate_sofware_version_id.sh

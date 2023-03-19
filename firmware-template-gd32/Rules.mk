@@ -6,8 +6,9 @@ AS	 = $(CC)
 LD	 = $(PREFIX)ld
 AR	 = $(PREFIX)ar
 
-FAMILY?=gd32f10x
 BOARD?=BOARD_GD32F107RC
+ENET_PHY?=DP83848
+FAMILY?=gd32f10x
 
 FAMILY:=$(shell echo $(FAMILY) | tr A-Z a-z)
 FAMILY_UC=$(shell echo $(FAMILY) | tr a-w A-W)
@@ -54,13 +55,11 @@ LIBDEP=$(addprefix ../lib-,$(LIBS))
 
 $(info $$LIBDEP [${LIBDEP}])
 
-COPS=-DBARE_METAL -DGD32 -DGD32F10X_CL -D$(BOARD) 
-COPS+=$(DEFINES) $(MAKE_FLAGS) $(INCLUDES)
-COPS+=$(LIBINCDIRS)
+COPS=-DBARE_METAL -DGD32 -DGD32F10X_CL -D$(BOARD) -DPHY_TYPE=$(ENET_PHY)
+COPS+=$(DEFINES) $(MAKE_FLAGS) $(INCLUDES) $(LIBINCDIRS)
 COPS+=-Os -mcpu=cortex-m3 -mthumb
 COPS+=-nostartfiles -ffreestanding -nostdlib
-COPS+=-fstack-usage
-COPS+=-Wstack-usage=8192
+COPS+=-fstack-usage -Wstack-usage=8192
 COPS+=-ffunction-sections -fdata-sections
 
 CPPOPS=-std=c++11 
@@ -119,7 +118,7 @@ clean: $(LIBDEP)
 lisdep: $(LIBDEP)
 
 $(LIBDEP):
-	$(MAKE) -f Makefile.GD32 $(MAKECMDGOALS) 'FAMILY=${FAMILY}' 'MAKE_FLAGS=$(DEFINES)' -C $@ 
+	$(MAKE) -f Makefile.GD32 $(MAKECMDGOALS) 'FAMILY=${FAMILY}' 'PHY_TYPE=${ENET_PHY}' 'MAKE_FLAGS=$(DEFINES)' -C $@ 
 
 # Build bin
 

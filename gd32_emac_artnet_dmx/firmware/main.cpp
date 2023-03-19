@@ -2,7 +2,7 @@
  * @file main.cpp
  *
  */
-/* Copyright (C) 2022 by Arjan van Vught mailto:info@gd32-dmx.org
+/* Copyright (C) 2022-2023 by Arjan van Vught mailto:info@gd32-dmx.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,6 @@
 #include "hardware.h"
 #include "network.h"
 #include "networkconst.h"
-#include "ledblink.h"
 
 #include "mdns.h"
 #include "mdnsservices.h"
@@ -51,8 +50,6 @@
 #include "dmxsend.h"
 #include "rdmdeviceparams.h"
 #include "dmxconfigudp.h"
-
-#include "dmxinput.h"
 
 #include "remoteconfig.h"
 #include "remoteconfigparams.h"
@@ -76,16 +73,12 @@ void Hardware::RebootHandler() {
 void main() {
 	Hardware hw;
 	Network nw;
-	LedBlink lb;
 	DisplayUdf display;
 	FirmwareVersion fw(SOFTWARE_VERSION, __DATE__, __TIME__);
 
 	ConfigStore configStore;
 
-	fw.Print("\x1b[32m" "Art-Net 4 DMX/RDM controller {1 Universe}" "\x1b[37m");
-
-	hw.SetLed(hardware::LedStatus::ON);
-	lb.SetLedBlinkDisplay(new DisplayHandler);
+	fw.Print("Art-Net 4 DMX/RDM controller {1 Universe}");
 
 	display.TextStatus(NetworkConst::MSG_NETWORK_INIT, Display7SegmentMessage::INFO_NETWORK_INIT, CONSOLE_YELLOW);
 
@@ -105,22 +98,21 @@ void main() {
 
 #if defined (ENABLE_HTTPD)
 	HttpDaemon httpDaemon;
-	httpDaemon.Start();
 #endif
 
 	display.TextStatus(ArtNetMsgConst::PARAMS, Display7SegmentMessage::INFO_NODE_PARMAMS, CONSOLE_YELLOW);
 
-	StoreArtNet storeArtNet;
-	ArtNetParams artnetParams(&storeArtNet);
-
 	ArtNet4Node node;
+
+	StoreArtNet storeArtNet;
+	node.SetArtNetStore(&storeArtNet);
+
+	ArtNetParams artnetParams(&storeArtNet);
 
 	if (artnetParams.Load()) {
 		artnetParams.Dump();
 		artnetParams.Set();
 	}
-
-	node.SetArtNetStore(&storeArtNet);
 
 	bool isSet;
 	node.SetUniverseSwitch(0, artnetParams.GetDirection(0), artnetParams.GetUniverse(0, isSet));
@@ -145,12 +137,6 @@ void main() {
 		node.SetOutput(&dmxSend);
 		pDmxConfigUdp = new DmxConfigUdp;
 		assert(pDmxConfigUdp != nullptr);
-	}
-
-	DmxInput dmxInput;
-
-	if (node.GetActiveInputPorts() != 0) {
-		node.SetArtNetDmx(&dmxInput);
 	}
 
 	StoreRDMDevice storeRdmDevice;
@@ -187,7 +173,7 @@ void main() {
 	display.Set(2, displayudf::Labels::NODE_NAME);
 	display.Set(3, displayudf::Labels::IP);
 	display.Set(4, displayudf::Labels::VERSION);
-	display.Set(5, displayudf::Labels::UNIVERSE);
+	display.Set(5, displayudf::Labels::UNIVERSE_PORT_A);
 	display.Set(6, displayudf::Labels::HOSTNAME);
 
 	StoreDisplayUdf storeDisplayUdf;
@@ -235,6 +221,6 @@ void main() {
 		httpDaemon.Run();
 #endif
 		display.Run();
-		lb.Run();
+		hw.Run();
 	}
 }
