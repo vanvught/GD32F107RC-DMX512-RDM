@@ -1,3 +1,6 @@
+$(info "lib/Rules.mk")
+$(info $$MAKE_FLAGS [${MAKE_FLAGS}])
+
 PREFIX ?= arm-none-eabi-
 
 CC	= $(PREFIX)gcc
@@ -6,15 +9,18 @@ AS	= $(CC)
 LD	= $(PREFIX)ld
 AR	= $(PREFIX)ar
 
+FAMILY?=gd32f10x
+MCU?=GD32F107RC
 BOARD?=BOARD_GD32F107RC
 ENET_PHY?=DP83848
-FAMILY?=gd32f10x
 
 FAMILY:=$(shell echo $(FAMILY) | tr A-Z a-z)
 FAMILY_UC=$(shell echo $(FAMILY) | tr a-w A-W)
 
 $(info $$FAMILY [${FAMILY}])
 $(info $$FAMILY_UC [${FAMILY_UC}])
+$(info $$BOARD [${BOARD}])
+$(info $$ENET_PHY [${ENET_PHY}])
 
 SRCDIR = src src/gd32 $(EXTRA_SRCDIR)
 
@@ -24,17 +30,22 @@ DEFINES:=$(addprefix -D,$(DEFINES))
 DEFINES+=-D_TIME_STAMP_YEAR_=$(shell date  +"%Y") -D_TIME_STAMP_MONTH_=$(shell date  +"%-m") -D_TIME_STAMP_DAY_=$(shell date  +"%-d")
 DEFINES+=-DCONFIG_STORE_USE_ROM
 
-COPS=-DBARE_METAL -DGD32 -DGD32F10X_CL -D$(BOARD) -DPHY_TYPE=$(ENET_PHY)
+ifeq ($(findstring ARTNET_VERSION=4,$(DEFINES)),ARTNET_VERSION=4)
+	ifeq ($(findstring ARTNET_HAVE_DMXIN,$(DEFINES)),ARTNET_HAVE_DMXIN)
+		DEFINES+=-DE131_HAVE_DMXIN
+	endif
+endif
+
+COPS=-DBARE_METAL -DGD32 -DGD32F10X_CL -D$(MCU) -D$(BOARD) -DPHY_TYPE=$(ENET_PHY)
 COPS+=$(DEFINES) $(MAKE_FLAGS) $(INCLUDES)
 COPS+=-Os -mcpu=cortex-m3 -mthumb
 COPS+=-nostartfiles -ffreestanding -nostdlib
 COPS+=-fstack-usage -Wstack-usage=8192
 COPS+=-ffunction-sections -fdata-sections
 
-CPPOPS=-std=c++11 
+CPPOPS=-std=c++11
 CPPOPS+=-Wnon-virtual-dtor -Woverloaded-virtual -Wnull-dereference -fno-rtti -fno-exceptions -fno-unwind-tables
-#CPPOPS+=-fno-use-cxa-atexit
-#CPPOPS+=-Wuseless-cast -Wold-style-cast
+CPPOPS+=-Wuseless-cast -Wold-style-cast
 CPPOPS+=-fno-threadsafe-statics
 
 CURR_DIR:=$(notdir $(patsubst %/,%,$(CURDIR)))

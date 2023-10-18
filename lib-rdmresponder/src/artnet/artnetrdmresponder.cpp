@@ -39,6 +39,10 @@
 
 #include "debug.h"
 
+namespace configstore {
+void delay();
+}  // namespace configstore
+
 ArtNetRdmResponder *ArtNetRdmResponder::s_pThis;
 TRdmMessage ArtNetRdmResponder::s_RdmCommand;
 
@@ -59,8 +63,13 @@ ArtNetRdmResponder::~ArtNetRdmResponder() {
 	DEBUG_EXIT
 }
 
-const uint8_t *ArtNetRdmResponder::Handler(__attribute__((unused)) uint32_t nPortIndex, const uint8_t *pRdmDataNoSC) {
+const uint8_t *ArtNetRdmResponder::Handler(uint32_t nPortIndex, const uint8_t *pRdmDataNoSC) {
 	DEBUG_ENTRY
+
+	if (nPortIndex != 0) {
+		DEBUG_EXIT
+		return nullptr;
+	}
 
 	if (pRdmDataNoSC == nullptr) {
 		DEBUG_EXIT

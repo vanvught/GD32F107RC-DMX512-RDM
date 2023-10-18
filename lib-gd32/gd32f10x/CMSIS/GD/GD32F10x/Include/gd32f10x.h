@@ -38,6 +38,14 @@ OF SUCH DAMAGE.
 #ifndef GD32F10X_H
 #define GD32F10X_H
 
+/* AvV BEGIN */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-function"
+#pragma GCC diagnostic ignored "-Wconversion"
+#pragma GCC diagnostic ignored "-Wsign-conversion"
+#pragma GCC diagnostic ignored "-Wduplicated-cond"
+/* AvV END */
+
 #ifdef __cplusplus
  extern "C" {
 #endif 

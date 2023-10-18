@@ -1,32 +1,15 @@
 $(info $$DEFINES [${DEFINES}])
 
-LINUX=
-ifeq ($(detected_OS),Linux) 
-	LINUX=1
-else
-	ifeq ($(detected_OS),Darwin) 
-		LINUX=1
-	endif
-endif
-
 ifeq ($(findstring NO_EMAC,$(DEFINES)),NO_EMAC)
 else
 	LIBS+=remoteconfig
 endif
 
-ifeq ($(findstring NODE_NODE,$(DEFINES)),NODE_NODE)
-	LIBS+=node artnet dmxartnet e131 dmxe131
-endif	
-
 ifeq ($(findstring NODE_ARTNET,$(DEFINES)),NODE_ARTNET)
 	ifeq ($(findstring ARTNET_VERSION=3,$(DEFINES)),ARTNET_VERSION=3)
 		LIBS+=artnet
 	else
-		LIBS+=artnet4 artnet
-		DEFINES+=NODE_E131
-		ifeq ($(findstring ARTNET_HAVE_DMXIN,$(DEFINES)),ARTNET_HAVE_DMXIN)
-			LIBS+=dmxartnet
-		endif
+		LIBS+=artnet e131
 	endif
 endif
 
@@ -34,20 +17,6 @@ ifeq ($(findstring NODE_E131,$(DEFINES)),NODE_E131)
 	ifneq ($(findstring e131,$(LIBS)),e131)
 		LIBS+=e131
 	endif
-	ifeq ($(findstring E131_HAVE_DMXIN,$(DEFINES)),E131_HAVE_DMXIN)
-		LIBS+=dmxe131
-	endif
-endif
-
-ifeq ($(findstring NODE_SHOWFILE,$(DEFINES)),NODE_SHOWFILE)
-	LIBS+=showfile osc
-	ifneq ($(findstring artnet,$(LIBS)),artnet)
-		LIBS+=artnet
-	endif
-endif
-
-ifeq ($(findstring NODE_LTC_SMPTE,$(DEFINES)),NODE_LTC_SMPTE)
-	LIBS+=ltc tcnet gps midi osc ws28xxdisplay ws28xx device
 endif
 
 ifeq ($(findstring NODE_OSC_CLIENT,$(DEFINES)),NODE_OSC_CLIENT)
@@ -56,14 +25,6 @@ endif
 
 ifeq ($(findstring NODE_OSC_SERVER,$(DEFINES)),NODE_OSC_SERVER)
 	LIBS+=oscserver osc
-endif
-
-ifeq ($(findstring NODE_DDP_DISPLAY,$(DEFINES)),NODE_DDP_DISPLAY)
-	LIBS+=ddp
-endif
-
-ifeq ($(findstring NODE_PP,$(DEFINES)),NODE_PP)
-	LIBS+=pp
 endif
 
 RDM=
@@ -86,17 +47,8 @@ ifeq ($(findstring RDM_RESPONDER,$(DEFINES)),RDM_RESPONDER)
 	ifneq ($(findstring rdmsubdevice,$(LIBS)),rdmsubdevice)
 		LIBS+=rdmsubdevice
 	endif
-	ifneq ($(findstring NODE_ARTNET,$(DEFINES)),NODE_ARTNET)
-		ifneq ($(findstring dmxreceiver,$(LIBS)),dmxreceiver)
-			LIBS+=dmxreceiver
-		endif
-	endif
-	RDM=1
-	LIBS+=dmx
-endif
-
-ifeq ($(findstring NODE_DMX,$(DEFINES)),NODE_DMX)
 	LIBS+=dmxreceiver dmx
+	RDM=1
 endif
 
 ifeq ($(findstring NODE_RDMNET_LLRP_ONLY,$(DEFINES)),NODE_RDMNET_LLRP_ONLY)
@@ -123,57 +75,16 @@ ifeq ($(findstring e131,$(LIBS)),e131)
 	LIBS+=uuid
 endif
 
-ifeq ($(findstring OUTPUT_DMX_MONITOR,$(DEFINES)),OUTPUT_DMX_MONITOR)
-	LIBS+=dmxmonitor	
-endif
-
 ifeq ($(findstring OUTPUT_DMX_SEND,$(DEFINES)),OUTPUT_DMX_SEND)
 	LIBS+=dmxsend dmx
 endif
 
-ifeq ($(findstring OUTPUT_DDP_PIXEL_MULTI,$(DEFINES)),OUTPUT_DDP_PIXEL_MULTI)
+
+ifeq ($(findstring OUTPUT_DMX_PIXEL,$(DEFINES)),OUTPUT_DMX_PIXEL)
 	LIBS+=ws28xxdmx ws28xx
-else
-	ifeq ($(findstring OUTPUT_DMX_PIXEL_MULTI,$(DEFINES)),OUTPUT_DMX_PIXEL_MULTI)
-		LIBS+=ws28xxdmx ws28xx
-	else
-		ifeq ($(findstring OUTPUT_DMX_PIXEL,$(DEFINES)),OUTPUT_DMX_PIXEL)
-			LIBS+=ws28xxdmx ws28xx
-		endif
-	endif
 endif
 
-ifeq ($(findstring OUTPUT_DDP_PIXEL,$(DEFINES)),OUTPUT_DDP_PIXEL)
-	LIBS+=ws28xx
-endif
-
-ifeq ($(findstring OUTPUT_DMX_STEPPER,$(DEFINES)),OUTPUT_DMX_STEPPER)
-	LIBS+=l6470dmx l6470
-endif
-
-ifeq ($(findstring OUTPUT_DMX_TLC59711,$(DEFINES)),OUTPUT_DMX_TLC59711)
-	LIBS+=tlc59711dmx tlc59711
-endif
-
-ifeq ($(findstring OUTPUT_DMX_ARTNET,$(DEFINES)),OUTPUT_DMX_ARTNET)
-	LIBS+=artnet
-endif
-
-ifeq ($(findstring OUTPUT_DMX_SERIAL,$(DEFINES)),OUTPUT_DMX_SERIAL)
-	LIBS+=dmxserial
-endif
-
-ifdef LINUX
-	LIBS+=configstore
-else
-	LIBS+=configstore flashcode
-endif
-
-ifeq ($(findstring NODE_LTC_SMPTE,$(DEFINES)),NODE_LTC_SMPTE)
-	DEFINES+=ENABLE_SSD1311 ENABLE_TC1602 ENABLE_CURSOR_MODE
-endif
-
-LIBS+=network lightset 
+LIBS+=configstore flashcode network lightset 
 
 ifeq ($(findstring DISPLAY_UDF,$(DEFINES)),DISPLAY_UDF)
 	LIBS+=displayudf

@@ -2,7 +2,7 @@
  * @file ws28xxdmx.h
  *
  */
-/* Copyright (C) 2016-2022 by Arjan van Vught mailto:info@orangepi-dmx.nl
+/* Copyright (C) 2016-2023 by Arjan van Vught mailto:info@orangepi-dmx.nl
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,15 +26,15 @@
 #ifndef WS28XXDMX_H_
 #define WS28XXDMX_H_
 
-#include <pixeldmxstore.h>
 #include <cstdint>
+#include <cassert>
 
 #include "lightset.h"
 
 #include "ws28xx.h"
 #include "pixeldmxconfiguration.h"
 #include "pixelpatterns.h"
-
+#include "pixeldmxstore.h"
 #include "pixeldmxhandler.h"
 
 class WS28xxDmx final: public LightSet {
@@ -42,10 +42,24 @@ public:
 	WS28xxDmx(PixelDmxConfiguration& pixelDmxConfiguration);
 	~WS28xxDmx() override;
 
-	void Start(uint32_t nPortIndex) override;
-	void Stop(uint32_t nPortIndex) override;
+	void Start(const uint32_t nPortIndex) override;
+	void Stop(const uint32_t nPortIndex) override;
 
-	void SetData(uint32_t nPortIndex, const uint8_t *pData, uint32_t nLength) override;
+	void SetData(uint32_t nPortIndex, const uint8_t *pData, uint32_t nLength, const bool doUpdate = true) override;
+	void Sync(__attribute__((unused)) const uint32_t nPortIndex) override {}
+	void Sync(const bool doForce) override {
+		if (__builtin_expect((!doForce), 1)) {
+			assert(m_pWS28xx != nullptr);
+			m_pWS28xx->Update();
+		}
+	}
+
+#if defined (OUTPUT_HAVE_STYLESWITCH)
+	void SetOutputStyle(__attribute__((unused)) const uint32_t nPortIndex, __attribute__((unused)) const lightset::OutputStyle outputStyle) override {}
+	lightset::OutputStyle GetOutputStyle(__attribute__((unused)) const uint32_t nPortIndex) const override {
+		return lightset::OutputStyle::DELTA;
+	}
+#endif
 
 	void Blackout(bool bBlackout) override;
 	void FullOn() override;
@@ -71,7 +85,7 @@ public:
 	}
 
 	uint32_t GetCount() const {
-		return m_pixelDmxConfiguration.GetCount();;
+		return m_pixelDmxConfiguration.GetCount();
 	}
 
 	uint32_t GetGroups() const {

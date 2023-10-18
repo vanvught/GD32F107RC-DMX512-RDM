@@ -16,9 +16,6 @@
   .type  Reset_Handler, %function
 
 Reset_Handler:
-  ldr   r0, =_sp
-  mov   sp, r0
-
   movs r1, #0
   b DataInit
 
@@ -44,6 +41,9 @@ Zerobss:
   ldr r3, = _ebss
   cmp r2, r3
   bcc FillZerobss
+#if defined (DEBUG_STACK)
+  bl stack_debug_init
+#endif
   bl  SystemInit
   bl main
   bx lr

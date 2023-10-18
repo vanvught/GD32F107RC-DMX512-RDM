@@ -30,7 +30,7 @@
 #include "networkconst.h"
 
 #include "mdns.h"
-#include "mdnsservices.h"
+
 #if defined (ENABLE_HTTPD)
 # include "httpd/httpd.h"
 #endif
@@ -64,13 +64,16 @@ void Hardware::RebootHandler() {
 
 void main() {
 	Hardware hw;
-	Network nw;
 	Display display;
+	ConfigStore configStore;
+	display.TextStatus(NetworkConst::MSG_NETWORK_INIT, Display7SegmentMessage::INFO_NETWORK_INIT, CONSOLE_YELLOW);
+	StoreNetwork storeNetwork;
+	Network nw(&storeNetwork);
+	display.TextStatus(NetworkConst::MSG_NETWORK_STARTED, Display7SegmentMessage::INFO_NONE, CONSOLE_GREEN);
 	FirmwareVersion fw(SOFTWARE_VERSION, __DATE__, __TIME__);
 
-	ConfigStore configStore;
-
 	fw.Print("OSC Server DMX controller {1x Universe}");
+	nw.Print();
 	
 	StoreOscServer storeOscServer;
 	OSCServerParams params(&storeOscServer);
@@ -82,19 +85,13 @@ void main() {
 		params.Set(&server);
 	}
 
-	display.TextStatus(NetworkConst::MSG_NETWORK_INIT, Display7SegmentMessage::INFO_NETWORK_INIT, CONSOLE_YELLOW);
-
-	StoreNetwork storeNetwork;
-	nw.SetNetworkStore(&storeNetwork);
-	nw.Init(&storeNetwork);
-	nw.Print();
-
 	display.TextStatus(NetworkConst::MSG_MDNS_CONFIG, Display7SegmentMessage::INFO_MDNS_CONFIG, CONSOLE_YELLOW);
+
 	MDNS mDns;
-	mDns.Start();
-	mDns.AddServiceRecord(nullptr, MDNS_SERVICE_OSC, server.GetPortIncoming(), mdns::Protocol::UDP, "type=server");
+	mDns.AddServiceRecord(nullptr, mdns::Services::CONFIG, "node=OSC Server");
+	mDns.AddServiceRecord(nullptr, mdns::Services::OSC, "type=server", server.GetPortIncoming());
 #if defined (ENABLE_HTTPD)
-	mDns.AddServiceRecord(nullptr, MDNS_SERVICE_HTTP, 80, mdns::Protocol::TCP, "node=OSC Server");
+	mDns.AddServiceRecord(nullptr, mdns::Services::HTTP);
 #endif
 	mDns.Print();
 
@@ -115,15 +112,12 @@ void main() {
 	}
 
 	DmxSend dmxSend;
-
 	dmxSend.Print();
 
 	DmxConfigUdp dmxConfigUdp;
 
 	server.SetOutput(&dmxSend);
 	server.Print();
-
-	dmxSend.Print();
 
 	for (uint8_t i = 1; i < 7 ; i++) {
 		display.ClearLine(i);

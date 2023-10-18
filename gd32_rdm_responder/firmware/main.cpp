@@ -28,6 +28,9 @@
 
 #include "hardware.h"
 #include "network.h"
+#if !defined(NO_EMAC)
+# include "networkconst.h"
+#endif
 
 #include "displayudf.h"
 #include "display_timeout.h"
@@ -73,20 +76,22 @@ void Hardware::RebootHandler() {
 
 void main() {
 	Hardware hw;
-	Network nw;
 	DisplayUdf display;
-	FirmwareVersion fw(SOFTWARE_VERSION, __DATE__, __TIME__);
-
 	ConfigStore configStore;
+#if !defined(NO_EMAC)
+	display.TextStatus(NetworkConst::MSG_NETWORK_INIT, Display7SegmentMessage::INFO_NETWORK_INIT, CONSOLE_YELLOW);
+	StoreNetwork storeNetwork;
+	Network nw(&storeNetwork);
+	display.TextStatus(NetworkConst::MSG_NETWORK_STARTED, Display7SegmentMessage::INFO_NONE, CONSOLE_GREEN);
+#else
+	Network nw;
+#endif
+	FirmwareVersion fw(SOFTWARE_VERSION, __DATE__, __TIME__);
 
 	const auto isConfigMode = is_config_mode();
 
 	fw.Print("RDM Responder");
-
 #if !defined(NO_EMAC)
-	StoreNetwork storeNetwork;
-	nw.SetNetworkStore(&storeNetwork);
-	nw.Init(&storeNetwork);
 	nw.Print();
 #endif
 
@@ -96,8 +101,8 @@ void main() {
 	PixelDmxParams pixelDmxParams(&storePixelDmx);
 
 	if (pixelDmxParams.Load()) {
-		pixelDmxParams.Set(&pixelDmxConfiguration);
 		pixelDmxParams.Dump();
+		pixelDmxParams.Set(&pixelDmxConfiguration);
 	}
 
 	/*
@@ -142,12 +147,15 @@ void main() {
 
 	RDMResponder rdmResponder(personalities, 2);
 
+	rdmResponder.SetProductCategory(E120_PRODUCT_CATEGORY_FIXTURE);
+	rdmResponder.SetProductDetail(E120_PRODUCT_DETAIL_LED);
+
 	StoreRDMSensors storeRdmSensors;
 	RDMSensorsParams rdmSensorsParams(&storeRdmSensors);
 
 	if (rdmSensorsParams.Load()) {
-		rdmSensorsParams.Set();
 		rdmSensorsParams.Dump();
+		rdmSensorsParams.Set();
 	}
 
 #if defined (ENABLE_RDM_SUBDEVICES)
@@ -155,8 +163,8 @@ void main() {
 	RDMSubDevicesParams rdmSubDevicesParams(&storeRdmSubDevices);
 
 	if (rdmSubDevicesParams.Load()) {
-		rdmSubDevicesParams.Set();
 		rdmSubDevicesParams.Dump();
+		rdmSubDevicesParams.Set();
 	}
 #endif
 
@@ -166,8 +174,8 @@ void main() {
 	RDMDeviceParams rdmDeviceParams(&storeRdmDevice);
 
 	if (rdmDeviceParams.Load()) {
-		rdmDeviceParams.Set(&rdmResponder);
 		rdmDeviceParams.Dump();
+		rdmDeviceParams.Set(&rdmResponder);
 	}
 
 	rdmResponder.SetRDMDeviceStore(&storeRdmDevice);
@@ -188,7 +196,7 @@ void main() {
 	}
 
 #if !defined(NO_EMAC)
-	RemoteConfig remoteConfig(remoteconfig::Node::RDMNET_LLRP_ONLY, remoteconfig::Output::PIXEL);
+	RemoteConfig remoteConfig(remoteconfig::Node::RDMRESPONDER, remoteconfig::Output::PIXEL);
 	RemoteConfigParams remoteConfigParams(new StoreRemoteConfig);
 
 	if(remoteConfigParams.Load()) {
@@ -203,11 +211,6 @@ void main() {
 	display.SetTitle("RDM Responder Pixel 1");
 	display.Set(2, displayudf::Labels::VERSION);
 	display.Set(6, displayudf::Labels::DMX_START_ADDRESS);
-	display.Printf(7, "%s:%d G%d %s",
-			PixelType::GetType(pixelDmxConfiguration.GetType()),
-			pixelDmxConfiguration.GetCount(),
-			pixelDmxConfiguration.GetGroupingCount(),
-			PixelType::GetMap(pixelDmxConfiguration.GetMap()));
 
 	StoreDisplayUdf storeDisplayUdf;
 	DisplayUdfParams displayUdfParams(&storeDisplayUdf);
@@ -218,6 +221,11 @@ void main() {
 	}
 
 	display.Show();
+	display.Printf(7, "%s:%d G%d %s",
+			PixelType::GetType(pixelDmxConfiguration.GetType()),
+			pixelDmxConfiguration.GetCount(),
+			pixelDmxConfiguration.GetGroupingCount(),
+			PixelType::GetMap(pixelDmxConfiguration.GetMap()));
 
 	if (isConfigMode) {
 		display.ClearLine(3);
