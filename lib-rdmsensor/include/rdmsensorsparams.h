@@ -29,7 +29,6 @@
 #include <cstdint>
 
 #include "rdmsensors.h"
-#include "rdmsensorstore.h"
 
 namespace rdm {
 namespace sensorsparams {
@@ -48,34 +47,21 @@ static_assert(sizeof(struct Params) <= rdm::sensors::STORE, "struct Params is to
 }  // namespace sensorsparams
 }  // namespace rdm
 
-class RDMSensorsParamsStore {
-public:
-	virtual ~RDMSensorsParamsStore() {}
-
-	virtual void Update(const rdm::sensorsparams::Params *pParams)=0;
-	virtual void Copy(rdm::sensorsparams::Params *pParams)=0;
-};
-
 class RDMSensorsParams {
 public:
-	RDMSensorsParams(RDMSensorsParamsStore *pRDMSensorsParamsStore);
+	RDMSensorsParams();
 
 	bool Load();
 	void Load(const char *pBuffer, uint32_t nLength);
 
 	void Builder(const rdm::sensorsparams::Params *pParams, char *pBuffer, uint32_t nLength, uint32_t& nSize);
 	void Save(char *pBuffer, uint32_t nLength, uint32_t& nSize) {
-		if (m_pRDMSensorsParamsStore == nullptr) {
-			nSize = 0;
-			return;
-		}
-
 		Builder(nullptr, pBuffer, nLength, nSize);
 	}
 
 	void Dump();
 
-	void Set(RDMSensorStore *pRDMSensorStore = nullptr);
+	void Set();
 
     static void staticCallbackFunction(void *p, const char *s);
 
@@ -84,7 +70,6 @@ private:
     bool Add(RDMSensor *pRDMSensor);
 
 private:
-	RDMSensorsParamsStore *m_pRDMSensorsParamsStore;
 	rdm::sensorsparams::Params m_Params;
 };
 

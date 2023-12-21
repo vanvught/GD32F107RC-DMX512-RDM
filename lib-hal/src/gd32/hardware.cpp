@@ -28,6 +28,7 @@
 #include <cassert>
 
 #include "hardware.h"
+#include "panel_led.h"
 
 #include "gd32.h"
 #include "gd32_i2c.h"
@@ -41,6 +42,8 @@
 #if defined (ENABLE_USB_HOST)
 void usb_init();
 #endif
+
+#include "logic_analyzer.h"
 
 #include "debug.h"
 
@@ -167,7 +170,7 @@ Hardware::Hardware() {
 	m_HwClock.HcToSys();
 #endif
 
-#if !defined(USE_LEDBLINK_BITBANGING595)
+#if !defined(CONFIG_LEDBLINK_USE_PANELLED)
 	rcu_periph_clock_enable(LED_BLINK_GPIO_CLK);
 # if !defined (GD32F4XX)
 	gpio_init(LED_BLINK_GPIO_PORT, GPIO_MODE_OUT_PP, GPIO_OSPEED_50MHZ, LED_BLINK_PIN);
@@ -178,20 +181,24 @@ Hardware::Hardware() {
 	GPIO_BC(LED_BLINK_GPIO_PORT) = LED_BLINK_PIN;
 #endif
 
-#if defined (LEDPANEL_595_CS_GPIOx)
-	rcu_periph_clock_enable(LEDPANEL_595_CS_RCU_GPIOx);
+#if defined (PANELLED_595_CS_GPIOx)
+	rcu_periph_clock_enable(PANELLED_595_CS_RCU_GPIOx);
 # if !defined (GD32F4XX)
-	gpio_init(LEDPANEL_595_CS_GPIOx, GPIO_MODE_OUT_PP, GPIO_OSPEED_50MHZ, LEDPANEL_595_CS_GPIO_PINx);
+	gpio_init(PANELLED_595_CS_GPIOx, GPIO_MODE_OUT_PP, GPIO_OSPEED_50MHZ, PANELLED_595_CS_GPIO_PINx);
 # else
-	gpio_mode_set(LEDPANEL_595_CS_GPIOx, GPIO_MODE_OUTPUT, GPIO_PUPD_NONE, LEDPANEL_595_CS_GPIO_PINx);
-	gpio_output_options_set(LEDPANEL_595_CS_GPIOx, GPIO_OTYPE_PP, GPIO_OSPEED_50MHZ, LEDPANEL_595_CS_GPIO_PINx);
+	gpio_mode_set(PANELLED_595_CS_GPIOx, GPIO_MODE_OUTPUT, GPIO_PUPD_NONE, PANELLED_595_CS_GPIO_PINx);
+	gpio_output_options_set(PANELLED_595_CS_GPIOx, GPIO_OTYPE_PP, GPIO_OSPEED_50MHZ, PANELLED_595_CS_GPIO_PINx);
 # endif
-	GPIO_BOP(LEDPANEL_595_CS_GPIOx) = LEDPANEL_595_CS_GPIO_PINx;
+	GPIO_BOP(PANELLED_595_CS_GPIOx) = PANELLED_595_CS_GPIO_PINx;
 #endif
+
+	hal::panel_led_init();
 
 #if defined ENABLE_USB_HOST
 	usb_init();
 #endif
+
+	logic_analyzer::init();
 
 	DEBUG_EXIT
 }
@@ -216,40 +223,6 @@ void Hardware::GetUuid(uuid_t out) {
 	cast.u32[3] = cast.u32[0] + cast.u32[1] + cast.u32[2];
 
 	memcpy(out, cast.uuid, sizeof(uuid_t));
-}
-
-bool Hardware::SetTime(__attribute__((unused)) const struct tm *pTime) {
-	DEBUG_ENTRY
-#if !defined(DISABLE_RTC)
-	rtc_time rtc_time;
-
-	rtc_time.tm_sec = pTime->tm_sec;
-	rtc_time.tm_min = pTime->tm_min;
-	rtc_time.tm_hour = pTime->tm_hour;
-	rtc_time.tm_mday = pTime->tm_mday;
-	rtc_time.tm_mon = pTime->tm_mon;
-	rtc_time.tm_year = pTime->tm_year;
-
-	m_HwClock.Set(&rtc_time);
-
-	DEBUG_EXIT
-	return true;
-#else
-	DEBUG_EXIT
-	return false;
-#endif
-}
-
-void Hardware::GetTime(struct tm *pTime) {
-	auto ltime = time(nullptr);
-	const auto *local_time = localtime(&ltime);
-
-	pTime->tm_year = local_time->tm_year;
-	pTime->tm_mon = local_time->tm_mon;
-	pTime->tm_mday = local_time->tm_mday;
-	pTime->tm_hour = local_time->tm_hour;
-	pTime->tm_min = local_time->tm_min;
-	pTime->tm_sec = local_time->tm_sec;
 }
 
 #include <cstdio>

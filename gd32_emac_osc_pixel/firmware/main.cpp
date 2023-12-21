@@ -73,6 +73,7 @@ void main() {
 	display.TextStatus(NetworkConst::MSG_NETWORK_INIT, Display7SegmentMessage::INFO_NETWORK_INIT, CONSOLE_YELLOW);
 	StoreNetwork storeNetwork;
 	Network nw(&storeNetwork);
+	MDNS mDns;
 	display.TextStatus(NetworkConst::MSG_NETWORK_STARTED, Display7SegmentMessage::INFO_NONE, CONSOLE_GREEN);
 	FirmwareVersion fw(SOFTWARE_VERSION, __DATE__, __TIME__);
 
@@ -89,15 +90,7 @@ void main() {
 		params.Set(&server);
 	}
 
-	display.TextStatus(NetworkConst::MSG_MDNS_CONFIG, Display7SegmentMessage::INFO_MDNS_CONFIG, CONSOLE_YELLOW);
-
-	MDNS mDns;
-	mDns.AddServiceRecord(nullptr, mdns::Services::CONFIG, "node=OSC Server");
-	mDns.AddServiceRecord(nullptr, mdns::Services::OSC, "type=server", server.GetPortIncoming());
-#if defined (ENABLE_HTTPD)
-	mDns.AddServiceRecord(nullptr, mdns::Services::HTTP);
-#endif
-	mDns.Print();
+	mDns.ServiceRecordAdd(nullptr, mdns::Services::OSC, "type=server", server.GetPortIncoming());
 
 #if defined (ENABLE_HTTPD)
 	HttpDaemon httpDaemon;
@@ -177,6 +170,8 @@ void main() {
 
 	while (configStore.Flash())
 		;
+
+	mDns.Print();
 
 	display.TextStatus(OscServerMsgConst::START, Display7SegmentMessage::INFO_BRIDGE_START, CONSOLE_YELLOW);
 

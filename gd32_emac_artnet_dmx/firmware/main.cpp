@@ -79,20 +79,12 @@ void main() {
 	display.TextStatus(NetworkConst::MSG_NETWORK_INIT, Display7SegmentMessage::INFO_NETWORK_INIT, CONSOLE_YELLOW);
 	StoreNetwork storeNetwork;
 	Network nw(&storeNetwork);
+	MDNS mDns;
 	display.TextStatus(NetworkConst::MSG_NETWORK_STARTED, Display7SegmentMessage::INFO_NONE, CONSOLE_GREEN);
 	FirmwareVersion fw(SOFTWARE_VERSION, __DATE__, __TIME__);
 
 	fw.Print("Art-Net 4 DMX/RDM controller {1 Universe}");
 	nw.Print();
-
-	display.TextStatus(NetworkConst::MSG_MDNS_CONFIG, Display7SegmentMessage::INFO_MDNS_CONFIG, CONSOLE_YELLOW);
-
-	MDNS mDns;
-	mDns.AddServiceRecord(nullptr, mdns::Services::CONFIG, "node=Art-Net 4 DMX/RDM");
-#if defined (ENABLE_HTTPD)
-	mDns.AddServiceRecord(nullptr, mdns::Services::HTTP);
-#endif
-	mDns.Print();
 
 #if defined (ENABLE_HTTPD)
 	HttpDaemon httpDaemon;
@@ -134,28 +126,18 @@ void main() {
 
 	DmxConfigUdp dmxConfigUdp;
 
-	StoreRDMDevice storeRdmDevice;
-
 	ArtNetRdmController artNetRdmController;
 
-	if (artnetParams.IsRdm()) {
-		RDMDeviceParams rdmDeviceParams(&storeRdmDevice);
+	RDMDeviceParams rdmDeviceParams;
 
-		if (rdmDeviceParams.Load()) {
-			rdmDeviceParams.Set(&artNetRdmController);
-			rdmDeviceParams.Dump();
-		}
+	rdmDeviceParams.Load();
+	rdmDeviceParams.Set(&artNetRdmController);
+	rdmDeviceParams.Dump();
 
-		artNetRdmController.Init();
-		artNetRdmController.Print();
+	artNetRdmController.Init();
+	artNetRdmController.Print();
 
-		if (node.GetRdm(0) && (node.GetPortDirection(0) == lightset::PortDir::OUTPUT)) {
-			display.TextStatus(ArtNetMsgConst::RDM_RUN, Display7SegmentMessage::INFO_RDM_RUN, CONSOLE_YELLOW);
-			artNetRdmController.Full(0);
-		}
-
-		node.SetRdmHandler(&artNetRdmController);
-	}
+	node.SetRdmController(&artNetRdmController, artnetParams.IsRdm());
 
 	node.Print();
 
@@ -189,6 +171,8 @@ void main() {
 
 	while (configStore.Flash())
 		;
+
+	mDns.Print();
 
 	display.TextStatus(ArtNetMsgConst::START, Display7SegmentMessage::INFO_NODE_START, CONSOLE_YELLOW);
 

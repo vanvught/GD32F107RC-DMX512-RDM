@@ -2,7 +2,7 @@
  * @file pixeldmxstore.h
  *
  */
-/* Copyright (C) 2019-2022 by Arjan van Vught mailto:info@orangepi-dmx.nl
+/* Copyright (C) 2019-2023 by Arjan van Vught mailto:info@orangepi-dmx.nl
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,8 +30,7 @@
 
 class PixelDmxStore {
 public:
-	virtual ~PixelDmxStore() {
-	}
+	virtual ~PixelDmxStore() = default;
 
 	virtual void SaveType(uint8_t nType)=0;
 	virtual void SaveCount(uint16_t nCount)=0;

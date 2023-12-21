@@ -48,28 +48,15 @@ static_assert(sizeof(struct Params) <= rdm::subdevices::STORE, "struct Params is
 }  // namespace subdevicesparams
 }  // namespace rdm
 
-class RDMSubDevicesParamsStore {
-public:
-	virtual ~RDMSubDevicesParamsStore() {}
-
-	virtual void Update(const rdm::subdevicesparams::Params *pParams)=0;
-	virtual void Copy(rdm::subdevicesparams::Params *pParams)=0;
-};
-
 class RDMSubDevicesParams {
 public:
-	RDMSubDevicesParams(RDMSubDevicesParamsStore *pRDMSubDevicesParamsStore);
+	RDMSubDevicesParams();
 
 	bool Load();
 	void Load(const char *pBuffer, uint32_t nLength);
 
 	void Builder(const rdm::subdevicesparams::Params *pParams, char *pBuffer, uint32_t nLength, uint32_t& nSize);
 	void Save(char *pBuffer, uint32_t nLength, uint32_t& nSize) {
-		if (m_pRDMSubDevicesParamsStore == nullptr) {
-			nSize = 0;
-			return;
-		}
-
 		Builder(nullptr, pBuffer, nLength, nSize);
 	}
 
@@ -84,7 +71,6 @@ private:
     bool Add(RDMSubDevice *pRDMSubDevice);
 
 private:
-    RDMSubDevicesParamsStore *m_pRDMSubDevicesParamsStore;
     rdm::subdevicesparams::Params m_Params;
 };
 

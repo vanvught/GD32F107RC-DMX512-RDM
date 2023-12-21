@@ -47,9 +47,7 @@ ifneq ($(MAKE_FLAGS),)
 	ifeq ($(findstring NODE_ARTNET,$(MAKE_FLAGS)), NODE_ARTNET)
 		EXTRA_SRCDIR+=src/artnet
 		EXTRA_INCLUDES+=../lib-artnet/include
-		EXTRA_SRCDIR+=src/rdm
 		RDM=1
-		EXTRA_INCLUDES+=../lib-rdm/include ../lib-rdmsensor/include ../lib-rdmsubdevice/include
 		ifeq ($(findstring ARTNET_VERSION=4,$(MAKE_FLAGS)), ARTNET_VERSION=4)
 			EXTRA_INCLUDES+=../lib-e131/include
 		endif	
@@ -70,14 +68,18 @@ ifneq ($(MAKE_FLAGS),)
 	
 	ifeq ($(findstring NODE_NODE,$(MAKE_FLAGS)), NODE_NODE)
 		EXTRA_SRCDIR+=src/node
-		EXTRA_INCLUDES+=../lib-node/include
-		EXTRA_INCLUDES+=../lib-artnet/include ../lib-rdmdiscovery/include
-		EXTRA_INCLUDES+=../lib-e131/include
+		EXTRA_INCLUDES+=../lib-node/include ../lib-artnet/include ../lib-e131/include
+		RDM=1
 	endif
 	
 	ifeq ($(findstring NODE_OSC_CLIENT,$(MAKE_FLAGS)), NODE_OSC_CLIENT)
 		EXTRA_SRCDIR+=src/oscclient
 		EXTRA_INCLUDES+=../lib-oscclient/include
+	endif
+	
+	ifeq ($(findstring NODE_OSC_SERVER,$(MAKE_FLAGS)), NODE_OSC_SERVER)
+		EXTRA_SRCDIR+=src/oscserver
+		EXTRA_INCLUDES+=../lib-oscserver/include
 	endif
 	
 	ifeq ($(findstring OUTPUT_DMX_SEND,$(MAKE_FLAGS)),OUTPUT_DMX_SEND)
@@ -110,10 +112,19 @@ ifneq ($(MAKE_FLAGS),)
 		EXTRA_INCLUDES+=../lib-tlc59711dmx/include ../lib-tlc59711/include
 	endif
 	
+	ifeq ($(findstring OUTPUT_DMX_PCA9685,$(MAKE_FLAGS)), OUTPUT_DMX_PCA9685)
+		EXTRA_SRCDIR+=src/pca9685
+		EXTRA_INCLUDES+=../lib-pca9685dmx/include ../lib-pca9685/include
+	endif
+
+	ifeq ($(findstring OUTPUT_DMX_MONITOR,$(MAKE_FLAGS)), OUTPUT_DMX_MONITOR)
+		EXTRA_SRCDIR+=src/dmxmonitor
+		EXTRA_INCLUDES+=../lib-dmxmonitor/include
+	endif
+	
 	ifeq ($(findstring RDM_CONTROLLER,$(MAKE_FLAGS)), RDM_CONTROLLER)
 		ifdef RDM
 		else
-			EXTRA_SRCDIR+=src/rdm
 			RDM=1
 		endif
 	endif
@@ -121,44 +132,58 @@ ifneq ($(MAKE_FLAGS),)
 	ifeq ($(findstring RDM_RESPONDER,$(MAKE_FLAGS)), RDM_RESPONDER)
 		ifdef RDM
 		else
-			EXTRA_SRCDIR+=src/rdm
 			RDM=1
 		endif
 		EXTRA_INCLUDES+=../lib-rdmresponder/include
+		EXTRA_INCLUDES+=../lib-rdmsensor/include
+		ifeq ($(findstring ENABLE_RDM_SUBDEVICES,$(MAKE_FLAGS)), ENABLE_RDM_SUBDEVICES)
+			EXTRA_INCLUDES+=../lib-rdmsubdevice/include
+		endif
 	endif
 	
 	ifeq ($(findstring NODE_RDMNET_LLRP_ONLY,$(MAKE_FLAGS)), NODE_RDMNET_LLRP_ONLY)
 		ifdef RDM
 		else
-			EXTRA_SRCDIR+=src/rdm
 			RDM=1
 		endif
-		EXTRA_INCLUDES+=../lib-rdm/include ../lib-rdmsensor/include ../lib-rdmsubdevice/include		
 	endif
 	
 	ifeq ($(findstring WIDGET_HAVE_FLASHROM,$(MAKE_FLAGS)), WIDGET_HAVE_FLASHROM)
 		EXTRA_SRCDIR+=src/widget
 		EXTRA_INCLUDES+=../lib-widget/include
 	endif
+	
+	ifdef RDM
+		EXTRA_SRCDIR+=src/rdm
+		EXTRA_INCLUDES+=../lib-rdm/include
+	endif
 else
-	EXTRA_SRCDIR+=src/artnet
-	EXTRA_INCLUDES+=../lib-artnet/include
-	EXTRA_SRCDIR+=src/e131
-	EXTRA_INCLUDES+=../lib-e131/include
-	EXTRA_SRCDIR+=src/node 
-	EXTRA_INCLUDES+=../lib-node/include ../lib-rdmdiscovery/include
-	EXTRA_SRCDIR+=src/ltc
-	EXTRA_INCLUDES+=../lib-ltc/include ../lib-tcnet/include
-	EXTRA_INCLUDES+=../lib-gps/include
-	EXTRA_INCLUDES+=../lib-rgbpanel/include
+	ifneq (, $(shell test -d '../lib-network/src/noemac' && echo -n yes))
+		DEFINES+=NO_EMAC
+	else
+		DEFINES+=ARTNET_VERSION=4
+		EXTRA_INCLUDES+=../lib-remoteconfig/include
+		EXTRA_SRCDIR+=src/artnet
+		EXTRA_INCLUDES+=../lib-artnet/include
+		EXTRA_SRCDIR+=src/e131
+		EXTRA_INCLUDES+=../lib-e131/include
+		EXTRA_SRCDIR+=src/node 
+		EXTRA_INCLUDES+=../lib-node/include ../lib-rdmdiscovery/include
+		EXTRA_SRCDIR+=src/ltc
+		EXTRA_INCLUDES+=../lib-ltc/include ../lib-tcnet/include
+		EXTRA_INCLUDES+=../lib-gps/include
+		EXTRA_INCLUDES+=../lib-rgbpanel/include
+	endif
+	
 	EXTRA_INCLUDES+=../lib-ws28xx/include
 	EXTRA_SRCDIR+=src/rdm
 	EXTRA_INCLUDES+=../lib-rdm/include ../lib-rdmsensor/include ../lib-rdmsubdevice/include		
 	EXTRA_SRCDIR+=src/stepper
 	EXTRA_INCLUDES+=../lib-l6470dmx/include ../lib-l6470/include
 	EXTRA_INCLUDES+=../lib-tlc59711dmx/include ../lib-tlc59711/include
+	EXTRA_SRCDIR+=src/pca9685
+	EXTRA_INCLUDES+=../lib-pca9685dmx/include ../lib-pca9685/include
 	
-	DEFINES+=ARTNET_VERSION=4
 	DEFINES+=LIGHTSET_PORTS=4
 	DEFINES+=CONFIG_PIXELDMX_MAX_PORTS=8
 	DEFINES+=CONFIG_DDPDISPLAY_MAX_PORTS=8
@@ -169,7 +194,5 @@ EXTRA_INCLUDES+=../lib-dmxsend/include
 EXTRA_INCLUDES+=../lib-dmxmonitor/include
 EXTRA_INCLUDES+=../lib-dmxreceiver/include ../lib-dmx/include
 EXTRA_INCLUDES+=../lib-oscserver/include 
-EXTRA_INCLUDES+=../lib-rdm/include ../lib-rdmsensor/include ../lib-rdmsubdevice/include
-EXTRA_INCLUDES+=../lib-spiflashinstall/include
 EXTRA_INCLUDES+=../lib-device/include
 EXTRA_INCLUDES+=../lib-midi/include

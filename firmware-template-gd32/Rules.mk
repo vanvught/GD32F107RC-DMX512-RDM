@@ -113,6 +113,8 @@ clean: $(LIBDEP)
 	rm -f $(TARGET)
 	rm -f $(MAP)
 	rm -f $(LIST)
+	rm -f $(SIZE)
+	rm -f include/sofware_version_id.h
 
 #
 # Libraries
@@ -148,4 +150,4 @@ $(foreach bdir,$(SRCDIR),$(eval $(call compile-objects,$(bdir))))
 
 .PHONY: calculate_unused_ram
 calculate_unused_ram: $(FAMILY).size $(LINKER)
-	@$(FIRMWARE_DIR)/calculate_unused_ram.sh $(FAMILY).size $(LINKER)
+	@"$(FIRMWARE_DIR)/calculate_unused_ram.sh" $(FAMILY).size $(LINKER)

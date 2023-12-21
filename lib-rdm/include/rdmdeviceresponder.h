@@ -29,7 +29,7 @@
 #include <cstdint>
 #include <cstring>
 
-#include "rdm.h"
+#include "rdmconst.h"
 #include "rdmdevice.h"
 #include "rdmidentify.h"
 #include "rdmpersonality.h"
@@ -50,7 +50,7 @@ void factorydefaults();
 class RDMDeviceResponder: public RDMDevice {
 public:
 	RDMDeviceResponder(RDMPersonality **pRDMPersonalities, uint32_t nPersonalityCount);
-	virtual ~RDMDeviceResponder() {}
+	virtual ~RDMDeviceResponder() = default;
 
 	void Init();
 	void Print();

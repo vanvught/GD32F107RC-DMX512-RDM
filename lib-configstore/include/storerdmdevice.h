@@ -27,35 +27,44 @@
 #define STORERDMDEVICE_H_
 
 #include <cstdint>
+#include <cstddef>
 
 #include "rdmdeviceparams.h"
-#include "rdmdevicestore.h"
 
 #include "configstore.h"
 
-class StoreRDMDevice final: public RDMDeviceParamsStore, public RDMDeviceStore {
+class StoreRDMDevice {
 public:
-	StoreRDMDevice();
-
-	void Update(const struct rdm::deviceparams::Params *pParams) override {
-		ConfigStore::Get()->Update(configstore::Store::RDMDEVICE, pParams, sizeof(struct rdm::deviceparams::Params));
+	static StoreRDMDevice& Get() {
+		static StoreRDMDevice instance;
+		return instance;
 	}
 
-	void Copy(struct rdm::deviceparams::Params *pRDMDeviceParams) override {
-		ConfigStore::Get()->Copy(configstore::Store::RDMDEVICE, pRDMDeviceParams, sizeof(struct rdm::deviceparams::Params));
+	void Update(const struct rdm::deviceparams::Params *pParams) {
+		Get().IUpdate(pParams);
 	}
 
-	void SaveLabel(const char *pLabel, uint8_t nLength) override {
-		ConfigStore::Get()->Update(configstore::Store::RDMDEVICE, __builtin_offsetof(struct rdm::deviceparams::Params, aDeviceRootLabel), pLabel, nLength, rdm::deviceparams::Mask::LABEL);
-		ConfigStore::Get()->Update(configstore::Store::RDMDEVICE, __builtin_offsetof(struct rdm::deviceparams::Params, nDeviceRootLabelLength), &nLength, sizeof(uint8_t), rdm::deviceparams::Mask::LABEL);
+	void Copy(struct rdm::deviceparams::Params *pRDMDeviceParams) {
+		Get().ICopy(pRDMDeviceParams);
 	}
 
-	static StoreRDMDevice *Get() {
-		return s_pThis;
+	void SaveLabel(const char *pLabel, uint8_t nLength) {
+		Get().ISaveLabel(pLabel, nLength);
 	}
 
 private:
-	static StoreRDMDevice *s_pThis;
+	void IUpdate(const struct rdm::deviceparams::Params *pParams) {
+		ConfigStore::Get()->Update(configstore::Store::RDMDEVICE, pParams, sizeof(struct rdm::deviceparams::Params));
+	}
+
+	void ICopy(struct rdm::deviceparams::Params *pRDMDeviceParams) {
+		ConfigStore::Get()->Copy(configstore::Store::RDMDEVICE, pRDMDeviceParams, sizeof(struct rdm::deviceparams::Params));
+	}
+
+	void ISaveLabel(const char *pLabel, uint8_t nLength) {
+		ConfigStore::Get()->Update(configstore::Store::RDMDEVICE, offsetof(struct rdm::deviceparams::Params, aDeviceRootLabel), pLabel, nLength, rdm::deviceparams::Mask::LABEL);
+		ConfigStore::Get()->Update(configstore::Store::RDMDEVICE, offsetof(struct rdm::deviceparams::Params, nDeviceRootLabelLength), &nLength, sizeof(uint8_t), rdm::deviceparams::Mask::LABEL);
+	}
 };
 
 #endif /* STORERDMDEVICE_H_ */

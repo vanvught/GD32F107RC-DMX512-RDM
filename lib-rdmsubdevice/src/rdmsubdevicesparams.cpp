@@ -2,7 +2,7 @@
  * @file rdmsubdevicesparams.cpp
  *
  */
-/* Copyright (C) 2020-2023 by Arjan van Vught mailto:info@orangepi-dmx.nl
+/* Copyright (C) 2020-2023 by Arjan van Vught mailto:info@gd32-dmx.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -35,30 +35,36 @@
 
 #include "rdmsubdevicesparams.h"
 #include "rdmsubdevices.h"
+#include "rdmsubdevicesconst.h"
+#include "rdm _subdevices.h"
+
+#include "storerdmsubdevices.h"
 
 #include "readconfigfile.h"
 #include "sscan.h"
 #include "propertiesbuilder.h"
 
 #if defined(ENABLE_RDM_SUBDEVICES)
-# include "rdmsubdevicebw7fets.h"
-# include "rdmsubdevicebwdimmer.h"
-# include "rdmsubdevicebwdio.h"
-# include "rdmsubdevicebwlcd.h"
-# include "rdmsubdevicebwrelay.h"
-//
-# include "rdmsubdevicemcp23s08.h"
-# include "rdmsubdevicemcp23s17.h"
-//
-# include "rdmsubdevicemcp4822.h"
-# include "rdmsubdevicemcp4902.h"
+# if defined(CONFIG_RDM_SUBDEVICES_USE_SPI)
+#  include "spi/rdmsubdevicebw7fets.h"
+#  include "spi/rdmsubdevicebwdimmer.h"
+#  include "spi/rdmsubdevicebwdio.h"
+#  include "spi/rdmsubdevicebwlcd.h"
+#  include "spi/rdmsubdevicebwrelay.h"
+#  include "spi/rdmsubdevicemcp23s08.h"
+#  include "spi/rdmsubdevicemcp23s17.h"
+#  include "spi/rdmsubdevicemcp4822.h"
+#  include "spi/rdmsubdevicemcp4902.h"
+# endif
+# if defined(CONFIG_RDM_SUBDEVICES_USE_I2C)
+# endif
 #endif
 
 #include "debug.h"
 
 using namespace rdm::subdevices;
 
-RDMSubDevicesParams::RDMSubDevicesParams(RDMSubDevicesParamsStore *pRDMSubDevicesParamsStore): m_pRDMSubDevicesParamsStore(pRDMSubDevicesParamsStore) {
+RDMSubDevicesParams::RDMSubDevicesParams() {
 	DEBUG_ENTRY
 
 	memset(&m_Params, 0, sizeof(struct rdm::subdevicesparams::Params));
@@ -75,20 +81,14 @@ bool RDMSubDevicesParams::Load() {
 	ReadConfigFile configfile(RDMSubDevicesParams::staticCallbackFunction, this);
 
 	if (configfile.Read(RDMSubDevicesConst::PARAMS_FILE_NAME)) {
-		if (m_pRDMSubDevicesParamsStore != nullptr) {
-			m_pRDMSubDevicesParamsStore->Update(&m_Params);
-		}
+		StoreRDMSubDevices::Update(&m_Params);
+
 	} else
 #endif
-	if (m_pRDMSubDevicesParamsStore != nullptr) {
-		m_pRDMSubDevicesParamsStore->Copy(&m_Params);
-		// Sanity check
-		if (m_Params.nCount >= rdm::subdevices::MAX) {
-			memset(&m_Params, 0, sizeof(struct rdm::subdevicesparams::Params));
-		}
-	} else {
-		DEBUG_EXIT
-		return false;
+		StoreRDMSubDevices::Copy(&m_Params);
+	// Sanity check
+	if (m_Params.nCount >= rdm::subdevices::MAX) {
+		memset(&m_Params, 0, sizeof(struct rdm::subdevicesparams::Params));
 	}
 
 	DEBUG_EXIT
@@ -100,12 +100,8 @@ void RDMSubDevicesParams::Load(const char *pBuffer, uint32_t nLength) {
 
 	assert(pBuffer != nullptr);
 	assert(nLength != 0);
-	assert(m_pRDMSubDevicesParamsStore != nullptr);
 
-	if (m_pRDMSubDevicesParamsStore == nullptr) {
-		DEBUG_EXIT
-		return;
-	}
+	debug_dump(pBuffer, nLength);
 
 	m_Params.nCount = 0;
 
@@ -113,7 +109,7 @@ void RDMSubDevicesParams::Load(const char *pBuffer, uint32_t nLength) {
 
 	config.Read(pBuffer, nLength);
 
-	m_pRDMSubDevicesParamsStore->Update(&m_Params);
+	StoreRDMSubDevices::Update(&m_Params);
 
 	DEBUG_EXIT
 }
@@ -126,11 +122,17 @@ void RDMSubDevicesParams::Builder(const rdm::subdevicesparams::Params *pParams, 
 	if (pParams != nullptr) {
 		memcpy(&m_Params, pParams, sizeof(struct rdm::subdevicesparams::Params));
 	} else {
-		assert(m_pRDMSubDevicesParamsStore != nullptr);
-		m_pRDMSubDevicesParamsStore->Copy(&m_Params);
+		StoreRDMSubDevices::Copy(&m_Params);
 	}
 
 	PropertiesBuilder builder(RDMSubDevicesConst::PARAMS_FILE_NAME, pBuffer, nLength);
+
+	for (uint32_t nCount = 0; nCount < m_Params.nCount; nCount++) {
+		char buffer[32];
+		const auto *p = &m_Params.Entry[nCount];
+		snprintf(buffer, sizeof(buffer) - 1, "%u,%s,%u,%u,%u", p->nChipSelect, rdm::subdevices::get_type_string(static_cast<rdm::subdevices::Types>(p->nType)), p->nAddress, p->nDmxStartAddress, p->nSpeedHz);
+		builder.AddRaw(buffer);
+	}
 
 	nSize = builder.GetSize();
 
@@ -143,7 +145,7 @@ void RDMSubDevicesParams::Dump() {
 	printf("%s::%s \'%s\':\n", __FILE__, __FUNCTION__, RDMSubDevicesConst::PARAMS_FILE_NAME);
 
 	for (uint32_t i = 0; i < m_Params.nCount; i++) {
-		printf(" %s 0x%.2x\n", RDMSubDevices::GetTypeString(static_cast<Types>(m_Params.Entry[i].nType)), m_Params.Entry[i].nAddress);
+		printf(" %s 0x%.2x\n", rdm::subdevices::get_type_string(static_cast<Types>(m_Params.Entry[i].nType)), m_Params.Entry[i].nAddress);
 	}
 #endif
 }
@@ -166,12 +168,14 @@ bool RDMSubDevicesParams::Add(RDMSubDevice *pRDMSubDevice) {
 void RDMSubDevicesParams::Set() {
 #if defined(ENABLE_RDM_SUBDEVICES)
 	for (uint32_t i = 0; i < m_Params.nCount; i++) {
+# if defined(CONFIG_RDM_SUBDEVICES_USE_SPI) ||  defined(CONFIG_RDM_SUBDEVICES_USE_I2C)
 		const auto nChipSelect = m_Params.Entry[i].nChipSelect;
 		const auto nAddress = m_Params.Entry[i].nAddress;
 		const auto nDmxStartAddress = m_Params.Entry[i].nDmxStartAddress;
 		const auto nSpeedHz = m_Params.Entry[i].nSpeedHz;
-
+# endif
 		switch (static_cast<Types>(m_Params.Entry[i].nType)) {
+# if defined(CONFIG_RDM_SUBDEVICES_USE_SPI)
 			case Types::BW7FETS:
 				Add(new RDMSubDeviceBw7fets(nDmxStartAddress, nChipSelect, nAddress, nSpeedHz));
 				break;
@@ -199,6 +203,9 @@ void RDMSubDevicesParams::Set() {
 			case Types::MCP4902:
 				Add(new RDMSubDeviceMCP4902(nDmxStartAddress, nChipSelect, nAddress, nSpeedHz));
 				break;
+# endif
+# if defined(CONFIG_RDM_SUBDEVICES_USE_I2C)
+# endif
 			default:
 				break;
 		}
@@ -208,6 +215,8 @@ void RDMSubDevicesParams::Set() {
 
 void RDMSubDevicesParams::callbackFunction(const char *pLine) {
 	assert(pLine != nullptr);
+
+	DEBUG_PUTS(pLine);
 
 	char aSubDeviceName[32];
 	memset(aSubDeviceName, 0, sizeof(aSubDeviceName));
@@ -220,12 +229,14 @@ void RDMSubDevicesParams::callbackFunction(const char *pLine) {
 
 	const auto nReturnCode = Sscan::Spi(pLine, nChipSelect, aSubDeviceName, nLength, nAddress, nDmxStartAddress, nSpeedHz);
 
+	DEBUG_PRINTF("nReturnCode=%u", static_cast<uint32_t>(nReturnCode));
+
 	if ((nReturnCode == Sscan::OK) && (aSubDeviceName[0] != 0) && (nLength != 0)) {
 		DEBUG_PRINTF("{%.*s}:%d, nChipSelect=%d, nAddress=%d, nDmxStartAddress=%d, nSpeedHz=%d", nLength, aSubDeviceName, static_cast<int>(nLength), nChipSelect, nAddress, nDmxStartAddress, nSpeedHz);
 
 		Types subDeviceType;
 
-		if ((subDeviceType = RDMSubDevices::GetTypeString(aSubDeviceName)) == Types::UNDEFINED) {
+		if ((subDeviceType = rdm::subdevices::get_type_string(aSubDeviceName)) == Types::UNDEFINED) {
 			return;
 		}
 

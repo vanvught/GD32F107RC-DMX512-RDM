@@ -2,7 +2,7 @@
  * @file pixeldmxparams.h
  *
  */
-/* Copyright (C) 2017-2022 by Arjan van Vught mailto:info@orangepi-dmx.nl
+/* Copyright (C) 2017-2023 by Arjan van Vught mailto:info@orangepi-dmx.nl
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"); to deal
@@ -71,7 +71,7 @@ struct Mask {
 	static constexpr auto HIGH_CODE = (1U << 11);
 	static constexpr auto START_UNI_PORT_1 = (1U << 12);
 };
-}  // pixeldmxparams name
+}  // pixeldmxparams
 
 class PixelDmxParamsStore {
 public:
@@ -85,8 +85,7 @@ public:
 class PixelDmxParams {
 public:
 	PixelDmxParams(PixelDmxParamsStore *pPixelDmxParamsStore);
-	~PixelDmxParams() {
-	}
+	~PixelDmxParams() = default;
 
 	bool Load();
 	void Load(const char *pBuffer, uint32_t nLength);
