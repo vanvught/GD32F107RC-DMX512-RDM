@@ -1,6 +1,6 @@
 $(info $$MAKE_FLAGS [${MAKE_FLAGS}])
 
-EXTRA_INCLUDES =../lib-flashcode/include ../lib-flash/include
+EXTRA_INCLUDES =../lib-flashcode/include
 EXTRA_INCLUDES+=../lib-hal/include ../lib-properties/include ../lib-lightset/include ../lib-network/include
 
 ifneq ($(MAKE_FLAGS),)
