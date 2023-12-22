@@ -80,15 +80,12 @@ void main() {
 	fw.Print("OSC Server Pixel controller {1x Universe}");
 	nw.Print();
 	
-	StoreOscServer storeOscServer;
-	OSCServerParams params(&storeOscServer);
-	
+	OSCServerParams params;
 	OscServer server;
 
-	if (params.Load()) {
-		params.Dump();
-		params.Set(&server);
-	}
+	params.Load();
+	params.Dump();
+	params.Set(&server);
 
 	mDns.ServiceRecordAdd(nullptr, mdns::Services::OSC, "type=server", server.GetPortIncoming());
 

@@ -57,19 +57,11 @@ struct ParamsMask {
 }  // namespace server
 }  // namespace osc
 
-class OSCServerParamsStore {
-public:
-	virtual ~OSCServerParamsStore() {}
-
-	virtual void Update(const osc::server::Params *pOSCServerParams)=0;
-	virtual void Copy(osc::server::Params *pOSCServerParams)=0;
-};
-
 class OSCServerParams {
 public:
-	OSCServerParams(OSCServerParamsStore *m_pOSCServerParamsStore);
+	OSCServerParams();
 
-	bool Load();
+	void Load();
 	void Load(const char *pBuffer, uint32_t nLength);
 
 	void Builder(const osc::server::Params *ptOSCServerParams, char *pBuffer, uint32_t nLength, uint32_t& nSize);
@@ -82,20 +74,20 @@ public:
 	void Dump();
 
 	uint16_t GetIncomingPort() const {
-		return m_tOSCServerParams.nIncomingPort;
+		return m_Params.nIncomingPort;
 	}
 
 	uint16_t GetOutgoingPort() const {
-		return m_tOSCServerParams.nOutgoingPort;
+		return m_Params.nOutgoingPort;
 	}
 
 	bool GetPartialTransmission() const {
-		return m_tOSCServerParams.bPartialTransmission;
+		return m_Params.bPartialTransmission;
 	}
 
 #if defined (ESP8266)
 	lightset::OutputType GetOutputType() const {
-		return static_cast<lightset::OutputType>(m_tOSCServerParams.tOutputType);
+		return static_cast<lightset::OutputType>(m_Params.tOutputType);
 	}
 #endif
 
@@ -104,12 +96,11 @@ public:
 private:
     void callbackFunction(const char *s);
     bool isMaskSet(uint32_t nMask) const {
-    	return (m_tOSCServerParams.nSetList & nMask) == nMask;
+    	return (m_Params.nSetList & nMask) == nMask;
     }
 
 private:
-	OSCServerParamsStore *m_pOSCServerParamsStore;
-    osc::server::Params m_tOSCServerParams;
+    osc::server::Params m_Params;
 };
 
 #endif /* OSCSERVERPARAMS_H_ */

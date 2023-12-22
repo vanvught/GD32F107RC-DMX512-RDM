@@ -76,15 +76,12 @@ void main() {
 	fw.Print("OSC Server DMX controller {1x Universe}");
 	nw.Print();
 	
-	StoreOscServer storeOscServer;
-	OSCServerParams params(&storeOscServer);
-	
+	OSCServerParams params;
 	OscServer server;
 
-	if (params.Load()) {
-		params.Dump();
-		params.Set(&server);
-	}
+	params.Load();
+	params.Dump();
+	params.Set(&server);
 
 	display.TextStatus(NetworkConst::MSG_MDNS_CONFIG, Display7SegmentMessage::INFO_MDNS_CONFIG, CONSOLE_YELLOW);
 

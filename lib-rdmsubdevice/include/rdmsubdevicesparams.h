@@ -52,7 +52,7 @@ class RDMSubDevicesParams {
 public:
 	RDMSubDevicesParams();
 
-	bool Load();
+	void Load();
 	void Load(const char *pBuffer, uint32_t nLength);
 
 	void Builder(const rdm::subdevicesparams::Params *pParams, char *pBuffer, uint32_t nLength, uint32_t& nSize);

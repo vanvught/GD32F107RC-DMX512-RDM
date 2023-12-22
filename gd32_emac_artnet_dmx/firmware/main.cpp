@@ -131,8 +131,8 @@ void main() {
 	RDMDeviceParams rdmDeviceParams;
 
 	rdmDeviceParams.Load();
-	rdmDeviceParams.Set(&artNetRdmController);
 	rdmDeviceParams.Dump();
+	rdmDeviceParams.Set(&artNetRdmController);
 
 	artNetRdmController.Init();
 	artNetRdmController.Print();

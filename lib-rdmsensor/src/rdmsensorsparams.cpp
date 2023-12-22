@@ -79,7 +79,7 @@ RDMSensorsParams::RDMSensorsParams() {
 	DEBUG_EXIT
 }
 
-bool RDMSensorsParams::Load() {
+void RDMSensorsParams::Load() {
 	DEBUG_ENTRY
 
 	m_Params.nDevices = 0;
@@ -91,14 +91,14 @@ bool RDMSensorsParams::Load() {
 		StoreRDMSensors::Update(&m_Params);
 	} else
 #endif
-	StoreRDMSensors::Copy(&m_Params);
+		StoreRDMSensors::Copy(&m_Params);
+
 	// Sanity check
 	if (m_Params.nDevices >= rdm::sensors::devices::MAX) {
 		memset(&m_Params, 0, sizeof(struct rdm::sensorsparams::Params));
 	}
 
 	DEBUG_EXIT
-	return true;
 }
 
 void RDMSensorsParams::Load(const char *pBuffer, uint32_t nLength) {
@@ -146,20 +146,6 @@ void RDMSensorsParams::Builder(const rdm::sensorsparams::Params *pParams, char *
 
 	DEBUG_PRINTF("nSize=%d", nSize);
 	DEBUG_EXIT
-}
-
-void RDMSensorsParams::Dump() {
-#ifndef NDEBUG
-	printf("%s::%s \'%s\':\n", __FILE__, __FUNCTION__, RDMSensorsConst::PARAMS_FILE_NAME);
-
-	for (uint32_t i = 0; i < m_Params.nDevices; i++) {
-		printf(" %s 0x%.2x\n", rdm::sensors::get_type_string(static_cast<rdm::sensors::Types>(m_Params.Entry[i].nType)), m_Params.Entry[i].nAddress);
-	}
-
-	for (uint32_t i = 0; i < rdm::sensors::MAX; i++) {
-		printf("%2d %d\n", i, m_Params.nCalibrate[i]);
-	}
-#endif
 }
 
 bool RDMSensorsParams::Add(RDMSensor *pRDMSensor) {
@@ -297,4 +283,18 @@ void RDMSensorsParams::staticCallbackFunction(void *p, const char *s) {
 	assert(s != nullptr);
 
 	(static_cast<RDMSensorsParams*>(p))->callbackFunction(s);
+}
+
+void RDMSensorsParams::Dump() {
+#ifndef NDEBUG
+	printf("%s::%s \'%s\':\n", __FILE__, __FUNCTION__, RDMSensorsConst::PARAMS_FILE_NAME);
+
+	for (uint32_t i = 0; i < m_Params.nDevices; i++) {
+		printf(" %s 0x%.2x\n", rdm::sensors::get_type_string(static_cast<rdm::sensors::Types>(m_Params.Entry[i].nType)), m_Params.Entry[i].nAddress);
+	}
+
+	for (uint32_t i = 0; i < rdm::sensors::MAX; i++) {
+		printf("%2d %d\n", i, m_Params.nCalibrate[i]);
+	}
+#endif
 }

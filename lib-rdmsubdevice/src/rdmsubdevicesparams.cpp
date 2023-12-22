@@ -72,7 +72,7 @@ RDMSubDevicesParams::RDMSubDevicesParams() {
 	DEBUG_EXIT
 }
 
-bool RDMSubDevicesParams::Load() {
+void RDMSubDevicesParams::Load() {
 	DEBUG_ENTRY
 
 	m_Params.nCount = 0;
@@ -86,13 +86,13 @@ bool RDMSubDevicesParams::Load() {
 	} else
 #endif
 		StoreRDMSubDevices::Copy(&m_Params);
+
 	// Sanity check
 	if (m_Params.nCount >= rdm::subdevices::MAX) {
 		memset(&m_Params, 0, sizeof(struct rdm::subdevicesparams::Params));
 	}
 
 	DEBUG_EXIT
-	return true;
 }
 
 void RDMSubDevicesParams::Load(const char *pBuffer, uint32_t nLength) {
@@ -138,16 +138,6 @@ void RDMSubDevicesParams::Builder(const rdm::subdevicesparams::Params *pParams, 
 
 	DEBUG_PRINTF("nSize=%d", nSize);
 	DEBUG_EXIT
-}
-
-void RDMSubDevicesParams::Dump() {
-#ifndef NDEBUG
-	printf("%s::%s \'%s\':\n", __FILE__, __FUNCTION__, RDMSubDevicesConst::PARAMS_FILE_NAME);
-
-	for (uint32_t i = 0; i < m_Params.nCount; i++) {
-		printf(" %s 0x%.2x\n", rdm::subdevices::get_type_string(static_cast<Types>(m_Params.Entry[i].nType)), m_Params.Entry[i].nAddress);
-	}
-#endif
 }
 
 bool RDMSubDevicesParams::Add(RDMSubDevice *pRDMSubDevice) {
@@ -268,4 +258,14 @@ void RDMSubDevicesParams::staticCallbackFunction(void *p, const char *s) {
 	assert(s != nullptr);
 
 	(static_cast<RDMSubDevicesParams*>(p))->callbackFunction(s);
+}
+
+void RDMSubDevicesParams::Dump() {
+#ifndef NDEBUG
+	printf("%s::%s \'%s\':\n", __FILE__, __FUNCTION__, RDMSubDevicesConst::PARAMS_FILE_NAME);
+
+	for (uint32_t i = 0; i < m_Params.nCount; i++) {
+		printf(" %s 0x%.2x\n", rdm::subdevices::get_type_string(static_cast<Types>(m_Params.Entry[i].nType)), m_Params.Entry[i].nAddress);
+	}
+#endif
 }

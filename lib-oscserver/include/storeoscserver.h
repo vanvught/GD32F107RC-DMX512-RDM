@@ -1,8 +1,8 @@
 /**
- * @file storeoscserver.cpp
+ * @file storeoscserver.h
  *
  */
-/* Copyright (C) 2019-2020 by Arjan van Vught mailto:info@orangepi-dmx.nl
+/* Copyright (C) 2019-2022 by Arjan van Vught mailto:info@orangepi-dmx.nl
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,20 +23,36 @@
  * THE SOFTWARE.
  */
 
-#include <cassert>
+#ifndef STOREOSCSERVER_H_
+#define STOREOSCSERVER_H_
 
-#include "storeoscserver.h"
+#include "oscserverparams.h"
 
-#include "debug.h"
+#include "configstore.h"
 
-StoreOscServer *StoreOscServer::s_pThis = nullptr;
+class StoreOscServer {
+public:
+	static StoreOscServer& Get() {
+		static StoreOscServer instance;
+		return instance;
+	}
 
-StoreOscServer::StoreOscServer() {
-	DEBUG_ENTRY
+	static void Update(const struct osc::server::Params *pOSCServerParams) {
+		Get().IUpdate(pOSCServerParams);
+	}
 
-	assert(s_pThis == nullptr);
-	s_pThis = this;
+	static void Copy(struct osc::server::Params *pOSCServerParams) {
+		Get().ICopy(pOSCServerParams);
+	}
 
-	DEBUG_PRINTF("%p", reinterpret_cast<void *>(s_pThis));
-	DEBUG_EXIT
-}
+private:
+	void IUpdate(const struct osc::server::Params *pOSCServerParams) {
+		ConfigStore::Get()->Update(configstore::Store::OSC, pOSCServerParams, sizeof(struct osc::server::Params));
+	}
+
+	void ICopy(struct osc::server::Params *pOSCServerParams) {
+		ConfigStore::Get()->Copy(configstore::Store::OSC, pOSCServerParams, sizeof(struct osc::server::Params));
+	}
+};
+
+#endif /* STOREOSCSERVER_H_ */
