@@ -32,6 +32,7 @@
 
 #include "pca9685dmx.h"
 #include "pca9685pwmled.h"
+#include "storepca9685.h"
 
 class PCA9685DmxLed final: public LightSet {
 public:
@@ -50,6 +51,9 @@ public:
 
 		if ((nDmxStartAddress != 0) && (nDmxStartAddress <= lightset::dmx::UNIVERSE_SIZE)) {
 			m_nDmxStartAddress = nDmxStartAddress;
+
+			StorePCA9685::SaveDmxStartAddress(m_nDmxStartAddress);
+
 			return true;
 		}
 

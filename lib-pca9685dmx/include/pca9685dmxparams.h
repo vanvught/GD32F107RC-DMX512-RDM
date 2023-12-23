@@ -54,23 +54,13 @@ struct Mask {
 	static constexpr uint32_t SERVO_LEFT_US 	   = (1U << 8);
 	static constexpr uint32_t SERVO_RIGHT_US 	   = (1U << 9);
 };
-
 }  // namespace pca9685dmxparams
-
-class PCA9685DmxParamsStore {
-public:
-	virtual ~PCA9685DmxParamsStore() {}
-
-	virtual void Update(const struct pca9685dmxparams::Params *pPCA9685DmxParams)=0;
-	virtual void Copy(struct pca9685dmxparams::Params *pPCA9685DmxParams)=0;
-};
 
 class PCA9685DmxParams {
 public:
-	PCA9685DmxParams(PCA9685DmxParamsStore *pPCA9685DmxParamsStore);
-	~PCA9685DmxParams() {};
+	PCA9685DmxParams();
 
-	bool Load();
+	void Load();
 	void Load(const char *pBuffer, uint32_t nLength);
 
 	void Builder(const struct pca9685dmxparams::Params *pParams, char *pBuffer, uint32_t nLength, uint32_t& nSize);
@@ -92,7 +82,6 @@ private:
     }
 
 private:
-    PCA9685DmxParamsStore *m_pPCA9685DmxParamsStore;
     pca9685dmxparams::Params m_Params;
 };
 

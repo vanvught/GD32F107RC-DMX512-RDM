@@ -1,8 +1,8 @@
 /**
- * @file storepca9685.cpp
+ * @file storedmxsend.h
  *
  */
-/* Copyright (C) 2023 by Arjan van Vught mailto:info@orangepi-dmx.nl
+/* Copyright (C) 2018-2023 by Arjan van Vught mailto:info@orangepi-dmx.nl
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,20 +23,35 @@
  * THE SOFTWARE.
  */
 
-#include <cassert>
+#ifndef STOREDMXSEND_H_
+#define STOREDMXSEND_H_
 
-#include "storepca9685.h"
+#include "dmxparams.h"
+#include "configstore.h"
 
-#include "debug.h"
+class StoreDmxSend {
+public:
+	static StoreDmxSend& Get() {
+		static StoreDmxSend instance;
+		return instance;
+	}
 
-StorePCA9685 *StorePCA9685::s_pThis = nullptr;
+	static void Update(const struct dmxsendparams::Params *pDmxParams) {
+		Get().IUpdate(pDmxParams);
+	}
 
-StorePCA9685::StorePCA9685() {
-	DEBUG_ENTRY
+	static void Copy(struct dmxsendparams::Params *pDmxParams) {
+		Get().ICopy(pDmxParams);
+	}
 
-	assert(s_pThis == nullptr);
-	s_pThis = this;
+private:
+	void IUpdate(const struct dmxsendparams::Params *pDmxParams) {
+		ConfigStore::Get()->Update(configstore::Store::DMXSEND, pDmxParams, sizeof(struct dmxsendparams::Params));
+	}
 
-	DEBUG_PRINTF("%p", reinterpret_cast<void *>(s_pThis));
-	DEBUG_EXIT
-}
+	void ICopy(struct dmxsendparams::Params *pDmxParams) {
+		ConfigStore::Get()->Copy(configstore::Store::DMXSEND, pDmxParams, sizeof(struct dmxsendparams::Params));
+	}
+};
+
+#endif /* STOREDMXSEND_H_ */

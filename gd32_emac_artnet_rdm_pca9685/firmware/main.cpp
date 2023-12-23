@@ -92,15 +92,12 @@ void main() {
 	HttpDaemon httpDaemon;
 #endif
 
-	StorePCA9685 storePCA9685;
-	PCA9685DmxParams pca9685DmxParams(&storePCA9685);
-
+	PCA9685DmxParams pca9685DmxParams;
 	PCA9685Dmx pca9685Dmx;
 
-	if (pca9685DmxParams.Load()) {
-		pca9685DmxParams.Dump();
-		pca9685DmxParams.Set(&pca9685Dmx);
-	}
+	pca9685DmxParams.Load();
+	pca9685DmxParams.Dump();
+	pca9685DmxParams.Set(&pca9685Dmx);
 
 	char aDescription[64];
 	snprintf(aDescription, sizeof(aDescription) - 1, "PCA9685");

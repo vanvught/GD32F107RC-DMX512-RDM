@@ -41,6 +41,8 @@
 #include "lightset.h"
 #include "lightsetparamsconst.h"
 
+#include "storepca9685.h"
+
 #include "readconfigfile.h"
 #include "sscan.h"
 #include "propertiesbuilder.h"
@@ -63,7 +65,7 @@ uint32_t get_mode(const char *pMode) {
 }
 }  // namespace pca9685dmxparams
 
-PCA9685DmxParams::PCA9685DmxParams(PCA9685DmxParamsStore *pPCA9685DmxParamsStore): m_pPCA9685DmxParamsStore(pPCA9685DmxParamsStore) {
+PCA9685DmxParams::PCA9685DmxParams() {
 	m_Params.nSetList = 0;
 	m_Params.nAddress = pca9685::I2C_ADDRESS_DEFAULT;
 	m_Params.nChannelCount = pca9685::PWM_CHANNELS;
@@ -73,25 +75,17 @@ PCA9685DmxParams::PCA9685DmxParams(PCA9685DmxParamsStore *pPCA9685DmxParamsStore
 	m_Params.nServoRightUs = pca9685::servo::RIGHT_DEFAULT_US;
 }
 
-bool PCA9685DmxParams::Load() {
+void PCA9685DmxParams::Load() {
 	m_Params.nSetList = 0;
 
 #if !defined(DISABLE_FS)
 	ReadConfigFile configfile(PCA9685DmxParams::staticCallbackFunction, this);
 
 	if (configfile.Read(PCA9685DmxParamsConst::FILE_NAME)) {
-		if (m_pPCA9685DmxParamsStore != nullptr) {
-			m_pPCA9685DmxParamsStore->Update(&m_Params);
-		}
+		StorePCA9685::Update(&m_Params);
 	} else
 #endif
-	if (m_pPCA9685DmxParamsStore != nullptr) {
-		m_pPCA9685DmxParamsStore->Copy(&m_Params);
-	} else {
-		return false;
-	}
-
-	return true;
+		StorePCA9685::Copy(&m_Params);
 }
 
 void PCA9685DmxParams::Load(const char *pBuffer, uint32_t nLength) {
@@ -104,7 +98,7 @@ void PCA9685DmxParams::Load(const char *pBuffer, uint32_t nLength) {
 
 	config.Read(pBuffer, nLength);
 
-	m_pPCA9685DmxParamsStore->Update(&m_Params);
+	StorePCA9685::Update(&m_Params);
 }
 
 void PCA9685DmxParams::SetBool(const uint8_t nValue, const uint32_t nMask) {
@@ -225,7 +219,7 @@ void PCA9685DmxParams::Builder(const struct pca9685dmxparams::Params *pParams, c
 	if (pParams != nullptr) {
 		memcpy(&m_Params, pParams, sizeof(struct pca9685dmxparams::Params));
 	} else {
-		m_pPCA9685DmxParamsStore->Copy(&m_Params);
+		StorePCA9685::Copy(&m_Params);
 	}
 
 	PropertiesBuilder builder(PCA9685DmxParamsConst::FILE_NAME, pBuffer, nLength);

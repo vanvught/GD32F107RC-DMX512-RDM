@@ -30,32 +30,39 @@
 #include <cstddef>
 
 #include "pca9685dmxparams.h"
-#include "pca9685dmxstore.h"
-
 #include "configstore.h"
 
-class StorePCA9685 final: public PCA9685DmxParamsStore, public PCA9685DmxStore {
+class StorePCA9685 {
 public:
-	StorePCA9685();
-
-	void Update(const struct pca9685dmxparams::Params *pParams) override {
-		ConfigStore::Get()->Update(configstore::Store::PCA9685, pParams, sizeof(struct pca9685dmxparams::Params));
+	static StorePCA9685& Get() {
+		static StorePCA9685 instance;
+		return instance;
 	}
 
-	void Copy(struct pca9685dmxparams::Params *pParams) override {
-		ConfigStore::Get()->Copy(configstore::Store::PCA9685, pParams, sizeof(struct pca9685dmxparams::Params));
+	static void Update(const struct pca9685dmxparams::Params *pParams) {
+		Get().IUpdate(pParams);
 	}
 
-	void SaveDmxStartAddress(uint16_t nDmxStartAddress) override {
-		ConfigStore::Get()->Update(configstore::Store::PCA9685, offsetof(struct pca9685dmxparams::Params, nDmxStartAddress), &nDmxStartAddress, sizeof(uint32_t), pca9685dmxparams::Mask::DMX_START_ADDRESS);
+	static void Copy(struct pca9685dmxparams::Params *pParams) {
+		Get().ICopy(pParams);
 	}
 
-	static StorePCA9685 *Get() {
-		return s_pThis;
+	static void SaveDmxStartAddress(uint16_t nDmxStartAddress) {
+		Get().ISaveDmxStartAddress(nDmxStartAddress);
 	}
 
 private:
-	static StorePCA9685 *s_pThis;
+	void IUpdate(const struct pca9685dmxparams::Params *pParams) {
+		ConfigStore::Get()->Update(configstore::Store::PCA9685, pParams, sizeof(struct pca9685dmxparams::Params));
+	}
+
+	void ICopy(struct pca9685dmxparams::Params *pParams) {
+		ConfigStore::Get()->Copy(configstore::Store::PCA9685, pParams, sizeof(struct pca9685dmxparams::Params));
+	}
+
+	void ISaveDmxStartAddress(uint16_t nDmxStartAddress) {
+		ConfigStore::Get()->Update(configstore::Store::PCA9685, offsetof(struct pca9685dmxparams::Params, nDmxStartAddress), &nDmxStartAddress, sizeof(uint32_t), pca9685dmxparams::Mask::DMX_START_ADDRESS);
+	}
 };
 
 #endif /* STOREPCA9685_H_ */

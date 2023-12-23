@@ -115,15 +115,12 @@ void main() {
 	bool bIsSet;
 	bridge.SetUniverse(0, e131params.GetDirection(0), e131params.GetUniverse(0, bIsSet));
 
-	StoreDmxSend storeDmxSend;
-	DmxParams dmxparams(&storeDmxSend);
-
+	DmxParams dmxparams;
 	Dmx dmx;
 
-	if (dmxparams.Load()) {
-		dmxparams.Dump();
-		dmxparams.Set(&dmx);
-	}
+	dmxparams.Load();
+	dmxparams.Dump();
+	dmxparams.Set(&dmx);
 
 	uint16_t nUniverse;
 

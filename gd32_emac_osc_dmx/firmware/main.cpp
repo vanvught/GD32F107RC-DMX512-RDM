@@ -93,15 +93,12 @@ void main() {
 
 	display.TextStatus(OscServerMsgConst::PARAMS, Display7SegmentMessage::INFO_BRIDGE_PARMAMS, CONSOLE_YELLOW);
 
-	StoreDmxSend storeDmxSend;
-	DmxParams dmxparams(&storeDmxSend);
-
+	DmxParams dmxparams;
 	Dmx dmx;
 
-	if (dmxparams.Load()) {
-		dmxparams.Dump();
-		dmxparams.Set(&dmx);
-	}
+	dmxparams.Load();
+	dmxparams.Dump();
+	dmxparams.Set(&dmx);
 
 	DmxSend dmxSend;
 	dmxSend.Print();

@@ -106,15 +106,12 @@ void main() {
 
 	node.SetUniverse(0, artnetParams.GetDirection(0), artnetParams.GetUniverse(0));
 
-	StoreDmxSend storeDmxSend;
-	DmxParams dmxparams(&storeDmxSend);
-
+	DmxParams dmxparams;
 	Dmx dmx;
 
-	if (dmxparams.Load()) {
-		dmxparams.Dump();
-		dmxparams.Set(&dmx);
-	}
+	dmxparams.Load();
+	dmxparams.Dump();
+	dmxparams.Set(&dmx);
 
 	const auto portDirection = (node.GetPortDirection(0) == lightset::PortDir::OUTPUT ? dmx::PortDirection::OUTP : dmx::PortDirection::INP);
 	dmx.SetPortDirection(0, portDirection , false);
