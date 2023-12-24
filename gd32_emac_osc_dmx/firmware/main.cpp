@@ -125,10 +125,9 @@ void main() {
 	StoreRemoteConfig storeRemoteConfig;
 	RemoteConfigParams remoteConfigParams(&storeRemoteConfig);
 
-	if(remoteConfigParams.Load()) {
-		remoteConfigParams.Dump();
-		remoteConfigParams.Set(&remoteConfig);
-	}
+	remoteConfigParams.Load();
+	remoteConfigParams.Dump();
+	remoteConfigParams.Set(&remoteConfig);
 
 	while (configStore.Flash())
 		;

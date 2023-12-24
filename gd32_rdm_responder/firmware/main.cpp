@@ -192,10 +192,9 @@ void main() {
 	RemoteConfig remoteConfig(remoteconfig::Node::RDMRESPONDER, remoteconfig::Output::PIXEL);
 	RemoteConfigParams remoteConfigParams(new StoreRemoteConfig);
 
-	if(remoteConfigParams.Load()) {
-		remoteConfigParams.Set(&remoteConfig);
-		remoteConfigParams.Dump();
-	}
+	remoteConfigParams.Load();
+	remoteConfigParams.Dump();
+	remoteConfigParams.Set(&remoteConfig);
 
 	while (configStore.Flash())
 		;
@@ -205,15 +204,14 @@ void main() {
 	display.Set(2, displayudf::Labels::VERSION);
 	display.Set(6, displayudf::Labels::DMX_START_ADDRESS);
 
-	StoreDisplayUdf storeDisplayUdf;
-	DisplayUdfParams displayUdfParams(&storeDisplayUdf);
+	DisplayUdfParams displayUdfParams;
 
-	if (displayUdfParams.Load()) {
-		displayUdfParams.Dump();
-		displayUdfParams.Set(&display);
-	}
+	displayUdfParams.Load();
+	displayUdfParams.Dump();
+	displayUdfParams.Set(&display);
 
 	display.Show();
+
 	display.Printf(7, "%s:%d G%d %s",
 			PixelType::GetType(pixelDmxConfiguration.GetType()),
 			pixelDmxConfiguration.GetCount(),
