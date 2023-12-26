@@ -66,6 +66,8 @@ uint32_t get_mode(const char *pMode) {
 }  // namespace pca9685dmxparams
 
 PCA9685DmxParams::PCA9685DmxParams() {
+	DEBUG_ENTRY
+
 	m_Params.nSetList = 0;
 	m_Params.nAddress = pca9685::I2C_ADDRESS_DEFAULT;
 	m_Params.nChannelCount = pca9685::PWM_CHANNELS;
@@ -73,9 +75,13 @@ PCA9685DmxParams::PCA9685DmxParams() {
 	m_Params.nLedPwmFrequency = pca9685::pwmled::DEFAULT_FREQUENCY;
 	m_Params.nServoLeftUs = pca9685::servo::LEFT_DEFAULT_US;
 	m_Params.nServoRightUs = pca9685::servo::RIGHT_DEFAULT_US;
+
+	DEBUG_EXIT
 }
 
 void PCA9685DmxParams::Load() {
+	DEBUG_ENTRY
+
 	m_Params.nSetList = 0;
 
 #if !defined(DISABLE_FS)
@@ -86,9 +92,16 @@ void PCA9685DmxParams::Load() {
 	} else
 #endif
 		StorePCA9685::Copy(&m_Params);
+
+#ifndef NDEBUG
+	Dump();
+#endif
+	DEBUG_EXIT
 }
 
 void PCA9685DmxParams::Load(const char *pBuffer, uint32_t nLength) {
+	DEBUG_ENTRY
+
 	assert(pBuffer != nullptr);
 	assert(nLength != 0);
 
@@ -99,6 +112,11 @@ void PCA9685DmxParams::Load(const char *pBuffer, uint32_t nLength) {
 	config.Read(pBuffer, nLength);
 
 	StorePCA9685::Update(&m_Params);
+
+#ifndef NDEBUG
+	Dump();
+#endif
+	DEBUG_EXIT
 }
 
 void PCA9685DmxParams::SetBool(const uint8_t nValue, const uint32_t nMask) {
@@ -270,7 +288,6 @@ void PCA9685DmxParams::Set(PCA9685Dmx *pPCA9685Dmx) {
 }
 
 void PCA9685DmxParams::Dump() {
-#ifndef NDEBUG
 	printf("%s::%s \'%s\':\n", __FILE__,__FUNCTION__, PCA9685DmxParamsConst::FILE_NAME);
 
 	printf(" %s=0x%.2x\n", PCA9685DmxParamsConst::I2C_ADDRESS, m_Params.nAddress);
@@ -302,5 +319,4 @@ void PCA9685DmxParams::Dump() {
 
 	printf(" %s=%d\n", PCA9685DmxParamsConst::SERVO_LEFT_US, m_Params.nServoLeftUs);
 	printf(" %s=%d\n", PCA9685DmxParamsConst::SERVO_RIGHT_US, m_Params.nServoRightUs);
-#endif
 }

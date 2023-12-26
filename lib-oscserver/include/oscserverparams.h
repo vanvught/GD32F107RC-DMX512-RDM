@@ -71,8 +71,6 @@ public:
 
 	void Set(OscServer *pOscServer);
 
-	void Dump();
-
 	uint16_t GetIncomingPort() const {
 		return m_Params.nIncomingPort;
 	}
@@ -94,6 +92,7 @@ public:
     static void staticCallbackFunction(void *p, const char *s);
 
 private:
+	void Dump();
     void callbackFunction(const char *s);
     bool isMaskSet(uint32_t nMask) const {
     	return (m_Params.nSetList & nMask) == nMask;

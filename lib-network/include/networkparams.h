@@ -97,8 +97,6 @@ public:
 		Builder(nullptr, pBuffer, nLength, nSize);
 	}
 
-	void Dump();
-
 	bool isDhcpUsed() const {
 		return m_Params.bIsDhcpUsed;
 	}
@@ -155,6 +153,7 @@ public:
     static void staticCallbackFunction(void *p, const char *s);
 
 private:
+	void Dump();
     void callbackFunction(const char *s);
     bool isMaskSet(uint32_t nMask) const {
     	return (m_Params.nSetList & nMask) == nMask;

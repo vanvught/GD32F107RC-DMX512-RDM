@@ -80,7 +80,6 @@ void main() {
 	OscServer server;
 
 	params.Load();
-	params.Dump();
 	params.Set(&server);
 
 	display.TextStatus(NetworkConst::MSG_MDNS_CONFIG, Display7SegmentMessage::INFO_MDNS_CONFIG, CONSOLE_YELLOW);
@@ -97,7 +96,6 @@ void main() {
 	Dmx dmx;
 
 	dmxparams.Load();
-	dmxparams.Dump();
 	dmxparams.Set(&dmx);
 
 	DmxSend dmxSend;
@@ -122,11 +120,8 @@ void main() {
 
 	RemoteConfig remoteConfig(remoteconfig::Node::OSC, remoteconfig::Output::DMX, 1);
 
-	StoreRemoteConfig storeRemoteConfig;
-	RemoteConfigParams remoteConfigParams(&storeRemoteConfig);
-
+	RemoteConfigParams remoteConfigParams;
 	remoteConfigParams.Load();
-	remoteConfigParams.Dump();
 	remoteConfigParams.Set(&remoteConfig);
 
 	while (configStore.Flash())

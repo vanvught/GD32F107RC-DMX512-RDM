@@ -96,7 +96,6 @@ void main() {
 	PCA9685Dmx pca9685Dmx;
 
 	pca9685DmxParams.Load();
-	pca9685DmxParams.Dump();
 	pca9685DmxParams.Set(&pca9685Dmx);
 
 	char aDescription[64];
@@ -113,7 +112,6 @@ void main() {
 	node.SetLongName(aDescription);
 
 	if (artnetParams.Load()) {
-		artnetParams.Dump();
 		artnetParams.Set(DMXPORT_OFFSET);
 	}
 
@@ -131,7 +129,6 @@ void main() {
 	RDMSensorsParams rdmSensorsParams;
 
 	rdmSensorsParams.Load();
-	rdmSensorsParams.Dump();
 	rdmSensorsParams.Set();
 
 	rdmResponder.Init();
@@ -139,7 +136,6 @@ void main() {
 	RDMDeviceParams rdmDeviceParams;
 
 	rdmDeviceParams.Load();
-	rdmDeviceParams.Dump();
 	rdmDeviceParams.Set(&rdmResponder);
 
 	rdmResponder.Print();
@@ -158,18 +154,14 @@ void main() {
 	DisplayUdfParams displayUdfParams;
 
 	displayUdfParams.Load();
-	displayUdfParams.Dump();
 	displayUdfParams.Set(&display);
 
 	display.Show(&node);
 
 	RemoteConfig remoteConfig(remoteconfig::Node::ARTNET, remoteconfig::Output::PWM, node.GetActiveOutputPorts());
 
-	StoreRemoteConfig storeRemoteConfig;
-	RemoteConfigParams remoteConfigParams(&storeRemoteConfig);
-
+	RemoteConfigParams remoteConfigParams;
 	remoteConfigParams.Load();
-	remoteConfigParams.Dump();
 	remoteConfigParams.Set(&remoteConfig);
 
 	while (configStore.Flash())

@@ -59,13 +59,12 @@ public:
 		Builder(nullptr, pBuffer, nLength, nSize);
 	}
 
-	void Dump();
-
 	void Set();
 
     static void staticCallbackFunction(void *p, const char *s);
 
 private:
+	void Dump();
     void callbackFunction(const char *pLine);
     bool Add(RDMSensor *pRDMSensor);
 

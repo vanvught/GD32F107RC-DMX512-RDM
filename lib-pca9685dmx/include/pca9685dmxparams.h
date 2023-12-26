@@ -70,11 +70,10 @@ public:
 
 	void Set(PCA9685Dmx *pPCA9685Dmx);
 
-	void Dump();
-
 	static void staticCallbackFunction(void *p, const char *s);
 
 private:
+	void Dump();
     void callbackFunction(const char *pLine);
     void SetBool(const uint8_t nValue, const uint32_t nMask);
     bool isMaskSet(uint32_t nMask) const {

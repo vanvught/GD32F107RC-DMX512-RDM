@@ -53,12 +53,18 @@
 using namespace osc::server;
 
 OSCServerParams::OSCServerParams() {
+	DEBUG_ENTRY
+
 	memset(&m_Params, 0, sizeof(struct Params));
 	m_Params.nIncomingPort = osc::port::DEFAULT_INCOMING;
 	m_Params.nOutgoingPort = osc::port::DEFAULT_OUTGOING;
+
+	DEBUG_EXIT
 }
 
 void OSCServerParams::Load() {
+	DEBUG_ENTRY
+
 	m_Params.nSetList = 0;
 
 #if !defined(DISABLE_FS)
@@ -69,9 +75,16 @@ void OSCServerParams::Load() {
 	} else
 #endif
 		StoreOscServer::Copy(&m_Params);
+
+#ifndef NDEBUG
+	Dump();
+#endif
+	DEBUG_EXIT
 }
 
 void OSCServerParams::Load(const char* pBuffer, uint32_t nLength) {
+	DEBUG_ENTRY
+
 	assert(pBuffer != nullptr);
 	assert(nLength != 0);
 
@@ -82,6 +95,11 @@ void OSCServerParams::Load(const char* pBuffer, uint32_t nLength) {
 	config.Read(pBuffer, nLength);
 
 	StoreOscServer::Update(&m_Params);
+
+#ifndef NDEBUG
+	Dump();
+#endif
+	DEBUG_EXIT
 }
 
 void OSCServerParams::callbackFunction(const char *pLine) {
@@ -215,31 +233,11 @@ void OSCServerParams::staticCallbackFunction(void *p, const char *s) {
 }
 
 void OSCServerParams::Dump() {
-#ifndef NDEBUG
 	printf("%s::%s \'%s\':\n", __FILE__, __FUNCTION__, OscServerParamsConst::FILE_NAME);
-
-	if (isMaskSet(ParamsMask::INCOMING_PORT)) {
-		printf(" %s=%d\n", OscParamsConst::INCOMING_PORT, m_Params.nIncomingPort);
-	}
-
-	if (isMaskSet(ParamsMask::OUTGOING_PORT)) {
-		printf(" %s=%d\n", OscParamsConst::OUTGOING_PORT, m_Params.nOutgoingPort);
-	}
-
-	if (isMaskSet(ParamsMask::PATH)) {
-		printf(" %s=%s\n", OscServerParamsConst::PATH, m_Params.aPath);
-	}
-
-	if (isMaskSet(ParamsMask::PATH_INFO)) {
-		printf(" %s=%s\n", OscServerParamsConst::PATH_INFO, m_Params.aPathInfo);
-	}
-
-	if (isMaskSet(ParamsMask::PATH_BLACKOUT)) {
-		printf(" %s=%s\n", OscServerParamsConst::PATH_BLACKOUT, m_Params.aPathBlackOut);
-	}
-
-	if (isMaskSet(ParamsMask::TRANSMISSION)) {
-		printf(" %s=%d\n", OscServerParamsConst::TRANSMISSION, m_Params.bPartialTransmission);
-	}
-#endif
+	printf(" %s=%d\n", OscParamsConst::INCOMING_PORT, m_Params.nIncomingPort);
+	printf(" %s=%d\n", OscParamsConst::OUTGOING_PORT, m_Params.nOutgoingPort);
+	printf(" %s=%s\n", OscServerParamsConst::PATH, m_Params.aPath);
+	printf(" %s=%s\n", OscServerParamsConst::PATH_INFO, m_Params.aPathInfo);
+	printf(" %s=%s\n", OscServerParamsConst::PATH_BLACKOUT, m_Params.aPathBlackOut);
+	printf(" %s=%d\n", OscServerParamsConst::TRANSMISSION, m_Params.bPartialTransmission);
 }

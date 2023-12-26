@@ -84,7 +84,6 @@ void main() {
 	OscServer server;
 
 	params.Load();
-	params.Dump();
 	params.Set(&server);
 
 	mDns.ServiceRecordAdd(nullptr, mdns::Services::OSC, "type=server", server.GetPortIncoming());
@@ -102,7 +101,6 @@ void main() {
 
 	if (pixelDmxParams.Load()) {
 		pixelDmxParams.Set(&pixelDmxConfiguration);
-		pixelDmxParams.Dump();
 	}
 
 	/*
@@ -157,11 +155,8 @@ void main() {
 
 	RemoteConfig remoteConfig(remoteconfig::Node::OSC,  remoteconfig::Output::PIXEL, 1);
 
-	StoreRemoteConfig storeRemoteConfig;
-	RemoteConfigParams remoteConfigParams(&storeRemoteConfig);
-
+	RemoteConfigParams remoteConfigParams;
 	remoteConfigParams.Load();
-	remoteConfigParams.Dump();
 	remoteConfigParams.Set(&remoteConfig);
 
 	while (configStore.Flash())

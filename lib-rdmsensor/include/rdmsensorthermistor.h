@@ -47,7 +47,7 @@ public:
 	m_nChannel(nChannel)
 	{
 		DEBUG_ENTRY
-		DEBUG_PRINTF("nSensor=%u, nAddress=0x%.2x, nChannel=%u, nCalibration=%d, pRDMSensorStore=%p", nSensor, nAddress, nChannel, nCalibration, reinterpret_cast<void *>(pRDMSensorStore));
+		DEBUG_PRINTF("nSensor=%u, nAddress=0x%.2x, nChannel=%u, nCalibration=%d", nSensor, nAddress, nChannel, nCalibration);
 
 		SetType(E120_SENS_TEMPERATURE);
 		SetUnit(E120_UNITS_CENTIGRADE);

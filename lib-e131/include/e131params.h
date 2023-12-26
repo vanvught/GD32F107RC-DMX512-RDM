@@ -132,8 +132,6 @@ public:
 
 	void Set(uint32_t nPortIndexOffset);
 
-	void Dump();
-
 	uint16_t GetUniverse(uint32_t nPortIndex, bool &IsSet) const {
 		if (nPortIndex < e131params::MAX_PORTS) {
 			IsSet = isMaskSet(e131params::Mask::UNIVERSE_A << nPortIndex);
@@ -171,6 +169,7 @@ public:
     static void staticCallbackFunction(void *p, const char *s);
 
 private:
+	void Dump();
     void callbackFunction(const char *s);
     bool isMaskSet(uint32_t nMask) const {
     	return (m_Params.nSetList & nMask) == nMask;

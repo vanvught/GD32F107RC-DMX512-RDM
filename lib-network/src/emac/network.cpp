@@ -76,10 +76,7 @@ Network::Network(NetworkParamsStore *pNetworkParamsStore) {
 	emac_start(m_aNetMacaddr, s_lastState);
 
 	NetworkParams params(pNetworkParamsStore);
-
-	if (params.Load()) {
-		params.Dump();
-	}
+	params.Load();
 
 	m_IpInfo.ip.addr = params.GetIpAddress();
 	m_IpInfo.netmask.addr = params.GetNetMask();

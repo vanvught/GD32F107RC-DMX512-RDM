@@ -101,7 +101,6 @@ void main() {
 	PixelDmxParams pixelDmxParams(&storePixelDmx);
 
 	if (pixelDmxParams.Load()) {
-		pixelDmxParams.Dump();
 		pixelDmxParams.Set(&pixelDmxConfiguration);
 	}
 
@@ -153,14 +152,12 @@ void main() {
 	RDMSensorsParams rdmSensorsParams;
 
 	rdmSensorsParams.Load();
-	rdmSensorsParams.Dump();
 	rdmSensorsParams.Set();
 
 #if defined (ENABLE_RDM_SUBDEVICES)
 	RDMSubDevicesParams rdmSubDevicesParams;
 
 	rdmSubDevicesParams.Load();
-	rdmSubDevicesParams.Dump();
 	rdmSubDevicesParams.Set();
 #endif
 
@@ -169,7 +166,6 @@ void main() {
 	RDMDeviceParams rdmDeviceParams;
 
 	rdmDeviceParams.Load();
-	rdmDeviceParams.Dump();
 	rdmDeviceParams.Set(&rdmResponder);
 
 	rdmResponder.Start();
@@ -190,10 +186,9 @@ void main() {
 
 #if !defined(NO_EMAC)
 	RemoteConfig remoteConfig(remoteconfig::Node::RDMRESPONDER, remoteconfig::Output::PIXEL);
-	RemoteConfigParams remoteConfigParams(new StoreRemoteConfig);
 
+	RemoteConfigParams remoteConfigParams;
 	remoteConfigParams.Load();
-	remoteConfigParams.Dump();
 	remoteConfigParams.Set(&remoteConfig);
 
 	while (configStore.Flash())
@@ -207,7 +202,6 @@ void main() {
 	DisplayUdfParams displayUdfParams;
 
 	displayUdfParams.Load();
-	displayUdfParams.Dump();
 	displayUdfParams.Set(&display);
 
 	display.Show();

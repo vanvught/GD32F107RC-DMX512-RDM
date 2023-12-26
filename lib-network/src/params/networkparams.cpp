@@ -63,18 +63,14 @@ bool NetworkParams::Load() {
 	ReadConfigFile configfile(NetworkParams::staticCallbackFunction, this);
 
 	if (configfile.Read(NetworkParamsConst::FILE_NAME)) {
-		if (m_pNetworkParamsStore != nullptr) {
-			m_pNetworkParamsStore->Update(&m_Params);
-		}
+		m_pNetworkParamsStore->Update(&m_Params);
 	} else
 #endif
-	if (m_pNetworkParamsStore != nullptr) {
 		m_pNetworkParamsStore->Copy(&m_Params);
-	} else {
-		DEBUG_EXIT
-		return false;
-	}
 
+#ifndef NDEBUG
+	Dump();
+#endif
 	DEBUG_EXIT
 	return true;
 }
@@ -94,6 +90,9 @@ void NetworkParams::Load(const char *pBuffer, uint32_t nLength) {
 	assert(m_pNetworkParamsStore != nullptr);
 	m_pNetworkParamsStore->Update(&m_Params);
 
+#ifndef NDEBUG
+	Dump();
+#endif
 	DEBUG_EXIT
 }
 
@@ -269,4 +268,23 @@ void NetworkParams::Builder(const struct networkparams::Params *ptNetworkParams,
 
 	DEBUG_PRINTF("nSize=%d", nSize);
 	DEBUG_EXIT
+}
+
+void NetworkParams::Dump() {
+	printf("%s::%s \'%s\':\n", __FILE__, __FUNCTION__, NetworkParamsConst::FILE_NAME);
+
+	debug_print_bits(m_Params.nSetList);
+
+	printf(" %s=%d [%s]\n", NetworkParamsConst::USE_DHCP, static_cast<int>(m_Params.bIsDhcpUsed), m_Params.bIsDhcpUsed != 0 ? "Yes" : "No");
+	printf(" %s=" IPSTR "\n", NetworkParamsConst::IP_ADDRESS, IP2STR(m_Params.nLocalIp));
+	printf(" %s=" IPSTR "\n", NetworkParamsConst::NET_MASK, IP2STR(m_Params.nNetmask));
+
+#if defined (ESP8266)
+	printf(" %s=" IPSTR "\n", NetworkParamsConst::DEFAULT_GATEWAY, IP2STR(m_Params.nGatewayIp));
+	printf(" %s=" IPSTR "\n",  NetworkParamsConst::NAME_SERVER, IP2STR(m_Params.nNameServerIp));
+#endif
+
+	printf(" %s=%s\n", NetworkParamsConst::HOSTNAME, m_Params.aHostName);
+	printf(" %s=" IPSTR "\n", NetworkParamsConst::NTP_SERVER, IP2STR(m_Params.nNtpServerIp));
+	printf(" %s=%1.1f\n", NetworkParamsConst::NTP_UTC_OFFSET, m_Params.fNtpUtcOffset);
 }

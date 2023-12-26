@@ -97,12 +97,10 @@ public:
 
 	void Set(PixelDmxConfiguration *pPixelDmxConfiguration);
 
-	void Dump();
-
 	uint16_t GetStartUniversePort(uint32_t nOutputPortIndex, bool& isSet) const {
 		if (nOutputPortIndex < pixeldmxparams::MAX_PORTS) {
 			isSet = isMaskSet(pixeldmxparams::Mask::START_UNI_PORT_1 << nOutputPortIndex);
-			return m_pixelDmxParams.nStartUniverse[nOutputPortIndex];
+			return m_Params.nStartUniverse[nOutputPortIndex];
 		}
 
 		isSet = false;
@@ -110,20 +108,21 @@ public:
 	}
 
 	uint8_t GetTestPattern() const {
-		return m_pixelDmxParams.nTestPattern;
+		return m_Params.nTestPattern;
 	}
 
 	static void staticCallbackFunction(void *p, const char *s);
 
 private:
+	void Dump();
     void callbackFunction(const char *pLine);
     bool isMaskSet(uint32_t nMask) const {
-    	return (m_pixelDmxParams.nSetList & nMask) == nMask;
+    	return (m_Params.nSetList & nMask) == nMask;
     }
 
 private:
     PixelDmxParamsStore *m_pPixelDmxParamsStore;
-    pixeldmxparams::Params m_pixelDmxParams;
+    pixeldmxparams::Params m_Params;
 };
 
 #endif /* PIXELDMXPARAMS_H_ */

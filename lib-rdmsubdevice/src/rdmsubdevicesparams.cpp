@@ -92,6 +92,9 @@ void RDMSubDevicesParams::Load() {
 		memset(&m_Params, 0, sizeof(struct rdm::subdevicesparams::Params));
 	}
 
+#ifndef NDEBUG
+	Dump();
+#endif
 	DEBUG_EXIT
 }
 
@@ -111,6 +114,9 @@ void RDMSubDevicesParams::Load(const char *pBuffer, uint32_t nLength) {
 
 	StoreRDMSubDevices::Update(&m_Params);
 
+#ifndef NDEBUG
+	Dump();
+#endif
 	DEBUG_EXIT
 }
 
@@ -261,11 +267,9 @@ void RDMSubDevicesParams::staticCallbackFunction(void *p, const char *s) {
 }
 
 void RDMSubDevicesParams::Dump() {
-#ifndef NDEBUG
 	printf("%s::%s \'%s\':\n", __FILE__, __FUNCTION__, RDMSubDevicesConst::PARAMS_FILE_NAME);
 
 	for (uint32_t i = 0; i < m_Params.nCount; i++) {
 		printf(" %s 0x%.2x\n", rdm::subdevices::get_type_string(static_cast<Types>(m_Params.Entry[i].nType)), m_Params.Entry[i].nAddress);
 	}
-#endif
 }
