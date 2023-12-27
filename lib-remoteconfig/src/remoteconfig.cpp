@@ -616,7 +616,7 @@ void RemoteConfig::HandleGetRconfigTxt(uint32_t& nSize) {
 void RemoteConfig::HandleGetNetworkTxt(uint32_t& nSize) {
 	DEBUG_ENTRY
 
-	NetworkParams networkParams(StoreNetwork::Get());
+	NetworkParams networkParams;
 	networkParams.Save(s_pUdpBuffer, remoteconfig::udp::BUFFER_SIZE, nSize);
 
 	DEBUG_EXIT
@@ -638,8 +638,7 @@ void RemoteConfig::HandleGetArtnetTxt(uint32_t& nSize) {
 void RemoteConfig::HandleGetE131Txt(uint32_t& nSize) {
 	DEBUG_ENTRY
 
-	assert(StoreE131::Get() != nullptr);
-	E131Params e131params(StoreE131::Get());
+	E131Params e131params;
 	e131params.Save(s_pUdpBuffer, remoteconfig::udp::BUFFER_SIZE, nSize);
 
 	DEBUG_EXIT
@@ -971,8 +970,7 @@ void RemoteConfig::HandleSetRconfig() {
 void RemoteConfig::HandleSetNetworkTxt() {
 	DEBUG_ENTRY
 
-	assert(StoreNetwork::Get() != nullptr);
-	NetworkParams params(StoreNetwork::Get());
+	NetworkParams params;
 	params.Load(s_pUdpBuffer, m_nBytesReceived);
 
 	DEBUG_EXIT
@@ -994,8 +992,7 @@ void RemoteConfig::HandleSetArtnetTxt() {
 void RemoteConfig::HandleSetE131Txt() {
 	DEBUG_ENTRY
 
-	assert(StoreE131::Get() != nullptr);
-	E131Params e131params(StoreE131::Get());
+	E131Params e131params;
 	e131params.Load(s_pUdpBuffer, m_nBytesReceived);
 
 	DEBUG_EXIT

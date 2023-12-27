@@ -37,6 +37,7 @@
 #include "e131params.h"
 #include "e131paramsconst.h"
 #include "e131.h"
+#include "storee131.h"
 
 #include "readconfigfile.h"
 #include "sscan.h"
@@ -62,7 +63,7 @@ static constexpr uint16_t portdir_clear(const uint32_t i) {
 
 using namespace e131params;
 
-E131Params::E131Params(E131ParamsStore *pE131ParamsStore):m_pE131ParamsStore(pE131ParamsStore) {
+E131Params::E131Params() {
 	DEBUG_ENTRY
 	DEBUG_PRINTF("sizeof(struct Params)=%d", static_cast<int>(sizeof(struct Params)));
 
@@ -92,10 +93,10 @@ bool E131Params::Load() {
 	ReadConfigFile configfile(E131Params::staticCallbackFunction, this);
 
 	if (configfile.Read(E131ParamsConst::FILE_NAME)) {
-		m_pE131ParamsStore->Update(&m_Params);
+		StoreE131::Update(&m_Params);
 	} else
 #endif
-		m_pE131ParamsStore->Copy(&m_Params);
+		StoreE131::Copy(&m_Params);
 
 #ifndef NDEBUG
 	Dump();
@@ -116,8 +117,7 @@ void E131Params::Load(const char* pBuffer, uint32_t nLength) {
 
 	config.Read(pBuffer, nLength);
 
-	assert(m_pE131ParamsStore != nullptr);
-	m_pE131ParamsStore->Update(&m_Params);
+	StoreE131::Update(&m_Params);
 
 #ifndef NDEBUG
 	Dump();
@@ -252,8 +252,7 @@ void E131Params::Builder(const struct Params *pParams, char *pBuffer, uint32_t n
 	if (pParams != nullptr) {
 		memcpy(&m_Params, pParams, sizeof(struct Params));
 	} else {
-		assert(m_pE131ParamsStore != nullptr);
-		m_pE131ParamsStore->Copy(&m_Params);
+		StoreE131::Copy(&m_Params);
 	}
 
 	PropertiesBuilder builder(E131ParamsConst::FILE_NAME, pBuffer, nLength);

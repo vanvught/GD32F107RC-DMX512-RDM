@@ -30,6 +30,7 @@
 
 #include "network.h"
 #include "networkparams.h"
+#include "storenetwork.h"
 
 #include "hardware.h"
 
@@ -58,7 +59,7 @@ static constexpr char TO_HEX(const char i) {
 
 Network *Network::s_pThis;
 
-Network::Network(NetworkParamsStore *pNetworkParamsStore) {
+Network::Network() {
 	DEBUG_ENTRY
 	assert(s_pThis == nullptr);
 	s_pThis = this;
@@ -75,7 +76,7 @@ Network::Network(NetworkParamsStore *pNetworkParamsStore) {
 
 	emac_start(m_aNetMacaddr, s_lastState);
 
-	NetworkParams params(pNetworkParamsStore);
+	NetworkParams params;
 	params.Load();
 
 	m_IpInfo.ip.addr = params.GetIpAddress();
@@ -211,11 +212,9 @@ void Network::SetIp(uint32_t nIp) {
 	net_set_ip(&m_IpInfo);
 	net_set_gw(&m_IpInfo);
 
-	if (m_pNetworkStore != nullptr) {
-		m_pNetworkStore->SaveIp(m_IpInfo.ip.addr);
-		m_pNetworkStore->SaveGatewayIp(m_IpInfo.gw.addr);
-		m_pNetworkStore->SaveDhcp(false);
-	}
+	StoreNetwork::SaveIp(m_IpInfo.ip.addr);
+	StoreNetwork::SaveGatewayIp(m_IpInfo.gw.addr);
+	StoreNetwork::SaveDhcp(false);
 
 	network::mdns_announcement();
 	network::display_ip();
@@ -235,9 +234,7 @@ void Network::SetNetmask(uint32_t nNetmask) {
 	m_IpInfo.netmask.addr = nNetmask;
 	net_set_netmask(&m_IpInfo);
 
-	if (m_pNetworkStore != nullptr) {
-		m_pNetworkStore->SaveNetMask(m_IpInfo.netmask.addr);
-	}
+	StoreNetwork::SaveNetMask(m_IpInfo.netmask.addr);
 
 	network::display_ip();
 	network::display_netmask();
@@ -256,9 +253,7 @@ void Network::SetGatewayIp(uint32_t nGatewayIp) {
 	m_IpInfo.gw.addr = nGatewayIp;
 	net_set_gw(&m_IpInfo);
 
-	if (m_pNetworkStore != nullptr) {
-		m_pNetworkStore->SaveGatewayIp(m_IpInfo.gw.addr);
-	}
+	StoreNetwork::SaveGatewayIp(m_IpInfo.gw.addr);
 
 	network::display_gateway();
 
@@ -271,9 +266,7 @@ void Network::SetHostName(const char *pHostName) {
 	strncpy(m_aHostName, pHostName, network::HOSTNAME_SIZE - 1);
 	m_aHostName[network::HOSTNAME_SIZE - 1] = '\0';
 
-	if (m_pNetworkStore != nullptr) {
-		m_pNetworkStore->SaveHostName(m_aHostName, static_cast<uint16_t>(strlen(m_aHostName)));
-	}
+	StoreNetwork::SaveHostName(m_aHostName, static_cast<uint16_t>(strlen(m_aHostName)));
 
 	network::mdns_announcement();
 	network::display_hostname();
@@ -295,9 +288,7 @@ bool Network::SetZeroconf() {
 	if (m_IsZeroconfUsed) {
 		m_IsDhcpUsed = false;
 
-		if (m_pNetworkStore != nullptr) {
-			m_pNetworkStore->SaveDhcp(true);// Zeroconf is enabled only when use_dhcp=1
-		}
+		StoreNetwork::SaveDhcp(true);// Zeroconf is enabled only when use_dhcp=1
 	}
 
 	network::mdns_announcement();
@@ -333,9 +324,7 @@ bool Network::EnableDhcp() {
 
 	DEBUG_PRINTF("m_IsDhcpUsed=%d, m_IsZeroconfUsed=%d", m_IsDhcpUsed, m_IsZeroconfUsed);
 
-	if (m_pNetworkStore != nullptr) {
-		m_pNetworkStore->SaveDhcp(m_IsDhcpUsed);
-	}
+	StoreNetwork::SaveDhcp(m_IsDhcpUsed);
 
 	network::mdns_announcement();
 	network::display_ip();

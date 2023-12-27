@@ -77,22 +77,14 @@ struct Mask {
 
 }  // namespace networkparams
 
-class NetworkParamsStore {
-public:
-	virtual ~NetworkParamsStore() = default;
-
-	virtual void Update(const networkparams::Params *pNetworkParams)=0;
-	virtual void Copy(networkparams::Params *pNetworkParams)=0;
-};
-
 class NetworkParams {
 public:
-	NetworkParams(NetworkParamsStore *pNetworkParamsStore);
+	NetworkParams();
 
-	bool Load();
+	void Load();
 	void Load(const char *pBuffer, uint32_t nLength);
 
-	void Builder(const networkparams::Params *ptNetworkParams, char *pBuffer, uint32_t nLength, uint32_t& nSize);
+	void Builder(const networkparams::Params *pParams, char *pBuffer, uint32_t nLength, uint32_t& nSize);
 	void Save(char *pBuffer, uint32_t nLength, uint32_t& nSize) {
 		Builder(nullptr, pBuffer, nLength, nSize);
 	}
@@ -160,7 +152,6 @@ private:
     }
 
 private:
-	NetworkParamsStore *m_pNetworkParamsStore;
 	networkparams::Params m_Params;
 };
 

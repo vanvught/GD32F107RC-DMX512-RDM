@@ -110,17 +110,9 @@ struct Mask {
 };
 }
 
-class E131ParamsStore {
-public:
-	virtual ~E131ParamsStore() = default;
-
-	virtual void Update(const e131params::Params *pParams)=0;
-	virtual void Copy(e131params::Params *pParams)=0;
-};
-
 class E131Params {
 public:
-	E131Params(E131ParamsStore *pE131ParamsStore);
+	E131Params();
 
 	bool Load();
 	void Load(const char *pBuffer, uint32_t nLength);
@@ -183,7 +175,6 @@ private:
 	}
 
 private:
-    E131ParamsStore *m_pE131ParamsStore;
     e131params::Params m_Params;
 };
 

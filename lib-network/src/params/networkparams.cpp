@@ -35,6 +35,7 @@
 #include "network.h"
 #include "networkparams.h"
 #include "networkparamsconst.h"
+#include "storenetwork.h"
 
 #include "readconfigfile.h"
 #include "sscan.h"
@@ -45,7 +46,7 @@
 
 using namespace networkparams;
 
-NetworkParams::NetworkParams(NetworkParamsStore *pNetworkParamsStore): m_pNetworkParamsStore(pNetworkParamsStore) {
+NetworkParams::NetworkParams() {
 	DEBUG_ENTRY
 
 	memset(&m_Params, 0, sizeof(struct networkparams::Params));
@@ -55,7 +56,7 @@ NetworkParams::NetworkParams(NetworkParamsStore *pNetworkParamsStore): m_pNetwor
 	DEBUG_EXIT
 }
 
-bool NetworkParams::Load() {
+void NetworkParams::Load() {
 	DEBUG_ENTRY
 	m_Params.nSetList = 0;
 
@@ -63,16 +64,15 @@ bool NetworkParams::Load() {
 	ReadConfigFile configfile(NetworkParams::staticCallbackFunction, this);
 
 	if (configfile.Read(NetworkParamsConst::FILE_NAME)) {
-		m_pNetworkParamsStore->Update(&m_Params);
+		StoreNetwork::Update(&m_Params);
 	} else
 #endif
-		m_pNetworkParamsStore->Copy(&m_Params);
+		StoreNetwork::Copy(&m_Params);
 
 #ifndef NDEBUG
 	Dump();
 #endif
 	DEBUG_EXIT
-	return true;
 }
 
 void NetworkParams::Load(const char *pBuffer, uint32_t nLength) {
@@ -87,8 +87,7 @@ void NetworkParams::Load(const char *pBuffer, uint32_t nLength) {
 
 	config.Read(pBuffer, nLength);
 
-	assert(m_pNetworkParamsStore != nullptr);
-	m_pNetworkParamsStore->Update(&m_Params);
+	StoreNetwork::Update(&m_Params);
 
 #ifndef NDEBUG
 	Dump();
@@ -222,8 +221,7 @@ void NetworkParams::Builder(const struct networkparams::Params *ptNetworkParams,
 	if (ptNetworkParams != nullptr) {
 		memcpy(&m_Params, ptNetworkParams, sizeof(struct networkparams::Params));
 	} else {
-		assert(m_pNetworkParamsStore != nullptr);
-		m_pNetworkParamsStore->Copy(&m_Params);
+		StoreNetwork::Copy(&m_Params);
 	}
 
 	PropertiesBuilder builder(NetworkParamsConst::FILE_NAME, pBuffer, nLength);
