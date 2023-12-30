@@ -55,9 +55,7 @@
 
 #include "configstore.h"
 #include "storenetwork.h"
-#include "storeoscserver.h"
 #include "storeremoteconfig.h"
-#include "storepixeldmx.h"
 
 #include "firmwareversion.h"
 #include "software_version.h"
@@ -95,12 +93,9 @@ void main() {
 
 	PixelDmxConfiguration pixelDmxConfiguration;
 
-	StorePixelDmx storePixelDmx;
-	PixelDmxParams pixelDmxParams(&storePixelDmx);
-
-	if (pixelDmxParams.Load()) {
-		pixelDmxParams.Set(&pixelDmxConfiguration);
-	}
+	PixelDmxParams pixelDmxParams;
+	pixelDmxParams.Load();
+	pixelDmxParams.Set(&pixelDmxConfiguration);
 
 	/*
 	 * DMX Footprint = (Channels per Pixel * Groups) <= 512 (1 Universe)
@@ -124,7 +119,6 @@ void main() {
 	}
 
 	WS28xxDmx pixelDmx(pixelDmxConfiguration);
-	pixelDmx.SetWS28xxDmxStore(&storePixelDmx);
 
 	const auto nTestPattern = static_cast<pixelpatterns::Pattern>(pixelDmxParams.GetTestPattern());
 	PixelTestPattern pixelTestPattern(nTestPattern, 1);

@@ -38,8 +38,6 @@
 #include "rdmsubdevicesconst.h"
 #include "rdm _subdevices.h"
 
-#include "storerdmsubdevices.h"
-
 #include "readconfigfile.h"
 #include "sscan.h"
 #include "propertiesbuilder.h"
@@ -81,11 +79,11 @@ void RDMSubDevicesParams::Load() {
 	ReadConfigFile configfile(RDMSubDevicesParams::staticCallbackFunction, this);
 
 	if (configfile.Read(RDMSubDevicesConst::PARAMS_FILE_NAME)) {
-		StoreRDMSubDevices::Update(&m_Params);
+		RDMSubDevicesParamsStore::Update(&m_Params);
 
 	} else
 #endif
-		StoreRDMSubDevices::Copy(&m_Params);
+		RDMSubDevicesParamsStore::Copy(&m_Params);
 
 	// Sanity check
 	if (m_Params.nCount >= rdm::subdevices::MAX) {
@@ -112,7 +110,7 @@ void RDMSubDevicesParams::Load(const char *pBuffer, uint32_t nLength) {
 
 	config.Read(pBuffer, nLength);
 
-	StoreRDMSubDevices::Update(&m_Params);
+	RDMSubDevicesParamsStore::Update(&m_Params);
 
 #ifndef NDEBUG
 	Dump();
@@ -128,7 +126,7 @@ void RDMSubDevicesParams::Builder(const rdm::subdevicesparams::Params *pParams, 
 	if (pParams != nullptr) {
 		memcpy(&m_Params, pParams, sizeof(struct rdm::subdevicesparams::Params));
 	} else {
-		StoreRDMSubDevices::Copy(&m_Params);
+		RDMSubDevicesParamsStore::Copy(&m_Params);
 	}
 
 	PropertiesBuilder builder(RDMSubDevicesConst::PARAMS_FILE_NAME, pBuffer, nLength);

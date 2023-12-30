@@ -60,10 +60,7 @@
 #include "configstore.h"
 #include "storeremoteconfig.h"
 #include "storeartnet.h"
-#include "storedisplayudf.h"
-#include "storerdmdevice.h"
 #include "storerdmsensors.h"
-#include "storepca9685.h"
 
 #include "firmwareversion.h"
 #include "software_version.h"
@@ -105,7 +102,7 @@ void main() {
 	ArtNetNode node;
 	StoreArtNet storeArtNet(DMXPORT_OFFSET);
 
-	ArtNetParams artnetParams(&storeArtNet);
+	ArtNetParams artnetParams;
 	node.SetArtNetStore(&storeArtNet);
 
 	node.SetLongName(aDescription);

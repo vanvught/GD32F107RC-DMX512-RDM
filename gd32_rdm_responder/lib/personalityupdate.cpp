@@ -28,10 +28,10 @@
 
 #include "displayudf.h"
 #include "personalities.h"
+#include "pixeldmxstore.h"
 #include "pixelpatterns.h"
 #include "pixeltestpattern.h"
 #include "rdmresponder.h"
-#include "storepixeldmx.h"
 #include "ws28xxdmx.h"
 
 #include "debug.h"
@@ -41,7 +41,7 @@ void RDMResponder::PersonalityUpdate(uint32_t nPersonality) {
 
 #if defined(ENABLE_CONFIG_PIDS)
 	const auto type = Personalities::toPixelType(Personalities::fromPersonalityIdx(nPersonality));
-	StorePixelDmx::Get()->SaveType(static_cast<uint8_t>(type));
+	PixelDmxStore::SaveType(static_cast<uint8_t>(type));
 #endif
 
 	DisplayUdf::Get()->ClearLine(7);

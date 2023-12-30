@@ -27,12 +27,17 @@
 #define RDMDEVICESTORE_H_
 
 #include <cstdint>
+#include <cstddef>
+
+#include "rdmdeviceparams.h"
+#include "configstore.h"
 
 class RDMDeviceStore {
 public:
-	virtual ~RDMDeviceStore() = default;
-
-	virtual void SaveLabel(const char *pLabel, uint8_t nLength)=0;
+	static void SaveLabel(const char *pLabel, uint8_t nLength) {
+		ConfigStore::Get()->Update(configstore::Store::RDMDEVICE, offsetof(struct rdm::deviceparams::Params, aDeviceRootLabel), pLabel, nLength, rdm::deviceparams::Mask::LABEL);
+		ConfigStore::Get()->Update(configstore::Store::RDMDEVICE, offsetof(struct rdm::deviceparams::Params, nDeviceRootLabelLength), &nLength, sizeof(uint8_t), rdm::deviceparams::Mask::LABEL);
+	}
 };
 
 #endif /* RDMDEVICESTORE_H_ */

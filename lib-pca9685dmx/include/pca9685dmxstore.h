@@ -1,8 +1,8 @@
 /**
- * @file storee131.h
+ * @file pca9685dmxstore.h
  *
  */
-/* Copyright (C) 2018-2023 by Arjan van Vught mailto:info@orangepi-dmx.nl
+/* Copyright (C) 2023 by Arjan van Vught mailto:info@orangepi-dmx.nl
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,35 +23,20 @@
  * THE SOFTWARE.
  */
 
-#ifndef STOREE131_H_
-#define STOREE131_H_
+#ifndef PCA9685DMXSTORE_H_
+#define PCA9685DMXSTORE_H_
 
-#include "e131params.h"
+#include <cstdint>
+#include <cstddef>
+
+#include "pca9685dmxparams.h"
 #include "configstore.h"
 
-class StoreE131 {
+class PCA9685DmxStore {
 public:
-	static StoreE131& Get() {
-		static StoreE131 instance;
-		return instance;
-	}
-
-	static void Update(const struct e131params::Params *pParams) {
-		Get().IUpdate(pParams);
-	}
-
-	static void Copy(struct e131params::Params *pParams) {
-		Get().ICopy(pParams);
-	}
-
-private:
-	void IUpdate(const struct e131params::Params *pParams) {
-		ConfigStore::Get()->Update(configstore::Store::NODE, pParams, sizeof(struct e131params::Params));
-	}
-
-	void ICopy(struct e131params::Params *pParams) {
-		ConfigStore::Get()->Copy(configstore::Store::NODE, pParams, sizeof(struct e131params::Params));
+	static void SaveDmxStartAddress(uint16_t nDmxStartAddress) {
+		ConfigStore::Get()->Update(configstore::Store::PCA9685, offsetof(struct pca9685dmxparams::Params, nDmxStartAddress), &nDmxStartAddress, sizeof(uint32_t), pca9685dmxparams::Mask::DMX_START_ADDRESS);
 	}
 };
 
-#endif /* STOREE131_H_ */
+#endif /* PCA9685DMXSTORE_H_ */

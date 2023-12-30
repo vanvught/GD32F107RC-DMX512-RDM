@@ -29,6 +29,7 @@
 #include <cstdint>
 
 #include "rdmsubdevices.h"
+#include "configstore.h"
 
 namespace rdm {
 namespace subdevicesparams {
@@ -47,6 +48,17 @@ static_assert(sizeof(struct Params) <= rdm::subdevices::STORE, "struct Params is
 
 }  // namespace subdevicesparams
 }  // namespace rdm
+
+class RDMSubDevicesParamsStore {
+public:
+	static void Update(const rdm::subdevicesparams::Params *pParams)  {
+		ConfigStore::Get()->Update(configstore::Store::RDMSUBDEVICES, pParams, sizeof(struct rdm::subdevicesparams::Params));
+	}
+
+	static void Copy(rdm::subdevicesparams::Params *pParams) {
+		ConfigStore::Get()->Copy(configstore::Store::RDMSUBDEVICES, pParams, sizeof(struct rdm::subdevicesparams::Params));
+	}
+};
 
 class RDMSubDevicesParams {
 public:

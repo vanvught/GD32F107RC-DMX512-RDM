@@ -29,7 +29,7 @@
 #include <cstdint>
 
 #include "oscserver.h"
-
+#include "configstore.h"
 #include "lightset.h"
 
 namespace osc {
@@ -46,16 +46,27 @@ struct Params {
 } __attribute__((packed));
 
 struct ParamsMask {
-	static constexpr auto INCOMING_PORT = (1U << 0);
-	static constexpr auto OUTGOING_PORT = (1U << 1);
-	static constexpr auto PATH = (1U << 2);
-	static constexpr auto TRANSMISSION = (1U << 3);
-	static constexpr auto OUTPUT = (1U << 4);
-	static constexpr auto PATH_INFO = (1U << 5);
-	static constexpr auto PATH_BLACKOUT = (1U << 6);
+	static constexpr uint32_t INCOMING_PORT = (1U << 0);
+	static constexpr uint32_t OUTGOING_PORT = (1U << 1);
+	static constexpr uint32_t PATH = (1U << 2);
+	static constexpr uint32_t TRANSMISSION = (1U << 3);
+	static constexpr uint32_t OUTPUT = (1U << 4);
+	static constexpr uint32_t PATH_INFO = (1U << 5);
+	static constexpr uint32_t PATH_BLACKOUT = (1U << 6);
 };
 }  // namespace server
 }  // namespace osc
+
+class StoreOscServer {
+public:
+	static void Update(const struct osc::server::Params *pParams) {
+		ConfigStore::Get()->Update(configstore::Store::OSC, pParams, sizeof(struct osc::server::Params));
+	}
+
+	static void Copy(struct osc::server::Params *pParams) {
+		ConfigStore::Get()->Copy(configstore::Store::OSC, pParams, sizeof(struct osc::server::Params));
+	}
+};
 
 class OSCServerParams {
 public:
@@ -64,7 +75,7 @@ public:
 	void Load();
 	void Load(const char *pBuffer, uint32_t nLength);
 
-	void Builder(const osc::server::Params *ptOSCServerParams, char *pBuffer, uint32_t nLength, uint32_t& nSize);
+	void Builder(const osc::server::Params *pParams, char *pBuffer, uint32_t nLength, uint32_t& nSize);
 	void Save(char *pBuffer, uint32_t nLength, uint32_t& nSize) {
 		Builder(nullptr, pBuffer, nLength, nSize);
 	}

@@ -65,12 +65,7 @@
 
 #include "configstore.h"
 #include "storeartnet.h"
-#include "storedisplayudf.h"
 #include "storenetwork.h"
-#include "storepixeldmx.h"
-#if defined (NODE_RDMNET_LLRP_ONLY)
-# include "storerdmdevice.h"
-#endif
 #include "storeremoteconfig.h"
 
 #include "firmwareversion.h"
@@ -107,14 +102,13 @@ void main() {
 	StoreArtNet storeArtNet(DMXPORT_OFFSET);
 	node.SetArtNetStore(&storeArtNet);
 
-	ArtNetParams artnetParams(&storeArtNet);
+	ArtNetParams artnetParams;
 	artnetParams.Load();
 	artnetParams.Set(DMXPORT_OFFSET);
 
 	PixelDmxConfiguration pixelDmxConfiguration;
 
-	StorePixelDmx storePixelDmx;
-	PixelDmxParams pixelDmxParams(&storePixelDmx);
+	PixelDmxParams pixelDmxParams;
 	pixelDmxParams.Load();
 	pixelDmxParams.Set(&pixelDmxConfiguration);
 

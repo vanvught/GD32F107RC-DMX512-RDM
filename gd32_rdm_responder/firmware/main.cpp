@@ -33,6 +33,7 @@
 #endif
 
 #include "displayudf.h"
+#include "displayudfparams.h"
 #include "display_timeout.h"
 
 #include "rdmresponder.h"
@@ -57,13 +58,7 @@
 #endif
 
 #include "configstore.h"
-#include "storepixeldmx.h"
-#include "storerdmdevice.h"
 #include "storerdmsensors.h"
-#if defined (ENABLE_RDM_SUBDEVICES)
-# include "storerdmsubdevices.h"
-#endif
-#include "storedisplayudf.h"
 
 #include "firmwareversion.h"
 #include "software_version.h"
@@ -96,12 +91,9 @@ void main() {
 
 	PixelDmxConfiguration pixelDmxConfiguration;
 
-	StorePixelDmx storePixelDmx;
-	PixelDmxParams pixelDmxParams(&storePixelDmx);
-
-	if (pixelDmxParams.Load()) {
-		pixelDmxParams.Set(&pixelDmxConfiguration);
-	}
+	PixelDmxParams pixelDmxParams;
+	pixelDmxParams.Load();
+	pixelDmxParams.Set(&pixelDmxConfiguration);
 
 	/*
 	 * DMX Footprint = (Channels per Pixel * Groups) <= 512 (1 Universe)
@@ -124,7 +116,6 @@ void main() {
 	}
 
 	WS28xxDmx pixelDmx(pixelDmxConfiguration);
-	pixelDmx.SetWS28xxDmxStore(&storePixelDmx);
 
 	PixelDmxStartStop pixelDmxStartStop;
 	pixelDmx.SetPixelDmxHandler(&pixelDmxStartStop);
@@ -132,7 +123,7 @@ void main() {
 	const auto nTestPattern = static_cast<pixelpatterns::Pattern>(pixelDmxParams.GetTestPattern());
 	PixelTestPattern pixelTestPattern(nTestPattern, 1);
 
-	PixelDmxParamsRdm pixelDmxParamsRdm(&storePixelDmx);
+	PixelDmxParamsRdm pixelDmxParamsRdm;
 
 	char aDescription[rdm::personality::DESCRIPTION_MAX_LENGTH];
 	snprintf(aDescription, sizeof(aDescription) - 1U, "%s:%u G%u [%s]",
@@ -141,7 +132,10 @@ void main() {
 			pixelDmxConfiguration.GetGroupingCount(),
 			PixelType::GetMap(pixelDmxConfiguration.GetMap()));
 
-	RDMPersonality *personalities[2] = { new RDMPersonality(aDescription, &pixelDmx), new RDMPersonality("Config mode", &pixelDmxParamsRdm) };
+	RDMPersonality *personalities[2] = {
+			new RDMPersonality(aDescription, &pixelDmx),
+			new RDMPersonality("Config mode", &pixelDmxParamsRdm)
+	};
 
 	RDMResponder rdmResponder(personalities, 2);
 

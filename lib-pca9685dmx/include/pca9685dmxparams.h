@@ -28,6 +28,7 @@
 
 #include "pca9685.h"
 #include "pca9685dmx.h"
+#include "configstore.h"
 
 namespace pca9685dmxparams {
 struct Params {
@@ -55,6 +56,17 @@ struct Mask {
 	static constexpr uint32_t SERVO_RIGHT_US 	   = (1U << 9);
 };
 }  // namespace pca9685dmxparams
+
+class PCA9685DmxParamsStore {
+public:
+	static void Update(const struct pca9685dmxparams::Params *pParams) {
+		ConfigStore::Get()->Update(configstore::Store::PCA9685, pParams, sizeof(struct pca9685dmxparams::Params));
+	}
+
+	static void Copy(struct pca9685dmxparams::Params *pParams) {
+		ConfigStore::Get()->Copy(configstore::Store::PCA9685, pParams, sizeof(struct pca9685dmxparams::Params));
+	}
+};
 
 class PCA9685DmxParams {
 public:

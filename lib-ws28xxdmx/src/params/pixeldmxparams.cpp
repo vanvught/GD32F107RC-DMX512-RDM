@@ -37,6 +37,7 @@
 #include "pixeltype.h"
 #include "pixelpatterns.h"
 #include "pixelconfiguration.h"
+
 #include "gamma/gamma_tables.h"
 
 #include "lightset.h"
@@ -53,7 +54,7 @@
 using namespace pixel;
 using namespace lightset;
 
-PixelDmxParams::PixelDmxParams(PixelDmxParamsStore *pPixelDmxParamsStore): m_pPixelDmxParamsStore(pPixelDmxParamsStore) {
+PixelDmxParams::PixelDmxParams() {
 	m_Params.nSetList = 0;
 	m_Params.nType = static_cast<uint8_t>(pixel::defaults::TYPE);
 	m_Params.nCount = defaults::COUNT;
@@ -73,7 +74,7 @@ PixelDmxParams::PixelDmxParams(PixelDmxParamsStore *pPixelDmxParamsStore): m_pPi
 	}
 }
 
-bool PixelDmxParams::Load() {
+void PixelDmxParams::Load() {
 	DEBUG_ENTRY
 
 	m_Params.nSetList = 0;
@@ -82,17 +83,15 @@ bool PixelDmxParams::Load() {
 	ReadConfigFile configfile(PixelDmxParams::staticCallbackFunction, this);
 
 	if (configfile.Read(DevicesParamsConst::FILE_NAME)) {
-		m_pPixelDmxParamsStore->Update(&m_Params);
+		PixelDmxParamsStore::Update(&m_Params);
 	} else
 #endif
-		m_pPixelDmxParamsStore->Copy(&m_Params);
-
+		PixelDmxParamsStore::Copy(&m_Params);
 
 #ifndef NDEBUG
 	Dump();
 #endif
 	DEBUG_EXIT
-	return true;
 }
 
 void PixelDmxParams::Load(const char *pBuffer, uint32_t nLength) {
@@ -107,7 +106,7 @@ void PixelDmxParams::Load(const char *pBuffer, uint32_t nLength) {
 
 	config.Read(pBuffer, nLength);
 
-	m_pPixelDmxParamsStore->Update(&m_Params);
+	PixelDmxParamsStore::Update(&m_Params);
 
 #ifndef NDEBUG
 	Dump();
@@ -296,7 +295,7 @@ void PixelDmxParams::Builder(const struct pixeldmxparams::Params *ptWS28xxParams
 	if (ptWS28xxParams != nullptr) {
 		memcpy(&m_Params, ptWS28xxParams, sizeof(struct pixeldmxparams::Params));
 	} else {
-		m_pPixelDmxParamsStore->Copy(&m_Params);
+		PixelDmxParamsStore::Copy(&m_Params);
 	}
 
 	PropertiesBuilder builder(DevicesParamsConst::FILE_NAME, pBuffer, nLength);

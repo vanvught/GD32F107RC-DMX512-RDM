@@ -50,9 +50,7 @@
 #include "remoteconfigparams.h"
 
 #include "configstore.h"
-#include "storedmxsend.h"
 #include "storenetwork.h"
-#include "storeoscserver.h"
 #include "storeremoteconfig.h"
 
 #include "firmwareversion.h"

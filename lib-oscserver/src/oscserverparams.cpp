@@ -42,8 +42,6 @@
 
 #include "lightsetparamsconst.h"
 
-#include "storeoscserver.h"
-
 #include "readconfigfile.h"
 #include "sscan.h"
 #include "propertiesbuilder.h"

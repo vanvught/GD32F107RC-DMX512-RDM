@@ -41,8 +41,6 @@
 #include "lightset.h"
 #include "lightsetparamsconst.h"
 
-#include "storepca9685.h"
-
 #include "readconfigfile.h"
 #include "sscan.h"
 #include "propertiesbuilder.h"
@@ -88,10 +86,10 @@ void PCA9685DmxParams::Load() {
 	ReadConfigFile configfile(PCA9685DmxParams::staticCallbackFunction, this);
 
 	if (configfile.Read(PCA9685DmxParamsConst::FILE_NAME)) {
-		StorePCA9685::Update(&m_Params);
+		PCA9685DmxParamsStore::Update(&m_Params);
 	} else
 #endif
-		StorePCA9685::Copy(&m_Params);
+		PCA9685DmxParamsStore::Copy(&m_Params);
 
 #ifndef NDEBUG
 	Dump();
@@ -111,7 +109,7 @@ void PCA9685DmxParams::Load(const char *pBuffer, uint32_t nLength) {
 
 	config.Read(pBuffer, nLength);
 
-	StorePCA9685::Update(&m_Params);
+	PCA9685DmxParamsStore::Update(&m_Params);
 
 #ifndef NDEBUG
 	Dump();
@@ -237,7 +235,7 @@ void PCA9685DmxParams::Builder(const struct pca9685dmxparams::Params *pParams, c
 	if (pParams != nullptr) {
 		memcpy(&m_Params, pParams, sizeof(struct pca9685dmxparams::Params));
 	} else {
-		StorePCA9685::Copy(&m_Params);
+		PCA9685DmxParamsStore::Copy(&m_Params);
 	}
 
 	PropertiesBuilder builder(PCA9685DmxParamsConst::FILE_NAME, pBuffer, nLength);

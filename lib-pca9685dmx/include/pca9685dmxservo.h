@@ -31,8 +31,8 @@
 #include "lightset.h"
 
 #include "pca9685dmx.h"
+#include "pca9685dmxstore.h"
 #include "pca9685servo.h"
-#include "storepca9685.h"
 
 class PCA9685DmxServo final: public LightSet {
 public:
@@ -51,9 +51,7 @@ public:
 
 		if ((nDmxStartAddress != 0) && (nDmxStartAddress <= lightset::dmx::UNIVERSE_SIZE)) {
 			m_nDmxStartAddress = nDmxStartAddress;
-
-			StorePCA9685::SaveDmxStartAddress(m_nDmxStartAddress);
-
+			PCA9685DmxStore::SaveDmxStartAddress(m_nDmxStartAddress);
 			return true;
 		}
 
