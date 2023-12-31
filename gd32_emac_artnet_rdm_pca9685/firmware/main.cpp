@@ -58,9 +58,7 @@
 #include "remoteconfigparams.h"
 
 #include "configstore.h"
-#include "storeremoteconfig.h"
 #include "storeartnet.h"
-#include "storerdmsensors.h"
 
 #include "firmwareversion.h"
 #include "software_version.h"

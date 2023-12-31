@@ -53,12 +53,9 @@
 #if !defined(NO_EMAC)
 # include "remoteconfig.h"
 # include "remoteconfigparams.h"
-# include "storeremoteconfig.h"
-# include "storenetwork.h"
 #endif
 
 #include "configstore.h"
-#include "storerdmsensors.h"
 
 #include "firmwareversion.h"
 #include "software_version.h"

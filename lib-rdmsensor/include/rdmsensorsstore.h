@@ -1,8 +1,8 @@
 /**
- * @file storeremoteconfig.h
+ * @file rdmsensorsstore.h
  *
  */
-/* Copyright (C) 2019-2023 by Arjan van Vught mailto:info@orangepi-dmx.nl
+/* Copyright (C) 2023 by Arjan van Vught mailto:info@orangepi-dmx.nl
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,35 +23,24 @@
  * THE SOFTWARE.
  */
 
-#ifndef STOREREMOTECONFIG_H_
-#define STOREREMOTECONFIG_H_
+#ifndef RDMSENSORSSTORE_H_
+#define RDMSENSORSSTORE_H_
 
-#include "remoteconfigparams.h"
+#include <cstdint>
+#include <cstddef>
+#include <cassert>
+
+#include "rdmsensorsparams.h"
+#include "rdmsensors.h"
 #include "configstore.h"
 
-class StoreRemoteConfig {
+class RDMSensorsStore {
 public:
-	static StoreRemoteConfig& Get() {
-		static StoreRemoteConfig instance;
-		return instance;
-	}
-
-	static void Update(const struct remoteconfigparams::Params *pParams) {
-		Get().IUpdate(pParams);
-	}
-
-	static void Copy(struct remoteconfigparams::Params *pParams) {
-		Get().ICopy(pParams);
-	}
-
-private:
-	void IUpdate(const struct remoteconfigparams::Params *pParams) {
-		ConfigStore::Get()->Update(configstore::Store::RCONFIG, pParams, sizeof(struct remoteconfigparams::Params));
-	}
-
-	void ICopy(struct remoteconfigparams::Params *pParams) {
-		ConfigStore::Get()->Copy(configstore::Store::RCONFIG, pParams, sizeof(struct remoteconfigparams::Params));
+	static void SaveCalibration(const uint32_t nSensor, const int32_t nCalibration) {
+		assert(nSensor < rdm::sensors::MAX);
+		auto c = static_cast<int16_t>(nCalibration);
+		ConfigStore::Get()->Update(configstore::Store::RDMSENSORS, (nSensor * sizeof(int16_t)) + offsetof(struct rdm::sensorsparams::Params, nCalibrate), &c, sizeof(int16_t));
 	}
 };
 
-#endif /* STOREREMOTECONFIG_H_ */
+#endif /* RDMSENSORSSTORE_H_ */

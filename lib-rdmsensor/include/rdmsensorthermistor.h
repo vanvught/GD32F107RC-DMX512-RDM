@@ -29,12 +29,11 @@
 #include <cstdint>
 
 #include "rdmsensor.h"
-#include "mcp3424.h"
-#include "thermistor.h"
-
+#include "rdmsensorsstore.h"
 #include "rdm_e120.h"
 
-#include "storerdmsensors.h"
+#include "mcp3424.h"
+#include "thermistor.h"
 
 #include "debug.h"
 
@@ -87,7 +86,7 @@ public:
 			const auto iMeasure = static_cast<int32_t>(GetValue(nResistor) * 10);
 			DEBUG_PRINTF("iCalibrate=%d, iMeasure=%d, m_nOffset=%d, nResistor=%u", iCalibrate, iMeasure, m_nCalibration, nResistor);
 			if (iCalibrate == iMeasure) {
-				StoreRDMSensors::SaveCalibration(RDMSensor::GetSensor(), m_nCalibration);
+				RDMSensorsStore::SaveCalibration(RDMSensor::GetSensor(), m_nCalibration);
 				return true;
 			}
 		}
@@ -97,7 +96,7 @@ public:
 
 	void ResetCalibration() {
 		m_nCalibration = 0;
-		StoreRDMSensors::SaveCalibration(RDMSensor::GetSensor(), m_nCalibration);
+		RDMSensorsStore::SaveCalibration(RDMSensor::GetSensor(), m_nCalibration);
 	}
 
 	int32_t GetCalibration() const {
