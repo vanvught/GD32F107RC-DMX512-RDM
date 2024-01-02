@@ -64,13 +64,15 @@
 #include "remoteconfigparams.h"
 
 #include "configstore.h"
-#include "storeartnet.h"
-
 
 #include "firmwareversion.h"
 #include "software_version.h"
 
-static constexpr uint32_t DMXPORT_OFFSET = 4U;
+namespace artnetnode {
+namespace configstore {
+uint32_t DMXPORT_OFFSET = 4;
+}  // namespace configstore
+}  // namespace artnetnode
 
 void Hardware::RebootHandler() {
 	WS28xx::Get()->Blackout();
@@ -98,12 +100,9 @@ void main() {
 
 	ArtNetNode node;
 
-	StoreArtNet storeArtNet(DMXPORT_OFFSET);
-	node.SetArtNetStore(&storeArtNet);
-
 	ArtNetParams artnetParams;
 	artnetParams.Load();
-	artnetParams.Set(DMXPORT_OFFSET);
+	artnetParams.Set();
 
 	PixelDmxConfiguration pixelDmxConfiguration;
 
@@ -183,7 +182,7 @@ void main() {
 	displayUdfParams.Load();
 	displayUdfParams.Set(&display);
 
-	display.Show(&node, DMXPORT_OFFSET);
+	display.Show(&node);
 
 	display.Printf(7, "%s:%d G%d %s",
 		PixelType::GetType(pixelDmxConfiguration.GetType()),

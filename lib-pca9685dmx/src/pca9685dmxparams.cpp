@@ -2,7 +2,7 @@
  * @file pca9685dmxparams.cpp
  *
  */
-/* Copyright (C) 2017-2023 by Arjan van Vught mailto:info@orangepi-dmx.nl
+/* Copyright (C) 2017-2024 by Arjan van Vught mailto:info@orangepi-dmx.nl
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -211,12 +211,35 @@ void PCA9685DmxParams::callbackFunction(const char *pLine) {
 	 */
 
 	if (Sscan::Uint16(pLine, PCA9685DmxParamsConst::SERVO_LEFT_US, nValue16) == Sscan::OK) {
+		if ((nValue16 != 0) && (nValue16 != pca9685::servo::LEFT_DEFAULT_US)) {
+			m_Params.nServoLeftUs = nValue16;
+			m_Params.nSetList |= pca9685dmxparams::Mask::SERVO_LEFT_US;
+		} else {
+			m_Params.nServoLeftUs = pca9685::servo::LEFT_DEFAULT_US;
+			m_Params.nSetList &= ~pca9685dmxparams::Mask::SERVO_LEFT_US;
+		}
+		return;
+	}
 
+	if (Sscan::Uint16(pLine, PCA9685DmxParamsConst::SERVO_CENTER_US, nValue16) == Sscan::OK) {
+		if ((nValue16 != 0) && (nValue16 != pca9685::servo::CENTER_DEFAULT_US)) {
+			m_Params.nServoRightUs = nValue16;
+			m_Params.nSetList |= pca9685dmxparams::Mask::SERVO_CENTER_US;
+		} else {
+			m_Params.nServoRightUs = pca9685::servo::CENTER_DEFAULT_US;
+			m_Params.nSetList &= ~pca9685dmxparams::Mask::SERVO_CENTER_US;
+		}
 		return;
 	}
 
 	if (Sscan::Uint16(pLine, PCA9685DmxParamsConst::SERVO_RIGHT_US, nValue16) == Sscan::OK) {
-
+		if ((nValue16 != 0) && (nValue16 != pca9685::servo::RIGHT_DEFAULT_US)) {
+			m_Params.nServoRightUs = nValue16;
+			m_Params.nSetList |= pca9685dmxparams::Mask::SERVO_RIGHT_US;
+		} else {
+			m_Params.nServoRightUs = pca9685::servo::RIGHT_DEFAULT_US;
+			m_Params.nSetList &= ~pca9685dmxparams::Mask::SERVO_RIGHT_US;
+		}
 		return;
 	}
 }
@@ -252,6 +275,7 @@ void PCA9685DmxParams::Builder(const struct pca9685dmxparams::Params *pParams, c
 
 	builder.AddComment("mode=servo");
 	builder.Add(PCA9685DmxParamsConst::SERVO_LEFT_US, m_Params.nServoLeftUs, isMaskSet(pca9685dmxparams::Mask::SERVO_LEFT_US));
+	builder.Add(PCA9685DmxParamsConst::SERVO_LEFT_US, m_Params.nServoCenterUs, isMaskSet(pca9685dmxparams::Mask::SERVO_CENTER_US));
 	builder.Add(PCA9685DmxParamsConst::SERVO_RIGHT_US, m_Params.nServoRightUs, isMaskSet(pca9685dmxparams::Mask::SERVO_RIGHT_US));
 
 	nSize = builder.GetSize();
@@ -267,20 +291,28 @@ void PCA9685DmxParams::Set(PCA9685Dmx *pPCA9685Dmx) {
 	/*
 	 * Generic
 	 */
+
 	pPCA9685Dmx->SetAddress(m_Params.nAddress);
 	pPCA9685Dmx->SetMode(isMaskSet(pca9685dmxparams::Mask::MODE));
 	pPCA9685Dmx->SetChannelCount(m_Params.nChannelCount);
 	pPCA9685Dmx->SetDmxStartAddress(m_Params.nDmxStartAddress);
 	pPCA9685Dmx->SetUse8Bit(isMaskSet(pca9685dmxparams::Mask::USE_8BIT));
+
 	/*
 	 * LED specific
 	 */
+
 	pPCA9685Dmx->SetLedPwmFrequency(m_Params.nLedPwmFrequency);
 	pPCA9685Dmx->SetLedOutputInvert(isMaskSet(pca9685dmxparams::Mask::LED_OUTPUT_INVERT) ? pca9685::Invert::OUTPUT_INVERTED : pca9685::Invert::OUTPUT_NOT_INVERTED);
 	pPCA9685Dmx->SetLedOutputDriver(isMaskSet(pca9685dmxparams::Mask::LED_OUTPUT_OPENDRAIN) ? pca9685::Output::DRIVER_OPENDRAIN : pca9685::Output::DRIVER_TOTEMPOLE);
+
 	/*
 	 * Servo specific
 	 */
+
+	pPCA9685Dmx->SetServoLeftUs(m_Params.nServoLeftUs);
+	pPCA9685Dmx->SetServoCenterUs(m_Params.nServoCenterUs);
+	pPCA9685Dmx->SetServoRightUs(m_Params.nServoRightUs);
 
 	DEBUG_EXIT
 }
@@ -316,5 +348,6 @@ void PCA9685DmxParams::Dump() {
 	 */
 
 	printf(" %s=%d\n", PCA9685DmxParamsConst::SERVO_LEFT_US, m_Params.nServoLeftUs);
+	printf(" %s=%d\n", PCA9685DmxParamsConst::SERVO_CENTER_US, m_Params.nServoCenterUs);
 	printf(" %s=%d\n", PCA9685DmxParamsConst::SERVO_RIGHT_US, m_Params.nServoRightUs);
 }

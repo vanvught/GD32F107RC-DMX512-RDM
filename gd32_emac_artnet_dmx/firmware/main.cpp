@@ -55,12 +55,15 @@
 #include "remoteconfigparams.h"
 
 #include "configstore.h"
-#include "storeartnet.h"
 
 #include "firmwareversion.h"
 #include "software_version.h"
 
-static constexpr uint32_t DMXPORT_OFFSET = 0;
+namespace artnetnode {
+namespace configstore {
+uint32_t DMXPORT_OFFSET = 0;
+}  // namespace configstore
+}  // namespace artnetnode
 
 void Hardware::RebootHandler() {
 	Dmx::Get()->Blackout();
@@ -88,20 +91,15 @@ void main() {
 
 	ArtNetNode node;
 
-	StoreArtNet storeArtNet(DMXPORT_OFFSET);
-	node.SetArtNetStore(&storeArtNet);
-
 	ArtNetParams artnetParams;
-
-	if (artnetParams.Load()) {
-		artnetParams.Set(DMXPORT_OFFSET);
-	}
+	artnetParams.Load();
+	artnetParams.Set();
 
 	node.SetUniverse(0, artnetParams.GetDirection(0), artnetParams.GetUniverse(0));
 
-	DmxParams dmxparams;
 	Dmx dmx;
 
+	DmxParams dmxparams;
 	dmxparams.Load();
 	dmxparams.Set(&dmx);
 

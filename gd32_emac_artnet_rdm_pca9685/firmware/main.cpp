@@ -58,12 +58,15 @@
 #include "remoteconfigparams.h"
 
 #include "configstore.h"
-#include "storeartnet.h"
 
 #include "firmwareversion.h"
 #include "software_version.h"
 
-static constexpr uint32_t DMXPORT_OFFSET = 0;
+namespace artnetnode {
+namespace configstore {
+uint32_t DMXPORT_OFFSET = 0;
+}  // namespace configstore
+}  // namespace artnetnode
 
 void Hardware::RebootHandler() {
 	ArtNetNode::Get()->Stop();
@@ -98,16 +101,12 @@ void main() {
 	display.TextStatus(ArtNetMsgConst::PARAMS, Display7SegmentMessage::INFO_NODE_PARMAMS, CONSOLE_YELLOW);
 
 	ArtNetNode node;
-	StoreArtNet storeArtNet(DMXPORT_OFFSET);
-
-	ArtNetParams artnetParams;
-	node.SetArtNetStore(&storeArtNet);
 
 	node.SetLongName(aDescription);
 
-	if (artnetParams.Load()) {
-		artnetParams.Set(DMXPORT_OFFSET);
-	}
+	ArtNetParams artnetParams;
+	artnetParams.Load();
+	artnetParams.Set();
 
 	node.SetRdm(static_cast<uint32_t>(0), true);
 	node.SetOutput(pca9685Dmx.GetLightSet());

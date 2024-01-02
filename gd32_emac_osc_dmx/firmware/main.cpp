@@ -88,9 +88,9 @@ void main() {
 
 	display.TextStatus(OscServerMsgConst::PARAMS, Display7SegmentMessage::INFO_BRIDGE_PARMAMS, CONSOLE_YELLOW);
 
-	DmxParams dmxparams;
 	Dmx dmx;
 
+	DmxParams dmxparams;
 	dmxparams.Load();
 	dmxparams.Set(&dmx);
 

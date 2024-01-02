@@ -62,11 +62,14 @@
 
 #include "configstore.h"
 
-
 #include "firmwareversion.h"
 #include "software_version.h"
 
-static constexpr uint32_t DMXPORT_OFFSET = 0;
+namespace e131bridge {
+namespace configstore {
+uint32_t DMXPORT_OFFSET = 0;
+}  // namespace configstore
+}  // namespace e131bridge
 
 void Hardware::RebootHandler() {
 	Dmx::Get()->Blackout();
@@ -98,14 +101,14 @@ void main() {
 
 	E131Params e131params;
 	e131params.Load();
-	e131params.Set(DMXPORT_OFFSET);
+	e131params.Set();
 
 	bool bIsSet;
 	bridge.SetUniverse(0, e131params.GetDirection(0), e131params.GetUniverse(0, bIsSet));
 
-	DmxParams dmxparams;
 	Dmx dmx;
 
+	DmxParams dmxparams;
 	dmxparams.Load();
 	dmxparams.Set(&dmx);
 

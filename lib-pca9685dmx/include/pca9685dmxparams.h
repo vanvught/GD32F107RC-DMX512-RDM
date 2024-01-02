@@ -2,7 +2,7 @@
  * @file pca9685dmxparams.h
  *
  */
-/* Copyright (C) 2017-2023 by Arjan van Vught mailto:info@orangepi-dmx.nl
+/* Copyright (C) 2017-2024 by Arjan van Vught mailto:info@orangepi-dmx.nl
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -38,7 +38,8 @@ struct Params {
 	uint16_t nDmxStartAddress;	///< 2	9
 	uint16_t nLedPwmFrequency;	///< 2	12
 	uint16_t nServoLeftUs;		///< 2	14
-	uint16_t nServoRightUs;		///< 2	16
+	uint16_t nServoCenterUs;	///< 2	16
+	uint16_t nServoRightUs;		///< 2	18
 } __attribute__((packed));
 
 static_assert(sizeof(struct Params) <= 32, "struct Params is too large");
@@ -53,7 +54,8 @@ struct Mask {
 	static constexpr uint32_t LED_OUTPUT_INVERT    = (1U << 6);
 	static constexpr uint32_t LED_OUTPUT_OPENDRAIN = (1U << 7);
 	static constexpr uint32_t SERVO_LEFT_US 	   = (1U << 8);
-	static constexpr uint32_t SERVO_RIGHT_US 	   = (1U << 9);
+	static constexpr uint32_t SERVO_CENTER_US 	   = (1U << 9);
+	static constexpr uint32_t SERVO_RIGHT_US 	   = (1U << 10);
 };
 }  // namespace pca9685dmxparams
 
