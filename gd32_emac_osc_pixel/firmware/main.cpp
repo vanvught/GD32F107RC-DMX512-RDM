@@ -31,10 +31,6 @@
 
 #include "mdns.h"
 
-#if defined (ENABLE_HTTPD)
-# include "httpd/httpd.h"
-#endif
-
 #include "display.h"
 #include "displayhandler.h"
 
@@ -83,10 +79,6 @@ void main() {
 	params.Set(&server);
 
 	mDns.ServiceRecordAdd(nullptr, mdns::Services::OSC, "type=server", server.GetPortIncoming());
-
-#if defined (ENABLE_HTTPD)
-	HttpDaemon httpDaemon;
-#endif
 
 	display.TextStatus(OscServerMsgConst::PARAMS, Display7SegmentMessage::INFO_BRIDGE_PARMAMS, CONSOLE_YELLOW);
 
@@ -174,9 +166,6 @@ void main() {
 			pixelTestPattern.Run();
 		}
 		mDns.Run();
-#if defined (ENABLE_HTTPD)
-		httpDaemon.Run();
-#endif
 		display.Run();
 		hw.Run();
 	}

@@ -1608,9 +1608,9 @@ void timer_master_output_trigger_source_select(uint32_t timer_periph, uint32_t o
     \param[in]  slavemode:
                 only one parameter can be selected which is shown as below:
       \arg        TIMER_SLAVE_MODE_DISABLE: slave mode disable
-      \arg        TIMER_ENCODER_MODE0: encoder mode 0
-      \arg        TIMER_ENCODER_MODE1: encoder mode 1
-      \arg        TIMER_ENCODER_MODE2: encoder mode 2
+      \arg        TIMER_QUAD_DECODER_MODE0: quadrature decoder mode 0
+      \arg        TIMER_QUAD_DECODER_MODE1: quadrature decoder mode 1
+      \arg        TIMER_QUAD_DECODER_MODE2: quadrature decoder mode 2
       \arg        TIMER_SLAVE_MODE_RESTART: restart mode
       \arg        TIMER_SLAVE_MODE_PAUSE: pause mode
       \arg        TIMER_SLAVE_MODE_EVENT: event mode
@@ -1676,9 +1676,9 @@ void timer_external_trigger_config(uint32_t timer_periph, uint32_t extprescaler,
     \param[in]  timer_periph: TIMERx(x=0..4,7,8,11)
     \param[in]  decomode:
                 only one parameter can be selected which is shown as below:
-      \arg        TIMER_ENCODER_MODE0: counter counts on CI0FE0 edge depending on CI1FE1 level
-      \arg        TIMER_ENCODER_MODE1: counter counts on CI1FE1 edge depending on CI0FE0 level
-      \arg        TIMER_ENCODER_MODE2: counter counts on both CI0FE0 and CI1FE1 edges depending on the level of the other input
+      \arg        TIMER_QUAD_DECODER_MODE0: counter counts on CI0FE0 edge depending on CI1FE1 level
+      \arg        TIMER_QUAD_DECODER_MODE1: counter counts on CI1FE1 edge depending on CI0FE0 level
+      \arg        TIMER_QUAD_DECODER_MODE2: counter counts on both CI0FE0 and CI1FE1 edges depending on the level of the other input
     \param[in]  ic0polarity:
                 only one parameter can be selected which is shown as below:
       \arg        TIMER_IC_POLARITY_RISING: capture rising edge

@@ -203,7 +203,7 @@ void adc_disable(uint32_t adc_periph)
 }
 
 /*!
-    \brief      ADC calibration and reset calibration
+    \brief      ADC calibration and reset calibration(GD32F10x_MD series without this function)
     \param[in]  adc_periph: ADCx, x=0,1,2
     \param[out] none
     \retval     none

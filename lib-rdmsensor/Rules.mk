@@ -1,4 +1,4 @@
-EXTRA_INCLUDES+=../lib-rdm/include ../lib-configstore/include ../lib-properties/include ../lib-device/include ../lib-hal/include
+EXTRA_INCLUDES+=../lib-rdm/include ../lib-properties/include
 
 ifneq ($(MAKE_FLAGS),)
 	ifneq (,$(findstring CONFIG_STORE_USE_ROM,$(MAKE_FLAGS)))

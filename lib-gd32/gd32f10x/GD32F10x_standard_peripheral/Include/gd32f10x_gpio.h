@@ -258,10 +258,8 @@ OF SUCH DAMAGE.
 #define AFIO_PCF0_CAN_REMAP              BITS(13,14)         /*!< CAN remapping */
 #define AFIO_PCF0_PD01_REMAP             BIT(15)             /*!< port D0/port D1 mapping on OSC_IN/OSC_OUT */
 #define AFIO_PCF0_TIMER4CH3_REMAP        BIT(16)             /*!< TIMER4 channel3 internal remapping */
-#define AFIO_PCF0_ADC0_ETRGINS_REMAP     BIT(17)             /*!< ADC 0 external trigger inserted conversion remapping */
-#define AFIO_PCF0_ADC0_ETRGREG_REMAP     BIT(18)             /*!< ADC 0 external trigger regular conversion remapping */
-#define AFIO_PCF0_ADC1_ETRGINS_REMAP     BIT(19)             /*!< ADC 1 external trigger inserted conversion remapping */
-#define AFIO_PCF0_ADC1_ETRGREG_REMAP     BIT(20)             /*!< ADC 1 external trigger regular conversion remapping */
+#define AFIO_PCF0_ADC0_ETRGRT_REMAP     BIT(18)             /*!< ADC 0 external trigger routine conversion remapping */
+#define AFIO_PCF0_ADC1_ETRGRT_REMAP     BIT(20)             /*!< ADC 1 external trigger routine conversion remapping */
 #define AFIO_PCF0_SWJ_CFG                BITS(24,26)         /*!< serial wire JTAG configuration */
 #endif /* GD32F10X_CL */
 
@@ -417,10 +415,8 @@ typedef FlagStatus bit_status;
 #define GPIO_TIMER4CH3_IREMAP            ((uint32_t)0x00200001U)   /*!< TIMER4 channel3 internal remapping(only for GD32F10X_CL devices and GD32F10X_HD devices) */
 #endif /* GD32F10X_CL||GD32F10X_HD */
 #if (defined(GD32F10X_MD) || defined(GD32F10X_HD) || defined(GD32F10X_XD))
-#define GPIO_ADC0_ETRGINS_REMAP          ((uint32_t)0x00200002U)   /*!< ADC0 external trigger inserted conversion remapping(only for GD32F10X_MD devices, GD32F10X_HD devices and GD32F10X_XD devices) */
-#define GPIO_ADC0_ETRGREG_REMAP          ((uint32_t)0x00200004U)   /*!< ADC0 external trigger regular conversion remapping(only for GD32F10X_MD devices, GD32F10X_HD devices and GD32F10X_XD devices) */
-#define GPIO_ADC1_ETRGINS_REMAP          ((uint32_t)0x00200008U)   /*!< ADC1 external trigger inserted conversion remapping(only for GD32F10X_MD devices, GD32F10X_HD devices and GD32F10X_XD devices) */
-#define GPIO_ADC1_ETRGREG_REMAP          ((uint32_t)0x00200010U)   /*!< ADC1 external trigger regular conversion remapping(only for GD32F10X_MD devices, GD32F10X_HD devices and GD32F10X_XD devices) */
+#define GPIO_ADC0_ETRGRT_REMAP          ((uint32_t)0x00200004U)   /*!< ADC0 external trigger routine conversion remapping(only for GD32F10X_MD devices, GD32F10X_HD devices and GD32F10X_XD devices) */
+#define GPIO_ADC1_ETRGRT_REMAP          ((uint32_t)0x00200010U)   /*!< ADC1 external trigger routine conversion remapping(only for GD32F10X_MD devices, GD32F10X_HD devices and GD32F10X_XD devices) */
 #endif /* GD32F10X_MD||GD32F10X_HD||GD32F10X_XD */
 #define GPIO_SWJ_NONJTRST_REMAP          ((uint32_t)0x00300100U)   /*!< full SWJ(JTAG-DP + SW-DP),but without NJTRST */
 #define GPIO_SWJ_SWDPENABLE_REMAP        ((uint32_t)0x00300200U)   /*!< JTAG-DP disabled and SW-DP enabled */

@@ -26,6 +26,8 @@ SRCDIR = src src/gd32 $(EXTRA_SRCDIR)
 
 include ../firmware-template-gd32/Includes.mk
 
+INCLUDES+=-I../lib-configstore/include -I../lib-device/include -I../lib-display/include -I../lib-flashcode/include -I../lib-hal/include -I../lib-lightset/include -I../lib-network/include
+
 DEFINES:=$(addprefix -D,$(DEFINES))
 DEFINES+=-D_TIME_STAMP_YEAR_=$(shell date  +"%Y") -D_TIME_STAMP_MONTH_=$(shell date  +"%-m") -D_TIME_STAMP_DAY_=$(shell date  +"%-d")
 DEFINES+=-DCONFIG_STORE_USE_ROM
@@ -43,7 +45,7 @@ COPS+=-nostartfiles -ffreestanding -nostdlib
 COPS+=-fstack-usage -Wstack-usage=8192
 COPS+=-ffunction-sections -fdata-sections
 
-CPPOPS=-std=c++11
+CPPOPS=-std=c++20
 CPPOPS+=-Wnon-virtual-dtor -Woverloaded-virtual -Wnull-dereference -fno-rtti -fno-exceptions -fno-unwind-tables
 CPPOPS+=-Wuseless-cast -Wold-style-cast
 CPPOPS+=-fno-threadsafe-statics

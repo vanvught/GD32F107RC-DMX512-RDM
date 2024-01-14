@@ -31,10 +31,6 @@
 
 #include "mdns.h"
 
-#if defined (ENABLE_HTTPD)
-# include "httpd/httpd.h"
-#endif
-
 #include "displayudf.h"
 #include "displayudfparams.h"
 #include "displayhandler.h"
@@ -88,12 +84,6 @@ void main() {
 
 	fw.Print("sACN E1.31 DMX {1 Universe}");
 	nw.Print();
-
-	display.TextStatus(NetworkConst::MSG_MDNS_CONFIG, Display7SegmentMessage::INFO_MDNS_CONFIG, CONSOLE_YELLOW);
-
-#if defined (ENABLE_HTTPD)
-	HttpDaemon httpDaemon;
-#endif
 
 	display.TextStatus(E131MsgConst::PARAMS, Display7SegmentMessage::INFO_BRIDGE_PARMAMS, CONSOLE_YELLOW);
 
@@ -200,9 +190,6 @@ void main() {
 		mDns.Run();
 #if defined (NODE_RDMNET_LLRP_ONLY)
 		llrpOnlyDevice.Run();
-#endif
-#if defined (ENABLE_HTTPD)
-		httpDaemon.Run();
 #endif
 		display.Run();
 		hw.Run();

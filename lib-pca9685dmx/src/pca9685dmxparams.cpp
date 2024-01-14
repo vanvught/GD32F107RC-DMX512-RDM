@@ -51,10 +51,11 @@ namespace pca9685dmxparams {
 static constexpr char MODE_LED[] = "led";
 static constexpr char MODE_SERVO[] = "servo";
 
-const char *get_mode(const uint32_t nMode) {
+static const char *get_mode(const uint32_t nMode) {
 	return nMode != 0 ?  MODE_SERVO : MODE_LED;
 }
-uint32_t get_mode(const char *pMode) {
+
+static uint32_t get_mode(const char *pMode) {
 	if (strcasecmp(pMode, MODE_SERVO) == 0) {
 		return 1;
 	}
@@ -72,6 +73,7 @@ PCA9685DmxParams::PCA9685DmxParams() {
 	m_Params.nDmxStartAddress = lightset::dmx::START_ADDRESS_DEFAULT;
 	m_Params.nLedPwmFrequency = pca9685::pwmled::DEFAULT_FREQUENCY;
 	m_Params.nServoLeftUs = pca9685::servo::LEFT_DEFAULT_US;
+	m_Params.nServoCenterUs = pca9685::servo::CENTER_DEFAULT_US;
 	m_Params.nServoRightUs = pca9685::servo::RIGHT_DEFAULT_US;
 
 	DEBUG_EXIT
@@ -275,7 +277,7 @@ void PCA9685DmxParams::Builder(const struct pca9685dmxparams::Params *pParams, c
 
 	builder.AddComment("mode=servo");
 	builder.Add(PCA9685DmxParamsConst::SERVO_LEFT_US, m_Params.nServoLeftUs, isMaskSet(pca9685dmxparams::Mask::SERVO_LEFT_US));
-	builder.Add(PCA9685DmxParamsConst::SERVO_LEFT_US, m_Params.nServoCenterUs, isMaskSet(pca9685dmxparams::Mask::SERVO_CENTER_US));
+	builder.Add(PCA9685DmxParamsConst::SERVO_CENTER_US, m_Params.nServoCenterUs, isMaskSet(pca9685dmxparams::Mask::SERVO_CENTER_US));
 	builder.Add(PCA9685DmxParamsConst::SERVO_RIGHT_US, m_Params.nServoRightUs, isMaskSet(pca9685dmxparams::Mask::SERVO_RIGHT_US));
 
 	nSize = builder.GetSize();

@@ -1,4 +1,4 @@
-EXTRA_INCLUDES+=../lib-rdm/include ../lib-configstore/include ../lib-lightset/include ../lib-properties/include ../lib-device/include
+EXTRA_INCLUDES+=../lib-rdm/include ../lib-lightset/include ../lib-properties/include
 
 ifneq ($(MAKE_FLAGS),)
 	ifeq ($(findstring ENABLE_RDM_SUBDEVICES,$(MAKE_FLAGS)), ENABLE_RDM_SUBDEVICES)

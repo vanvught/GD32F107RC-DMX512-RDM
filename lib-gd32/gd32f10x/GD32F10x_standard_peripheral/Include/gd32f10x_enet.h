@@ -47,11 +47,11 @@ OF SUCH DAMAGE.
 #endif
 
 #ifndef ENET_RXBUF_NUM
-#define ENET_RXBUF_NUM                   2U                                     /*!< ethernet Rx DMA descriptor number */
+#define ENET_RXBUF_NUM                   5U                                     /*!< ethernet Rx DMA descriptor number */
 #endif
 
 #ifndef ENET_TXBUF_NUM
-#define ENET_TXBUF_NUM                   1U                                     /*!< ethernet Tx DMA descriptor number */
+#define ENET_TXBUF_NUM                   5U                                     /*!< ethernet Tx DMA descriptor number */
 #endif
 
 #ifndef ENET_RXBUF_SIZE
@@ -129,7 +129,7 @@ OF SUCH DAMAGE.
 #define ENET_MAC_HLH                     REG32((ENET) + 0x08U)                  /*!< ethernet MAC hash list high register */
 #define ENET_MAC_HLL                     REG32((ENET) + 0x0CU)                  /*!< ethernet MAC hash list low register */
 #define ENET_MAC_PHY_CTL                 REG32((ENET) + 0x10U)                  /*!< ethernet MAC PHY control register */
-#define ENET_MAC_PHY_DATA                REG32((ENET) + 0x14U)                  /*!< ethernet MAC MII data register */
+#define ENET_MAC_PHY_DATA                REG32((ENET) + 0x14U)                  /*!< ethernet MAC PHY data register */
 #define ENET_MAC_FCTL                    REG32((ENET) + 0x18U)                  /*!< ethernet MAC flow control register */
 #define ENET_MAC_FCTH                    REG32((ENET) + 0x1080U)                /*!< ethernet MAC flow control threshold register */
 #define ENET_MAC_VLT                     REG32((ENET) + 0x1CU)                  /*!< ethernet MAC VLAN tag register */
@@ -636,7 +636,7 @@ typedef enum
     ENET_DMA_FLAG_TST               = ENET_REGIDX_BIT(DMA_STAT_REG_OFFSET, 29U),    /*!< timestamp trigger status flag */                        
 }enet_flag_enum;
 
-/* ENET status flag clear */
+/* ENET stutus flag clear */
 typedef enum
 {
     /* ENET_DMA_STAT register */
@@ -814,7 +814,7 @@ typedef enum
 {
     ENET_PROMISCUOUS_MODE           = ENET_MAC_FRMF_PM,                             /*!< promiscuous mode enabled */
     ENET_RECEIVEALL                 = (int32_t)ENET_MAC_FRMF_FAR,                   /*!< all received frame are forwarded to application */
-	ENET_CUSTOM						= BIT(4),
+	ENET_CUSTOM						= BIT(4),										/** AvV **/
 	ENET_BROADCAST_FRAMES_PASS      = (uint32_t)0x00000000U,                        /*!< the address filters pass all received broadcast frames */
     ENET_BROADCAST_FRAMES_DROP      = ENET_MAC_FRMF_BFRMD                           /*!< the address filters filter all incoming broadcast frames */
 }enet_frmrecept_enum;
@@ -889,7 +889,7 @@ typedef struct
     uint32_t interframegap;                                                         /*!< inter frame gap related parameters */
 }enet_initpara_struct;
 
-/* structure for ENET DMA descriptors */ 
+/* structure for ENET DMA desciptors */ 
 typedef struct  
 {
     uint32_t status;                                                                /*!< status */
@@ -1221,7 +1221,7 @@ typedef struct
 #define ENET_FORWARD_UNDERSZ_GOODFRAMES_DISABLE   ((uint32_t)0x00000000)                        /*!< RxFIFO drops all frames whose length is less than 64 bytes */
 #define ENET_FORWARD_UNDERSZ_GOODFRAMES           (ENET_DMA_CTL_FUF << 2)                       /*!< the function that forwarding undersized good frames */
 
-#define ENET_SECONDFRAME_OPT_ENABLE               ((uint32_t)0x00000000)                        /*!< TxDMA controller operate on second frame mode enable*/
+#define ENET_SECONDFRAME_OPT_ENABLE               ENET_DMA_CTL_OSF                              /*!< TxDMA controller operate on second frame mode enable*/
 #define ENET_SECONDFRAME_OPT_DISABLE              ((uint32_t)0x00000000)                        /*!< TxDMA controller operate on second frame mode disable */
 #define ENET_SECONDFRAME_OPT                      ENET_DMA_CTL_OSF                              /*!< TxDMA controller operate on second frame function */
 
