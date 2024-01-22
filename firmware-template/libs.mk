@@ -27,10 +27,9 @@ ifeq ($(findstring NODE_OSC_SERVER,$(DEFINES)),NODE_OSC_SERVER)
 	LIBS+=oscserver osc
 endif
 
-DMX=
 
 ifeq ($(findstring RDM_CONTROLLER,$(DEFINES)),RDM_CONTROLLER)
-	LIBS+=rdm
+	RDM=1
 	DMX=1
 endif
 
@@ -46,14 +45,12 @@ ifeq ($(findstring RDM_RESPONDER,$(DEFINES)),RDM_RESPONDER)
 	ifneq ($(findstring rdmsubdevice,$(LIBS)),rdmsubdevice)
 		LIBS+=rdmsubdevice
 	endif
-	LIBS+=rdm
+	RDM=1
 	DMX=1
 endif
 
 ifeq ($(findstring NODE_RDMNET_LLRP_ONLY,$(DEFINES)),NODE_RDMNET_LLRP_ONLY)
-	ifneq ($(findstring rdmnet,$(LIBS)),rdmnet)
-		LIBS+=rdmnet
-	endif
+	RDM=1
 	ifneq ($(findstring e131,$(LIBS)),e131)
 		LIBS+=e131
 	endif
@@ -63,13 +60,6 @@ ifeq ($(findstring NODE_RDMNET_LLRP_ONLY,$(DEFINES)),NODE_RDMNET_LLRP_ONLY)
 	ifneq ($(findstring rdmsubdevice,$(LIBS)),rdmsubdevice)
 		LIBS+=rdmsubdevice
 	endif
-	ifneq ($(findstring RDM_CONTROLLER,$(DEFINES)),RDM_CONTROLLER)
-		LIBS+=rdm
-	endif
-endif
-
-ifeq ($(findstring e131,$(LIBS)),e131)
-	LIBS+=uuid
 endif
 
 ifeq ($(findstring OUTPUT_DMX_SEND,$(DEFINES)),OUTPUT_DMX_SEND)
@@ -77,8 +67,16 @@ ifeq ($(findstring OUTPUT_DMX_SEND,$(DEFINES)),OUTPUT_DMX_SEND)
 	DMX=1
 endif
 
+ifdef RDM
+	LIBS+=rdm
+endif
+
 ifdef DMX
 	LIBS+=dmx
+endif
+
+ifeq ($(findstring e131,$(LIBS)),e131)
+	LIBS+=uuid
 endif
 
 ifeq ($(findstring OUTPUT_DMX_PIXEL,$(DEFINES)),OUTPUT_DMX_PIXEL)
