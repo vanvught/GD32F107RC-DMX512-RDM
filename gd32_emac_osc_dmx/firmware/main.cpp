@@ -2,7 +2,7 @@
  * @file main.cpp
  *
  */
-/* Copyright (C) 2022-2023 by Arjan van Vught mailto:info@gd32-dmx.org
+/* Copyright (C) 2022-2024 by Arjan van Vught mailto:info@gd32-dmx.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -89,8 +89,6 @@ void main() {
 	DmxSend dmxSend;
 	dmxSend.Print();
 
-	DmxConfigUdp dmxConfigUdp;
-
 	server.SetOutput(&dmxSend);
 	server.Print();
 
@@ -131,7 +129,6 @@ void main() {
 		server.Run();
 		remoteConfig.Run();
 		configStore.Flash();
-		dmxConfigUdp.Run();
 		mDns.Run();
 		display.Run();
 		hw.Run();

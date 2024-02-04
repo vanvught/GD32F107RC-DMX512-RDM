@@ -2,7 +2,7 @@
  * @file main.cpp
  *
  */
-/* Copyright (C) 2022-2023 by Arjan van Vught mailto:info@gd32-dmx.org
+/* Copyright (C) 2022-2024 by Arjan van Vught mailto:info@gd32-dmx.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -45,7 +45,7 @@
 #include "pixeltype.h"
 #include "pixeltestpattern.h"
 #include "pixeldmxparams.h"
-#include "pixeldmxstartstop.h"
+
 #include "ws28xxdmx.h"
 
 #if defined (NODE_RDMNET_LLRP_ONLY)
@@ -54,6 +54,11 @@
 # include "rdmnetconst.h"
 # include "rdmpersonality.h"
 # include "rdm_e120.h"
+#endif
+
+#if defined (NODE_SHOWFILE)
+# include "showfile.h"
+# include "showfileparams.h"
 #endif
 
 #include "remoteconfig.h"
@@ -103,7 +108,6 @@ void main() {
 	pixelDmxParams.Set(&pixelDmxConfiguration);
 
 	WS28xxDmx pixelDmx(pixelDmxConfiguration);
-	pixelDmx.SetPixelDmxHandler(new PixelDmxStartStop);
 
 	const auto nUniverses = pixelDmx.GetUniverses();
 
@@ -150,6 +154,16 @@ void main() {
 	rdmDeviceParams.Set(&llrpOnlyDevice);
 	
 	llrpOnlyDevice.Print();
+#endif
+
+#if defined (NODE_SHOWFILE)
+	ShowFile showFile;
+
+	ShowFileParams showFileParams;
+	showFileParams.Load();
+	showFileParams.Set();
+
+	showFile.Print();
 #endif
 
 	bridge.Print();
@@ -203,6 +217,9 @@ void main() {
 		hw.WatchdogFeed();
 		nw.Run();
 		bridge.Run();
+#if defined (NODE_SHOWFILE)
+		showFile.Run();
+#endif
 		remoteConfig.Run();
 		configStore.Flash();
 		if (__builtin_expect((PixelTestPattern::GetPattern() != pixelpatterns::Pattern::NONE), 0)) {

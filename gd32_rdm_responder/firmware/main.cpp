@@ -2,7 +2,7 @@
  * @file main.cpp
  *
  */
-/* Copyright (C) 2021-2023 by Arjan van Vught mailto:info@gd32-dmx.org
+/* Copyright (C) 2021-2024 by Arjan van Vught mailto:info@gd32-dmx.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -46,7 +46,7 @@
 
 #include "pixeldmxparams.h"
 #include "ws28xxdmx.h"
-#include "pixeldmxstartstop.h"
+
 #include "pixeldmxparamsrdm.h"
 #include "pixeltestpattern.h"
 
@@ -113,9 +113,6 @@ void main() {
 	}
 
 	WS28xxDmx pixelDmx(pixelDmxConfiguration);
-
-	PixelDmxStartStop pixelDmxStartStop;
-	pixelDmx.SetPixelDmxHandler(&pixelDmxStartStop);
 
 	const auto nTestPattern = static_cast<pixelpatterns::Pattern>(pixelDmxParams.GetTestPattern());
 	PixelTestPattern pixelTestPattern(nTestPattern, 1);

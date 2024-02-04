@@ -66,4 +66,22 @@
 # error Configuration error
 #endif
 
+#if defined (GD32H7XX)
+# ifdef USE_ENET0
+#  define ENETx			ENET0
+#  define RCU_ENET		RCU_ENET0
+#  define RCU_ENETTX	RCU_ENET0TX
+#  define RCU_ENETRX	RCU_ENET0RX
+# elif USE_ENET1
+#  define ENETx			ENET1
+#  define RCU_ENET		RCU_ENET1
+#  define RCU_ENETTX	RCU_ENET1TX
+#  define RCU_ENETRX	RCU_ENET1RX
+# else
+#  error
+# endif
+#else
+# define ENETx
+#endif
+
 #endif /* GD32_BOARD_H_ */

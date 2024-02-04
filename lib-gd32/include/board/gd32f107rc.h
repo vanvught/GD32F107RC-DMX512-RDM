@@ -2,7 +2,7 @@
  * @file gd32f107rc.h
  *
  */
-/* Copyright (C) 2021-2022 by Arjan van Vught mailto:info@gd32-dmx.org
+/* Copyright (C) 2021-2024 by Arjan van Vught mailto:info@gd32-dmx.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -181,6 +181,12 @@ static constexpr uint32_t PORT_A_TX = 0;
 #define GD32_BOARD_LED2			GD32_PORT_TO_GPIO(GD32_GPIO_PORTC, 2)
 #define GD32_BOARD_LED3			GD32_PORT_TO_GPIO(GD32_GPIO_PORTC, 3)
 #define GD32_BOARD_STATUS_LED	GD32_BOARD_LED1
+
+/**
+ * Pixel DMX
+ */
+
+#define PIXELDMXSTARTSTOP_GPIO	GD32_BOARD_LED2
 
 /**
  * SPI LCD
