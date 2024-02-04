@@ -2,7 +2,7 @@
  * @file gd32_spi.cpp
  *
  */
-/* Copyright (C) 2021-2023 by Arjan van Vught mailto:info@gd32-dmx.org
+/* Copyright (C) 2021-2024 by Arjan van Vught mailto:info@gd32-dmx.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,19 +32,19 @@
 
 static uint8_t s_nChipSelect = GD32_SPI_CS0;
 
-static inline void _cs_high() {
+static inline void cs_high() {
 	if (s_nChipSelect == GD32_SPI_CS0) {
 		GPIO_BOP(SPI_NSS_GPIOx) = static_cast<uint32_t>(SPI_NSS_GPIO_PINx);
 	}
 }
 
-static inline void _cs_low() {
+static inline void cs_low() {
 	if (s_nChipSelect == GD32_SPI_CS0) {
 		GPIO_BC(SPI_NSS_GPIOx) = static_cast<uint32_t>(SPI_NSS_GPIO_PINx);
 	}
 }
 
-static uint8_t _send_byte(uint8_t byte) {
+static uint8_t send_byte(uint8_t byte) {
 	while (RESET == (SPI_STAT(SPI_PERIPH) & SPI_FLAG_TBE))
 		;
 
@@ -85,7 +85,7 @@ void gd32_spi_begin()  {
 
     gpio_fsel(SPI_NSS_GPIOx, SPI_NSS_GPIO_PINx, GPIO_FSEL_OUTPUT);
 
-	_cs_high();
+	cs_high();
 
 	spi_disable(SPI_PERIPH);
 	spi_i2s_deinit(SPI_PERIPH);
@@ -171,15 +171,15 @@ void gd32_spi_transfernb(const char *pTxBuffer, char *pRxBuffer, uint32_t nDataL
 	assert(pTxBuffer != nullptr);
 	assert(pRxBuffer != nullptr);
 
-	_cs_low();
+	cs_low();
 
 	while (nDataLength-- > 0) {
-		*pRxBuffer = _send_byte(static_cast<uint8_t>(*pTxBuffer));
+		*pRxBuffer = send_byte(static_cast<uint8_t>(*pTxBuffer));
 		pRxBuffer++;
 		pTxBuffer++;
 	}
 
-	_cs_high();
+	cs_high();
 }
 
 void gd32_spi_transfern(char *pTxBuffer, uint32_t nDataLength) {
@@ -187,23 +187,23 @@ void gd32_spi_transfern(char *pTxBuffer, uint32_t nDataLength) {
 }
 
 void gd32_spi_write(const uint16_t nData) {
-	_cs_low();
+	cs_low();
 
-	_send_byte(static_cast<uint8_t>(nData >> 8));
-	_send_byte(static_cast<uint8_t>(nData & 0xFF));
+	send_byte(static_cast<uint8_t>(nData >> 8));
+	send_byte(static_cast<uint8_t>(nData & 0xFF));
 
-	_cs_high();
+	cs_high();
 }
 
 void gd32_spi_writenb(const char *pTxBuffer, uint32_t nDataLength) {
 	assert(pTxBuffer != nullptr);
 
-	_cs_low();
+	cs_low();
 
 	while (nDataLength-- > 0) {
-		_send_byte(static_cast<uint8_t>(*pTxBuffer));
+		send_byte(static_cast<uint8_t>(*pTxBuffer));
 		pTxBuffer++;
 	}
 
-	_cs_high();
+	cs_high();
 }

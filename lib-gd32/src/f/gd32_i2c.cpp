@@ -2,7 +2,7 @@
  * @file gd32_i2c.cpp
  *
  */
-/* Copyright (C) 2021-2022 by Arjan van Vught mailto:info@gd32-dmx.org
+/* Copyright (C) 2021-2024 by Arjan van Vught mailto:info@gd32-dmx.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,9 +32,8 @@ static constexpr int32_t TIMEOUT = 0xfff;
 
 static uint8_t s_nAddress;
 
-static int32_t _sendstart(void) {
+static int32_t send_start() {
 	auto nTimeout = TIMEOUT;
-
 	/* wait until I2C bus is idle */
 	while (i2c_flag_get(I2C_PERIPH, I2C_FLAG_I2CBSY)) {
 		if (--nTimeout <= 0) {
@@ -42,11 +41,9 @@ static int32_t _sendstart(void) {
 		}
 	}
 
-	nTimeout = TIMEOUT;
-
-	/* send a start condition to I2C bus */
 	i2c_start_on_bus(I2C_PERIPH);
 
+	nTimeout = TIMEOUT;
 	/* wait until SBSEND bit is set */
 	while (!i2c_flag_get(I2C_PERIPH, I2C_FLAG_SBSEND)) {
 		if (--nTimeout <= 0) {
@@ -57,12 +54,10 @@ static int32_t _sendstart(void) {
 	return GD32_I2C_OK;
 }
 
-static int32_t _sendslaveaddr(void) {
-	auto nTimeout = TIMEOUT;
-
-	/* send slave address to I2C bus */
+static int32_t send_slaveaddr() {
 	i2c_master_addressing(I2C_PERIPH, s_nAddress, I2C_TRANSMITTER);
 
+	auto nTimeout = TIMEOUT;
 	/* wait until ADDSEND bit is set */
 	while (!i2c_flag_get(I2C_PERIPH, I2C_FLAG_ADDSEND)) {
 		if (--nTimeout <= 0) {
@@ -74,7 +69,6 @@ static int32_t _sendslaveaddr(void) {
 	i2c_flag_clear(I2C_PERIPH, I2C_FLAG_ADDSEND);
 
 	nTimeout = TIMEOUT;
-
 	/* wait until the transmit data buffer is empty */
 	while (SET != i2c_flag_get(I2C_PERIPH, I2C_FLAG_TBE)) {
 		if (--nTimeout <= 0) {
@@ -85,10 +79,9 @@ static int32_t _sendslaveaddr(void) {
 	return GD32_I2C_OK;
 }
 
-static int32_t _stop(void) {
+static int32_t send_stop() {
 	auto nTimeout = TIMEOUT;
 
-    /* send a stop condition to I2C bus */
     i2c_stop_on_bus(I2C_PERIPH);
 
     /* wait until the stop condition is finished */
@@ -101,17 +94,11 @@ static int32_t _stop(void) {
 	return GD32_I2C_OK;
 }
 
-static int32_t _senddata(uint8_t *pData, uint32_t nCount) {
-	int32_t nTimeout;
-
+static int32_t send_data(const uint8_t *pData, const uint32_t nCount) {
 	for (uint32_t i = 0; i < nCount; i++) {
 		i2c_data_transmit(I2C_PERIPH, *pData);
-
-		/* point to the next byte to be written */
 		pData++;
-
-		nTimeout = TIMEOUT;
-
+		int32_t nTimeout = TIMEOUT;
 		/* wait until BTC bit is set */
 		while (!i2c_flag_get(I2C_PERIPH, I2C_FLAG_BTC)) {
 			if (--nTimeout <= 0) {
@@ -123,23 +110,23 @@ static int32_t _senddata(uint8_t *pData, uint32_t nCount) {
 	return GD32_I2C_OK;
 }
 
-static int _write(char *pBuffer, int nLength) {
-	if (_sendstart() != GD32_I2C_OK) {
-		_stop();
+static int32_t write(const char *pBuffer, const int nLength) {
+	if (send_start() != GD32_I2C_OK) {
+		send_stop();
 		return -1;
 	}
 
-	if (_sendslaveaddr() != GD32_I2C_OK) {
-		_stop();
+	if (send_slaveaddr() != GD32_I2C_OK) {
+		send_stop();
 		return -1;
 	}
 
-	if (_senddata((uint8_t*) pBuffer, (uint32_t) nLength) != GD32_I2C_OK) {
-		_stop();
+	if (send_data((uint8_t*) pBuffer, (uint32_t) nLength) != GD32_I2C_OK) {
+		send_stop();
 		return -1;
 	}
 
-	_stop();
+	send_stop();
 
 	return 0;
 }
@@ -148,7 +135,7 @@ static int _write(char *pBuffer, int nLength) {
  * Public API's
  */
 
-void gd32_i2c_begin(void) {
+void gd32_i2c_begin() {
 	rcu_periph_clock_enable(I2C_RCU_CLK);
 	rcu_periph_clock_enable(I2C_GPIO_SCL_CLK);
 	rcu_periph_clock_enable(I2C_GPIO_SDA_CLK);
@@ -186,18 +173,16 @@ void gd32_i2c_set_address(uint8_t nAddress) {
 }
 
 uint8_t gd32_i2c_write(const char *pBuffer, uint32_t nLength) {
-	const auto ret = _write((char *)pBuffer, (int) nLength);
-
+	const auto ret = write((char *)pBuffer, (int) nLength);
 	return (uint8_t)-ret;
 }
 
 uint8_t gd32_i2c_read(char *pBuffer, uint32_t nLength) {
 	auto nTimeout = TIMEOUT;
-
 	/* wait until I2C bus is idle */
 	while (i2c_flag_get(I2C_PERIPH, I2C_FLAG_I2CBSY)) {
 		if (--nTimeout <= 0) {
-			_stop();
+			send_stop();
 			return GD32_I2C_NOK_TOUT;
 		}
 	}
@@ -210,16 +195,14 @@ uint8_t gd32_i2c_read(char *pBuffer, uint32_t nLength) {
 	i2c_start_on_bus(I2C_PERIPH);
 
 	nTimeout = TIMEOUT;
-
 	/* wait until SBSEND bit is set */
 	while (!i2c_flag_get(I2C_PERIPH, I2C_FLAG_SBSEND)) {
 		if (--nTimeout <= 0) {
-			_stop();
+			send_stop();
 			return GD32_I2C_NOK_TOUT;
 		}
 	}
 
-	/* send slave address to I2C bus */
 	i2c_master_addressing(I2C_PERIPH, s_nAddress, I2C_RECEIVER);
 
 	if (nLength < 3) {
@@ -228,11 +211,10 @@ uint8_t gd32_i2c_read(char *pBuffer, uint32_t nLength) {
 	}
 
 	nTimeout = TIMEOUT;
-
 	/* wait until ADDSEND bit is set */
 	while (!i2c_flag_get(I2C_PERIPH, I2C_FLAG_ADDSEND)) {
 		if (--nTimeout <= 0) {
-			_stop();
+			send_stop();
 			return GD32_I2C_NOK_TOUT;
 		}
 	}
@@ -246,7 +228,6 @@ uint8_t gd32_i2c_read(char *pBuffer, uint32_t nLength) {
 	}
 
 	auto nTimeoutLoop = TIMEOUT;
-
 	/* while there is data to be read */
 	while (nLength) {
 		if (3 == nLength) {
@@ -254,27 +235,24 @@ uint8_t gd32_i2c_read(char *pBuffer, uint32_t nLength) {
 			/* wait until BTC bit is set */
 			while (!i2c_flag_get(I2C_PERIPH, I2C_FLAG_BTC)) {
 				if (--nTimeout <= 0) {
-					_stop();
+					send_stop();
 					return GD32_I2C_NOK_TOUT;
 				}
 			}
 
-			/* disable acknowledge */
 			i2c_ack_config(I2C_PERIPH, I2C_ACK_DISABLE);
 		}
 
 		if (2 == nLength) {
 			nTimeout = TIMEOUT;
-
 			/* wait until BTC bit is set */
 			while (!i2c_flag_get(I2C_PERIPH, I2C_FLAG_BTC)) {
 				if (--nTimeout <= 0) {
-					_stop();
+					send_stop();
 					return GD32_I2C_NOK_TOUT;
 				}
 			}
 
-			/* send a stop condition to I2C bus */
 			i2c_stop_on_bus(I2C_PERIPH);
 		}
 
@@ -287,13 +265,12 @@ uint8_t gd32_i2c_read(char *pBuffer, uint32_t nLength) {
 		}
 
 		if (--nTimeoutLoop <= 0) {
-			_stop();
+			send_stop();
 			return GD32_I2C_NOK_TOUT;
 		}
 	}
 
 	nTimeout = TIMEOUT;
-
 	/* wait until the stop condition is finished */
 	while (I2C_CTL0(I2C_PERIPH) & 0x0200) {
 		if (--nTimeout <= 0) {
@@ -301,9 +278,7 @@ uint8_t gd32_i2c_read(char *pBuffer, uint32_t nLength) {
 		}
 	}
 
-	/* enable acknowledge */
 	i2c_ack_config(I2C_PERIPH, I2C_ACK_ENABLE);
-
 	i2c_ackpos_config(I2C_PERIPH, I2C_ACKPOS_CURRENT);
 
 	return GD32_I2C_OK;

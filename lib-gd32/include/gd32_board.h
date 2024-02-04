@@ -50,6 +50,8 @@
 # include "board/gd32f207c_eval.h"
 #elif defined (BOARD_GD32F470Z_EVAL)
 # include "board/gd32f470z_eval.h"
+#elif defined (BOARD_GD32H759I_EVAL)
+# include "board/gd32h759i_eval.h"
 #elif defined (BOARD_BW_OPIDMX4)
 # include "board/bw_opidmx4.h"
 #elif defined (BOARD_DMX3)

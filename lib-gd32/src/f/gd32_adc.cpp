@@ -27,7 +27,7 @@
 
 #include "gd32.h"
 
-void gd32_adc_init(void) {
+void gd32_adc_init() {
 	rcu_periph_clock_enable(RCU_ADC0);
 #if !defined (GD32F4XX)
 	rcu_adc_clock_config(RCU_CKADC_CKAPB2_DIV12);
@@ -86,21 +86,20 @@ void gd32_adc_init(void) {
     adc_software_trigger_enable(ADC0, ADC_INSERTED_CHANNEL);
 }
 
-float gd32_adc_gettemp(void) {
-	/* value convert  */
+float gd32_adc_gettemp() {
 	const float temperature = (1.43f - ADC_IDATA0(ADC0) * 3.3f / 4096) * 1000 / 4.3f + 25;
 	adc_software_trigger_enable(ADC0, ADC_INSERTED_CHANNEL);
 	return temperature;
 }
 
-float gd32_adc_getvref(void) {
+float gd32_adc_getvref() {
 	const float vref_value = (ADC_IDATA1(ADC0) * 3.3f / 4096);
 	adc_software_trigger_enable(ADC0, ADC_INSERTED_CHANNEL);
 	return vref_value;
 }
 
 #if defined (GD32F4XX)
-float gd32_adc_getvbat(void) {
+float gd32_adc_getvbat() {
 	const float vref_value =  (ADC_IDATA2(ADC0) * 3.3f / 4096) * 4;
 	adc_software_trigger_enable(ADC0, ADC_INSERTED_CHANNEL);
 	return vref_value;

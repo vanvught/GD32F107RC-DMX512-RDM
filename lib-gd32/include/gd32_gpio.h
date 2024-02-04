@@ -104,7 +104,7 @@ inline void gpio_fsel(const uint32_t gpio_periph, const uint32_t pin, const uint
 #elif  defined (GD32F4XX) || defined (GD32H7XX)
 	if (fsel == GPIO_FSEL_OUTPUT) {
 		 gpio_mode_set(gpio_periph, GPIO_MODE_OUTPUT, GPIO_PUPD_NONE, pin);
-		 gpio_output_options_set(gpio_periph, GPIO_OTYPE_PP, GPIO_OSPEED_50MHZ, pin);
+		 gpio_output_options_set(gpio_periph, GPIO_OTYPE_PP, GPIO_OSPEED, pin);
 	} else {
 		 gpio_mode_set(gpio_periph, GPIO_MODE_INPUT, GPIO_PUPD_PULLUP, pin);
 	}

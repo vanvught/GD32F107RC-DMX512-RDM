@@ -61,6 +61,9 @@ extern "C" {
 #elif defined (GD32F407) || defined (GD32F450) || defined (GD32F470)
 # define GD32F4XX
 # include "gd32f4xx.h"
+#elif defined (GD32H759)
+# define GD32H7XX
+# include "gd32h7xx.h"
 #else
 # error MCU is not supported
 #endif
@@ -89,7 +92,7 @@ uint16_t bkp_data_read(bkp_data_register_enum register_number);
 #endif
 
 #if defined (GD32H7XX)
-# define GPIO_OSPEED	GPIO_OSPEED_100_220MHZ
+# define GPIO_OSPEED	GPIO_OSPEED_60MHZ
 #else
 # define GPIO_OSPEED	GPIO_OSPEED_50MHZ
 #endif
