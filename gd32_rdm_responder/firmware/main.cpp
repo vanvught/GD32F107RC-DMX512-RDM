@@ -34,7 +34,6 @@
 
 #include "displayudf.h"
 #include "displayudfparams.h"
-#include "display_timeout.h"
 
 #include "rdmresponder.h"
 #include "rdmpersonality.h"

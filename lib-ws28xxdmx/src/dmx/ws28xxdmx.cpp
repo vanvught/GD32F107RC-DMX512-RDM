@@ -81,7 +81,7 @@ WS28xxDmx::~WS28xxDmx() {
 	DEBUG_EXIT
 }
 
-void WS28xxDmx::Start(__attribute__((unused)) uint32_t nPortIndex) {
+void WS28xxDmx::Start([[maybe_unused]] uint32_t nPortIndex) {
 	if (m_bIsStarted) {
 		return;
 	}
@@ -93,7 +93,7 @@ void WS28xxDmx::Start(__attribute__((unused)) uint32_t nPortIndex) {
 #endif
 }
 
-void WS28xxDmx::Stop(__attribute__((unused)) uint32_t nPortIndex) {
+void WS28xxDmx::Stop([[maybe_unused]] uint32_t nPortIndex) {
 	if (!m_bIsStarted) {
 		return;
 	}
