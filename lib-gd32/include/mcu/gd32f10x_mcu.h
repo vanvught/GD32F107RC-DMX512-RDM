@@ -71,7 +71,12 @@
 #endif
 
 #define USART2_RCU_CLK		RCU_USART2
-#if defined (USART2_PARTIAL_REMAP)
+#if defined (USART2_FULL_REMAP)
+# define USART2_GPIO_PORT	GPIOD
+# define USART2_GPIO_CLK	RCU_GPIOD
+# define USART2_TX_PIN		GPIO_PIN_8
+# define USART2_RX_PIN		GPIO_PIN_9
+#elif defined (USART2_PARTIAL_REMAP)
 # define USART2_GPIO_PORT	GPIOC
 # define USART2_GPIO_CLK	RCU_GPIOC
 # define USART2_TX_PIN		GPIO_PIN_10
@@ -190,7 +195,7 @@
 /**
  * DMA
  */
- 
+
 #define SPI0_DMAx			DMA0
 #define SPI0_TX_DMA_CHx		DMA_CH2
 
