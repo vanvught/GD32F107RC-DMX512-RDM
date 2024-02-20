@@ -31,6 +31,10 @@
 
 #include "mdns.h"
 
+#if defined (ENABLE_NTP_CLIENT)
+# include "ntpclient.h"
+#endif
+
 #include "displayudf.h"
 #include "displayudfparams.h"
 #include "displayhandler.h"
@@ -85,6 +89,12 @@ void main() {
 
 	fw.Print("Art-Net 4 PCA9685");
 	nw.Print();
+
+#if defined (ENABLE_NTP_CLIENT)
+	NtpClient ntpClient;
+	ntpClient.Start();
+	ntpClient.Print();
+#endif
 
 	PCA9685DmxParams pca9685DmxParams;
 	PCA9685Dmx pca9685Dmx;
@@ -187,6 +197,9 @@ void main() {
 		remoteConfig.Run();
 		configStore.Flash();
 		mDns.Run();
+#if defined (ENABLE_NTP_CLIENT)
+		ntpClient.Run();
+#endif
 		display.Run();
 		hw.Run();
 	}

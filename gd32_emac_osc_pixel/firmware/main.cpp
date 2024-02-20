@@ -31,6 +31,10 @@
 
 #include "mdns.h"
 
+#if defined (ENABLE_NTP_CLIENT)
+# include "ntpclient.h"
+#endif
+
 #include "display.h"
 #include "displayhandler.h"
 
@@ -73,6 +77,12 @@ void main() {
 	fw.Print("OSC Server Pixel controller {1x Universe}");
 	nw.Print();
 	
+#if defined (ENABLE_NTP_CLIENT)
+	NtpClient ntpClient;
+	ntpClient.Start();
+	ntpClient.Print();
+#endif
+
 	OSCServerParams params;
 	OscServer server;
 
@@ -164,6 +174,9 @@ void main() {
 			pixelTestPattern.Run();
 		}
 		mDns.Run();
+#if defined (ENABLE_NTP_CLIENT)
+		ntpClient.Run();
+#endif
 		display.Run();
 		hw.Run();
 	}
