@@ -87,12 +87,10 @@ ifeq ($(findstring OUTPUT_DMX_PCA9685,$(DEFINES)),OUTPUT_DMX_PCA9685)
 	LIBS+=pca9685dmx pca9685
 endif
 
-LIBS+=configstore flashcode network lightset 
-
 ifeq ($(findstring DISPLAY_UDF,$(DEFINES)),DISPLAY_UDF)
 	LIBS+=displayudf
 endif
 
-LIBS+=properties display device hal
+LIBS+=configstore flashcode network lightset properties display device hal
 
 $(info $$LIBS [${LIBS}])
