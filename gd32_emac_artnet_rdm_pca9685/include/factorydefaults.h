@@ -1,8 +1,8 @@
 /**
- * @file software_version.h
+ * @file factorydefaults.h
  *
  */
-/* Copyright (C) 2021-2024 by Arjan van Vught mailto:info@gd32-dmx.org
+/* Copyright (C) 2021-2023 by Arjan van Vught mailto:info@gd32-dmx.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,9 +23,26 @@
  * THE SOFTWARE.
  */
 
-#ifndef SOFTWARE_VERSION_H_
-#define SOFTWARE_VERSION_H_
+#ifndef FACTORYDEFAULTS_H_
+#define FACTORYDEFAULTS_H_
 
-constexpr char SOFTWARE_VERSION[] = "2.1";
+#include "remoteconfig.h"
+#include "configstore.h"
+#include "networkstore.h"
 
-#endif /* SOFTWARE_VERSION_H_ */
+namespace rdm {
+namespace device {
+namespace responder {
+
+void factorydefaults() {
+	RemoteConfig::Get()->SetDisable(false);
+	ConfigStore::Get()->ResetSetList(configstore::Store::RDMDEVICE);
+	ConfigStore::Get()->ResetSetList(configstore::Store::NODE);
+	NetworkStore::SaveDhcp(true);
+}
+
+}  // namespace responder
+}  // namespace device
+}  // namespace rdm
+
+#endif /* FACTORYDEFAULTS_H_ */

@@ -77,8 +77,3 @@ lib-*/src/linux/*
 lib-*/include/linux/*
 
 lib-network/src/noemac/*
-
-# RDMNet LLRP Only
-generate_sofware_version_id.sh
-factorydefaults.h
-rdmsoftwareversion.cpp
