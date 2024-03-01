@@ -91,10 +91,6 @@
  * SPI
  */
 
-// #define SPI2_REMAP
-#if defined (SPI2_REMAP)
-# define SPI_REMAP			SPI2_REMAP_GPIO
-#endif
 #define SPI_PERIPH			SPI2_PERIPH
 #define SPI_NSS_GPIOx		SPI2_NSS_GPIOx
 #define SPI_NSS_RCU_GPIOx	SPI2_NSS_RCU_GPIOx
