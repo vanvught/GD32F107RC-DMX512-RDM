@@ -54,6 +54,23 @@ WS28xxDmx::WS28xxDmx(PixelDmxConfiguration& pixelDmxConfiguration): m_pixelDmxCo
 	assert(s_pThis == nullptr);
 	s_pThis = this;
 
+	/*
+	 * DMX Footprint = (Channels per Pixel * Groups) <= 512 (1 Universe)
+	 * Groups = Led count / Grouping count
+	 *
+	 * Channels per Pixel * (Led count / Grouping count) <= 512
+	 * Channels per Pixel * Led count <= 512 * Grouping count
+	 *
+	 * Led count <= (512 * Grouping count) / Channels per Pixel
+	 */
+
+	pixelDmxConfiguration.Validate(1 , m_nChannelsPerPixel, m_PortInfo);
+
+	if (pixelDmxConfiguration.GetUniverses() > 1) {
+		const auto nCount = (512U * pixelDmxConfiguration.GetGroupingCount()) / m_nChannelsPerPixel;
+		pixelDmxConfiguration.SetCount(nCount);
+	}
+
 	m_pixelDmxConfiguration.Validate(1 , m_nChannelsPerPixel, m_PortInfo);
 
 	m_pWS28xx = new WS28xx(m_pixelDmxConfiguration);
