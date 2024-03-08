@@ -89,9 +89,6 @@
 					<sourceEntries>
 						<entry excluding="scr/e131|examples|src" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 						<entry excluding="artnet|e131|ltc|node|pca9685|pixel|rdm|widget" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="src"/>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src/artnet"/>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src/e131"/>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src/pixel"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -193,7 +190,6 @@
 						<entry excluding="device|device/file|device/i2c|device/ram/gd32|device/rom|device/spi|src|src/gd32" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 						<entry excluding="file|i2c|ram/gd32|rom|spi" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="device"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="device/rom"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="device/spi"/>
 						<entry excluding="gd32" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="src"/>
 					</sourceEntries>
 				</configuration>

@@ -92,17 +92,33 @@
  */
 
 #define SPI_PERIPH			SPI2_PERIPH
-#define SPI_NSS_GPIOx		SPI2_NSS_GPIOx
-#define SPI_NSS_RCU_GPIOx	SPI2_NSS_RCU_GPIOx
-#define SPI_NSS_GPIO_PINx	SPI2_NSS_GPIO_PINx
 #define SPI_RCU_CLK			SPI2_RCU_CLK
-#define SPI_GPIOx			SPI2_GPIOx
 #define SPI_RCU_GPIOx		SPI2_RCU_GPIOx
+#define SPI_GPIOx			SPI2_GPIOx
 #define SPI_SCK_PIN			SPI2_SCK_GPIO_PINx
 #define SPI_MISO_PIN		SPI2_MISO_GPIO_PINx
 #define SPI_MOSI_PIN		SPI2_MOSI_GPIO_PINx
+#define SPI_NSS_RCU_GPIOx	SPI2_NSS_RCU_GPIOx
+#define SPI_NSS_GPIOx		SPI2_NSS_GPIOx
+#define SPI_NSS_GPIO_PINx	SPI2_NSS_GPIO_PINx
 #define SPI_DMAx			SPI2_DMAx
 #define SPI_DMA_CHx			SPI2_TX_DMA_CHx
+
+/**
+ * I2S
+ */
+
+#define I2S_PERIPH			SPI2_PERIPH
+#define I2S_RCU_CLK			SPI2_RCU_CLK
+#define I2S_RCU_GPIOx		SPI2_RCU_GPIOx
+#define I2S_GPIOx			SPI2_GPIOx
+#define I2S_CK_GPIO_PINx		SPI2_SCK_GPIO_PINx
+#define I2S_SD_GPIO_PINx		SPI2_MOSI_GPIO_PINx
+#define I2S_WS_RCU_GPIOx	SPI2_NSS_RCU_GPIOx
+#define I2S_WS_GPIOx		SPI2_NSS_GPIOx
+#define I2S_WS_GPIO_PINx	SPI2_NSS_GPIO_PINx
+#define I2S_DMAx			SPI2_DMAx
+#define I2S_DMA_CHx			SPI2_TX_DMA_CHx
 
 /**
  * U(S)ART
@@ -170,7 +186,7 @@ static constexpr uint32_t PORT_A_TX = 0;
 #define GD32_MCU_NAME			"GD32F107RC"
 #define GD32_BOARD_NAME			"GD32F107RC"
 
-#include "mcu/gd32f107_mcu.h"
+#include "mcu/gd32f10x_mcu.h"
 #include "gd32_gpio.h"
 
 #define GD32_BOARD_LED1			GD32_PORT_TO_GPIO(GD32_GPIO_PORTC, 0)

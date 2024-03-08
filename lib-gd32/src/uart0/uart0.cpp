@@ -1,8 +1,8 @@
 /**
- * @file gd32f107_mcu.h
+ * @file uart0.cpp
  *
  */
-/* Copyright (C) 2024 by Arjan van Vught mailto:info@gd32-dmx.org
+/* Copyright (C) 2021-2024 by Arjan van Vught mailto:info@gd32-dmx.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,22 +23,34 @@
  * THE SOFTWARE.
  */
 
-#ifndef MCU_GD32F107_MCU_H_
-#define MCU_GD32F107_MCU_H_
+#include <cstdint>
+#include <cstdio>
 
-#if !defined(GD32F10X_CL)
-# error This file should not be included
+#include "gd32.h"
+#include "gd32_uart.h"
+
+extern "C" {
+void uart0_init(void) {
+	gd32_uart_begin(USART0, 115200U, GD32_UART_BITS_8, GD32_UART_PARITY_NONE, GD32_UART_STOP_1BIT);
+}
+
+void uart0_putc(int c) {
+	if (c == '\n') {
+		while (RESET == usart_flag_get(USART0, USART_FLAG_TBE))
+			;
+#if defined (GD32H7XX)
+		USART_TDATA(USART0) = USART_TDATA_TDATA & (uint32_t)'\r';
+#else
+		USART_DATA(USART0) = ((uint16_t) USART_DATA_DATA & (uint8_t) '\r');
 #endif
+	}
 
-#include <stdint.h>
-
-#define MCU_CLOCK_FREQ		(uint32_t)(108000000)
-#define AHB_CLOCK_FREQ     	(uint32_t)(108000000)
-#define APB1_CLOCK_FREQ		(uint32_t)(54000000)
-#define APB2_CLOCK_FREQ		(uint32_t)(108000000)
-#define TIMER_PSC_1MHZ		(uint16_t)(107)
-#define TIMER_PSC_10KHZ		(uint16_t)(10799)
-
-#include "gd32f10x_mcu.h"
-
-#endif /* MCU_GD32F107_MCU_H_ */
+	while (RESET == usart_flag_get(USART0, USART_FLAG_TBE))
+		;
+#if defined (GD32H7XX)
+	USART_TDATA(USART0) = USART_TDATA_TDATA & (uint32_t) c;
+#else
+	USART_DATA(USART0) = ((uint16_t) USART_DATA_DATA & (uint8_t) c);
+#endif
+}
+}

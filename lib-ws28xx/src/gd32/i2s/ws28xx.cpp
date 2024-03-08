@@ -2,7 +2,7 @@
  * @file ws28xx.cpp
  *
  */
-/* Copyright (C) 2022 by Arjan van Vught mailto:info@gd32-dmx.org
+/* Copyright (C) 2022-2024 by Arjan van Vught mailto:info@gd32-dmx.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,11 +30,9 @@
 #include "ws28xx.h"
 #include "pixelconfiguration.h"
 
-#include "hal_spi.h"
+#include "gd32_spi.h"
 
 #include "debug.h"
-
-using namespace pixel;
 
 static uint32_t s_tmp;
 
@@ -63,15 +61,15 @@ WS28xx::WS28xx(PixelConfiguration& pixelConfiguration) {
 
 	const auto type = m_PixelConfiguration.GetType();
 
-	if ((type == Type::APA102) || (type == Type::SK9822) || (type == Type::P9813)) {
+	if ((type == pixel::Type::APA102) || (type == pixel::Type::SK9822) || (type == pixel::Type::P9813)) {
 		m_nBufSize += nCount;
 		m_nBufSize += 8;
 	}
 
 	SetupBuffers();
 
-	FUNC_PREFIX(spi_dma_begin());
-	FUNC_PREFIX(spi_dma_set_speed_hz(pixelConfiguration.GetClockSpeedHz()));
+	i2s::gd32_spi_dma_begin();
+	i2s::gd32_spi_dma_set_speed_hz(pixelConfiguration.GetClockSpeedHz());
 
 	DEBUG_EXIT
 }
@@ -87,7 +85,7 @@ void WS28xx::SetupBuffers() {
 
 	uint32_t nSize;
 
-	m_pBuffer = const_cast<uint8_t*>(FUNC_PREFIX (spi_dma_tx_prepare(&nSize)));
+	m_pBuffer = const_cast<uint8_t *>(i2s::gd32_spi_dma_tx_prepare(&nSize));
 	assert(m_pBuffer != nullptr);
 
 	const auto nSizeHalf = nSize / 2;
@@ -118,7 +116,7 @@ void WS28xx::Update() {
 		pDst[i] = __builtin_bswap16(pSrc[i]);
 	}
 
-	FUNC_PREFIX(spi_dma_tx_start(m_pBlackoutBuffer, m_nBufSize));
+	i2s::gd32_spi_dma_tx_start(m_pBlackoutBuffer, m_nBufSize);
 }
 
 void WS28xx::Blackout() {
@@ -127,7 +125,7 @@ void WS28xx::Blackout() {
 	// A blackout can be called any time. Make sure the previous transmit is ended.
 	do {
 		__ISB();
-	} while (FUNC_PREFIX(spi_dma_tx_is_active()));
+	} while (i2s::gd32_spi_dma_tx_is_active());
 
 	auto *pBuffer = m_pBuffer;
 	m_pBuffer = m_pBlackoutBuffer;
@@ -135,21 +133,21 @@ void WS28xx::Blackout() {
 	const auto type = m_PixelConfiguration.GetType();
 	const auto nCount = m_PixelConfiguration.GetCount();
 
-	if ((type == Type::APA102) || (type == Type::SK9822) || (type == Type::P9813)) {
+	if ((type == pixel::Type::APA102) || (type == pixel::Type::SK9822) || (type == pixel::Type::P9813)) {
 		memset(m_pBuffer, 0, 4);
 
 		for (uint32_t nPixelIndex = 0; nPixelIndex < nCount; nPixelIndex++) {
 			SetPixel(nPixelIndex, 0, 0, 0);
 		}
 
-		if ((type == Type::APA102) || (type == Type::SK9822)) {
+		if ((type == pixel::Type::APA102) || (type == pixel::Type::SK9822)) {
 			memset(&m_pBuffer[m_nBufSize - 4], 0xFF, 4);
 		} else {
 			memset(&m_pBuffer[m_nBufSize - 4], 0, 4);
 		}
 	} else {
 		m_pBuffer[0] = 0x00;
-		memset(&m_pBuffer[1], type == Type::WS2801 ? 0 : m_PixelConfiguration.GetLowCode(), m_nBufSize);
+		memset(&m_pBuffer[1], type == pixel::Type::WS2801 ? 0 : m_PixelConfiguration.GetLowCode(), m_nBufSize);
 	}
 
 	Update();
@@ -157,7 +155,7 @@ void WS28xx::Blackout() {
 	// A blackout may not be interrupted.
 	do {
 		__ISB();
-	} while (FUNC_PREFIX(spi_dma_tx_is_active()));
+	} while (i2s::gd32_spi_dma_tx_is_active());
 
 	m_pBuffer = pBuffer;
 
@@ -170,7 +168,7 @@ void WS28xx::FullOn() {
 	// Can be called any time. Make sure the previous transmit is ended.
 	do {
 		__ISB();
-	} while (FUNC_PREFIX(spi_dma_tx_is_active()));
+	} while (i2s::gd32_spi_dma_tx_is_active());
 
 	auto *pBuffer = m_pBuffer;
 	m_pBuffer = m_pBlackoutBuffer;
@@ -178,21 +176,21 @@ void WS28xx::FullOn() {
 	const auto type = m_PixelConfiguration.GetType();
 	const auto nCount = m_PixelConfiguration.GetCount();
 
-	if ((type == Type::APA102) || (type == Type::SK9822) || (type == Type::P9813)) {
+	if ((type == pixel::Type::APA102) || (type == pixel::Type::SK9822) || (type == pixel::Type::P9813)) {
 		memset(m_pBuffer, 0, 4);
 
 		for (uint32_t nPixelIndex = 0; nPixelIndex < nCount; nPixelIndex++) {
 			SetPixel(nPixelIndex, 0xFF, 0xFF, 0xFF);
 		}
 
-		if ((type == Type::APA102) || (type == Type::SK9822)) {
+		if ((type == pixel::Type::APA102) || (type == pixel::Type::SK9822)) {
 			memset(&m_pBuffer[m_nBufSize - 4], 0xFF, 4);
 		} else {
 			memset(&m_pBuffer[m_nBufSize - 4], 0, 4);
 		}
 	} else {
 		m_pBuffer[0] = 0x00;
-		memset(&m_pBuffer[1], type == Type::WS2801 ? 0xFF : m_PixelConfiguration.GetHighCode(), m_nBufSize);
+		memset(&m_pBuffer[1], type == pixel::Type::WS2801 ? 0xFF : m_PixelConfiguration.GetHighCode(), m_nBufSize);
 	}
 
 	Update();
@@ -200,7 +198,7 @@ void WS28xx::FullOn() {
 	// May not be interrupted.
 	do {
 		__ISB();
-	} while (FUNC_PREFIX(spi_dma_tx_is_active()));
+	} while (i2s::gd32_spi_dma_tx_is_active());
 
 	m_pBuffer = pBuffer;
 

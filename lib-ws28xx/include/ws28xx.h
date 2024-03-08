@@ -2,7 +2,7 @@
  * @file ws28xx.h
  *
  */
-/* Copyright (C) 2017-2023 by Arjan van Vught mailto:info@orangepi-dmx.nl
+/* Copyright (C) 2017-2024 by Arjan van Vught mailto:info@orangepi-dmx.nl
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,9 +30,7 @@
 
 #include "pixelconfiguration.h"
 
-#if defined (USE_SPI_DMA)
-# include "hal_spi.h"
-#endif
+#include "hal_spi.h"
 
 class WS28xx {
 public:
@@ -42,15 +40,15 @@ public:
 	void SetPixel(uint32_t nIndex, uint8_t nRed, uint8_t nGreen, uint8_t nBlue);
 	void SetPixel(uint32_t nIndex, uint8_t nRed, uint8_t nGreen, uint8_t nBlue, uint8_t nWhite);
 
-#if defined ( USE_SPI_DMA )
 	bool IsUpdating () {
-		return FUNC_PREFIX (spi_dma_tx_is_active());
-	}
+#if defined (GD32)
+		return i2s::gd32_spi_dma_tx_is_active();
+#elif defined (H3)
+		return h3_spi_dma_tx_is_active();
 #else
-	bool IsUpdating() const {
 		return false;
-	}
 #endif
+	}
 
 	void Update();
 	void Blackout();
