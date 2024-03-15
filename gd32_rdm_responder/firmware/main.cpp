@@ -91,7 +91,7 @@ void main() {
 	pixelDmxParams.Load();
 	pixelDmxParams.Set(&pixelDmxConfiguration);
 
-	WS28xxDmx pixelDmx(pixelDmxConfiguration);
+	WS28xxDmx pixelDmx(&pixelDmxConfiguration);
 
 	const auto nTestPattern = static_cast<pixelpatterns::Pattern>(pixelDmxParams.GetTestPattern());
 	PixelTestPattern pixelTestPattern(nTestPattern, 1);
