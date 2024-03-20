@@ -30,6 +30,7 @@
 #include "network.h"
 #if !defined(NO_EMAC)
 # include "networkconst.h"
+# include "mdns.h"
 #endif
 
 #include "displayudf.h"
@@ -39,10 +40,11 @@
 #include "rdmpersonality.h"
 #include "rdmdeviceparams.h"
 #include "rdmsensorsparams.h"
-#if defined (ENABLE_RDM_SUBDEVICES)
+#if defined (CONFIG_RDM_ENABLE_SUBDEVICES)
 # include "rdmsubdevicesparams.h"
 #endif
 
+#include "pixeltype.h"
 #include "pixeldmxparams.h"
 #include "ws28xxdmx.h"
 
@@ -72,6 +74,7 @@ void main() {
 #if !defined(NO_EMAC)
 	display.TextStatus(NetworkConst::MSG_NETWORK_INIT, Display7SegmentMessage::INFO_NETWORK_INIT, CONSOLE_YELLOW);
 	Network nw;
+	MDNS mDns;
 	display.TextStatus(NetworkConst::MSG_NETWORK_STARTED, Display7SegmentMessage::INFO_NONE, CONSOLE_GREEN);
 #else
 	Network nw;
@@ -98,6 +101,17 @@ void main() {
 
 	PixelDmxParamsRdm pixelDmxParamsRdm;
 
+#if defined (CONFIG_RDM_MANUFACTURER_PIDS_SET)
+	static constexpr auto PERSONALITY_COUNT = static_cast<uint32_t>(pixel::Type::UNDEFINED);
+	RDMPersonality *personalities[PERSONALITY_COUNT];
+
+	for (uint32_t nIndex = 0; nIndex < PERSONALITY_COUNT; nIndex++) {
+		const auto description = PixelType::GetType(static_cast<pixel::Type>(nIndex));
+		personalities[nIndex] = new RDMPersonality(description, &pixelDmx);
+	}
+
+	RDMResponder rdmResponder(personalities, PERSONALITY_COUNT, static_cast<uint32_t>(pixelDmxConfiguration.GetType()) + 1U);
+#else
 	char aDescription[rdm::personality::DESCRIPTION_MAX_LENGTH];
 	snprintf(aDescription, sizeof(aDescription) - 1U, "%s:%u G%u [%s]",
 			PixelType::GetType(pixelDmxConfiguration.GetType()),
@@ -111,7 +125,7 @@ void main() {
 	};
 
 	RDMResponder rdmResponder(personalities, 2);
-
+#endif
 	rdmResponder.SetProductCategory(E120_PRODUCT_CATEGORY_FIXTURE);
 	rdmResponder.SetProductDetail(E120_PRODUCT_DETAIL_LED);
 
@@ -120,7 +134,7 @@ void main() {
 	rdmSensorsParams.Load();
 	rdmSensorsParams.Set();
 
-#if defined (ENABLE_RDM_SUBDEVICES)
+#if defined (CONFIG_RDM_ENABLE_SUBDEVICES)
 	RDMSubDevicesParams rdmSubDevicesParams;
 
 	rdmSubDevicesParams.Load();
@@ -198,10 +212,9 @@ void main() {
 #if !defined(NO_EMAC)
 		nw.Run();
 		remoteConfig.Run();
+		mDns.Run();
 #endif
-		if (__builtin_expect((PixelTestPattern::GetPattern() != pixelpatterns::Pattern::NONE), 0)) {
-			pixelTestPattern.Run();
-		}
+		pixelTestPattern.Run();
 		display.Run();
 		hw.Run();
 	}

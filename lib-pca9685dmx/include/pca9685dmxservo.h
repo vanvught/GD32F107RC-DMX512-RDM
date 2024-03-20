@@ -42,7 +42,7 @@ public:
 	void Start(__attribute__((unused)) const uint32_t nPortIndex = 0) override {};
 	void Stop(__attribute__((unused)) const uint32_t nPortIndex = 0) override {};
 
-	void SetData(uint32_t nPortIndex, const uint8_t *pDmxData, uint32_t nLength, const bool doUpdate = true) override;
+	void SetData(const uint32_t nPortIndex, const uint8_t *pDmxData, uint32_t nLength, const bool doUpdate = true) override;
 	void Sync(__attribute__((unused)) const uint32_t nPortIndex) override {};
 	void Sync(__attribute__((unused)) const bool doForce = false) override {};
 

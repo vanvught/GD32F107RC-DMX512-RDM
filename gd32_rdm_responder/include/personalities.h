@@ -17,7 +17,7 @@ namespace Personalities
 {
 
 enum class Personality : uint8_t {
-#if defined(ENABLE_CONFIG_PIDS)
+#if defined(CONFIG_RDM_ENABLE_CONFIG_PIDS)
 	WS2801,
 	WS2811,
 	WS2812,

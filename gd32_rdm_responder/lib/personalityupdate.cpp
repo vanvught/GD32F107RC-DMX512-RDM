@@ -2,7 +2,7 @@
  * @file personalityupdate.cpp
  *
  */
-/* Copyright (C) 2021-2023 by Arjan van Vught mailto:info@gd32-dmx.org
+/* Copyright (C) 2021-2024 by Arjan van Vught mailto:info@orangepi-dmx.nl
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,56 +23,60 @@
  * THE SOFTWARE.
  */
 
-#include <cassert>
 #include <cstdint>
 
-#include "displayudf.h"
-#include "personalities.h"
-#include "pixeldmxstore.h"
-#include "pixelpatterns.h"
-#include "pixeltestpattern.h"
 #include "rdmresponder.h"
+
 #include "ws28xxdmx.h"
+#include "pixeldmxstore.h"
+#include "pixeltestpattern.h"
+#include "pixelpatterns.h"
+#include "displayudf.h"
 
 #include "debug.h"
 
-void RDMResponder::PersonalityUpdate(uint32_t nPersonality) {
+void RDMResponder::PersonalityUpdate(uint32_t nPersonality)  {
 	DEBUG_PRINTF("nPersonality=%u", nPersonality);
 
-#if defined(ENABLE_CONFIG_PIDS)
-	const auto type = Personalities::toPixelType(Personalities::fromPersonalityIdx(nPersonality));
-	PixelDmxStore::SaveType(static_cast<uint8_t>(type));
+#if defined (CONFIG_RDM_MANUFACTURER_PIDS_SET)
+	assert(nPersonality != 0);
+	assert((nPersonality - 1U) < static_cast<uint32_t>(pixel::Type::UNDEFINED));
+	const auto type = static_cast<uint8_t>(nPersonality - 1);
+	PixelDmxStore::SaveType(type);
+
+	const auto nTestPattern = PixelTestPattern::Get()->GetPattern();
+
+	if (nTestPattern == pixelpatterns::Pattern::NONE) {
+	} else {
+		DisplayUdf::Get()->ClearEndOfLine();
+		DisplayUdf::Get()->Printf(6, "%s:%u", PixelPatterns::GetName(nTestPattern), static_cast<uint32_t>(nTestPattern));
+	}
+#else
 #endif
 
-	DisplayUdf::Get()->ClearLine(7);
+	DisplayUdf::Get()->ClearEndOfLine();
 	DisplayUdf::Get()->Printf(7, "%s:%d G%d %s",
-			PixelType::GetType(WS28xxDmx::Get()->GetType()),
-			WS28xxDmx::Get()->GetCount(), WS28xxDmx::Get()->GetGroupingCount(),
-			PixelType::GetMap(WS28xxDmx::Get()->GetMap()));
+					PixelType::GetType(WS28xxDmx::Get()->GetType()),
+					WS28xxDmx::Get()->GetCount(),
+					WS28xxDmx::Get()->GetGroupingCount(),
+					PixelType::GetMap(WS28xxDmx::Get()->GetMap()));
 	DisplayUdf::Get()->Show();
 
-	assert(nPersonality < PERSONALITY_COUNT);
-	switch (static_cast<Personalities::Personality>(nPersonality)) {
-#if !defined(ENABLE_CONFIG_PIDS)
-	case Personalities::Personality::CONFIG_MODE: {
-		DisplayUdf::Get()->ClearLine(3);
-		DisplayUdf::Get()->ClearLine(4);
-		DisplayUdf::Get()->Write(4, "Config Mode");
-		DisplayUdf::Get()->ClearLine(5);
-		break;
-	}
-#endif
-	default: {
-		const auto nTestPattern = PixelTestPattern::GetPattern();
+#if defined (CONFIG_RDM_MANUFACTURER_PIDS_SET)
+#else
+	if (nPersonality == 1) {
+		const auto nTestPattern = PixelTestPattern::Get()->GetPattern();
 
 		if (nTestPattern == pixelpatterns::Pattern::NONE) {
 		} else {
-			DisplayUdf::Get()->ClearLine(6);
-			DisplayUdf::Get()->Printf(6, "%s:%u",
-					PixelPatterns::GetName(nTestPattern),
-					static_cast<uint32_t>(nTestPattern));
+			DisplayUdf::Get()->ClearEndOfLine();
+			DisplayUdf::Get()->Printf(6, "%s:%u", PixelPatterns::GetName(nTestPattern), static_cast<uint32_t>(nTestPattern));
 		}
-		break;
+	} else if (nPersonality == 2) {
+		DisplayUdf::Get()->ClearLine(3);
+		DisplayUdf::Get()->ClearEndOfLine();
+		DisplayUdf::Get()->Write(4, "Config Mode");
+		DisplayUdf::Get()->ClearLine(5);
 	}
-	}
+#endif
 }

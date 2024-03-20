@@ -29,6 +29,8 @@
 									<listOptionValue builtIn="false" value="DISABLE_TFTP"/>
 									<listOptionValue builtIn="false" value="BOARD_GD32F107RC"/>
 									<listOptionValue builtIn="false" value="GD32F10X_CL"/>
+									<listOptionValue builtIn="false" value="CONFIG_RDM_ENABLE_MANUFACTURER_PIDS"/>
+									<listOptionValue builtIn="false" value="CONFIG_RDM_MANUFACTURER_PIDS_SET"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1563139810" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
@@ -58,6 +60,8 @@
 									<listOptionValue builtIn="false" value="GD32F10X_CL"/>
 									<listOptionValue builtIn="false" value="BOARD_GD32F107RC"/>
 									<listOptionValue builtIn="false" value="ENABLE_RDM_SELF_TEST"/>
+									<listOptionValue builtIn="false" value="CONFIG_RDM_ENABLE_MANUFACTURER_PIDS"/>
+									<listOptionValue builtIn="false" value="CONFIG_RDM_MANUFACTURER_PIDS_SET"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.1906657905" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
