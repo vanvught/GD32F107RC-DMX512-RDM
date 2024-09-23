@@ -8,6 +8,7 @@
     \version 2019-11-27, V2.1.1, firmware for GD32F10x
     \version 2020-07-14, V2.1.2, firmware for GD32F10x
     \version 2020-09-30, V2.2.0, firmware for GD32F10x
+    \version 2021-07-21, V2.2.1, firmware for GD32F10x
 */
 
 /*
@@ -90,7 +91,7 @@ void can_struct_para_init(can_struct_type_enum type, void* p_struct)
         /* used for can_init() */
         case CAN_INIT_STRUCT:
             ((can_parameter_struct*)p_struct)->auto_bus_off_recovery = DISABLE;
-            ((can_parameter_struct*)p_struct)->no_auto_retrans = DISABLE;
+            ((can_parameter_struct*)p_struct)->auto_retrans = DISABLE;
             ((can_parameter_struct*)p_struct)->auto_wake_up = DISABLE;
             ((can_parameter_struct*)p_struct)->prescaler = 0x03FFU; 
             ((can_parameter_struct*)p_struct)->rec_fifo_overwrite = DISABLE; 
@@ -160,7 +161,7 @@ void can_struct_para_init(can_struct_type_enum type, void* p_struct)
       \arg        time_triggered: ENABLE or DISABLE
       \arg        auto_bus_off_recovery: ENABLE or DISABLE
       \arg        auto_wake_up: ENABLE or DISABLE
-      \arg        no_auto_retrans: ENABLE or DISABLE
+      \arg        auto_retrans: ENABLE or DISABLE
       \arg        rec_fifo_overwrite: ENABLE or DISABLE
       \arg        trans_fifo_order: ENABLE or DISABLE
       \arg        prescaler: 0x0001 - 0x0400
@@ -209,18 +210,18 @@ ErrStatus can_init(uint32_t can_periph, can_parameter_struct* can_parameter_init
         }else{
             CAN_CTL(can_periph) &= ~CAN_CTL_AWU;
         }
-        /* automatic retransmission mode disable */
-        if(ENABLE == can_parameter_init->no_auto_retrans){
-            CAN_CTL(can_periph) |= CAN_CTL_ARD;
-        }else{
+        /* automatic retransmission mode */
+        if(ENABLE == can_parameter_init->auto_retrans){
             CAN_CTL(can_periph) &= ~CAN_CTL_ARD;
-        }
-        /* receive fifo overwrite mode */        
-        if(ENABLE == can_parameter_init->rec_fifo_overwrite){
-            CAN_CTL(can_periph) |= CAN_CTL_RFOD;
         }else{
+            CAN_CTL(can_periph) |= CAN_CTL_ARD;
+        }
+        /* receive fifo overwrite mode */
+        if(ENABLE == can_parameter_init->rec_fifo_overwrite){
             CAN_CTL(can_periph) &= ~CAN_CTL_RFOD;
-        } 
+        }else{
+            CAN_CTL(can_periph) |= CAN_CTL_RFOD;
+        }
         /* transmit fifo order */
         if(ENABLE == can_parameter_init->trans_fifo_order){
             CAN_CTL(can_periph) |= CAN_CTL_TFO;
@@ -843,7 +844,7 @@ uint8_t can_transmit_error_number_get(uint32_t can_periph)
       \arg        CAN_INT_BO: bus-off interrupt enable
       \arg        CAN_INT_ERRN: error number interrupt enable
       \arg        CAN_INT_ERR: error interrupt enable
-      \arg        CAN_INT_WU: wakeup interrupt enable
+      \arg        CAN_INT_WAKEUP: wakeup interrupt enable
       \arg        CAN_INT_SLPW: sleep working interrupt enable
     \param[out] none
     \retval     none
@@ -871,7 +872,7 @@ void can_interrupt_enable(uint32_t can_periph, uint32_t interrupt)
       \arg        CAN_INT_BO: bus-off interrupt enable
       \arg        CAN_INT_ERRN: error number interrupt enable
       \arg        CAN_INT_ERR: error interrupt enable
-      \arg        CAN_INT_WU: wakeup interrupt enable
+      \arg        CAN_INT_WAKEUP: wakeup interrupt enable
       \arg        CAN_INT_SLPW: sleep working interrupt enable
     \param[out] none
     \retval     none

@@ -2,7 +2,7 @@
  * @file handler.h
  *
  */
-/* Copyright (C) 2022 by Arjan van Vught mailto:info@gd32-dmx.org
+/* Copyright (C) 2022-2024 by Arjan van Vught mailto:info@gd32-dmx.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -56,9 +56,9 @@ public:
 	}
 
 	void Info(int32_t nHandle, uint32_t nRemoteIp, uint16_t nPortOutgoing) {
-		OscSimpleSend MsgSendLedType(nHandle, nRemoteIp, nPortOutgoing, "/info/ledtype", "s", const_cast<char *>(PixelType::GetType(m_pWS28xxDmx->GetType())));
-		OscSimpleSend MsgSendLedCount(nHandle, nRemoteIp, nPortOutgoing, "/info/ledcount", "i", static_cast<int>(m_pWS28xxDmx->GetCount()));
-		OscSimpleSend MsgSendGroupCount(nHandle, nRemoteIp, nPortOutgoing, "/info/groupcount", "i", static_cast<int>(m_pWS28xxDmx->GetGroupingCount()));
+		OscSimpleSend MsgSendLedType(nHandle, nRemoteIp, nPortOutgoing, "/info/ledtype", "s", const_cast<char *>(pixel::pixel_get_type(PixelConfiguration::Get().GetType())));
+		OscSimpleSend MsgSendLedCount(nHandle, nRemoteIp, nPortOutgoing, "/info/ledcount", "i", static_cast<int>(PixelConfiguration::Get().GetCount()));
+		OscSimpleSend MsgSendGroupCount(nHandle, nRemoteIp, nPortOutgoing, "/info/groupcount", "i", static_cast<int>(PixelDmxConfiguration::Get().GetGroupingCount()));
 	}
 
 private:

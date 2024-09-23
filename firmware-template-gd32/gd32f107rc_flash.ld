@@ -1,6 +1,6 @@
 MEMORY
 {
-  FLASH (rx)      : ORIGIN = 0x08007000, LENGTH = 74K
+  FLASH (rx)      : ORIGIN = 0x08008000, LENGTH = 76K
   RAM (xrw)       : ORIGIN = 0x20000000, LENGTH = 96K
 }
 
@@ -34,23 +34,6 @@ SECTIONS
     KEEP (*(.fini))
     . = ALIGN(4);
     _etext = .;
-    
-    . = ALIGN(8);
-     
-    PROVIDE_HIDDEN (__preinit_array_start = .);
-    KEEP (*(.preinit_array*))
-    PROVIDE_HIDDEN (__preinit_array_end = .);
-
-    PROVIDE_HIDDEN (__init_array_start = .);
-    KEEP (*(SORT(.init_array.*)))
-    KEEP (*(.init_array*))
-    PROVIDE_HIDDEN (__init_array_end = .);
-
-    PROVIDE_HIDDEN (__fini_array_start = .);
-    KEEP (*(.fini_array*))
-    KEEP (*(SORT(.fini_array.*)))
-    PROVIDE_HIDDEN (__fini_array_end = .);
-    
   } >FLASH
 
   .rodata :
@@ -59,6 +42,29 @@ SECTIONS
     *(.rodata)
     *(.rodata*)
     . = ALIGN(4);
+  } >FLASH
+  
+  .preinit_array :
+  {
+    PROVIDE_HIDDEN (__preinit_array_start = .);
+    KEEP (*(.preinit_array*))
+    PROVIDE_HIDDEN (__preinit_array_end = .);
+  } >FLASH
+  
+  .init_array :
+  {
+    PROVIDE_HIDDEN (__init_array_start = .);
+    KEEP (*(SORT(.init_array.*)))
+    KEEP (*(.init_array*))
+    PROVIDE_HIDDEN (__init_array_end = .);
+  } >FLASH
+  
+  .fini_array :
+  {
+    PROVIDE_HIDDEN (__fini_array_start = .);
+    KEEP (*(.fini_array*))
+    KEEP (*(SORT(.fini_array.*)))
+    PROVIDE_HIDDEN (__fini_array_end = .);
   } >FLASH
 
   .stack :
@@ -70,15 +76,6 @@ SECTIONS
     . = ALIGN(4);
   } >RAM AT>RAM
   
-  .heap :
-  {
-    . = ALIGN(4);
-    heap_low = .;
-    . = . + __heap_size;
-    heap_top = .;
-    . = ALIGN(4);
-  } >RAM AT>RAM
-
   _sidata = LOADADDR(.data);
   .data :
   {
@@ -103,9 +100,18 @@ SECTIONS
     __bss_end__ = _ebss;
   } >RAM
 
- . = ALIGN(8);
+  . = ALIGN(8);
   PROVIDE ( end = _ebss );
   PROVIDE ( _end = _ebss );
+
+  .heap :
+  {
+    . = ALIGN(4);
+    heap_low = .;
+    . = . + __heap_size;
+    heap_top = .;
+    . = ALIGN(4);
+  } >RAM
 
   /DISCARD/ :
   {
@@ -115,5 +121,4 @@ SECTIONS
   }
 }
 
- /* input sections */
-GROUP(libgcc.a libc.a)
+GROUP(libgcc.a)

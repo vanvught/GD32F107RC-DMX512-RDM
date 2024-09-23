@@ -2,7 +2,7 @@
  * @file oscsimplesend.cpp
  *
  */
-/* Copyright (C) 2020-2023 by Arjan van Vught mailto:info@orangepi-dmx.nl
+/* Copyright (C) 2020-2024 by Arjan van Vught mailto:info@gd32-dmx.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -122,5 +122,5 @@ void OscSimpleSend::UpdateMessage(const char *pPath, uint32_t nPathLength, char 
 void OscSimpleSend::Send(uint32_t nMessageLength, int32_t nHandle, uint32_t nIpAddress, uint16_t nPort) {
 	debug_dump(s_Message, nMessageLength);
 
-	Network::Get()->SendTo(nHandle, s_Message, static_cast<uint16_t>(nMessageLength), nIpAddress, nPort);
+	Network::Get()->SendTo(nHandle, s_Message, nMessageLength, nIpAddress, nPort);
 }

@@ -2,7 +2,7 @@
  * @file flashcode.cpp
  *
  */
-/* Copyright (C) 2021-2022 by Arjan van Vught mailto:info@orangepi-dmx.nl
+/* Copyright (C) 2021-2024 by Arjan van Vught mailto:info@gd32-dmx.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -41,7 +41,7 @@ FlashCode::FlashCode() {
 
 	m_IsDetected = true;
 
-	printf("FMC: Detected %s with total %d bytes [%d kB]\n", GetName(), GetSize(), GetSize() / 1024U);
+	printf("FMC: %s %u [%u]\n", GetName(), static_cast<unsigned int>(GetSize()), static_cast<unsigned int>(GetSize() / 1024U));
 	DEBUG_EXIT
 }
 

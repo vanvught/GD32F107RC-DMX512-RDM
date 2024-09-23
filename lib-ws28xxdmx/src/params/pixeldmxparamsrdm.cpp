@@ -2,7 +2,7 @@
  * @file pixeldmxparamsdmx.cpp
  *
  */
-/* Copyright (C) 2021-2023 by Arjan van Vught mailto:info@orangepi-dmx.nl
+/* Copyright (C) 2021-2024 by Arjan van Vught mailto:info@orangepi-dmx.nl
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,48 +23,25 @@
  * THE SOFTWARE.
  */
 
+#if defined (DEBUG_PIXELDMX)
+# undef NDEBUG
+#endif
+
 #include <cstdint>
 #include <cassert>
 
 #include "pixeldmxparamsrdm.h"
-#include "pixeltype.h"
 #include "pixeldmxstore.h"
+#include "pixeltype.h"
 
 #include "lightset.h"
 
 #include "debug.h"
 
-using namespace pixeldmx::paramsdmx;
-
-PixelDmxStore *PixelDmxParamsRdm::s_pWS28xxDmxStore;
-uint8_t PixelDmxParamsRdm::s_Data;
-
-PixelDmxParamsRdm::PixelDmxParamsRdm(PixelDmxStore *pWS28xxDmxStore) {
-	DEBUG_ENTRY
-
-	s_pWS28xxDmxStore = pWS28xxDmxStore;
-
-	DEBUG_EXIT
-}
-
-void PixelDmxParamsRdm::Start(__attribute__((unused)) uint32_t nPortIndex) {
-	DEBUG_ENTRY
+void PixelDmxParamsRdm::SetData([[maybe_unused]] uint32_t nPortIndex, const uint8_t *pData, uint32_t nLength, [[maybe_unused]] const bool doUpdate) {
 	assert(nPortIndex == 0);
 
-	DEBUG_EXIT
-}
-
-void PixelDmxParamsRdm::Stop(__attribute__((unused)) uint32_t nPortIndex) {
-	DEBUG_ENTRY
-	assert(nPortIndex == 0);
-
-	DEBUG_EXIT
-}
-
-void PixelDmxParamsRdm::SetData(__attribute__((unused)) uint32_t nPortIndex, const uint8_t *pData, uint32_t nLength, __attribute__((unused)) const bool doUpdate) {
-	assert(nPortIndex == 0);
-
-	if (nLength < DMX_FOOTPRINT) {
+	if (nLength < pixeldmx::paramsdmx::DMX_FOOTPRINT) {
 		return;
 	}
 
@@ -77,30 +54,32 @@ void PixelDmxParamsRdm::SetData(__attribute__((unused)) uint32_t nPortIndex, con
 	 * Slot 6: Program;
 	 */
 
-	assert(DMX_FOOTPRINT == 6);
+	assert(pixeldmx::paramsdmx::DMX_FOOTPRINT == 6);
 
-	const auto nLastIndex = DMX_FOOTPRINT - 1U;
+	const auto nLastIndex = pixeldmx::paramsdmx::DMX_FOOTPRINT - 1U;
 
 	if (pData[nLastIndex] == 0x00) {
-		s_Data = 0x00;
+		m_Data = 0x00;
 	} else {
-		if ((pData[nLastIndex] == 0xFF) && (s_Data == 0x00)) {
+		if ((pData[nLastIndex] == 0xFF) && (m_Data == 0x00)) {
 			DEBUG_PUTS("Program");
-			s_Data = 0xFF;
+			m_Data = 0xFF;
 
-			auto nData = pData[static_cast<uint32_t>(SlotInfo::TYPE)];
+			auto nData = pData[static_cast<uint32_t>(pixeldmx::paramsdmx::SlotInfo::TYPE)];
 			auto nUndefined = static_cast<uint8_t>(pixel::Type::UNDEFINED);
-			s_pWS28xxDmxStore->SaveType(nData < nUndefined ? nData : nUndefined);
+			const auto nType = nData < nUndefined ? nData : nUndefined;
+			PixelDmxStore::SaveType(nType);
 
 			// Validation takes place in class PixelDmxConfiguration
-			s_pWS28xxDmxStore->SaveCount(pData[static_cast<uint32_t>(SlotInfo::COUNT)]);
-			s_pWS28xxDmxStore->SaveGroupingCount(pData[static_cast<uint32_t>(SlotInfo::GROUPING_COUNT)]);
+			PixelDmxStore::SaveCount(pData[static_cast<uint32_t>(pixeldmx::paramsdmx::SlotInfo::COUNT)]);
+			PixelDmxStore::SaveGroupingCount(pData[static_cast<uint32_t>(pixeldmx::paramsdmx::SlotInfo::GROUPING_COUNT)]);
 
-			nData = pData[static_cast<uint32_t>(SlotInfo::MAP)];
+			nData = pData[static_cast<uint32_t>(pixeldmx::paramsdmx::SlotInfo::MAP)];
 			nUndefined = static_cast<uint8_t>(pixel::Map::UNDEFINED);
-			s_pWS28xxDmxStore->SaveMap(nData < nUndefined ? nData : nUndefined);
+			const auto nMap = nData < nUndefined ? nData : nUndefined;
+			PixelDmxStore::SaveMap(nMap);
 
-			s_pWS28xxDmxStore->SaveTestPattern(pData[static_cast<uint32_t>(SlotInfo::TEST_PATTERN)]);
+			PixelDmxStore::SaveTestPattern(pData[static_cast<uint32_t>(pixeldmx::paramsdmx::SlotInfo::TEST_PATTERN)]);
 		}
 	}
 
@@ -109,17 +88,6 @@ void PixelDmxParamsRdm::SetData(__attribute__((unused)) uint32_t nPortIndex, con
 	}
 }
 
-bool PixelDmxParamsRdm::GetSlotInfo(uint16_t nSlotOffset, lightset::SlotInfo &slotInfo) {
-	if (nSlotOffset >= DMX_FOOTPRINT) {
-		return false;
-	}
-
-	slotInfo.nType = 0x00;			// ST_PRIMARY
-	slotInfo.nCategory = 0xFFFF;	// SD_UNDEFINED;
-
-	return true;
-}
-
-void PixelDmxParamsRdm::Display(__attribute__((unused)) const uint8_t *pData) {
+void PixelDmxParamsRdm::Display([[maybe_unused]] const uint8_t *pData) {
 	// Weak
 }

@@ -60,12 +60,14 @@ do-tftp.sh
 
 sofware_version_id.h
 
-gd32f20x*.*
+gd32f2*.*
 lib-gd32/gd32f20x/*
-gd32f30x*.*
+gd32f3*.*
 lib-gd32/gd32f30x/*
-gd32f4xx*.*
+gd32f4*.*
 lib-gd32/gd32f4xx/*
+gd32fh*.*
+lib-gd32/gd32h7xx/*
 
 lib-*/src/esp8266/*
 lib-*/include/esp8266/*
@@ -77,8 +79,6 @@ lib-*/src/linux/*
 lib-*/include/linux/*
 
 lib-network/src/noemac/*
+lib-network/src/emac/gd32/h
 
-# RDMNet LLRP Only
-generate_sofware_version_id.sh
-factorydefaults.h
-rdmsoftwareversion.cpp
+software_version_id.h

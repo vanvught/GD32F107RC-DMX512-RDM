@@ -295,7 +295,7 @@ void adc_data_alignment_config(uint32_t adc_periph, uint32_t data_alignment);
 void adc_enable(uint32_t adc_periph);
 /* disable ADC interface */
 void adc_disable(uint32_t adc_periph);
-/* ADC calibration and reset calibration */
+/* ADC calibration and reset calibration(GD32F10x_MD series without this function) */
 void adc_calibration_enable(uint32_t adc_periph);
 /* enable the temperature sensor and Vrefint channel */
 void adc_tempsensor_vrefint_enable(void);

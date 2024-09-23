@@ -4,7 +4,11 @@ ifneq ($(MAKE_FLAGS),)
 	ifeq ($(findstring gd32f4xx,$(FAMILY)), gd32f4xx)
 		EXTRA_SRCDIR=src/gd32/f4xx
 	else
-		EXTRA_SRCDIR=src/gd32/fmc
+		ifeq ($(findstring gd32h7xx,$(FAMILY)), gd32h7xx)
+			EXTRA_SRCDIR=src/gd32/h7xx
+		else
+			EXTRA_SRCDIR=src/gd32/fmc
+		endif
 	endif
 else
 	EXTRA_SRCDIR=src/gd32/fmc
