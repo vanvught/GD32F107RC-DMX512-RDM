@@ -2,7 +2,7 @@
  * @file main.cpp
  *
  */
-/* Copyright (C) 2024 by Arjan van Vught mailto:info@gd32-dmx.org
+/* Copyright (C) 2024-2025 by Arjan van Vught mailto:info@gd32-dmx.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,129 +23,89 @@
  * THE SOFTWARE.
  */
 
-#if !defined (NODE_RDMNET_LLRP_ONLY)
-# error
+#if !defined(NODE_RDMNET_LLRP_ONLY)
+#error
 #endif
 
 #include <cstdio>
 #include <time.h>
 #include <sys/time.h>
 
-#include "hardware.h"
+#include "gd32/hal_watchdog.h"
 #include "network.h"
-#include "networkconst.h"
-
-#include "net/apps/mdns.h"
-
-#if defined (ENABLE_NTP_CLIENT)
-# include "net/apps/ntpclient.h"
-#endif
-
 #include "displayudf.h"
-#include "displayudfparams.h"
-
+#include "json/displayudfparams.h"
 #include "configstore.h"
-
 #include "remoteconfig.h"
-#include "remoteconfigparams.h"
-
-#include "rdmnetllrponly.h"
-#include "factorydefaults.h"
-
+#include "rdmnetdevice.h"
+#include "hwclock.h"
 #include "firmwareversion.h"
 #include "software_version.h"
+#include "software_version_id.h"
 
-#include "debug.h"
-
-void Hardware::RebootHandler() {
-	HwClock::Get()->SysToHc();
+namespace hal
+{
+void RebootHandler()
+{
+    HwClock::Get()->SysToHc();
 }
+} // namespace hal
 
-int main() {
-	Hardware hw;
-	DisplayUdf display;
-	ConfigStore configStore;
-	display.TextStatus(NetworkConst::MSG_NETWORK_INIT, CONSOLE_YELLOW);
-	Network nw;
-	MDNS mDns;
-	display.TextStatus(NetworkConst::MSG_NETWORK_STARTED, CONSOLE_GREEN);
-	FirmwareVersion fw(SOFTWARE_VERSION, __DATE__, __TIME__);
+int main() // NOLINT
+{
+    hal::Init();
+    DisplayUdf display;
+    ConfigStore config_store;
+    network::Init();
+    FirmwareVersion fw(SOFTWARE_VERSION, __DATE__, __TIME__, DEVICE_SOFTWARE_VERSION_ID);
 
-	fw.Print("RDMNet LLRP device only");
-	
+    fw.Print("RDMNet LLRP device only");
 
-#if defined (ENABLE_NTP_CLIENT)
-	NtpClient ntpClient;
-	ntpClient.Start();
-	ntpClient.Print();
-#endif
+    RDMNetDevice llrp_only_device;
+    llrp_only_device.Print();
 
-	RDMNetLLRPOnly device;
-	device.Init();
-	device.Print();
+    RemoteConfig remote_config(remoteconfig::Output::CONFIG, 0);
 
-	RemoteConfig remoteConfig(remoteconfig::Node::RDMNET_LLRP_ONLY, remoteconfig::Output::CONFIG, 0);
+    display.SetTitle("LLRP Only - TFTP");
+    display.Set(2, displayudf::Labels::kHostname);
+    display.Set(3, displayudf::Labels::kIp);
+    display.Set(4, displayudf::Labels::kDefaultGateway);
+    display.Set(5, displayudf::Labels::kVersion);
 
-	RemoteConfigParams remoteConfigParams;
-	remoteConfigParams.Load();
-	remoteConfigParams.Set(&remoteConfig);
+    json::DisplayUdfParams displayudf_params;
+    displayudf_params.Load();
+    displayudf_params.SetAndShow();
 
-	while (configStore.Flash())
-		;
+    display.Write(6, "mDNS enabled");
+    display.TextStatus("Device running", console::Colours::kConsoleGreen);
 
-	mDns.Print();
+    hal::WatchdogInit();
 
-	display.SetTitle("LLRP Only - TFTP");
-	display.Set(2, displayudf::Labels::HOSTNAME);
-	display.Set(3, displayudf::Labels::IP);
-	display.Set(4, displayudf::Labels::DEFAULT_GATEWAY);
-	display.Set(5, displayudf::Labels::VERSION);
+    auto time1 = time(nullptr);
 
-	DisplayUdfParams displayUdfParams;
-	displayUdfParams.Load();
-	displayUdfParams.Set(&display);
+    for (;;)
+    {
+        hal::WatchdogFeed();
+        network::Run();
+        hal::Run();
 
-	display.Show();
-	display.Write(6, "mDNS enabled");
-	display.TextStatus("Device running", CONSOLE_GREEN);
+        const auto kTime2 = time(nullptr);
 
-	hw.SetMode(hardware::ledblink::Mode::NORMAL);
+        struct tm hw_clock;
+        memset(&hw_clock, 0, sizeof(struct tm));
 
-	hw.WatchdogInit();
+        if (time1 != kTime2)
+        {
+            time1 = kTime2;
 
-	auto nTime1 = time(nullptr);
+            auto* tm = localtime(&kTime2);
+            struct tm tmlocal;
+            memcpy(&tmlocal, tm, sizeof(struct tm));
 
-	for (;;) {
-		hw.WatchdogFeed();
-		nw.Run();
-		mDns.Run();
-		device.Run();
-		remoteConfig.Run();
-#if defined (ENABLE_NTP_CLIENT)
-		ntpClient.Run();
-#endif
-		configStore.Flash();
-		display.Run();
-		hw.Run();
+            HwClock::Get()->Get(&hw_clock);
 
-		const auto nTime2 = time(nullptr);
-
-		if (nTime1 != nTime2) {
-			nTime1 = nTime2;
-
-			auto *tm = localtime(&nTime2);
-			struct tm tmlocal;
-			memcpy(&tmlocal, tm, sizeof(struct tm));
-
-			struct tm tmHwClock;
-			HwClock::Get()->Get(&tmHwClock);
-
-			display.Printf(7, "%.2d:%.2d:%.2d %.2d:%.2d:%.2d",
-					tmlocal.tm_hour, tmlocal.tm_min, tmlocal.tm_sec,
-					tmHwClock.tm_hour, tmHwClock.tm_min, tmHwClock.tm_sec);
-			printf("%.2d:%.2d:%.2d %.2d:%.2d:%.2d\n",
-					tmlocal.tm_hour, tmlocal.tm_min, tmlocal.tm_sec,
-					tmHwClock.tm_hour, tmHwClock.tm_min, tmHwClock.tm_sec);
-		}
-	}
+            display.Printf(7, "%.2d:%.2d:%.2d %.2d:%.2d:%.2d", tmlocal.tm_hour, tmlocal.tm_min, tmlocal.tm_sec, hw_clock.tm_hour, hw_clock.tm_min, hw_clock.tm_sec);
+            printf("%.2d:%.2d:%.2d %.2d:%.2d:%.2d\r", tmlocal.tm_hour, tmlocal.tm_min, tmlocal.tm_sec, hw_clock.tm_hour, hw_clock.tm_min, hw_clock.tm_sec);
+        }
+    }
 }

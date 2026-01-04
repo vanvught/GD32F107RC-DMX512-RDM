@@ -2,7 +2,7 @@
  * @file flashcode.cpp
  *
  */
-/* Copyright (C) 2021-2022 by Arjan van Vught mailto:info@gd32-dmx.org
+/* Copyright (C) 2021-2025 by Arjan van Vught mailto:info@gd32-dmx.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,288 +28,353 @@
 #include <cassert>
 
 #include "flashcode.h"
-
 #include "gd32.h"
 
 /**
  * With the latest GD32F firmware, this function is declared as static.
  */
-#if defined (GD32F20X)
-extern "C" {
-fmc_state_enum fmc_bank0_state_get(void);
-fmc_state_enum fmc_bank1_state_get(void);
+#if defined(GD32F20X)
+extern "C"
+{
+    fmc_state_enum fmc_bank0_state_get(void);
+    fmc_state_enum fmc_bank1_state_get(void);
 }
 #endif
 
-#include "debug.h"
+#include "firmware/debug/debug_debug.h"
 
-namespace flashcode {
+namespace flashcode
+{
 /* Backwards compatibility with SPI FLASH */
-static constexpr auto FLASH_SECTOR_SIZE = 4096U;
+static constexpr auto kFlashSectorSize = 4096U;
 /* The flash page size is 2KB for bank0 */
-static constexpr auto BANK0_FLASH_PAGE = (2U * 1024U);
+static constexpr auto kBanK0FlashPage = (2U * 1024U);
 /* The flash page size is 4KB for bank1 */
-static constexpr auto BANK1_FLASH_PAGE = (4U * 1024U);
+static constexpr auto kBanK1FlashPage = (4U * 1024U);
 
-enum class State {
-	IDLE,
-	ERASE_BUSY,
-	ERASE_PROGAM,
-	WRITE_BUSY,
-	WRITE_PROGRAM,
-	ERROR
+enum class State
+{
+    IDLE,
+    ERASE_BUSY,
+    ERASE_PROGAM,
+    WRITE_BUSY,
+    WRITE_PROGRAM,
+    ERROR
 };
 
-static State s_State = State::IDLE;
-static uint32_t s_nPage;
-static uint32_t s_nLength;
-static uint32_t s_nAddress;
-static uint32_t *s_pData;
+static State s_state = State::IDLE;
+static uint32_t s_page;
+static uint32_t s_length;
+static uint32_t s_address;
+static uint32_t* s_data;
 static bool s_isBank0;
-}  // namespace flashcode
+} // namespace flashcode
 
-bool static is_bank0(const uint32_t page_address) {
-	/* flash size is greater than 512k */
-	if (FMC_BANK0_SIZE < FMC_SIZE) {
-		if (FMC_BANK0_END_ADDRESS > page_address) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+bool static is_bank0(const uint32_t page_address)
+{
+    /* flash size is greater than 512k */
+    if (FMC_BANK0_SIZE < FMC_SIZE)
+    {
+        if (FMC_BANK0_END_ADDRESS > page_address)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 
-	return true;
+    return true;
 }
 
 using namespace flashcode;
 
-uint32_t FlashCode::GetSize() const {
-	return FMC_SIZE * 1024U;
+uint32_t FlashCode::GetSize() const
+{
+    return FMC_SIZE * 1024U;
 }
 
-uint32_t FlashCode::GetSectorSize() const {
-	return FLASH_SECTOR_SIZE;
+uint32_t FlashCode::GetSectorSize() const
+{
+    return kFlashSectorSize;
 }
 
-bool FlashCode::Read(uint32_t nOffset, uint32_t nLength, uint8_t *pBuffer, flashcode::result& nResult) {
-	DEBUG_ENTRY
-	DEBUG_PRINTF("offset=%p[%d], len=%u[%d], data=%p[%d]", nOffset, (((uint32_t)(nOffset) & 0x3) == 0), nLength, (((uint32_t)(nLength) & 0x3) == 0), pBuffer, (((uint32_t)(pBuffer) & 0x3) == 0));
+bool FlashCode::Read(uint32_t offset, uint32_t length, uint8_t* pBuffer, flashcode::Result& result)
+{
+    DEBUG_ENTRY();
+    DEBUG_PRINTF("offset=%p[%d], len=%u[%d], data=%p[%d]", offset, (((uint32_t)(offset) & 0x3) == 0), length, (((uint32_t)(length) & 0x3) == 0), pBuffer, (((uint32_t)(pBuffer) & 0x3) == 0));
 
-	const auto *pSrc = reinterpret_cast<uint32_t *>(nOffset + FLASH_BASE);
-	auto *pDst = reinterpret_cast<uint32_t *>(pBuffer);
+    const auto* pSrc = reinterpret_cast<uint32_t*>(offset + FLASH_BASE);
+    auto* pDst = reinterpret_cast<uint32_t*>(pBuffer);
 
-	while (nLength > 0) {
-		*pDst++ = *pSrc++;
-		nLength -= 4;
-	}
+    while (length > 0)
+    {
+        *pDst++ = *pSrc++;
+        length -= 4;
+    }
 
-	nResult = result::OK;
+    result = Result::kOk;
 
-	DEBUG_EXIT
-	return true;
+    DEBUG_EXIT();
+    return true;
 }
 
-bool FlashCode::Erase(uint32_t nOffset, uint32_t nLength, flashcode::result& nResult) {
-	DEBUG_ENTRY
-	DEBUG_PRINTF("State=%d", static_cast<int>(s_State));
+bool FlashCode::Erase(uint32_t offset, uint32_t length, flashcode::Result& result)
+{
+    DEBUG_ENTRY();
+    DEBUG_PRINTF("State=%d", static_cast<int>(s_state));
 
-	nResult = result::OK;
+    result = Result::kOk;
 
-	switch (s_State) {
-	case State::IDLE:
-		s_nPage = nOffset + FLASH_BASE;
-		s_nLength = nLength;
-		if ((s_isBank0 = is_bank0(s_nPage))) {
-			fmc_bank0_unlock();
-		} else {
-			fmc_bank1_unlock();
-		}
-		s_State = State::ERASE_BUSY;
-		DEBUG_PRINTF("isBank0=%d", static_cast<int>(s_isBank0));
-		DEBUG_EXIT
-		return false;
-		break;
-	case State::ERASE_BUSY:
-		if (s_isBank0) {
-			if (FMC_BUSY == fmc_bank0_state_get()) {
-				DEBUG_EXIT
-				return false;
-			}
-		} else {
-			if (FMC_BUSY == fmc_bank1_state_get()) {
-				DEBUG_EXIT
-				return false;
-			}
-		}
+    switch (s_state)
+    {
+        case State::IDLE:
+            s_page = offset + FLASH_BASE;
+            s_length = length;
+            if ((s_isBank0 = is_bank0(s_page)))
+            {
+                fmc_bank0_unlock();
+            }
+            else
+            {
+                fmc_bank1_unlock();
+            }
+            s_state = State::ERASE_BUSY;
+            DEBUG_PRINTF("isBank0=%d", static_cast<int>(s_isBank0));
+            DEBUG_EXIT();
+            return false;
+            break;
+        case State::ERASE_BUSY:
+            if (s_isBank0)
+            {
+                if (FMC_BUSY == fmc_bank0_state_get())
+                {
+                    DEBUG_EXIT();
+                    return false;
+                }
+            }
+            else
+            {
+                if (FMC_BUSY == fmc_bank1_state_get())
+                {
+                    DEBUG_EXIT();
+                    return false;
+                }
+            }
 
-		if (s_isBank0) {
-			FMC_CTL0 &= ~FMC_CTL0_PER;
-		} else {
-			FMC_CTL1 &= ~FMC_CTL1_PER;
-		}
+            if (s_isBank0)
+            {
+                FMC_CTL0 &= ~FMC_CTL0_PER;
+            }
+            else
+            {
+                FMC_CTL1 &= ~FMC_CTL1_PER;
+            }
 
-		if (s_nLength == 0) {
-			if (s_isBank0) {
-				fmc_bank0_lock();
-			} else {
-				fmc_bank1_lock();
-			}
-			s_State = State::IDLE;
-			DEBUG_EXIT
-			return true;
-		}
+            if (s_length == 0)
+            {
+                if (s_isBank0)
+                {
+                    fmc_bank0_lock();
+                }
+                else
+                {
+                    fmc_bank1_lock();
+                }
+                s_state = State::IDLE;
+                DEBUG_EXIT();
+                return true;
+            }
 
-		s_State = State::ERASE_PROGAM;
-		DEBUG_EXIT
-		return false;
-		break;
-	case State::ERASE_PROGAM:
-		if (s_nLength > 0) {
-			DEBUG_PRINTF("s_nPage=%p", s_nPage);
+            s_state = State::ERASE_PROGAM;
+            DEBUG_EXIT();
+            return false;
+            break;
+        case State::ERASE_PROGAM:
+            if (s_length > 0)
+            {
+                DEBUG_PRINTF("s_page=%p", s_page);
 
-			if (s_isBank0) {
-				FMC_CTL0 |= FMC_CTL0_PER;
-				FMC_ADDR0 = s_nPage;
-				FMC_CTL0 |= FMC_CTL0_START;
+                if (s_isBank0)
+                {
+                    FMC_CTL0 |= FMC_CTL0_PER;
+                    FMC_ADDR0 = s_page;
+                    FMC_CTL0 |= FMC_CTL0_START;
 
-				s_nLength -= BANK0_FLASH_PAGE;
-				s_nPage += BANK0_FLASH_PAGE;
-			} else {
-				FMC_CTL1 |= FMC_CTL1_PER;
-				FMC_ADDR1 = s_nPage;
-				if (FMC_OBSTAT & FMC_OBSTAT_SPC) {
-					FMC_ADDR0 = s_nPage;
-				}
-				FMC_CTL1 |= FMC_CTL1_START;
+                    s_length -= kBanK0FlashPage;
+                    s_page += kBanK0FlashPage;
+                }
+                else
+                {
+                    FMC_CTL1 |= FMC_CTL1_PER;
+                    FMC_ADDR1 = s_page;
+                    if (FMC_OBSTAT & FMC_OBSTAT_SPC)
+                    {
+                        FMC_ADDR0 = s_page;
+                    }
+                    FMC_CTL1 |= FMC_CTL1_START;
 
-				s_nLength -= BANK1_FLASH_PAGE;
-				s_nPage += BANK1_FLASH_PAGE;
-			}
-		}
+                    s_length -= kBanK1FlashPage;
+                    s_page += kBanK1FlashPage;
+                }
+            }
 
-		s_State = State::ERASE_BUSY;
-		DEBUG_EXIT
-		return false;
-		break;
-	case State::WRITE_BUSY:
-		if (s_isBank0) {
-			FMC_CTL0 &= ~FMC_CTL0_PG;
-		} else {
-			FMC_CTL1 &= ~FMC_CTL1_PG;
-		}
-		/*@fallthrough@*/
-		/* no break */
-	case State::WRITE_PROGRAM:
-		s_State = State::IDLE;
-		DEBUG_EXIT
-		return false;
-		break;
-	default:
-		assert(0);
-		__builtin_unreachable();
-		break;
-	}
+            s_state = State::ERASE_BUSY;
+            DEBUG_EXIT();
+            return false;
+            break;
+        case State::WRITE_BUSY:
+            if (s_isBank0)
+            {
+                FMC_CTL0 &= ~FMC_CTL0_PG;
+            }
+            else
+            {
+                FMC_CTL1 &= ~FMC_CTL1_PG;
+            }
+            /*@fallthrough@*/
+            /* no break */
+        case State::WRITE_PROGRAM:
+            s_state = State::IDLE;
+            DEBUG_EXIT();
+            return false;
+            break;
+        default:
+            assert(0);
+            __builtin_unreachable();
+            break;
+    }
 
-	assert(0);
-	__builtin_unreachable();
-	return true;
+    assert(0);
+    __builtin_unreachable();
+    return true;
 }
 
-bool FlashCode::Write(uint32_t nOffset, uint32_t nLength, const uint8_t *pBuffer, flashcode::result& nResult) {
-	nResult = result::OK;
+bool FlashCode::Write(uint32_t offset, uint32_t length, const uint8_t* pBuffer, flashcode::Result& result)
+{
+    result = Result::kOk;
 
-	switch (s_State) {
-	case State::IDLE:
-		DEBUG_PUTS("State::IDLE");
-		s_nAddress = nOffset + FLASH_BASE;
-		s_pData = const_cast<uint32_t *>(reinterpret_cast<const uint32_t *>(pBuffer));
-		s_nLength = nLength;
-		if ((s_isBank0 = is_bank0(s_nAddress))) {
-			fmc_bank0_unlock();
-		} else {
-			fmc_bank1_unlock();
-		}
-		s_State = State::WRITE_BUSY;
-		DEBUG_PRINTF("isBank0=%d", static_cast<int>(s_isBank0));
-		DEBUG_EXIT
-		return false;
-		break;
-	case State::WRITE_BUSY:
-		if (s_isBank0) {
-			if (FMC_BUSY == fmc_bank0_state_get()) {
-				DEBUG_EXIT
-				return false;
-			}
-		} else {
-			if (FMC_BUSY == fmc_bank1_state_get()) {
-				DEBUG_EXIT
-				return false;
-			}
-		}
+    switch (s_state)
+    {
+        case State::IDLE:
+            DEBUG_PUTS("State::IDLE");
+            s_address = offset + FLASH_BASE;
+            s_data = const_cast<uint32_t*>(reinterpret_cast<const uint32_t*>(pBuffer));
+            s_length = length;
+            if ((s_isBank0 = is_bank0(s_address)))
+            {
+                fmc_bank0_unlock();
+            }
+            else
+            {
+                fmc_bank1_unlock();
+            }
+            s_state = State::WRITE_BUSY;
+            DEBUG_PRINTF("isBank0=%d", static_cast<int>(s_isBank0));
+            DEBUG_EXIT();
+            return false;
+            break;
+        case State::WRITE_BUSY:
+            if (s_isBank0)
+            {
+                if (FMC_BUSY == fmc_bank0_state_get())
+                {
+                    DEBUG_EXIT();
+                    return false;
+                }
+            }
+            else
+            {
+                if (FMC_BUSY == fmc_bank1_state_get())
+                {
+                    DEBUG_EXIT();
+                    return false;
+                }
+            }
 
-		if (s_isBank0) {
-			FMC_CTL0 &= ~FMC_CTL0_PG;
-		} else {
-			FMC_CTL1 &= ~FMC_CTL1_PG;
-		}
+            if (s_isBank0)
+            {
+                FMC_CTL0 &= ~FMC_CTL0_PG;
+            }
+            else
+            {
+                FMC_CTL1 &= ~FMC_CTL1_PG;
+            }
 
-		if (s_nLength == 0) {
-			if (s_isBank0) {
-				fmc_bank0_lock();
-			} else {
-				fmc_bank1_lock();
-			}
-			s_State = State::IDLE;
-			DEBUG_EXIT
-			return true;
-		}
+            if (s_length == 0)
+            {
+                if (s_isBank0)
+                {
+                    fmc_bank0_lock();
+                }
+                else
+                {
+                    fmc_bank1_lock();
+                }
+                s_state = State::IDLE;
+                DEBUG_EXIT();
+                return true;
+            }
 
-		s_State = State::WRITE_PROGRAM;
-		return false;
-		break;
-	case State::WRITE_PROGRAM:
-		if (s_nLength >= 4) {
-			if (s_isBank0) {
-				FMC_CTL0 |= FMC_CTL0_PG;
-			} else {
-				FMC_CTL1 |= FMC_CTL1_PG;
-			}
-			REG32(s_nAddress) = *s_pData;
+            s_state = State::WRITE_PROGRAM;
+            return false;
+            break;
+        case State::WRITE_PROGRAM:
+            if (s_length >= 4)
+            {
+                if (s_isBank0)
+                {
+                    FMC_CTL0 |= FMC_CTL0_PG;
+                }
+                else
+                {
+                    FMC_CTL1 |= FMC_CTL1_PG;
+                }
+                REG32(s_address) = *s_data;
 
-			s_pData++;
-			s_nAddress += 4;
-			s_nLength -= 4;
-		} else if (s_nLength > 0) {
-			if (s_isBank0) {
-				FMC_CTL0 |= FMC_CTL0_PG;
-			} else {
-				FMC_CTL1 |= FMC_CTL1_PG;
-			}
-			REG32(s_nAddress) = *s_pData;
-		}
-		s_State = State::WRITE_BUSY;
-		return false;
-		break;
-	case State::ERASE_BUSY:
-		if (s_isBank0) {
-			FMC_CTL0 &= ~FMC_CTL0_PER;
-		} else {
-			FMC_CTL1 &= ~FMC_CTL1_PER;
-		}
-		/*@fallthrough@*/
-		/* no break */
-	case State::ERASE_PROGAM:
-		s_State = State::IDLE;
-		DEBUG_EXIT
-		return false;
-		break;
-	default:
-		assert(0);
-		__builtin_unreachable();
-		break;
-	}
+                s_data++;
+                s_address += 4;
+                s_length -= 4;
+            }
+            else if (s_length > 0)
+            {
+                if (s_isBank0)
+                {
+                    FMC_CTL0 |= FMC_CTL0_PG;
+                }
+                else
+                {
+                    FMC_CTL1 |= FMC_CTL1_PG;
+                }
+                REG32(s_address) = *s_data;
+            }
+            s_state = State::WRITE_BUSY;
+            return false;
+            break;
+        case State::ERASE_BUSY:
+            if (s_isBank0)
+            {
+                FMC_CTL0 &= ~FMC_CTL0_PER;
+            }
+            else
+            {
+                FMC_CTL1 &= ~FMC_CTL1_PER;
+            }
+            /*@fallthrough@*/
+            /* no break */
+        case State::ERASE_PROGAM:
+            s_state = State::IDLE;
+            DEBUG_EXIT();
+            return false;
+            break;
+        default:
+            assert(0);
+            __builtin_unreachable();
+            break;
+    }
 
-	assert(0);
-	__builtin_unreachable();
-	return true;
+    assert(0);
+    __builtin_unreachable();
+    return true;
 }

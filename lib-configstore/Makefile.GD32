@@ -1,11 +1,16 @@
 DEFINES =NDEBUG
 
 ifneq ($(MAKE_FLAGS),)
+	ifneq (,$(findstring CONFIG_STORE_USE_RAM,$(MAKE_FLAGS)))
+		EXTRA_SRCDIR+=device/gd32/ram
+	endif
+	ifneq (,$(findstring CONFIG_STORE_USE_ROM,$(MAKE_FLAGS)))
+		EXTRA_SRCDIR+=device/gd32/rom
+	endif
 else
 	DEFINES+=CONFIG_STORE_USE_RAM
+	EXTRA_SRCDIR=device/gd32/ram
 endif
-
-EXTRA_SRCDIR=device/ram/gd32
 
 include Rules.mk
 include ../firmware-template-gd32/lib/Rules.mk

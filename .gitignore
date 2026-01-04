@@ -82,3 +82,7 @@ lib-network/src/noemac/*
 lib-network/src/emac/gd32/h
 
 software_version_id.h
+*._h
+*._cpp
+/.cache
+compile_commands.json

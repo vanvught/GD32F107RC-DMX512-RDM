@@ -29,6 +29,6 @@ There is a 1x DMX/RDM board from BitWizard -> [https://www.bitwizard.nl/shop/dmx
 ### OSC Server Pixel
 There is an opensource hardware board available here -> [https://github.com/vanvught/h3dmx512-zip/tree/master/eagle/Orange-Pi-Zero/Pixel/P5](https://github.com/vanvught/h3dmx512-zip/tree/master/eagle/Orange-Pi-Zero/Pixel/P5)
 
-## Remote Configuration Manager
-[https://github.com/vanvught/Remote-Config-UI/releases](https://github.com/vanvught/Remote-Config-UI/releases)<br>
-<img alt="GitHub release" src="https://img.shields.io/github/v/release/vanvught/Remote-Config-UI">
+## GD32 Firmware Update UI
+[https://github.com/vanvught/GD32F-Firmware-Update-UI/releases](https://github.com/vanvught/GD32F-Firmware-Update-UI/releases)<br>
+<img alt="GitHub release" src="https://img.shields.io/github/v/release/vanvught/GD32F-Firmware-Update-UI">

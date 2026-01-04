@@ -1,8 +1,7 @@
 /**
  * @file handler.h
- *
  */
-/* Copyright (C) 2022-2024 by Arjan van Vught mailto:info@gd32-dmx.org
+/* Copyright (C) 2022-2025 by Arjan van Vught mailto:info@gd32-dmx.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,37 +31,37 @@
 #include "oscsimplesend.h"
 
 #include "pixeltype.h"
-#include "ws28xxdmx.h"
+#include "pixeldmx.h"
 
-#include "debug.h"
+#include "firmware/debug/debug_debug.h"
 
 class Handler: public OscServerHandler  {
 public:
-	Handler(WS28xxDmx *pWS28xxDmx): m_pWS28xxDmx(pWS28xxDmx) {
-		DEBUG_ENTRY
-		DEBUG_EXIT
+	Handler(PixelDmx *pPixelDmx): m_pPixelDmx(pPixelDmx) {
+		DEBUG_ENTRY();
+		DEBUG_EXIT();
 	}
 
-	void Blackout() {
-		DEBUG_ENTRY
-		m_pWS28xxDmx->Blackout(true);
-		DEBUG_EXIT
+	void Blackout() override {
+		DEBUG_ENTRY();
+		m_pPixelDmx->Blackout(true);
+		DEBUG_EXIT();
 	}
 
-	void Update() {
-		DEBUG_ENTRY
-		m_pWS28xxDmx->Blackout(false);
-		DEBUG_EXIT
+	void Update() override {
+		DEBUG_ENTRY();
+		m_pPixelDmx->Blackout(false);
+		DEBUG_EXIT();
 	}
 
-	void Info(int32_t nHandle, uint32_t nRemoteIp, uint16_t nPortOutgoing) {
-		OscSimpleSend MsgSendLedType(nHandle, nRemoteIp, nPortOutgoing, "/info/ledtype", "s", const_cast<char *>(pixel::pixel_get_type(PixelConfiguration::Get().GetType())));
+	void Info(int32_t nHandle, uint32_t nRemoteIp, uint16_t nPortOutgoing) override {
+		OscSimpleSend MsgSendLedType(nHandle, nRemoteIp, nPortOutgoing, "/info/ledtype", "s", const_cast<char *>(pixel::GetType(PixelConfiguration::Get().GetType())));
 		OscSimpleSend MsgSendLedCount(nHandle, nRemoteIp, nPortOutgoing, "/info/ledcount", "i", static_cast<int>(PixelConfiguration::Get().GetCount()));
 		OscSimpleSend MsgSendGroupCount(nHandle, nRemoteIp, nPortOutgoing, "/info/groupcount", "i", static_cast<int>(PixelDmxConfiguration::Get().GetGroupingCount()));
 	}
 
 private:
-	WS28xxDmx *m_pWS28xxDmx;
+	PixelDmx *m_pPixelDmx;
 };
 
 #endif /* HANDLER_H_ */

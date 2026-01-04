@@ -2,7 +2,7 @@
  * @file is_config_mode.h
  *
  */
-/* Copyright (C) 2021-2022 by Arjan van Vught mailto:info@gd32-dmx.org
+/* Copyright (C) 2021-2025 by Arjan van Vught mailto:info@gd32-dmx.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,14 +28,15 @@
 
 #include "gd32.h"
 
-bool is_config_mode() {
+bool IsConfigMode()
+{
     rcu_periph_clock_enable(KEY1_RCU_GPIOx);
     gpio_init(KEY1_GPIOx, GPIO_MODE_IPU, GPIO_OSPEED_50MHZ, KEY1_PINx);
-    const auto isConfigMode = (gpio_input_bit_get(KEY1_GPIOx, KEY1_PINx) == RESET);
+    const auto kIsConfigMode = (gpio_input_bit_get(KEY1_GPIOx, KEY1_PINx) == RESET);
 
-    DEBUG_PRINTF("isConfigMode=%s", isConfigMode ? "Yes" : "No");
+    DEBUG_PRINTF("kIsConfigMode=%s", kIsConfigMode ? "Yes" : "No");
 
-    return isConfigMode;
+    return kIsConfigMode;
 }
 
-#endif /* IS_CONFIG_MODE_H_ */
+#endif  // IS_CONFIG_MODE_H_

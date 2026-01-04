@@ -1,4 +1,4 @@
-DEFINES =NODE_OSC_SERVER LIGHTSET_PORTS=1
+DEFINES =NODE_OSC_SERVER DMXNODE_PORTS=1
 
 DEFINES+=OUTPUT_DMX_SEND
 
@@ -21,3 +21,4 @@ SRCDIR=firmware lib
 include ../firmware-template-gd32/Rules.mk
 
 prerequisites:
+
