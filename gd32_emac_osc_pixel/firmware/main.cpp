@@ -27,7 +27,6 @@
 #include "hal_boardinfo.h"
 #include "display.h"
 #include "emac/network.h"
-#include "net/apps/mdns.h"
 #include "oscserver.h"
 #include "json/oscserverparams.h"
 #include "oscservermsgconst.h"
@@ -68,8 +67,6 @@ int main() // NOLINT
     oscserver_params.Load();
     oscserver_params.Set();
 
-    mdns::ServiceRecordAdd(nullptr, mdns::Services::OSC, "type=server", oscserver.GetPortIncoming());
-
     display.TextStatus(OscServerMsgConst::PARAMS, console::Colours::kConsoleYellow);
 
     PixelDmx pixeldmx;
@@ -94,7 +91,7 @@ int main() // NOLINT
 
     display.Printf(1, "OSC Pixel 1");
     display.Write(2, hal::BoardName(text_length));
-    display.Printf(3, "IP: " IPSTR " %c", IP2STR(net::GetPrimaryIp()), network::iface::IsDhcpKnown() ? (network::iface::IsDhcpUsed() ? 'D' : 'S') : ' ');
+    display.Printf(3, "IP: " IPSTR " %c", IP2STR(network::GetPrimaryIp()), network::iface::IsDhcpKnown() ? (network::iface::Dhcp() ? 'D' : 'S') : ' ');
     display.Printf(4, "In: %d", oscserver.GetPortIncoming());
     display.Printf(5, "Out: %d", oscserver.GetPortOutgoing());
 
