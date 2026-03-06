@@ -41,7 +41,7 @@
 #include "hwclock.h"
 #include "firmwareversion.h"
 #include "software_version.h"
-#include "software_version_id.h"
+
 
 namespace hal
 {
@@ -57,7 +57,7 @@ int main() // NOLINT
     DisplayUdf display;
     ConfigStore config_store;
     network::Init();
-    FirmwareVersion fw(SOFTWARE_VERSION, __DATE__, __TIME__, DEVICE_SOFTWARE_VERSION_ID);
+    FirmwareVersion fw(SOFTWARE_VERSION, __DATE__, __TIME__);
 
     fw.Print("RDMNet LLRP device only");
 
