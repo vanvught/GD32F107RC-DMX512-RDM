@@ -6,6 +6,9 @@ EXTRA_INCLUDES+=../lib-network/include
 EXTRA_SRCDIR+=src/json
 
 ifneq ($(MAKE_FLAGS),)
+	ifneq (,$(findstring NODE_RDMNET_LLRP_ONLY,$(MAKE_FLAGS)))
+		EXTRA_INCLUDES+=../lib-rdm/include
+	endif
 	ifeq ($(findstring OUTPUT_DMX_SEND,$(MAKE_FLAGS)), OUTPUT_DMX_SEND)
 		EXTRA_INCLUDES+=../lib-dmx/include
 	endif
