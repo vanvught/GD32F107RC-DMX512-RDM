@@ -11,6 +11,7 @@
 #pragma GCC push_options
 #pragma GCC optimize ("O2")
 #pragma GCC optimize ("-funroll-loops")
+#pragma GCC optimize ("-fprefetch-loop-arrays")
 
 #include <cstdint>
 #include <cstddef>

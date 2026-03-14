@@ -27,6 +27,8 @@
 #pragma GCC optimize("O2")
 #pragma GCC optimize("no-tree-loop-distribute-patterns")
 
+#include <cstdint>
+
 #include "gd32/hal.h"
 #include "gd32/hal_watchdog.h"
 #include "network.h"
@@ -45,7 +47,7 @@
 #include "remoteconfig.h"
 #include "configstore.h"
 #include "firmwareversion.h"
-#include "kSoftwareVersion.h"
+#include "software_version.h"
 #include "common/utils/utils_flags.h"
 #include "configurationstore.h"
 
@@ -64,7 +66,7 @@ int main() // NOLINT
     DisplayUdf display;
     ConfigStore config_store;
     network::Init();
-    FirmwareVersion fw(kSoftwareVersion, __DATE__, __TIME__);
+    FirmwareVersion fw(SOFTWARE_VERSION, __DATE__, __TIME__);
 
     fw.Print("Art-Net 4 Pixel controller {1x 4 Universes}");
 
