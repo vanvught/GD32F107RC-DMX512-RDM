@@ -38,7 +38,7 @@
 #include "remoteconfig.h"
 #include "configstore.h"
 #include "firmwareversion.h"
-#include "software_version.h"
+#include "kSoftwareVersion.h"
 
 namespace hal
 {
@@ -54,7 +54,7 @@ int main() // NOLINT
     Display display;
     ConfigStore config_store;
     network::Init();
-    FirmwareVersion fw(SOFTWARE_VERSION, __DATE__, __TIME__);
+    FirmwareVersion fw(kSoftwareVersion, __DATE__, __TIME__);
 
     fw.Print("OSC Server DMX controller {1x Universe}");
 

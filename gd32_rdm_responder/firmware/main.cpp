@@ -38,7 +38,7 @@
 #include "firmware/pixeldmx/show.h"
 #include "configstore.h"
 #include "firmwareversion.h"
-#include "software_version.h"
+#include "kSoftwareVersion.h"
 #include "is_config_mode.h"
 #include "common/utils/utils_flags.h"
 #include "configurationstore.h"
@@ -63,7 +63,7 @@ int main() // NOLINT
 #if !defined(NO_EMAC)    
     network::Init();
 #endif    
-    FirmwareVersion fw(SOFTWARE_VERSION, __DATE__, __TIME__);
+    FirmwareVersion fw(kSoftwareVersion, __DATE__, __TIME__);
 
     const auto kIsConfigMode = IsConfigMode();
 
