@@ -1,8 +1,8 @@
 /**
- * @file board_dmx4.h
+ * @file utils_string.h
  *
  */
-/* Copyright (C) 2022-2026 by Arjan van Vught mailto:info@gd32-dmx.org
+/* Copyright (C) 2026 by Arjan van Vught mailto:info@gd32-dmx.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,40 +23,22 @@
  * THE SOFTWARE.
  */
 
-#ifndef DMX_BOARD_DMX4_H_
-#define DMX_BOARD_DMX4_H_
+#ifndef COMMON_UTILS_UTILS_STRING_H_
+#define COMMON_UTILS_UTILS_STRING_H_
 
 #include <cstdint>
 
-#include "gd32.h" // IWYU pragma: keep
+namespace common
+{
+constexpr uint32_t ConstStrLen(const char* s)
+{
+    uint32_t len = 0;
+    while (s[len] != '\0')
+    {
+        ++len;
+    }
+    return len;
+}
+} // namespace common
 
-#define DMX_MAX_PORTS 4
-
-namespace dmx::config {
-namespace max {
-inline constexpr uint32_t kPorts = DMX_MAX_PORTS;
-} // namespace max
-
-#define DMX_USE_USART0
-#define DMX_USE_USART2
-#define DMX_USE_UART4
-#define DMX_USE_USART5
-
-inline constexpr auto kUsart0Port = 0;
-inline constexpr auto kUsart2Port = 1;
-inline constexpr auto kUart4Port = 2;
-inline constexpr auto kUsart5Port = 3;
-
-inline constexpr auto kDirPort0GpioPort = GPIOA;
-inline constexpr auto kDirPort0GpioPin = GPIO_PIN_4;
-
-inline constexpr auto kDirPort1GpioPort = GPIOB;
-inline constexpr auto kDirPort1GpioPin = GPIO_PIN_10;
-
-inline constexpr auto kDirPort2GpioPort = GPIOA;
-inline constexpr auto kDirPort2GpioPin = GPIO_PIN_5;
-
-inline constexpr auto kDirPort3GpioPort = GPIOB;
-inline constexpr auto kDirPort3GpioPin = GPIO_PIN_14;
-} // namespace dmx::config
-#endif // DMX_BOARD_DMX4_H_
+#endif // COMMON_UTILS_UTILS_STRING_H_
