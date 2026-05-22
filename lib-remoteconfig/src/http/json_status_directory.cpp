@@ -1,8 +1,7 @@
 /**
- * JsonGetPhystatus.cpp
- *
+ * @file json_status_directory.cpp
  */
-/* Copyright (C) 2023-2025 by Arjan van Vught mailto:info@gd32-dmx.org
+/* Copyright (C) 2025-2026 by Arjan van Vught mailto:info@gd32-dmx.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,20 +22,32 @@
  * THE SOFTWARE.
  */
 
+#include <cstddef>
+#include <cstdint>
 #include <cstdio>
 
-#include "emac/phy.h"
+#include "http/json_infos.h"
 
-namespace remoteconfig::net
-{
-uint32_t JsonGetPhystatus(char* out_buffer, uint32_t out_buffer_size)
-{
-    ::net::phy::Status phy_status;
-    ::net::phy::CustomizedStatus(phy_status);
+namespace json::status {
+uint32_t Directory(char* out_buffer, uint32_t out_buffer_size) {
+    uint32_t total = 0;
 
-    const auto kLength = static_cast<uint32_t>(snprintf(
-        out_buffer, out_buffer_size, "{\"link\":\"%s\",\"speed\":\"%s\",\"duplex\":\"%s\",\"autonegotiation\":\"%s\"}", ::net::phy::ToString(phy_status.link),
-        ::net::phy::ToString(phy_status.speed), ::net::phy::ToString(phy_status.duplex), ::net::phy::ToStringAutonegotiation(phy_status.autonegotiation)));
-    return kLength;
+    total += static_cast<uint32_t>(snprintf(out_buffer + total, out_buffer_size - total, "{\"files\":{"));
+
+    for (size_t i = 0; i < kFileInfosSize; ++i) {
+        const auto& entry = kFileInfos[i];
+        if ((entry.status_label != nullptr) && (entry.status_label[0] != '\0')) {
+            total += static_cast<uint32_t>(snprintf(out_buffer + total, out_buffer_size - total, "\"%s\":\"%s\"%s", entry.name, entry.status_label, (i + 1 < kFileInfosSize) ? "," : ""));
+        }
+    }
+
+    if (out_buffer[total - 1] == ',') {
+        out_buffer[total - 1] = '}';
+    } else {
+        out_buffer[total++] = '}';
+    }
+
+    out_buffer[total++] = '}';
+    return total;
 }
-} // namespace remoteconfig::net
+} // namespace json::status
