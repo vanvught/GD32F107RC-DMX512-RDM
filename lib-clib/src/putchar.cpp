@@ -2,7 +2,7 @@
  * @file putchar.cpp
  *
  */
-/* Copyright (C) 2020-2025 by Arjan van Vught mailto:info@gd32-dmx.org
+/* Copyright (C) 2020-2026 by Arjan van Vught mailto:info@gd32-dmx.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,13 +23,24 @@
  * THE SOFTWARE.
  */
 
-namespace console
-{
-void Putc(int);
-}
+#if defined(CONFIG_CLIB_USE_UART0)
+namespace uart0 {
+void PutChar(int);
+} // namespace uart0
+using uart0::PutChar;
+#elif defined(CONFIG_CLIB_USE_NULL)
+namespace {
+void PutChar([[maybe_unused]] int) {}
+} // namespace
+using ::PutChar;
+#else
+namespace console {
+void PutChar(int);
+} // namespace console
+using console::PutChar;
+#endif
 
-extern "C" int putchar(int c) //NOLINT
-{
-    console::Putc(c);
+extern "C" int putchar(int c) { // NOLINT
+    PutChar(c);
     return 1;
 }

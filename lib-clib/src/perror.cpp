@@ -23,21 +23,10 @@
  * THE SOFTWARE.
  */
 
-#include <stddef.h>
+#include <cstdio>
 #include <errno.h>
 
-namespace console
-{
-void Error(const char*);
-int Putc(int);
-int Puts(const char*);
-void Write(const char*, unsigned int);
-} // namespace console
-
-/*
-errno -l | cut -f3- -d ' ' | sort -V -u | awk '$0="\""$0"\","'
-*/
-
+//errno -l | cut -f3- -d ' ' | sort -V -u | awk '$0="\""$0"\","'
 const char* const kSysErrlist[] = {"OK",
                                    "Operation not permitted",
                                    "No such file or directory",
@@ -80,38 +69,28 @@ const char* const kSysErrlist[] = {"OK",
                                    "Directory not empty",
                                    "Bad message"};
 
-extern "C"
-{
-    char* strerror(int errnum) // NOLINT
-    {
-        if (errnum <= ELAST)
-        {
-            return const_cast<char*>(kSysErrlist[errnum]);
-        }
-
-        return const_cast<char*>(kSysErrlist[EBADMSG]);
+extern "C" {
+char* strerror(int errnum) { // NOLINT
+    if (errnum <= ELAST) {
+        return const_cast<char*>(kSysErrlist[errnum]);
     }
 
-    void perror(const char* s) // NOLINT
-    {
-        const char* ptr = nullptr;
+    return const_cast<char*>(kSysErrlist[EBADMSG]);
+}
 
-        if (errno >= 0 && errno < ELAST)
-        {
-            ptr = kSysErrlist[errno];
-        }
-        else
-        {
-            ptr = kSysErrlist[EBADMSG];
-        }
+void perror(const char* s) { // NOLINT
+    const char* ptr = nullptr;
 
-        if (s && *s)
-        {
-            console::Error(s);
-            console::Write(": ", 2);
-        }
-
-        console::Error(ptr);
-        console::Putc('\n');
+    if (errno >= 0 && errno < ELAST) {
+        ptr = kSysErrlist[errno];
+    } else {
+        ptr = kSysErrlist[EBADMSG];
     }
+
+    if (s && *s) {
+		printf("%s: ", s);
+    }
+
+    puts(ptr);
+}
 }

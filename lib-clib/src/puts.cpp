@@ -2,7 +2,7 @@
  * @file puts.cpp
  *
  */
-/* Copyright (C) 2017-2025 by Arjan van Vught mailto:info@gd32-dmx.org
+/* Copyright (C) 2017-2026 by Arjan van Vught mailto:info@gd32-dmx.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,14 +23,24 @@
  * THE SOFTWARE.
  */
 
-namespace console
-{
-void Puts(const char*);
-void Putc(int);
+#if defined(CONFIG_CLIB_USE_UART0)
+namespace uart0 {
+void Puts(const char* s);
+} // namespace uart0
+using uart0::Puts;
+#elif defined(CONFIG_CLIB_USE_NULL)
+namespace {
+void Puts([[maybe_unused]] const char* s) {}
+} // namespace
+using ::Puts;
+#else
+namespace console {
+void Puts(const char* s);
 } // namespace console
+using console::Puts;
+#endif
 
-extern "C" int puts(const char* s) //NOLINT
-{
-    console::Puts(s);
+extern "C" int puts(const char* s) { // NOLINT
+    Puts(s);
     return 1;
 }
