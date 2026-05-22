@@ -1,8 +1,8 @@
 /**
- * @file gd32_bkp.cpp
+ * @file serialnumber.cpp
  *
  */
-/* Copyright (C) 2022-2026 by Arjan van Vught mailto:info@gd32-dmx.org
+/* Copyright (C) 2025-2026 by Arjan van Vught mailto:info@gd32-dmx.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,37 +23,21 @@
  * THE SOFTWARE.
  */
 
-#if defined(GD32F4XX) || defined(GD32H7XX)
-#include <cassert>
-#include "gd32.h"
+#include <cstdint>
 
-void bkp_data_write(bkp_data_register_enum register_number, uint16_t data) {
-    switch (register_number) {
-        case BKP_DATA_0:
-            RTC_BKP0 = static_cast<uint32_t>(data);
-            break;
-        case BKP_DATA_1:
-            RTC_BKP1 = static_cast<uint32_t>(data);
-            break;
-        default:
-            assert(false && "Invalid register_number");
-            break;
-    }
-}
+#include "serialnumber.h"
 
-uint16_t bkp_data_read(bkp_data_register_enum register_number) {
-    switch (register_number) {
-        case BKP_DATA_0:
-            return RTC_BKP0;
-            break;
-        case BKP_DATA_1:
-            return RTC_BKP1;
-            break;
-        default:
-            assert(false && "Invalid register_number");
-            break;
-    }
-
-    return 0;
-}
+void SerialNumber(uint8_t sn[kSnSize]) {
+#if defined(GD32H7XX)
+    const auto kMacaddressHigh = *reinterpret_cast<volatile uint32_t*>(0x1FF0F7E8);
+#elif defined(GD32F4XX)
+    const auto kMacaddressHigh = *reinterpret_cast<volatile uint32_t*>(0x1FFF7A10);
+#else
+    const auto kMacaddressHigh = *reinterpret_cast<volatile uint32_t*>(0x1FFFF7E8);
 #endif
+
+    sn[0] = static_cast<uint8_t>((kMacaddressHigh >> 0) & 0xFF);
+    sn[1] = static_cast<uint8_t>((kMacaddressHigh >> 8) & 0xFF);
+    sn[2] = static_cast<uint8_t>((kMacaddressHigh >> 16) & 0xFF);
+    sn[3] = static_cast<uint8_t>((kMacaddressHigh >> 24) & 0xFF);
+}

@@ -1,8 +1,8 @@
 /**
- * @file gd32_bkp.cpp
+ * @file timing.h
  *
  */
-/* Copyright (C) 2022-2026 by Arjan van Vught mailto:info@gd32-dmx.org
+/* Copyright (C) 2026 by Arjan van Vught mailto:info@gd32-dmx.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,37 +23,40 @@
  * THE SOFTWARE.
  */
 
-#if defined(GD32F4XX) || defined(GD32H7XX)
-#include <cassert>
-#include "gd32.h"
+#ifndef TIMING_H_
+#define TIMING_H_
 
-void bkp_data_write(bkp_data_register_enum register_number, uint16_t data) {
-    switch (register_number) {
-        case BKP_DATA_0:
-            RTC_BKP0 = static_cast<uint32_t>(data);
-            break;
-        case BKP_DATA_1:
-            RTC_BKP1 = static_cast<uint32_t>(data);
-            break;
-        default:
-            assert(false && "Invalid register_number");
-            break;
-    }
-}
+#include <cstdint>
 
-uint16_t bkp_data_read(bkp_data_register_enum register_number) {
-    switch (register_number) {
-        case BKP_DATA_0:
-            return RTC_BKP0;
-            break;
-        case BKP_DATA_1:
-            return RTC_BKP1;
-            break;
-        default:
-            assert(false && "Invalid register_number");
-            break;
-    }
-
-    return 0;
-}
+#if defined(CONFIG_HAL_USE_SYSTICK)
+extern volatile uint32_t gv_nSysTickMillis;
+#elif defined(USE_FREE_RTOS)
+#include "FreeRTOS.h"
+#include "task.h"
+#else
+uint32_t Timer6GetElapsedMilliseconds();
 #endif
+
+uint32_t Gd32Micros();
+
+namespace timing {
+[[nodiscard]] inline uint32_t Micros() {
+    return Gd32Micros();
+}
+
+[[nodiscard]] inline uint32_t Millis() {
+#if defined(CONFIG_HAL_USE_SYSTICK)
+    return gv_nSysTickMillis;
+#elif defined(USE_FREE_RTOS)
+    return xTaskGetTickCount();
+#else
+    return Timer6GetElapsedMilliseconds();
+#endif
+}
+
+void DelayUs(uint32_t us, uint32_t offset = 0);
+
+[[nodiscard]] uint32_t UpTime();
+} // namespace timing
+
+#endif // TIMING_H_

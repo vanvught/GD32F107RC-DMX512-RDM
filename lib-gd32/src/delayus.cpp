@@ -1,8 +1,8 @@
 /**
- * @file udelay.cpp
+ * @file delayus.cpp
  *
  */
-/* Copyright (C) 2021-2025 by Arjan van Vught mailto:info@gd32-dmx.org
+/* Copyright (C) 2021-2026 by Arjan van Vught mailto:info@gd32-dmx.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,6 +23,9 @@
  * THE SOFTWARE.
  */
 
+#pragma GCC push_options
+#pragma GCC optimize("O2")
+
 #if defined(DEBUG_UDELAY)
 #undef NDEBUG
 #endif
@@ -34,8 +37,7 @@
 
 static constexpr auto kTicksPerUs = (MCU_CLOCK_FREQ / 1000000U);
 
-void UdelayInit()
-{
+void UdelayInit() {
     assert(MCU_CLOCK_FREQ == SystemCoreClock);
 
     CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
@@ -43,39 +45,30 @@ void UdelayInit()
     DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;
 }
 
-void udelay(uint32_t micros, uint32_t offset_micros)
-{
+namespace timing {
+void DelayUs(uint32_t micros, uint32_t offset_micros) {
     const auto kTicks = micros * kTicksPerUs;
 
     uint32_t ticks_count = 0;
     uint32_t ticks_previous;
 
-    if (offset_micros == 0)
-    {
+    if (offset_micros == 0) {
         ticks_previous = DWT->CYCCNT;
-    }
-    else
-    {
+    } else {
         ticks_previous = offset_micros;
     }
 
-    while (1)
-    {
+    while (1) {
         const auto kTicksNow = DWT->CYCCNT;
 
-        if (kTicksNow != ticks_previous)
-        {
-            if (kTicksNow > ticks_previous)
-            {
+        if (kTicksNow != ticks_previous) {
+            if (kTicksNow > ticks_previous) {
                 ticks_count += kTicksNow - ticks_previous;
-            }
-            else
-            {
+            } else {
                 ticks_count += UINT32_MAX - ticks_previous + kTicksNow;
             }
 
-            if (ticks_count >= kTicks)
-            {
+            if (ticks_count >= kTicks) {
                 break;
             }
 
@@ -83,24 +76,28 @@ void udelay(uint32_t micros, uint32_t offset_micros)
         }
     }
 }
+} // namespace timing
 
-static uint32_t micros_previous;
-static uint32_t result;
+// Use for:
+// microsecond delays
+// profiling
+// short protocol timing
+// busy waits
+uint32_t Gd32Micros() {
+    static uint32_t cycles_previous;
+    static uint32_t micros_accumulated;
+    static uint32_t cycle_remainder;
 
-uint32_t Gd32Micros()
-{
-    const auto kMicros = DWT->CYCCNT / kTicksPerUs;
+    const uint32_t kCyclesNow = DWT->CYCCNT;
+    const uint32_t kDeltaCycles = kCyclesNow - cycles_previous;
+    cycles_previous = kCyclesNow;
 
-    if (kMicros > micros_previous)
-    {
-        result += (kMicros - micros_previous);
-    }
-    else
-    {
-        result += ((UINT32_MAX / kTicksPerUs) - micros_previous + kMicros);
-    }
+    const uint32_t kTotal = cycle_remainder + kDeltaCycles;
 
-    micros_previous = kMicros;
+    micros_accumulated += kTotal / kTicksPerUs;
+    cycle_remainder = kTotal % kTicksPerUs;
 
-    return result;
+    return micros_accumulated;
 }
+
+#pragma GCC pop_options

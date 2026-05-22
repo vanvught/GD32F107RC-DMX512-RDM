@@ -1,8 +1,8 @@
 /**
- * @file gd32_bkp.cpp
+ * @file uart0.h
  *
  */
-/* Copyright (C) 2022-2026 by Arjan van Vught mailto:info@gd32-dmx.org
+/* Copyright (C) 2026 by Arjan van Vught mailto:info@gd32-dmx.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,37 +23,15 @@
  * THE SOFTWARE.
  */
 
-#if defined(GD32F4XX) || defined(GD32H7XX)
-#include <cassert>
-#include "gd32.h"
+#ifndef UART0_H_
+#define UART0_H_
 
-void bkp_data_write(bkp_data_register_enum register_number, uint16_t data) {
-    switch (register_number) {
-        case BKP_DATA_0:
-            RTC_BKP0 = static_cast<uint32_t>(data);
-            break;
-        case BKP_DATA_1:
-            RTC_BKP1 = static_cast<uint32_t>(data);
-            break;
-        default:
-            assert(false && "Invalid register_number");
-            break;
-    }
-}
+namespace uart0 {
+void Init();
+void PutChar(int c);
+void Puts(const char* s);
+int Printf(const char* fmt, ...);
+int GetChar();
+} // namespace uart0
 
-uint16_t bkp_data_read(bkp_data_register_enum register_number) {
-    switch (register_number) {
-        case BKP_DATA_0:
-            return RTC_BKP0;
-            break;
-        case BKP_DATA_1:
-            return RTC_BKP1;
-            break;
-        default:
-            assert(false && "Invalid register_number");
-            break;
-    }
-
-    return 0;
-}
-#endif
+#endif // UART0_H_

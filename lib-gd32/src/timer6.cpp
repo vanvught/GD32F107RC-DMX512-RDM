@@ -2,7 +2,7 @@
  * @file timer6.cpp
  *
  */
-/* Copyright (C) 2024-2025 by Arjan van Vught mailto:info@gd32-dmx.org
+/* Copyright (C) 2024-2026 by Arjan van Vught mailto:info@gd32-dmx.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,30 +26,28 @@
 #pragma GCC push_options
 #pragma GCC optimize("O2")
 
+#include <cstdint>
+
 #include "gd32.h"
 
-struct HwTimersSeconds g_Seconds;
+struct HwTimersSeconds gv_seconds;
 
-extern "C"
-{
+extern "C" {
 #if defined(CONFIG_TIMER6_HAVE_NO_IRQ_HANDLER)
-    void TIMER6_IRQHandler()
-    {
-        const auto kIntFlag = TIMER_INTF(TIMER6);
+void TIMER6_IRQHandler() {
+    const auto kIntFlag = TIMER_INTF(TIMER6);
 
-        if ((kIntFlag & TIMER_INT_FLAG_UP) == TIMER_INT_FLAG_UP)
-        {
-            g_Seconds.nUptime++;
-        }
-
-        TIMER_INTF(TIMER6) = static_cast<uint32_t>(~kIntFlag);
+    if ((kIntFlag & TIMER_INT_FLAG_UP) == TIMER_INT_FLAG_UP) {
+        gv_seconds.uptime = gv_seconds.uptime + 1;
     }
+
+    TIMER_INTF(TIMER6) = static_cast<uint32_t>(~kIntFlag);
+}
 #endif
 }
 
-void Timer6Config()
-{
-    g_Seconds.nUptime = 0;
+void Timer6Config() {
+    gv_seconds.uptime = 0;
 
     rcu_periph_clock_enable(RCU_TIMER6);
     timer_deinit(TIMER6);
@@ -63,7 +61,7 @@ void Timer6Config()
 
     timer_counter_value_config(TIMER6, 0);
 
-    timer_interrupt_flag_clear(TIMER6, ~0);
+    timer_interrupt_flag_clear(TIMER6, UINT32_MAX);
     timer_interrupt_enable(TIMER6, TIMER_INT_UP);
 
     NVIC_SetPriority(TIMER6_IRQn, (1UL << __NVIC_PRIO_BITS) - 1UL); // Lowest priority
@@ -72,20 +70,22 @@ void Timer6Config()
     timer_enable(TIMER6);
 }
 
-uint32_t Timer6GetElapsedMilliseconds()
-{
-    const auto kUptimeFirst = g_Seconds.nUptime;
-    auto timer_count = TIMER_CNT(TIMER6);
-    const auto kUptimeSecond = g_Seconds.nUptime;
+// Use for:
+// timeouts
+// periodic scheduling
+// millisecond-level elapsed time
+// network polling
+// UI timers
+uint32_t Timer6GetElapsedMilliseconds() {
+    auto seconds = gv_seconds.uptime;
+    auto timer_cnt = TIMER_CNT(TIMER6);
 
-    // Check for consistency
-    if (__builtin_expect((kUptimeFirst == kUptimeSecond), 1))
-    {
-        // No overflow detected, return the calculated time
-        return (kUptimeFirst * 1000U) + (timer_count / 10U);
+    if ((TIMER_INTF(TIMER6) & TIMER_INT_FLAG_UP) != 0U) {
+        seconds++;
+        timer_cnt = TIMER_CNT(TIMER6);
     }
 
-    // Potential overflow detected, re-read the timer count
-    timer_count = TIMER_CNT(TIMER6);
-    return (kUptimeSecond * 1000U) + (timer_count / 10U);
+    return seconds * 1000U + timer_cnt / 10U;
 }
+
+#pragma GCC pop_options

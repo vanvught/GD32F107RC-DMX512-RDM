@@ -1,8 +1,8 @@
 /**
- * @file gd32_bkp.cpp
+ * @file watchdog.h
  *
  */
-/* Copyright (C) 2022-2026 by Arjan van Vught mailto:info@gd32-dmx.org
+/* Copyright (C) 2025-2026 by Arjan van Vught mailto:info@gd32-dmx.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,37 +23,35 @@
  * THE SOFTWARE.
  */
 
-#if defined(GD32F4XX) || defined(GD32H7XX)
-#include <cassert>
-#include "gd32.h"
+#ifndef GD32_HAL_WATCHDOG_H_
+#define GD32_HAL_WATCHDOG_H_
 
-void bkp_data_write(bkp_data_register_enum register_number, uint16_t data) {
-    switch (register_number) {
-        case BKP_DATA_0:
-            RTC_BKP0 = static_cast<uint32_t>(data);
-            break;
-        case BKP_DATA_1:
-            RTC_BKP1 = static_cast<uint32_t>(data);
-            break;
-        default:
-            assert(false && "Invalid register_number");
-            break;
+#include "gd32.h" // IWYU pragma: keep
+
+namespace watchdog {
+namespace global {
+extern bool watchdog;
+}
+inline void Init() {
+    global::watchdog = (SUCCESS == fwdgt_config(0xFFFF, FWDGT_PSC_DIV16));
+
+    if (global::watchdog) {
+        fwdgt_enable();
     }
 }
 
-uint16_t bkp_data_read(bkp_data_register_enum register_number) {
-    switch (register_number) {
-        case BKP_DATA_0:
-            return RTC_BKP0;
-            break;
-        case BKP_DATA_1:
-            return RTC_BKP1;
-            break;
-        default:
-            assert(false && "Invalid register_number");
-            break;
-    }
-
-    return 0;
+inline void Feed() {
+    fwdgt_counter_reload();
 }
-#endif
+
+inline void Stop() {
+    global::watchdog = false;
+    fwdgt_config(0xFFFF, FWDGT_PSC_DIV64);
+}
+
+inline bool Watchdog() {
+    return global::watchdog;
+}
+} // namespace watchdog
+
+#endif // GD32_HAL_WATCHDOG_H_
