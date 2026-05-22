@@ -31,66 +31,51 @@
 #include "hal_statusled.h"
 #include "firmware/debug/debug_debug.h"
 
-namespace hal::statusled
-{
-namespace global
-{
+namespace hal::statusled {
+namespace global {
 Mode g_status_led_mode;
 } // namespace global
 
 static bool s_do_lock;
 
-enum class ModeToFrequency
-{
-    kOffOff = 0,
-    kNormal = 1,
-    kData = 3,
-    kFast = 5,
-    kReboot = 8,
-    kOffOn = 255
-};
+enum class ModeToFrequency { kOffOff = 0, kNormal = 1, kData = 3, kFast = 5, kReboot = 8, kOffOn = 255 };
 
 #if !defined(CONFIG_HAL_USE_MINIMUM)
 
-void __attribute__((weak)) Event([[maybe_unused]] Mode mode)
-{
+void __attribute__((weak)) Event([[maybe_unused]] Mode mode) {
     DEBUG_PRINTF("mode=%u", static_cast<uint32_t>(mode));
 }
 
-void SetModeWithLock(Mode mode, bool do_lock)
-{
+void SetModeWithLock(Mode mode, bool do_lock) {
     s_do_lock = false;
     SetMode(mode);
     s_do_lock = do_lock;
 }
 
-void SetMode(hal::statusled::Mode mode)
-{
-    if (s_do_lock || (global::g_status_led_mode == mode))
-    {
+void SetMode(hal::statusled::Mode mode) {
+    if (s_do_lock || (global::g_status_led_mode == mode)) {
         return;
     }
 
     global::g_status_led_mode = mode;
 
-    switch (global::g_status_led_mode)
-    {
-        case hal::statusled::Mode::OFF_OFF:
+    switch (global::g_status_led_mode) {
+        case hal::statusled::Mode::kOffOff:
             SetFrequency(static_cast<uint32_t>(ModeToFrequency::kOffOff));
             break;
-        case hal::statusled::Mode::OFF_ON:
+        case hal::statusled::Mode::kOffOn:
             SetFrequency(static_cast<uint32_t>(ModeToFrequency::kOffOn));
             break;
-        case hal::statusled::Mode::NORMAL:
+        case hal::statusled::Mode::kNormal:
             SetFrequency(static_cast<uint32_t>(ModeToFrequency::kNormal));
             break;
-        case hal::statusled::Mode::DATA:
+        case hal::statusled::Mode::kData:
             SetFrequency(static_cast<uint32_t>(ModeToFrequency::kData));
             break;
-        case hal::statusled::Mode::FAST:
+        case hal::statusled::Mode::kFast:
             SetFrequency(static_cast<uint32_t>(ModeToFrequency::kFast));
             break;
-        case hal::statusled::Mode::REBOOT:
+        case hal::statusled::Mode::kReboot:
             SetFrequency(static_cast<uint32_t>(ModeToFrequency::kReboot));
             break;
         default:
