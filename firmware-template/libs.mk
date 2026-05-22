@@ -103,6 +103,6 @@ ifeq ($(findstring DISPLAY_UDF,$(DEFINES)),DISPLAY_UDF)
 	LIBS+=displayudf
 endif
 
-LIBS+=display device hal
+LIBS+=display device hal hwclock
 
 $(info $$LIBS [${LIBS}])

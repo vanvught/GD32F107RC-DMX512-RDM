@@ -2,7 +2,7 @@
  * @file main.cpp
  *
  */
-/* Copyright (C) 2022-2025 by Arjan van Vught mailto:info@gd32-dmx.org
+/* Copyright (C) 2022-2026 by Arjan van Vught mailto:info@gd32-dmx.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,7 +26,7 @@
 #include <cstdint>
 
 #include "gd32/hal.h"
-#include "gd32/hal_watchdog.h"
+#include "watchdog.h"
 #include "hal_boardinfo.h"
 #include "display.h"
 #include "emac/network.h"
@@ -40,10 +40,8 @@
 #include "firmwareversion.h"
 #include "software_version.h"
 
-namespace hal
-{
-void RebootHandler()
-{
+namespace hal {
+void RebootHandler() {
     Dmx::Get()->Blackout();
 }
 } // namespace hal
@@ -64,7 +62,7 @@ int main() // NOLINT
     oscserver_params.Load();
     oscserver_params.Set();
 
-    display.TextStatus(OscServerMsgConst::PARAMS, console::Colours::kConsoleYellow);
+    display.TextStatus(OscServerMsgConst::kParams, ansi::Colours::Colour::kYellow);
 
     Dmx dmx;
 
@@ -78,8 +76,7 @@ int main() // NOLINT
     osc_server.SetOutput(&dmx_send);
     osc_server.Print();
 
-    for (uint8_t i = 1; i < 7; i++)
-    {
+    for (uint8_t i = 1; i < 7; i++) {
         display.ClearLine(i);
     }
 
@@ -93,17 +90,16 @@ int main() // NOLINT
 
     RemoteConfig remote_config(remoteconfig::Output::DMX, 1);
 
-    display.TextStatus(OscServerMsgConst::START, console::Colours::kConsoleYellow);
+    display.TextStatus(OscServerMsgConst::kStart, ansi::Colours::Colour::kYellow);
 
     osc_server.Start();
 
-    display.TextStatus(OscServerMsgConst::STARTED, console::Colours::kConsoleGreen);
+    display.TextStatus(OscServerMsgConst::kStarted, ansi::Colours::Colour::kGreen);
 
-    hal::WatchdogInit();
+    watchdog::Init();
 
-    for (;;)
-    {
-        hal::WatchdogFeed();
+    for (;;) {
+        watchdog::Feed();
         network::Run();
         hal::Run();
     }

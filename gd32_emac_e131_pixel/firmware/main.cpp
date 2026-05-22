@@ -2,7 +2,7 @@
  * @file main.cpp
  *
  */
-/* Copyright (C) 2022-2025 by Arjan van Vught mailto:info@gd32-dmx.org
+/* Copyright (C) 2022-2026 by Arjan van Vught mailto:info@gd32-dmx.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,14 +23,8 @@
  * THE SOFTWARE.
  */
 
-#pragma GCC push_options
-#pragma GCC optimize("O2")
-#pragma GCC optimize("no-tree-loop-distribute-patterns")
-
-#include <cstdint>
-
 #include "gd32/hal.h"
-#include "gd32/hal_watchdog.h"
+#include "watchdog.h"
 #include "network.h"
 #include "displayudf.h"
 #include "json/displayudfparams.h"
@@ -41,9 +35,6 @@
 #include "pixeltestpattern.h"
 #include "pixeldmx.h"
 #include "json/pixeldmxparams.h"
-#if defined(NODE_RDMNET_LLRP_ONLY)
-#include "rdmnetdevice.h"
-#endif
 #if defined(NODE_SHOWFILE)
 #include "showfile.h"
 #endif
@@ -54,10 +45,8 @@
 #include "common/utils/utils_flags.h"
 #include "configurationstore.h"
 
-namespace hal
-{
-void RebootHandler()
-{
+namespace hal {
+void RebootHandler() {
     PixelDmx::Get().Blackout();
     E131Bridge::Get()->Stop();
 }
@@ -84,19 +73,11 @@ int main() // NOLINT
 
     PixelTestPattern pixeltest_pattern(kTestPattern, 1);
 
-    if (PixelTestPattern::Get()->GetPattern() != pixelpatterns::Pattern::kNone)
-    {
+    if (PixelTestPattern::Get()->GetPattern() != pixelpatterns::Pattern::kNone) {
         dmxnode_node.SetOutput(nullptr);
-    }
-    else
-    {
+    } else {
         dmxnode_node.SetOutput(&pixeldmx);
     }
-
-#if defined(NODE_RDMNET_LLRP_ONLY)
-    RDMNetDevice llrp_only_device;
-    llrp_only_device.Print();
-#endif
 
 #if defined(NODE_SHOWFILE)
     ShowFile showfile;
@@ -119,17 +100,16 @@ int main() // NOLINT
 
     RemoteConfig remote_config(remoteconfig::Output::PIXEL, dmxnode_node.GetActiveOutputPorts());
 
-    display.TextStatus(DmxNodeMsgConst::START, console::Colours::kConsoleYellow);
+    display.TextStatus(DmxNodeMsgConst::START, ansi::Colours::Colour::kYellow);
 
     dmxnode_node.Start();
 
-    display.TextStatus(DmxNodeMsgConst::STARTED, console::Colours::kConsoleGreen);
+    display.TextStatus(DmxNodeMsgConst::STARTED, ansi::Colours::Colour::kGreen);
 
-    hal::WatchdogInit();
+    watchdog::Init();
 
-    for (;;)
-    {
-        hal::WatchdogFeed();
+    for (;;) {
+        watchdog::Feed();
         network::Run();
         dmxnode_node.Run();
 #if defined(NODE_SHOWFILE)

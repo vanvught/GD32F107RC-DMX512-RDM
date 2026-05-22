@@ -1,7 +1,7 @@
 /**
  * @file main.cpp
  */
-/* Copyright (C) 2022-2025 by Arjan van Vught mailto:info@gd32-dmx.org
+/* Copyright (C) 2022-2026 by Arjan van Vught mailto:info@gd32-dmx.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,7 +23,7 @@
  */
 
 #include "gd32/hal.h"
-#include "gd32/hal_watchdog.h"
+#include "watchdog.h"
 #include "hal_boardinfo.h"
 #include "display.h"
 #include "emac/network.h"
@@ -43,10 +43,8 @@
 #include "common/utils/utils_flags.h"
 #include "configurationstore.h"
 
-namespace hal
-{
-void RebootHandler()
-{
+namespace hal {
+void RebootHandler() {
     PixelDmx::Get().Blackout();
 }
 } // namespace hal
@@ -67,7 +65,7 @@ int main() // NOLINT
     oscserver_params.Load();
     oscserver_params.Set();
 
-    display.TextStatus(OscServerMsgConst::PARAMS, console::Colours::kConsoleYellow);
+    display.TextStatus(OscServerMsgConst::kParams, ansi::Colours::Colour::kYellow);
 
     PixelDmx pixeldmx;
 
@@ -97,17 +95,16 @@ int main() // NOLINT
 
     RemoteConfig remote_config(remoteconfig::Output::PIXEL, 1);
 
-    display.TextStatus(OscServerMsgConst::START, console::Colours::kConsoleYellow);
+    display.TextStatus(OscServerMsgConst::kStart, ansi::Colours::Colour::kYellow);
 
     oscserver.Start();
 
-    display.TextStatus(OscServerMsgConst::STARTED, console::Colours::kConsoleGreen);
+    display.TextStatus(OscServerMsgConst::kStarted, ansi::Colours::Colour::kGreen);
 
-    hal::WatchdogInit();
+    watchdog::Init();
 
-    for (;;)
-    {
-        hal::WatchdogFeed();
+    for (;;) {
+        watchdog::Feed();
         network::Run();
         pixeltest_pattern.Run();
         hal::Run();

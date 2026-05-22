@@ -2,7 +2,7 @@
  * @file main.cpp
  *
  */
-/* Copyright (C) 2024-2025 by Arjan van Vught mailto:info@gd32-dmx.org
+/* Copyright (C) 2024-2026 by Arjan van Vught mailto:info@gd32-dmx.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -31,7 +31,8 @@
 #include <time.h>
 #include <sys/time.h>
 
-#include "gd32/hal_watchdog.h"
+#include "gd32/hal.h"
+#include "watchdog.h"
 #include "network.h"
 #include "displayudf.h"
 #include "json/displayudfparams.h"
@@ -42,11 +43,8 @@
 #include "firmwareversion.h"
 #include "software_version.h"
 
-
-namespace hal
-{
-void RebootHandler()
-{
+namespace hal {
+void RebootHandler() {
     HwClock::Get()->SysToHc();
 }
 } // namespace hal
@@ -61,7 +59,7 @@ int main() // NOLINT
 
     fw.Print("RDMNet LLRP device only");
 
-    RDMNetDevice llrp_only_device;
+    RdmNetDevice llrp_only_device;
     llrp_only_device.Print();
 
     RemoteConfig remote_config(remoteconfig::Output::CONFIG, 0);
@@ -77,15 +75,14 @@ int main() // NOLINT
     displayudf_params.SetAndShow();
 
     display.Write(6, "mDNS enabled");
-    display.TextStatus("Device running", console::Colours::kConsoleGreen);
+    display.TextStatus("Device running", ansi::Colours::Colour::kGreen);
 
-    hal::WatchdogInit();
+    watchdog::Init();
 
     auto time1 = time(nullptr);
 
-    for (;;)
-    {
-        hal::WatchdogFeed();
+    for (;;) {
+        watchdog::Feed();
         network::Run();
         hal::Run();
 
@@ -94,8 +91,7 @@ int main() // NOLINT
         struct tm hw_clock;
         memset(&hw_clock, 0, sizeof(struct tm));
 
-        if (time1 != kTime2)
-        {
+        if (time1 != kTime2) {
             time1 = kTime2;
 
             auto* tm = localtime(&kTime2);

@@ -2,7 +2,7 @@
  * @file main.cpp
  *
  */
-/* Copyright (C) 2023-2025 by Arjan van Vught mailto:info@gd32-dmx.org
+/* Copyright (C) 2023-2026 by Arjan van Vught mailto:info@gd32-dmx.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,7 +26,7 @@
 #include <cstdint>
 
 #include "gd32/hal.h"
-#include "gd32/hal_watchdog.h"
+#include "watchdog.h"
 #include "network.h"
 #include "displayudf.h"
 #include "json/displayudfparams.h"
@@ -44,10 +44,8 @@
 #include "firmwareversion.h"
 #include "software_version.h"
 
-namespace hal
-{
-void RebootHandler()
-{
+namespace hal {
+void RebootHandler() {
     ArtNetNode::Get()->Stop();
 }
 } // namespace hal
@@ -76,7 +74,7 @@ int main() // NOLINT
     node.SetRdm(static_cast<uint32_t>(0), true);
     node.SetOutput(pca9685_dmx.GetPCA9685DmxSet());
 
-    RDMPersonality* rdm_personalities[1] = {new RDMPersonality(description, pca9685_dmx.GetPCA9685DmxSet())};
+    RdmPersonality* rdm_personalities[1] = {new RdmPersonality(description, pca9685_dmx.GetPCA9685DmxSet())};
     ArtNetRdmResponder rdm_responder(rdm_personalities, 1);
 
     node.SetRdmResponder(&rdm_responder);
@@ -101,17 +99,16 @@ int main() // NOLINT
 
     RemoteConfig remote_config(remoteconfig::Output::PWM, node.GetActiveOutputPorts());
 
-    display.TextStatus(DmxNodeMsgConst::START, console::Colours::kConsoleYellow);
+    display.TextStatus(DmxNodeMsgConst::START, ansi::Colours::Colour::kYellow);
 
     node.Start();
 
-    display.TextStatus(DmxNodeMsgConst::STARTED, console::Colours::kConsoleGreen);
+    display.TextStatus(DmxNodeMsgConst::STARTED, ansi::Colours::Colour::kGreen);
 
-    hal::WatchdogInit();
+    watchdog::Init();
 
-    for (;;)
-    {
-        hal::WatchdogFeed();
+    for (;;) {
+        watchdog::Feed();
         network::Run();
         node.Run();
 #if defined(NODE_SHOWFILE)

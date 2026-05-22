@@ -2,7 +2,7 @@
  * @file main.cpp
  *
  */
-/* Copyright (C) 2022-2025 by Arjan van Vught mailto:info@gd32-dmx.org
+/* Copyright (C) 2022-2026 by Arjan van Vught mailto:info@gd32-dmx.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,8 @@
 
 #include <cstdint>
 
-#include "gd32/hal_watchdog.h"
+#include "hal.h"
+#include "watchdog.h"
 #include "network.h"
 #include "displayudf.h"
 #include "json/displayudfparams.h"
@@ -34,9 +35,6 @@
 #include "dmxsend.h"
 #include "dmxnodenode.h"
 #include "dmxnodemsgconst.h"
-#if defined(NODE_RDMNET_LLRP_ONLY)
-#include "rdmnetdevice.h"
-#endif
 #if defined(NODE_SHOWFILE)
 #include "showfile.h"
 #endif
@@ -45,10 +43,8 @@
 #include "firmwareversion.h"
 #include "software_version.h"
 
-namespace hal
-{
-void RebootHandler()
-{
+namespace hal {
+void RebootHandler() {
     Dmx::Get()->Blackout();
     E131Bridge::Get()->Stop();
 }
@@ -78,15 +74,8 @@ int main() // NOLINT
     DmxNodeNode dmxnode_node;
     dmxnode_node.SetOutput(&dmx_send);
 
-    const auto kPortDirection = (dmxnode_node.GetPortDirection(kPortIndex) == dmxnode::PortDirection::kOutput ? dmx::PortDirection::kOutput : dmx::PortDirection::kInput);
-    dmx.SetPortDirection(kPortIndex, kPortDirection, false);
-
+    const auto kPortDirection = (dmxnode_node.PortDirection(kPortIndex) == dmxnode::Direction::kOutput ? dmx::Direction::kOutput : dmx::Direction::kInput);
     const auto kActivePorts = dmxnode_node.GetActiveInputPorts() + dmxnode_node.GetActiveOutputPorts();
-
-#if defined(NODE_RDMNET_LLRP_ONLY)
-    RDMNetDevice llrp_only_device;
-    llrp_only_device.Print();
-#endif
 
 #if defined(NODE_SHOWFILE)
     ShowFile showfile;
@@ -95,7 +84,7 @@ int main() // NOLINT
 
     dmxnode_node.Print();
 
-    display.SetTitle("sACN E1.31 DMX %s", kPortDirection == dmx::PortDirection::kInput ? "Input" : "Output");
+    display.SetTitle("sACN E1.31 DMX %s", kPortDirection == dmx::Direction::kInput ? "Input" : "Output");
     display.Set(2, displayudf::Labels::kIp);
     display.Set(3, displayudf::Labels::kVersion);
     display.Set(4, displayudf::Labels::kHostname);
@@ -107,17 +96,16 @@ int main() // NOLINT
 
     RemoteConfig remote_config(remoteconfig::Output::DMX, kActivePorts);
 
-    display.TextStatus(DmxNodeMsgConst::START, console::Colours::kConsoleYellow);
+    display.TextStatus(DmxNodeMsgConst::START, ansi::Colours::Colour::kYellow);
 
     dmxnode_node.Start();
 
-    display.TextStatus(DmxNodeMsgConst::STARTED, console::Colours::kConsoleGreen);
+    display.TextStatus(DmxNodeMsgConst::STARTED, ansi::Colours::Colour::kGreen);
 
-    hal::WatchdogInit();
+    watchdog::Init();
 
-    for (;;)
-    {
-        hal::WatchdogFeed();
+    for (;;) {
+        watchdog::Feed();
         network::Run();
         dmxnode_node.Run();
 #if defined(NODE_SHOWFILE)
