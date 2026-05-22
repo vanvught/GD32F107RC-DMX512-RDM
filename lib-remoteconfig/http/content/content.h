@@ -27,14 +27,9 @@
 #if !defined (CONFIG_HTTP_HTML_NO_DMX) && (defined(OUTPUT_DMX_SEND) || defined(OUTPUT_DMX_SEND_MULTI))
 #include "dmx.html.h"
 #endif // !defined (CONFIG_HTTP_HTML_NO_DMX) && (defined(OUTPUT_DMX_SEND) || defined(OUTPUT_DMX_SEND_MULTI))
-#if defined (NODE_SHOWFILE)
 #include "showfile.html.h"
-#endif // (NODE_SHOWFILE)
 #include "date.js.h"
 #include "default.js.h"
-#if !defined (CONFIG_HTTP_HTML_NO_PIXEL) && (defined(OUTPUT_DMX_PIXEL) || defined(OUTPUT_DMX_PIXEL_MULTI))
-#include "pixeltype.json.h"
-#endif // !defined (CONFIG_HTTP_HTML_NO_PIXEL) && (defined(OUTPUT_DMX_PIXEL) || defined(OUTPUT_DMX_PIXEL_MULTI))
 #if defined (NODE_SHOWFILE)
 #include "showfile.js.h"
 #endif // (NODE_SHOWFILE)
@@ -76,14 +71,9 @@ inline constexpr struct FilesContent kHttpContent[] = {
 #if !defined (CONFIG_HTTP_HTML_NO_DMX) && (defined(OUTPUT_DMX_SEND) || defined(OUTPUT_DMX_SEND_MULTI))
 	{ 1521353325,"dmx.html", dmx_html, 538, static_cast<http::ContentTypes>(0) },
 #endif // !defined (CONFIG_HTTP_HTML_NO_DMX) && (defined(OUTPUT_DMX_SEND) || defined(OUTPUT_DMX_SEND_MULTI))
-#if defined (NODE_SHOWFILE)
 	{ 92830953,"showfile.html", showfile_html, 1386, static_cast<http::ContentTypes>(0) },
-#endif // (NODE_SHOWFILE)
 	{ 1602327546,"date.js", date_js, 716, static_cast<http::ContentTypes>(2) },
 	{ 135667591,"default.js", default_js, 261, static_cast<http::ContentTypes>(2) },
-#if !defined (CONFIG_HTTP_HTML_NO_PIXEL) && (defined(OUTPUT_DMX_PIXEL) || defined(OUTPUT_DMX_PIXEL_MULTI))
-	{ 2632765249,"pixeltype.json", pixeltype_json, 1665, static_cast<http::ContentTypes>(3) },
-#endif // !defined (CONFIG_HTTP_HTML_NO_PIXEL) && (defined(OUTPUT_DMX_PIXEL) || defined(OUTPUT_DMX_PIXEL_MULTI))
 #if defined (NODE_SHOWFILE)
 	{ 4266521075,"showfile.js", showfile_js, 1425, static_cast<http::ContentTypes>(2) },
 #endif // (NODE_SHOWFILE)
