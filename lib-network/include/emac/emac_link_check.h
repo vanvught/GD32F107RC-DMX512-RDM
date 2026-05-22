@@ -1,5 +1,5 @@
 /**
- * net_link::check.cpp
+ * @file emac_link_check.h
  *
  */
 /* Copyright (C) 2022-2026 by Arjan van Vught mailto:info@gd32-dmx.org
@@ -23,36 +23,27 @@
  * THE SOFTWARE.
  */
 
-#include "emac/net_link_check.h"
-#include "emac/phy.h"
+#ifndef EMAC_NET_LINK_CHECK_H_
+#define EMAC_NET_LINK_CHECK_H_
 
-#if !defined(PHY_ADDRESS)
-#define PHY_ADDRESS 1
-#endif
+#include "emac_phy.h"
 
-namespace net::link
-{
-#if defined(ENET_LINK_CHECK_USE_INT)
-void InterruptInit()
-{
-    link::PinEnable();
-    link::PinRecovery();
-    link::GpioInit();
-    link::ExtiInit();
-}
-#endif
+namespace emac::link {
+emac::phy::Link StatusRead();
+void HandleChange(emac::phy::Link state);
+// Platform defined implementations
+// #if defined(ENET_LINK_CHECK_USE_INT) || defined(ENET_LINK_CHECK_USE_PIN_POLL)
+void GpioInit();
+void PinEnable();
+void PinRecovery();
+// #endif
+// #if defined(ENET_LINK_CHECK_USE_INT)
+void ExtiInit();
+void InterruptInit();
+// #elif defined(ENET_LINK_CHECK_USE_PIN_POLL)
+void PinPollInit();
+void PinPoll();
+// #endif
+} // namespace emac::link
 
-#if defined(ENET_LINK_CHECK_USE_PIN_POLL)
-void PinPollInit()
-{
-    link::PinEnable();
-    link::PinRecovery();
-    link::GpioInit();
-}
-#endif
-
-net::phy::Link StatusRead()
-{
-    return net::phy::GetLink(PHY_ADDRESS);
-}
-} // namespace net::link
+#endif // EMAC_NET_LINK_CHECK_H_

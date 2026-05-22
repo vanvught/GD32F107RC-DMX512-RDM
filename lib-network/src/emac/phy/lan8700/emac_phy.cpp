@@ -1,8 +1,8 @@
 /**
- * @file phy.cpp
+ * @file emac_phy.cpp
  *
  */
-/* Copyright (C) 2023-2025 by Arjan van Vught mailto:info@gd32-dmx.org
+/* Copyright (C) 2023-2026 by Arjan van Vught mailto:info@gd32-dmx.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,9 +25,9 @@
 
 #include <cstdint>
 
-#include "emac/phy.h"
+#include "emac/emac_phy.h"
+#include "emac/emac_link_check.h"
 #include "emac/mmi.h"
-#include "firmware/debug/debug_printbits.h"
 #include "firmware/debug/debug_debug.h"
 
 #if !defined(BIT)
@@ -38,32 +38,31 @@
 #define PHY_ADDRESS 1
 #endif
 
-namespace net::phy
-{
-void CustomizedLed()
-{
+namespace emac::phy {
+void CustomizedLed() {
     DEBUG_ENTRY();
 
     DEBUG_EXIT();
 }
 
-void CustomizedTiming()
-{
+void CustomizedTiming() {
     DEBUG_ENTRY();
 
     DEBUG_EXIT();
 }
 
-void CustomizedStatus(phy::Status& phy_status)
-{
+/**
+ * PHY SPECIAL CONTROL/STATUS REGISTER Index (In Decimal): 31
+ * @param phyStatus
+ */
+void CustomizedStatus(emac::phy::Status& phy_status) {
+    phy_status.link = link::StatusRead();
+
     uint16_t value;
-    phy::Read(PHY_ADDRESS, mmi::REG_BMSR, value);
+    phy::Read(PHY_ADDRESS, 0x1f, value);
 
-    debug::PrintBits(value);
-
-    phy_status.duplex = Duplex::kDuplexFull;
-    phy_status.speed = Speed::kSpeed100;
-    phy_status.link = (value & mmi::BMSR_LINKED_STATUS) ? Link::kStateUp : Link::kStateDown;
-    phy_status.autonegotiation = (value & mmi::BMSR_AUTONEGO_COMPLETE);
+    phy_status.duplex = ((value & BIT(4)) == BIT(4)) ? phy::Duplex::kDuplexFull : phy::Duplex::kDuplexHalf;
+    phy_status.speed = ((value & BIT(2)) == BIT(2)) ? phy::Speed::kSpeed10 : phy::Speed::kSpeed100;
+    phy_status.autonegotiation = ((value & BIT(12)) == BIT(12));
 }
-} // namespace net::phy
+} // namespace emac::phy

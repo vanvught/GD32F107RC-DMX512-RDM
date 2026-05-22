@@ -1,8 +1,8 @@
 /**
- * @file phy.cpp
+ * @file emac_phy.cpp
  *
  */
-/* Copyright (C) 2023-2025 by Arjan van Vught mailto:info@gd32-dmx.org
+/* Copyright (C) 2023-2026 by Arjan van Vught mailto:info@gd32-dmx.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,10 +25,9 @@
 
 #include <cstdint>
 
-#include "emac/phy.h"
-#include "emac/net_link_check.h"
+#include "emac/emac_phy.h"
 #include "emac/mmi.h"
-
+#include "firmware/debug/debug_printbits.h"
 #include "firmware/debug/debug_debug.h"
 
 #if !defined(BIT)
@@ -39,34 +38,28 @@
 #define PHY_ADDRESS 1
 #endif
 
-namespace net::phy
-{
-void CustomizedLed()
-{
+namespace emac::phy {
+void CustomizedLed() {
     DEBUG_ENTRY();
 
     DEBUG_EXIT();
 }
 
-void CustomizedTiming()
-{
+void CustomizedTiming() {
     DEBUG_ENTRY();
 
     DEBUG_EXIT();
 }
 
-/**
- * PHY Status Register (PHYSTS), address 10h
- * @param phyStatus
- */
-void CustomizedStatus(phy::Status& phy_status)
-{
+void CustomizedStatus(emac::phy::Status& phy_status) {
     uint16_t value;
-    phy::Read(PHY_ADDRESS, 0x10, value);
+    emac::phy::Read(PHY_ADDRESS, emac::mmi::REG_BMSR, value);
 
-    phy_status.link = ((value & BIT(0)) == BIT(0)) ? phy::Link::kStateUp : phy::Link::kStateDown;
-    phy_status.duplex = ((value & BIT(2)) == BIT(2)) ? phy::Duplex::kDuplexFull : phy::Duplex::kDuplexHalf;
-    phy_status.speed = ((value & BIT(1)) == BIT(1)) ? phy::Speed::kSpeed10 : phy::Speed::kSpeed100;
-    phy_status.autonegotiation = ((value & BIT(4)) == BIT(4));
+    debug::PrintBits(value);
+
+    phy_status.duplex = emac::phy::Duplex::kDuplexFull;
+    phy_status.speed = emac::phy::Speed::kSpeed100;
+    phy_status.link = (value & emac::mmi::BMSR_LINKED_STATUS) ? emac::phy::Link::kStateUp : emac::phy::Link::kStateDown;
+    phy_status.autonegotiation = (value & emac::mmi::BMSR_AUTONEGO_COMPLETE);
 }
-} // namespace net::phy
+} // namespace emac::phy
