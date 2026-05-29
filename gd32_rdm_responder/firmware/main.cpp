@@ -69,14 +69,13 @@ int main() // NOLINT
     fw.Print("RDM Responder");
 
     PixelDmx pixeldmx;
+    PixelTestPattern pixel_test_pattern(pixelpatterns::Pattern::kNone, 1);
 
     json::PixelDmxParams pixeldmx_params;
     pixeldmx_params.Load();
     pixeldmx_params.Set();
 
-    const auto kTestPattern = common::FromValue<pixelpatterns::Pattern>(ConfigStore::Instance().DmxLedGet(&common::store::DmxLed::test_pattern));
-
-    PixelTestPattern pixel_test_pattern(kTestPattern, 1);
+    const auto kTestPattern = pixel_test_pattern.GetPattern();
 
     PixelDmxParamsRdm pixeldmx_paramsrdm;
 
@@ -124,7 +123,7 @@ int main() // NOLINT
     displayudf_params.Load();
     displayudf_params.SetAndShow();
 
-    common::firmware::pixeldmx::Show(7);
+    common::firmware::pixeldmx::Show(7, kTestPattern);
 
     if (kIsConfigMode) {
         display.ClearLine(3);
