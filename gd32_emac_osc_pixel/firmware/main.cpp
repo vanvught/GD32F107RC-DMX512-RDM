@@ -24,7 +24,7 @@
 
 #include "gd32/hal.h"
 #include "watchdog.h"
-#include "hal_boardinfo.h"
+#include "board.h"
 #include "display.h"
 #include "emac/network.h"
 #include "oscserver.h"
@@ -68,16 +68,15 @@ int main() // NOLINT
     display.TextStatus(OscServerMsgConst::kParams, ansi::Colours::Colour::kYellow);
 
     PixelDmx pixeldmx;
+    PixelTestPattern pixeltest_pattern(pixelpatterns::Pattern::kNone, 1);
 
     json::PixelDmxParams pixeldmx_params;
     pixeldmx_params.Load();
     pixeldmx_params.Set();
 
-    const auto kTestPattern = common::FromValue<pixelpatterns::Pattern>(ConfigStore::Instance().DmxLedGet(&common::store::DmxLed::test_pattern));
+    const auto kTestPattern = pixeltest_pattern.GetPattern();
 
-    PixelTestPattern pixeltest_pattern(kTestPattern, 1);
-
-    common::firmware::pixeldmx::Show(7);
+    common::firmware::pixeldmx::Show(7, kTestPattern);
 
     oscserver.SetOutput(&pixeldmx);
     oscserver.SetOscServerHandler(new Handler(&pixeldmx));
@@ -88,7 +87,7 @@ int main() // NOLINT
     uint8_t text_length;
 
     display.Printf(1, "OSC Pixel 1");
-    display.Write(2, hal::BoardName(text_length));
+    display.Write(2, board::BoardName(text_length));
     display.Printf(3, "IP: " IPSTR " %c", IP2STR(network::GetPrimaryIp()), network::iface::IsDhcpKnown() ? (network::iface::Dhcp() ? 'D' : 'S') : ' ');
     display.Printf(4, "In: %d", oscserver.GetPortIncoming());
     display.Printf(5, "Out: %d", oscserver.GetPortOutgoing());

@@ -31,7 +31,6 @@
 #include "dmxnodenode.h"
 #include "dmxnodemsgconst.h"
 #include "firmware/pixeldmx/show.h"
-#include "pixeltype.h"
 #include "pixeltestpattern.h"
 #include "pixeldmx.h"
 #include "json/pixeldmxparams.h"
@@ -42,8 +41,6 @@
 #include "configstore.h"
 #include "firmwareversion.h"
 #include "software_version.h"
-#include "common/utils/utils_flags.h"
-#include "configurationstore.h"
 
 namespace hal {
 void RebootHandler() {
@@ -64,16 +61,15 @@ int main() // NOLINT
 
     DmxNodeNode dmxnode_node;
     PixelDmx pixeldmx;
+    PixelTestPattern pixeltest_pattern(pixelpatterns::Pattern::kNone, 1);
 
     json::PixelDmxParams pixeldmx_params;
     pixeldmx_params.Load();
     pixeldmx_params.Set();
 
-    const auto kTestPattern = common::FromValue<pixelpatterns::Pattern>(ConfigStore::Instance().DmxLedGet(&common::store::DmxLed::test_pattern));
+    const auto kTestPattern = pixeltest_pattern.GetPattern();
 
-    PixelTestPattern pixeltest_pattern(kTestPattern, 1);
-
-    if (PixelTestPattern::Get()->GetPattern() != pixelpatterns::Pattern::kNone) {
+    if (kTestPattern!= pixelpatterns::Pattern::kNone) {
         dmxnode_node.SetOutput(nullptr);
     } else {
         dmxnode_node.SetOutput(&pixeldmx);
@@ -96,7 +92,7 @@ int main() // NOLINT
     displayudf_params.Load();
     displayudf_params.SetAndShow();
 
-    common::firmware::pixeldmx::Show(7);
+    common::firmware::pixeldmx::Show(7, kTestPattern);
 
     RemoteConfig remote_config(remoteconfig::Output::PIXEL, dmxnode_node.GetActiveOutputPorts());
 
