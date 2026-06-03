@@ -25,6 +25,9 @@
 #include "showfile.html.h"
 #include "date.js.h"
 #include "default.js.h"
+#if !defined (CONFIG_HTTP_HTML_NO_PIXEL) && (defined(OUTPUT_DMX_PIXEL) || defined(OUTPUT_DMX_PIXEL_MULTI))
+#include "pixeltype.json.h"
+#endif // !defined (CONFIG_HTTP_HTML_NO_PIXEL) && (defined(OUTPUT_DMX_PIXEL) || defined(OUTPUT_DMX_PIXEL_MULTI))
 #if defined (NODE_SHOWFILE)
 #include "showfile.js.h"
 #endif // (NODE_SHOWFILE)

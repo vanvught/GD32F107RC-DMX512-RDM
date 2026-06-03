@@ -11,6 +11,14 @@ INCLUDES := -I$(ROOT)/common/include -I$(ROOT)/lib-remoteconfig/include -I$(ROOT
 COPS := -std=c++20 -Wall -Werror
 
 CONTENT ?= light
+USE_GZIP ?= 0
+
+ifeq ($(USE_GZIP),1)
+$(info Building with gzip support)
+COPS += -DUSE_GZIP
+else
+$(info Building without gzip support)
+endif
 
 all : content
 
@@ -24,7 +32,7 @@ generate_content : Makefile generate_content.cpp
 	$(CPP) generate_content.cpp $(INCLUDES) $(COPS) -o generate_content
 	
 pixeltype : $(ROOT)/lib-pixel/include/pixeltype.h
-	./parse_pixeltype.py $(ROOT)/lib-pixel/include/pixeltype.h -o pixeltype.json
+	 python3 parse_pixeltype.py $(ROOT)/lib-pixel/include/pixeltype.h -o $(CONTENT)/pixeltype.json
 	
 content : generate_content pixeltype
 	@echo "Running with directory $(CONTENT)"
