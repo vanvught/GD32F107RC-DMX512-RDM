@@ -85,12 +85,6 @@ inline uint8_t Read(uint8_t address, char* buffer, uint32_t length) {
     return Gd32I2cRead(address, buffer, length);
 }
 
-inline uint16_t Read16() {
-    char buf[2] = {0};
-    Read(buf, 2);
-    return static_cast<uint16_t>(static_cast<uint16_t>(buf[0]) << 8 | static_cast<uint16_t>(buf[1]));
-}
-
 inline bool IsConnected(uint8_t address, uint32_t baudrate = kNormalSpeed) {
     return Gd32I2cIsConnected(address, baudrate);
 }
@@ -113,19 +107,6 @@ inline void ReadReg(uint8_t reg, uint8_t& value) {
 
 inline void ReadReg(uint8_t address, uint8_t reg, uint8_t& value) {
     Gd32I2cReadReg(address, reg, value);
-}
-
-inline uint16_t ReadRegister16(uint8_t reg) {
-    const char kBuffer[] = {static_cast<char>(reg)};
-    i2c::Write(&kBuffer[0], 1);
-    return Read16();
-}
-
-inline uint16_t ReadRegister16DelayUs(uint8_t reg, uint32_t delay_us) {
-    const char kBuffer[] = {static_cast<char>(reg)};
-    i2c::Write(&kBuffer[0], 1);
-    timing::DelayUs(delay_us);
-    return Read16();
 }
 } // namespace i2c
 
