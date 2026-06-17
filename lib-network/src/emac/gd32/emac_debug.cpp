@@ -27,18 +27,18 @@
 
 #include "gd32.h"
 
-static uint32_t s_nCounter;
+static uint32_t s_counter;
 
 void emac_debug_run() {
-	uint32_t rxfifo_drop;
-	uint32_t rxdma_drop;
-#if defined (GD32H7XX)
-	enet_missed_frame_counter_get(ENETx, &rxfifo_drop, &rxdma_drop);
+    uint32_t rxfifo_drop;
+    uint32_t rxdma_drop;
+#if defined(GD32H7XX)
+    enet_missed_frame_counter_get(ENETx, &rxfifo_drop, &rxdma_drop);
 #else
-	enet_missed_frame_counter_get(&rxfifo_drop, &rxdma_drop);
+    enet_missed_frame_counter_get(&rxfifo_drop, &rxdma_drop);
 #endif
 
-	if ((rxfifo_drop != 0) || (rxdma_drop != 0)) {
-		printf("%u: RxFIFO: %u RxDMA: %u\n", ++s_nCounter, rxfifo_drop, rxdma_drop);
-	}
+    if ((rxfifo_drop != 0) || (rxdma_drop != 0)) {
+        printf("%u: RxFIFO: %u RxDMA: %u\n", ++s_counter, rxfifo_drop, rxdma_drop);
+    }
 }
