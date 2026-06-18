@@ -2450,7 +2450,10 @@ static void UsartDmaConfig() {
     dma_channel_subperipheral_select(UART3_DMAx, UART3_TX_DMA_CHx, UART3_TX_DMA_SUBPERIx);
 #endif
     Gd32DmaInterruptDisable<UART3_DMAx, UART3_TX_DMA_CHx, DMA_INTERRUPT_DISABLE>();
-#if !defined(GD32F4XX)
+#if defined(GD32F30X)
+    NVIC_SetPriority(DMA1_Channel3_Channel4_IRQn, 1);
+    NVIC_EnableIRQ(DMA1_Channel3_Channel4_IRQn);
+#elif !defined(GD32F4XX)
     NVIC_SetPriority(DMA1_Channel4_IRQn, 1);
     NVIC_EnableIRQ(DMA1_Channel4_IRQn);
 #else
