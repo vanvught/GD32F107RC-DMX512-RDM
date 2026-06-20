@@ -31,7 +31,7 @@
 #include <time.h>
 #include <sys/time.h>
 
-#include "gd32/hal.h"
+#include "board.h"
 #include "watchdog.h"
 #include "network.h"
 #include "displayudf.h"
@@ -40,18 +40,18 @@
 #include "remoteconfig.h"
 #include "rdmnetdevice.h"
 #include "hwclock.h"
-#include "firmwareversion.h"
+#include "firmware/firmwareversion.h"
 #include "software_version.h"
 
-namespace hal {
+namespace board {
 void RebootHandler() {
     HwClock::Get()->SysToHc();
 }
-} // namespace hal
+} // namespace board
 
 int main() // NOLINT
 {
-    hal::Init();
+    board::Init();
     DisplayUdf display;
     ConfigStore config_store;
     network::Init();
@@ -84,7 +84,7 @@ int main() // NOLINT
     for (;;) {
         watchdog::Feed();
         network::Run();
-        hal::Run();
+        board::Run();
 
         const auto kTime2 = time(nullptr);
 

@@ -1,8 +1,8 @@
 /**
- * @file board.h
+ * @file hal_statusled.h
  *
  */
-/* Copyright (C) 2026 by Arjan van Vught mailto:info@gd32-dmx.org
+/* Copyright (C) 2025-2026 by Arjan van Vught mailto:info@gd32-dmx.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,31 +23,25 @@
  * THE SOFTWARE.
  */
 
-#ifndef BOARD_H_
-#define BOARD_H_
+#ifndef BOARD_STATUSLED_H_
+#define BOARD_STATUSLED_H_
 
 #include <cstdint>
 
-namespace board {
-enum class BootDevice { kUnkown, kFel, kMmc0, kSpi, kHdd, kFlash, kRam };
+namespace board::statusled {
+enum class Mode { kOffOff, kOffOn, kNormal, kData, kFast, kReboot, kUnknown };
 
-void Init();
-bool Reboot();
-void RebootHandler();
+namespace global {
+extern Mode g_status_led_mode;
+} // namespace global
 
-BootDevice GetBootDevice();
+void SetModeWithLock(Mode mode, bool do_lock);
+void SetMode(Mode mode);
+inline Mode GetMode() {
+    return global::g_status_led_mode;
+}
+void SetFrequency(uint32_t frequency_hz);
+void Event(Mode mode);
+} // namespace board::statusled
 
-const char* BoardName(uint8_t& length);
-const char* SocName(uint8_t& length);
-const char* CpuName(uint8_t& length);
-const char* MachineName(uint8_t& length);
-const char* SysName(uint8_t& length);
-
-float CoreTemperatureMin();
-float CoreTemperatureMax();
-float CoreTemperatureCurrent();
-
-const char* Website();
-} // namespace board
-
-#endif // BOARD_H_
+#endif // BOARD_STATUSLED_H_

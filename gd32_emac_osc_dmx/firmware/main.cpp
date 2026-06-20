@@ -25,7 +25,7 @@
 
 #include <cstdint>
 
-#include "gd32/hal.h"
+#include "board.h"
 #include "watchdog.h"
 #include "board.h"
 #include "display.h"
@@ -37,18 +37,18 @@
 #include "dmxsend.h"
 #include "remoteconfig.h"
 #include "configstore.h"
-#include "firmwareversion.h"
+#include "firmware/firmwareversion.h"
 #include "software_version.h"
 
-namespace hal {
+namespace board {
 void RebootHandler() {
     Dmx::Get()->Blackout();
 }
-} // namespace hal
+} // namespace board
 
 int main() // NOLINT
 {
-    hal::Init();
+    board::Init();
     Display display;
     ConfigStore config_store;
     network::Init();
@@ -101,6 +101,6 @@ int main() // NOLINT
     for (;;) {
         watchdog::Feed();
         network::Run();
-        hal::Run();
+        board::Run();
     }
 }

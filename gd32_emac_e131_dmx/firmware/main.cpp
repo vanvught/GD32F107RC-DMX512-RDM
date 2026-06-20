@@ -25,7 +25,6 @@
 
 #include <cstdint>
 
-#include "hal.h"
 #include "watchdog.h"
 #include "network.h"
 #include "displayudf.h"
@@ -35,26 +34,28 @@
 #include "dmxsend.h"
 #include "dmxnodenode.h"
 #include "dmxnodemsgconst.h"
+
+#include "../../lib-board/include/board.h"
 #if defined(NODE_SHOWFILE)
 #include "showfile.h"
 #endif
 #include "remoteconfig.h"
 #include "configstore.h"
-#include "firmwareversion.h"
+#include "firmware/firmwareversion.h"
 #include "software_version.h"
 
-namespace hal {
+namespace board {
 void RebootHandler() {
     Dmx::Get()->Blackout();
     E131Bridge::Get()->Stop();
 }
-} // namespace hal
+} // namespace board
 
 static constexpr uint32_t kPortIndex = 0;
 
 int main() // NOLINT
 {
-    hal::Init();
+    board::Init();
     DisplayUdf display;
     ConfigStore config_store;
     network::Init();
@@ -111,6 +112,6 @@ int main() // NOLINT
 #if defined(NODE_SHOWFILE)
         showfile.Run();
 #endif
-        hal::Run();
+        board::Run();
     }
 }
