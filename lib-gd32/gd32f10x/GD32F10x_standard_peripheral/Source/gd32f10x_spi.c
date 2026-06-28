@@ -2,14 +2,11 @@
     \file    gd32f10x_spi.c
     \brief   SPI driver
 
-    \version 2014-12-26, V1.0.0, firmware for GD32F10x
-    \version 2017-06-20, V2.0.0, firmware for GD32F10x
-    \version 2018-07-31, V2.1.0, firmware for GD32F10x
-    \version 2020-09-30, V2.2.0, firmware for GD32F10x
+    \version 2026-02-12, V2.7.0, firmware for GD32F10x
 */
 
 /*
-    Copyright (c) 2020, GigaDevice Semiconductor Inc.
+    Copyright (c) 2026, GigaDevice Semiconductor Inc.
 
     Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:
@@ -177,7 +174,7 @@ void spi_disable(uint32_t spi_periph)
       \arg        I2S_MODE_MASTERRX: I2S master receive mode
     \param[in]  standard: I2S standard
                 only one parameter can be selected which is shown as below:
-      \arg        I2S_STD_PHILLIPS: I2S phillips standard
+      \arg        I2S_STD_PHILIPS: I2S philips standard
       \arg        I2S_STD_MSB: I2S MSB standard
       \arg        I2S_STD_LSB: I2S LSB standard
       \arg        I2S_STD_PCMSHORT: I2S PCM short standard
@@ -231,7 +228,7 @@ void i2s_init(uint32_t spi_periph, uint32_t mode, uint32_t standard, uint32_t ck
     \param[in]  mckout: I2S master clock output
                 only one parameter can be selected which is shown as below:
       \arg        I2S_MCKOUT_ENABLE: enable I2S master clock output
-      \arg        I2S_MCKOUT_DISABLE: disable 2S master clock output
+      \arg        I2S_MCKOUT_DISABLE: disable I2S master clock output
     \param[out] none
     \retval     none
 */
@@ -506,7 +503,7 @@ uint16_t spi_crc_polynomial_get(uint32_t spi_periph)
 }
 
 /*!
-    \brief      turn on SPI CRC function 
+    \brief      turn on SPI CRC function
     \param[in]  spi_periph: SPIx(x=0,1,2)
     \param[out] none
     \retval     none
@@ -550,11 +547,13 @@ void spi_crc_next(uint32_t spi_periph)
 */
 uint16_t spi_crc_get(uint32_t spi_periph, uint8_t crc)
 {
+    uint16_t crc_value = 0U;
     if(SPI_CRC_TX == crc) {
-        return ((uint16_t)(SPI_TCRC(spi_periph)));
+        crc_value = ((uint16_t)(SPI_TCRC(spi_periph)));
     } else {
-        return ((uint16_t)(SPI_RCRC(spi_periph)));
+        crc_value = ((uint16_t)(SPI_RCRC(spi_periph)));
     }
+    return crc_value;
 }
 
 /*!
@@ -587,11 +586,13 @@ void spi_crc_error_clear(uint32_t spi_periph)
 */
 FlagStatus spi_i2s_flag_get(uint32_t spi_periph, uint32_t flag)
 {
+    FlagStatus spi_flag = RESET;
     if(RESET != (SPI_STAT(spi_periph) & flag)) {
-        return SET;
+        spi_flag = SET;
     } else {
-        return RESET;
+        spi_flag = RESET;
     }
+    return spi_flag;
 }
 
 /*!
@@ -646,6 +647,7 @@ FlagStatus spi_i2s_interrupt_flag_get(uint32_t spi_periph, uint8_t interrupt)
 {
     uint32_t reg1 = SPI_STAT(spi_periph);
     uint32_t reg2 = SPI_CTL1(spi_periph);
+    FlagStatus spi_flag = RESET;
 
     switch(interrupt) {
     /* SPI/I2S transmit buffer empty interrupt */
@@ -683,8 +685,9 @@ FlagStatus spi_i2s_interrupt_flag_get(uint32_t spi_periph, uint8_t interrupt)
     }
     /*get SPI/I2S interrupt flag status */
     if((0U != reg1) && (0U != reg2)) {
-        return SET;
+        spi_flag = SET;
     } else {
-        return RESET;
+        spi_flag = RESET;
     }
+    return spi_flag;
 }

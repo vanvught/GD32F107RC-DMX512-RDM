@@ -2,14 +2,11 @@
     \file    gd32f10x_usart.c
     \brief   USART driver
 
-    \version 2014-12-26, V1.0.0, firmware for GD32F10x
-    \version 2017-06-20, V2.0.1, firmware for GD32F10x
-    \version 2018-07-31, V2.1.0, firmware for GD32F10x
-    \version 2020-09-30, V2.2.0, firmware for GD32F10x
+    \version 2026-02-12, V2.7.0, firmware for GD32F10x
 */
 
 /*
-    Copyright (c) 2020, GigaDevice Semiconductor Inc.
+    Copyright (c) 2026, GigaDevice Semiconductor Inc.
 
     Redistribution and use in source and binary forms, with or without modification, 
 are permitted provided that the following conditions are met:
@@ -439,7 +436,7 @@ void usart_synchronous_clock_config(uint32_t usart_periph, uint32_t clen, uint32
     \param[out] none
     \retval     none
 */
-void usart_guard_time_config(uint32_t usart_periph,uint8_t guat)
+void usart_guard_time_config(uint32_t usart_periph, uint8_t guat)
 {
     USART_GP(usart_periph) &= ~(USART_GP_GUAT);
     USART_GP(usart_periph) |= (USART_GP_GUAT & ((uint32_t)guat << GP_GUAT_OFFSET));
@@ -624,11 +621,14 @@ void usart_dma_transmit_config(uint32_t usart_periph, uint8_t dmaconfig)
 */
 FlagStatus usart_flag_get(uint32_t usart_periph, usart_flag_enum flag)
 {
+    FlagStatus ret = RESET;
+
     if(RESET != (USART_REG_VAL(usart_periph, flag) & BIT(USART_BIT_POS(flag)))){
-        return SET;
+        ret = SET;
     }else{
-        return RESET;
+        ret = RESET;
     }
+    return ret;
 }
 
 /*!
@@ -711,23 +711,26 @@ void usart_interrupt_disable(uint32_t usart_periph, uint32_t int_flag)
 */
 FlagStatus usart_interrupt_flag_get(uint32_t usart_periph, uint32_t int_flag)
 {
+    FlagStatus ret = RESET;
     uint32_t intenable = 0U, flagstatus = 0U;
+
     /* get the interrupt enable bit status */
     intenable = (USART_REG_VAL(usart_periph, int_flag) & BIT(USART_BIT_POS(int_flag)));
     /* get the corresponding flag bit status */
     flagstatus = (USART_REG_VAL2(usart_periph, int_flag) & BIT(USART_BIT_POS2(int_flag)));
 
     if(flagstatus && intenable){
-        return SET;
+        ret = SET;
     }else{
-        return RESET; 
+        ret = RESET; 
     }
+    return ret;
 }
 
 /*!
     \brief      clear USART interrupt flag in STAT register
     \param[in]  usart_periph: USARTx(x=0,1,2)/UARTx(x=3,4)
-    \param[in]  flag: USART interrupt flag
+    \param[in]  int_flag: USART interrupt flag
                 only one parameter can be selected which is shown as below:
       \arg        USART_INT_FLAG_CTS: CTS change flag
       \arg        USART_INT_FLAG_LBD: LIN break detected flag
@@ -736,7 +739,7 @@ FlagStatus usart_interrupt_flag_get(uint32_t usart_periph, uint32_t int_flag)
     \param[out] none
     \retval     none
 */
-void usart_interrupt_flag_clear(uint32_t usart_periph, uint32_t flag)
+void usart_interrupt_flag_clear(uint32_t usart_periph, uint32_t int_flag)
 {
-    USART_REG_VAL2(usart_periph, flag) = ~BIT(USART_BIT_POS2(flag));
+    USART_REG_VAL2(usart_periph, int_flag) = ~BIT(USART_BIT_POS2(int_flag));
 }

@@ -2,14 +2,11 @@
     \file    gd32f10x_fwdgt.c
     \brief   FWDGT driver
        
-    \version 2014-12-26, V1.0.0, firmware for GD32F10x
-    \version 2017-06-20, V2.0.0, firmware for GD32F10x
-    \version 2018-07-31, V2.1.0, firmware for GD32F10x
-    \version 2020-09-30, V2.2.0, firmware for GD32F10x
+    \version 2026-02-12, V2.7.0, firmware for GD32F10x
 */
 
 /*
-    Copyright (c) 2020, GigaDevice Semiconductor Inc.
+    Copyright (c) 2026, GigaDevice Semiconductor Inc.
 
     Redistribution and use in source and binary forms, with or without modification, 
 are permitted provided that the following conditions are met:
@@ -88,9 +85,13 @@ ErrStatus fwdgt_prescaler_value_config(uint16_t prescaler_value)
 {
     uint32_t timeout = FWDGT_PSC_TIMEOUT;
     uint32_t flag_status = RESET;
+    ErrStatus status = SUCCESS;
   
     /* enable write access to FWDGT_PSC */
     FWDGT_CTL = FWDGT_WRITEACCESS_ENABLE;
+
+    /* configure FWDGT */
+    FWDGT_PSC = (uint32_t)prescaler_value; 
   
     /* wait until the PUD flag to be reset */
     do{
@@ -98,13 +99,10 @@ ErrStatus fwdgt_prescaler_value_config(uint16_t prescaler_value)
     }while((--timeout > 0U) && ((uint32_t)RESET != flag_status));
     
     if ((uint32_t)RESET != flag_status){
-        return ERROR;
+        status = ERROR;
     }
-    
-    /* configure FWDGT */
-    FWDGT_PSC = (uint32_t)prescaler_value; 
 
-    return SUCCESS;
+    return status;
 }
 
 /*!
@@ -117,9 +115,12 @@ ErrStatus fwdgt_reload_value_config(uint16_t reload_value)
 {
     uint32_t timeout = FWDGT_RLD_TIMEOUT;
     uint32_t flag_status = RESET;
+    ErrStatus status = SUCCESS;
   
     /* enable write access to FWDGT_RLD */
     FWDGT_CTL = FWDGT_WRITEACCESS_ENABLE;
+
+    FWDGT_RLD = RLD_RLD(reload_value);
   
     /* wait until the RUD flag to be reset */
     do{
@@ -127,12 +128,10 @@ ErrStatus fwdgt_reload_value_config(uint16_t reload_value)
     }while((--timeout > 0U) && ((uint32_t)RESET != flag_status));
    
     if ((uint32_t)RESET != flag_status){
-        return ERROR;
+        status = ERROR;
     }
-    
-    FWDGT_RLD = RLD_RLD(reload_value);
 
-    return SUCCESS;
+    return status;
 }
 
 /*!
@@ -149,7 +148,7 @@ void fwdgt_counter_reload(void)
 /*!
     \brief      configure counter reload value, and prescaler divider value
     \param[in]  reload_value: specify reload value(0x0000 - 0x0FFF)
-    \param[in]  prescaler_div: FWDGT prescaler value
+    \param[in]  prescaler_value: FWDGT prescaler value
                 only one parameter can be selected which is shown as below:
       \arg        FWDGT_PSC_DIV4: FWDGT prescaler set to 4
       \arg        FWDGT_PSC_DIV8: FWDGT prescaler set to 8
@@ -161,38 +160,49 @@ void fwdgt_counter_reload(void)
     \param[out] none
     \retval     ErrStatus: ERROR or SUCCESS
 */
-ErrStatus fwdgt_config(uint16_t reload_value, uint8_t prescaler_div)
+ErrStatus fwdgt_config(uint16_t reload_value, uint8_t prescaler_value)
 {
     uint32_t timeout = FWDGT_PSC_TIMEOUT;
     uint32_t flag_status = RESET;
+    ErrStatus status = SUCCESS;
   
+    /* start the free watchdog timer counter */
+    FWDGT_CTL = FWDGT_KEY_ENABLE;
+
     /* enable write access to FWDGT_PSC,and FWDGT_RLD */
     FWDGT_CTL = FWDGT_WRITEACCESS_ENABLE;
+
+    /* configure FWDGT */
+    FWDGT_PSC = (uint32_t)prescaler_value;
+
     /* wait until the PUD flag to be reset */
-    do{
+    do {
        flag_status = FWDGT_STAT & FWDGT_STAT_PUD;
-    }while((--timeout > 0U) && ((uint32_t)RESET != flag_status));
+    } while((--timeout > 0U) && ((uint32_t)RESET != flag_status));
     
     if((uint32_t)RESET != flag_status){
-        return ERROR;
+        status = ERROR;
     }
-    /* configure FWDGT */
-    FWDGT_PSC = (uint32_t)prescaler_div;
 
-    timeout = FWDGT_RLD_TIMEOUT;
-    /* wait until the RUD flag to be reset */
-    do{
-       flag_status = FWDGT_STAT & FWDGT_STAT_RUD;
-    }while((--timeout > 0U) && ((uint32_t)RESET != flag_status));
-   
-    if((uint32_t)RESET != flag_status){
-        return ERROR;
+    if(SUCCESS == status) {
+        FWDGT_RLD = RLD_RLD(reload_value);
+        timeout = FWDGT_RLD_TIMEOUT;
+        /* wait until the RUD flag to be reset */
+        do {
+            flag_status = FWDGT_STAT & FWDGT_STAT_RUD;
+        } while((--timeout > 0U) && ((uint32_t)RESET != flag_status));
+    
+        if((uint32_t)RESET != flag_status) {
+            status = ERROR;
+        }
     }
-    FWDGT_RLD = RLD_RLD(reload_value);
-    /* reload the counter */
-    FWDGT_CTL = FWDGT_KEY_RELOAD;
 
-    return SUCCESS;
+    if(SUCCESS == status) {
+        /* reload the counter */
+        FWDGT_CTL = FWDGT_KEY_RELOAD;
+    }
+
+    return status;
 }
 
 /*!
@@ -206,9 +216,9 @@ ErrStatus fwdgt_config(uint16_t reload_value, uint8_t prescaler_div)
 */
 FlagStatus fwdgt_flag_get(uint16_t flag)
 {
+    FlagStatus flag_status = RESET;
     if(FWDGT_STAT & flag){
-        return SET;
+        flag_status = SET;
     }
-    
-    return RESET;
+    return flag_status;
 }

@@ -2,14 +2,11 @@
     \file    gd32f10x_gpio.c
     \brief   GPIO driver
     
-    \version 2014-12-26, V1.0.0, firmware for GD32F10x
-    \version 2017-06-20, V2.0.0, firmware for GD32F10x
-    \version 2018-07-31, V2.1.0, firmware for GD32F10x
-    \version 2020-09-30, V2.2.0, firmware for GD32F10x
+    \version 2026-02-12, V2.7.0, firmware for GD32F10x
 */
 
 /*
-    Copyright (c) 2020, GigaDevice Semiconductor Inc.
+    Copyright (c) 2026, GigaDevice Semiconductor Inc.
 
     Redistribution and use in source and binary forms, with or without modification, 
 are permitted provided that the following conditions are met:
@@ -150,7 +147,7 @@ void gpio_init(uint32_t gpio_periph, uint32_t mode, uint32_t speed, uint32_t pin
 
     /* configure the eight low port pins with GPIO_CTL0 */
     for(i = 0U;i < 8U;i++){
-        if((1U << i) & pin){
+        if(((uint32_t)1U << i) & pin){
             reg = GPIO_CTL0(gpio_periph);
             
             /* clear the specified pin mode bits */
@@ -161,11 +158,11 @@ void gpio_init(uint32_t gpio_periph, uint32_t mode, uint32_t speed, uint32_t pin
             /* set IPD or IPU */
             if(GPIO_MODE_IPD == mode){
                 /* reset the corresponding OCTL bit */
-                GPIO_BC(gpio_periph) = (uint32_t)((1U << i) & pin);
+                GPIO_BC(gpio_periph) = (uint32_t)(((uint32_t)1U << i) & pin);
             }else{
                 /* set the corresponding OCTL bit */
                 if(GPIO_MODE_IPU == mode){
-                    GPIO_BOP(gpio_periph) = (uint32_t)((1U << i) & pin);
+                    GPIO_BOP(gpio_periph) = (uint32_t)(((uint32_t)1U << i) & pin);
                 }
             }
             /* set GPIO_CTL0 register */
@@ -174,7 +171,7 @@ void gpio_init(uint32_t gpio_periph, uint32_t mode, uint32_t speed, uint32_t pin
     }
     /* configure the eight high port pins with GPIO_CTL1 */
     for(i = 8U;i < 16U;i++){
-        if((1U << i) & pin){
+        if(((uint32_t)1U << i) & pin){
             reg = GPIO_CTL1(gpio_periph);
             
             /* clear the specified pin mode bits */
@@ -185,11 +182,11 @@ void gpio_init(uint32_t gpio_periph, uint32_t mode, uint32_t speed, uint32_t pin
             /* set IPD or IPU */
             if(GPIO_MODE_IPD == mode){
                 /* reset the corresponding OCTL bit */
-                GPIO_BC(gpio_periph) = (uint32_t)((1U << i) & pin);
+                GPIO_BC(gpio_periph) = (uint32_t)(((uint32_t)1U << i) & pin);
             }else{
                 /* set the corresponding OCTL bit */
                 if(GPIO_MODE_IPU == mode){
-                    GPIO_BOP(gpio_periph) = (uint32_t)((1U << i) & pin);
+                    GPIO_BOP(gpio_periph) = (uint32_t)(((uint32_t)1U << i) & pin);
                 }
             }
             /* set GPIO_CTL1 register */
@@ -270,11 +267,15 @@ void gpio_port_write(uint32_t gpio_periph,uint16_t data)
 */
 FlagStatus gpio_input_bit_get(uint32_t gpio_periph,uint32_t pin)
 {
+    FlagStatus ret = RESET;
+    
     if((uint32_t)RESET != (GPIO_ISTAT(gpio_periph)&(pin))){
-        return SET; 
+        ret = SET; 
     }else{
-        return RESET;
+        ret = RESET;
     }
+
+    return ret;
 }
 
 /*!
@@ -299,11 +300,15 @@ uint16_t gpio_input_port_get(uint32_t gpio_periph)
 */
 FlagStatus gpio_output_bit_get(uint32_t gpio_periph, uint32_t pin)
 {
+    FlagStatus ret = RESET;
+    
     if((uint32_t)RESET !=(GPIO_OCTL(gpio_periph)&(pin))){
-        return SET;
+        ret = SET;
     }else{
-        return RESET;
+        ret = RESET;
     }
+    
+    return ret;
 }
 
 /*!

@@ -2,14 +2,11 @@
     \file    gd32f10x_bkp.c
     \brief   BKP driver
 
-    \version 2014-12-26, V1.0.0, firmware for GD32F10x
-    \version 2017-06-20, V2.0.0, firmware for GD32F10x
-    \version 2018-07-31, V2.1.0, firmware for GD32F10x
-    \version 2020-09-30, V2.2.0, firmware for GD32F10x
+    \version 2026-02-12, V2.7.0, firmware for GD32F10x
 */
 
 /*
-    Copyright (c) 2020, GigaDevice Semiconductor Inc.
+    Copyright (c) 2026, GigaDevice Semiconductor Inc.
 
     Redistribution and use in source and binary forms, with or without modification, 
 are permitted provided that the following conditions are met:
@@ -250,11 +247,13 @@ void bkp_interrupt_disable(void)
 */
 FlagStatus bkp_flag_get(void)
 {
+    FlagStatus ret_status;
     if(RESET != (BKP_TPCS & BKP_FLAG_TAMPER)){
-        return SET;
+        ret_status = SET;
     }else{
-        return RESET;
+        ret_status = RESET;
     }
+    return ret_status;
 }
 
 /*!
@@ -276,11 +275,13 @@ void bkp_flag_clear(void)
 */
 FlagStatus bkp_interrupt_flag_get(void)
 {
+    FlagStatus ret_status;
     if(RESET != (BKP_TPCS & BKP_INT_FLAG_TAMPER)){
-        return SET;
+        ret_status = SET;
     }else{
-        return RESET;
+        ret_status = RESET;
     }
+    return ret_status;
 }
 
 /*!

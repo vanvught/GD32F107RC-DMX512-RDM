@@ -2,14 +2,11 @@
     \file    gd32f10x_exti.c
     \brief   EXTI driver
 
-    \version 2014-12-26, V1.0.0, firmware for GD32F10x
-    \version 2017-06-20, V2.0.0, firmware for GD32F10x
-    \version 2018-07-31, V2.1.0, firmware for GD32F10x
-    \version 2020-09-30, V2.2.0, firmware for GD32F10x
+    \version 2026-02-12, V2.7.0, firmware for GD32F10x
 */
 
 /*
-    Copyright (c) 2020, GigaDevice Semiconductor Inc.
+    Copyright (c) 2026, GigaDevice Semiconductor Inc.
 
     Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:
@@ -201,11 +198,13 @@ void exti_software_interrupt_disable(exti_line_enum linex)
 */
 FlagStatus exti_flag_get(exti_line_enum linex)
 {
+    FlagStatus ret;
     if(RESET != (EXTI_PD & (uint32_t)linex)) {
-        return SET;
+        ret = SET;
     } else {
-        return RESET;
+        ret = RESET;
     }
+    return ret;
 }
 
 /*!
@@ -231,11 +230,13 @@ void exti_flag_clear(exti_line_enum linex)
 */
 FlagStatus exti_interrupt_flag_get(exti_line_enum linex)
 {
+    FlagStatus ret;
     if(RESET != (EXTI_PD & (uint32_t)linex)) {
-        return SET;
+        ret = SET;
     } else {
-        return RESET;
+        ret = RESET;
     }
+    return ret;
 }
 
 /*!

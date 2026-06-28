@@ -2,14 +2,11 @@
     \file    gd32f10x_enet.h
     \brief   definitions for the ENET
 
-    \version 2014-12-26, V1.0.0, firmware for GD32F10x
-    \version 2017-06-20, V2.0.0, firmware for GD32F10x
-    \version 2018-07-31, V2.1.0, firmware for GD32F10x
-    \version 2020-09-30, V2.2.0, firmware for GD32F10x
+    \version 2026-02-12, V2.7.0, firmware for GD32F10x
 */
 
 /*
-    Copyright (c) 2020, GigaDevice Semiconductor Inc.
+    Copyright (c) 2026, GigaDevice Semiconductor Inc.
 
     Redistribution and use in source and binary forms, with or without modification, 
 are permitted provided that the following conditions are met:
@@ -65,12 +62,9 @@ OF SUCH DAMAGE.
 /* #define USE_DELAY */
 
 #ifndef _PHY_H_
-#define DP83848		0
-#define LAN8700		1
-#define RTL8201F	2		/** AvV **/
-#ifndef PHY_TYPE			/** AvV **/
-# define PHY_TYPE	DP83848	/** AvV **/
-#endif						/** AvV **/
+#define DP83848                          0
+#define LAN8700                          1
+#define PHY_TYPE                         DP83848
 
 #define PHY_ADDRESS                      ((uint16_t)1U)                         /*!< phy address determined by the hardware */
 
@@ -111,10 +105,6 @@ OF SUCH DAMAGE.
 #define PHY_SR                           16U                                    /*!< tranceiver status register */
 #define PHY_SPEED_STATUS                 ((uint16_t)0x0002)                     /*!< configured information of speed: 10Mbit/s */
 #define PHY_DUPLEX_STATUS                ((uint16_t)0x0004)                     /*!< configured information of duplex: full-duplex */
-#elif(PHY_TYPE == RTL8201F)	/** AvV **/
-# define PHY_SR                          0U                                     /*!< tranceiver status register */
-# define PHY_SPEED_STATUS                ((uint16_t)0x2000)                     /*!< configured information of speed: 100Mbit/s */
-# define PHY_DUPLEX_STATUS               ((uint16_t)0x0100)                     /*!< configured information of duplex: full-duplex */
 #endif /* PHY_TYPE */
 
 #endif /* _PHY_H_ */
@@ -814,8 +804,7 @@ typedef enum
 {
     ENET_PROMISCUOUS_MODE           = ENET_MAC_FRMF_PM,                             /*!< promiscuous mode enabled */
     ENET_RECEIVEALL                 = (int32_t)ENET_MAC_FRMF_FAR,                   /*!< all received frame are forwarded to application */
-	ENET_CUSTOM						= BIT(4),										/** AvV **/
-	ENET_BROADCAST_FRAMES_PASS      = (uint32_t)0x00000000U,                        /*!< the address filters pass all received broadcast frames */
+    ENET_BROADCAST_FRAMES_PASS      = (uint32_t)0x00000000U,                        /*!< the address filters pass all received broadcast frames */
     ENET_BROADCAST_FRAMES_DROP      = ENET_MAC_FRMF_BFRMD                           /*!< the address filters filter all incoming broadcast frames */
 }enet_frmrecept_enum;
 

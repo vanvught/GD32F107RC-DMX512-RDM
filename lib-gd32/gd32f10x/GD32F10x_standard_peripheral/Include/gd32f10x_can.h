@@ -2,16 +2,11 @@
     \file    gd32f10x_can.h
     \brief   definitions for the CAN
     
-    \version 2014-12-26, V1.0.0, firmware for GD32F10x
-    \version 2017-06-20, V2.0.0, firmware for GD32F10x
-    \version 2018-07-31, V2.1.0, firmware for GD32F10x
-    \version 2019-11-27, V2.1.1, firmware for GD32F10x
-    \version 2020-09-30, V2.2.0, firmware for GD32F10x
-    \version 2021-07-21, V2.2.1, firmware for GD32F10x
+    \version 2026-02-12, V2.7.0, firmware for GD32F10x
 */
 
 /*
-    Copyright (c) 2020, GigaDevice Semiconductor Inc.
+    Copyright (c) 2026, GigaDevice Semiconductor Inc.
 
     Redistribution and use in source and binary forms, with or without modification, 
 are permitted provided that the following conditions are met:
@@ -103,7 +98,7 @@ OF SUCH DAMAGE.
 #define CAN_F20DATA0(canx)                 REG32((canx) + 0x2E0U)        /*!< CAN filter 20 data 0 register */
 #define CAN_F21DATA0(canx)                 REG32((canx) + 0x2E8U)        /*!< CAN filter 21 data 0 register */
 #define CAN_F22DATA0(canx)                 REG32((canx) + 0x2F0U)        /*!< CAN filter 22 data 0 register */
-#define CAN_F23DATA0(canx)                 REG32((canx) + 0x3F8U)        /*!< CAN filter 23 data 0 register */
+#define CAN_F23DATA0(canx)                 REG32((canx) + 0x2F8U)        /*!< CAN filter 23 data 0 register */
 #define CAN_F24DATA0(canx)                 REG32((canx) + 0x300U)        /*!< CAN filter 24 data 0 register */
 #define CAN_F25DATA0(canx)                 REG32((canx) + 0x308U)        /*!< CAN filter 25 data 0 register */
 #define CAN_F26DATA0(canx)                 REG32((canx) + 0x310U)        /*!< CAN filter 26 data 0 register */
@@ -677,6 +672,9 @@ typedef enum
 /* CAN timeout */
 #define CAN_TIMEOUT                        ((uint32_t)0x0000FFFFU)      /*!< timeout value */
 
+/* CAN maibox empty status mask */
+#define CAN_ALL_MAILBOX_EMPTY              ((uint32_t)0x1C000000U)      /*!< CAN maibox empty status mask */
+
 /* interrupt enable bits */
 #define CAN_INT_TME                        CAN_INTEN_TMEIE              /*!< transmit mailbox empty interrupt enable */
 #define CAN_INT_RFNE0                      CAN_INTEN_RFNEIE0            /*!< receive FIFO0 not empty interrupt enable */
@@ -723,7 +721,7 @@ uint8_t can_message_transmit(uint32_t can_periph, can_trasnmit_message_struct* t
 /* get CAN transmit state */
 can_transmit_state_enum can_transmit_states(uint32_t can_periph, uint8_t mailbox_number);
 /* stop CAN transmission */
-void can_transmission_stop(uint32_t can_periph, uint8_t mailbox_number);
+ErrStatus can_transmission_stop(uint32_t can_periph, uint8_t mailbox_number);
 /* CAN receive message */
 void can_message_receive(uint32_t can_periph, uint8_t fifo_number, can_receive_message_struct* receive_message);
 /* CAN release fifo */

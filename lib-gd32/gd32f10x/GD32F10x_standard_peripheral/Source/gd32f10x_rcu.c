@@ -2,14 +2,11 @@
     \file    gd32f10x_rcu.c
     \brief   RCU driver
 
-    \version 2014-12-26, V1.0.0, firmware for GD32F10x
-    \version 2017-06-20, V2.0.0, firmware for GD32F10x
-    \version 2018-07-31, V2.1.0, firmware for GD32F10x
-    \version 2020-09-30, V2.2.0, firmware for GD32F10x
+    \version 2026-02-12, V2.7.0, firmware for GD32F10x
 */
 
 /*
-    Copyright (c) 2020, GigaDevice Semiconductor Inc.
+    Copyright (c) 2026, GigaDevice Semiconductor Inc.
 
     Redistribution and use in source and binary forms, with or without modification, 
 are permitted provided that the following conditions are met:
@@ -668,12 +665,14 @@ void rcu_i2s2_clock_config(uint32_t i2s_clock_source)
 */
 FlagStatus rcu_flag_get(rcu_flag_enum flag)
 {
+    FlagStatus retval;
     /* get the rcu flag */
     if(RESET != (RCU_REG_VAL(flag) & BIT(RCU_BIT_POS(flag)))){
-        return SET;
+        retval = SET;
     }else{
-        return RESET;
+        retval = RESET;
     }
+    return retval;
 }
 
 /*!
@@ -704,12 +703,14 @@ void rcu_all_reset_flag_clear(void)
 */
 FlagStatus rcu_interrupt_flag_get(rcu_int_flag_enum int_flag)
 {
+    FlagStatus retval;
     /* get the rcu interrupt flag */
     if(RESET != (RCU_REG_VAL(int_flag) & BIT(RCU_BIT_POS(int_flag)))){
-        return SET;
+        retval = SET;
     }else{
-        return RESET;
+        retval = RESET;
     }
+    return retval;
 }
 
 /*!

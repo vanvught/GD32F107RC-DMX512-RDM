@@ -2,14 +2,11 @@
     \file    gd32f10x_exmc.c
     \brief   EXMC driver
 
-    \version 2014-12-26, V1.0.0, firmware for GD32F10x
-    \version 2017-06-20, V2.0.0, firmware for GD32F10x
-    \version 2018-07-31, V2.1.0, firmware for GD32F10x
-    \version 2020-09-30, V2.2.0, firmware for GD32F10x
+    \version 2026-02-12, V2.7.0, firmware for GD32F10x
 */
 
 /*
-    Copyright (c) 2020, GigaDevice Semiconductor Inc.
+    Copyright (c) 2026, GigaDevice Semiconductor Inc.
 
     Redistribution and use in source and binary forms, with or without modification, 
 are permitted provided that the following conditions are met:
@@ -554,17 +551,19 @@ void exmc_interrupt_disable(uint32_t bank, uint32_t interrupt_source)
 FlagStatus exmc_flag_get(uint32_t bank, uint32_t flag)
 {
     uint32_t status = 0x00000000U;
-
+    FlagStatus flag_status;
+    
     /* NAND bank1,bank2 or PC card bank3 */
     status = EXMC_NPINTEN(bank);
     
     if ((status & flag) != (uint32_t)flag ){
         /* flag is reset */
-        return RESET;
+        flag_status = RESET;
     }else{
         /* flag is set */
-        return SET;
+        flag_status = SET;
     }
+    return flag_status;
 }
 
 /*!
@@ -607,6 +606,7 @@ void exmc_flag_clear(uint32_t bank, uint32_t flag)
 FlagStatus exmc_interrupt_flag_get(uint32_t bank, uint32_t interrupt_source)
 {
     uint32_t status = 0x00000000U,interrupt_enable = 0x00000000U,interrupt_state = 0x00000000U;
+    FlagStatus flag_status;
 
     /* NAND bank1,bank2 or PC card bank3 */
     status = EXMC_NPINTEN(bank);
@@ -616,11 +616,12 @@ FlagStatus exmc_interrupt_flag_get(uint32_t bank, uint32_t interrupt_source)
 
     if ((interrupt_enable) && (interrupt_state)){
         /* interrupt flag is set */
-        return SET;
+        flag_status = SET;
     }else{
         /* interrupt flag is reset */
-        return RESET;
+        flag_status = RESET;
     }
+    return flag_status;
 }
 
 /*!

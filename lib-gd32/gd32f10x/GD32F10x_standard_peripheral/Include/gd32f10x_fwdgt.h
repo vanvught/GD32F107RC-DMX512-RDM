@@ -2,14 +2,11 @@
     \file    gd32f10x_fwdgt.h
     \brief   definitions for the FWDGT
     
-    \version 2014-12-26, V1.0.0, firmware for GD32F10x
-    \version 2017-06-20, V2.0.0, firmware for GD32F10x
-    \version 2018-07-31, V2.1.0, firmware for GD32F10x
-    \version 2020-09-30, V2.2.0, firmware for GD32F10x
+    \version 2026-02-12, V2.7.0, firmware for GD32F10x
 */
 
 /*
-    Copyright (c) 2020, GigaDevice Semiconductor Inc.
+    Copyright (c) 2026, GigaDevice Semiconductor Inc.
 
     Redistribution and use in source and binary forms, with or without modification, 
 are permitted provided that the following conditions are met:
@@ -106,7 +103,7 @@ ErrStatus fwdgt_reload_value_config(uint16_t reload_value);
 /* reload the counter of FWDGT */
 void fwdgt_counter_reload(void);
 /* configure counter reload value, and prescaler divider value */
-ErrStatus fwdgt_config(uint16_t reload_value, uint8_t prescaler_div);
+ErrStatus fwdgt_config(uint16_t reload_value, uint8_t prescaler_value);
 
 /* get flag state of FWDGT */
 FlagStatus fwdgt_flag_get(uint16_t flag);

@@ -2,15 +2,11 @@
     \file    gd32f10x_dma.c
     \brief   DMA driver
 
-    \version 2014-12-26, V1.0.0, firmware for GD32F10x
-    \version 2017-06-20, V2.0.0, firmware for GD32F10x
-    \version 2018-07-31, V2.1.0, firmware for GD32F10x
-    \version 2019-10-30, V2.1.1, firmware for GD32F10x
-    \version 2020-09-30, V2.2.0, firmware for GD32F10x
+    \version 2026-02-12, V2.7.0, firmware for GD32F10x
 */
 
 /*
-    Copyright (c) 2020, GigaDevice Semiconductor Inc.
+    Copyright (c) 2026, GigaDevice Semiconductor Inc.
 
     Redistribution and use in source and binary forms, with or without modification, 
 are permitted provided that the following conditions are met:
@@ -614,7 +610,7 @@ void dma_flag_clear(uint32_t dma_periph, dma_channel_enum channelx, uint32_t fla
 FlagStatus dma_interrupt_flag_get(uint32_t dma_periph, dma_channel_enum channelx, uint32_t flag)
 {
     uint32_t interrupt_enable = 0U, interrupt_flag = 0U;
-    
+    FlagStatus flag_status = RESET;
     switch(flag){
         case DMA_INT_FLAG_FTF:
             /* check whether the full transfer finish interrupt flag is set and enabled */
@@ -637,10 +633,11 @@ FlagStatus dma_interrupt_flag_get(uint32_t dma_periph, dma_channel_enum channelx
     
     /* when the interrupt flag is set and enabled, return SET */    
     if(interrupt_flag && interrupt_enable){
-        return SET;
+        flag_status = SET;
     }else{
-        return RESET;
+        flag_status = RESET;
     }
+    return flag_status;
 }
 
 /*!

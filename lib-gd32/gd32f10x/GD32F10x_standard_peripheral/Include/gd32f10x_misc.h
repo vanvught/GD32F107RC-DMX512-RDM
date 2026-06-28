@@ -2,14 +2,11 @@
     \file    gd32f10x_misc.h
     \brief   definitions for the MISC
 
-    \version 2014-12-26, V1.0.0, firmware for GD32F10x
-    \version 2017-06-20, V2.0.0, firmware for GD32F10x
-    \version 2018-07-31, V2.1.0, firmware for GD32F10x
-    \version 2020-09-30, V2.2.0, firmware for GD32F10x
+    \version 2026-02-12, V2.7.0, firmware for GD32F10x
 */
 
 /*
-    Copyright (c) 2020, GigaDevice Semiconductor Inc.
+    Copyright (c) 2026, GigaDevice Semiconductor Inc.
 
     Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:
@@ -76,9 +73,9 @@ OF SUCH DAMAGE.
 void nvic_priority_group_set(uint32_t nvic_prigroup);
 
 /* enable NVIC interrupt request */
-void nvic_irq_enable(uint8_t nvic_irq, uint8_t nvic_irq_pre_priority, uint8_t nvic_irq_sub_priority);
+void nvic_irq_enable(IRQn_Type nvic_irq, uint8_t nvic_irq_pre_priority, uint8_t nvic_irq_sub_priority);
 /* disable NVIC interrupt request */
-void nvic_irq_disable(uint8_t nvic_irq);
+void nvic_irq_disable(IRQn_Type nvic_irq);
 
 /* set the NVIC vector table base address */
 void nvic_vector_table_set(uint32_t nvic_vict_tab, uint32_t offset);

@@ -2,17 +2,11 @@
     \file  gd32f10x_can.c
     \brief CAN driver
 
-    \version 2014-12-26, V1.0.0, firmware for GD32F10x
-    \version 2017-06-20, V2.0.0, firmware for GD32F10x
-    \version 2018-07-31, V2.1.0, firmware for GD32F10x
-    \version 2019-11-27, V2.1.1, firmware for GD32F10x
-    \version 2020-07-14, V2.1.2, firmware for GD32F10x
-    \version 2020-09-30, V2.2.0, firmware for GD32F10x
-    \version 2021-07-21, V2.2.1, firmware for GD32F10x
+    \version 2026-02-12, V2.7.0, firmware for GD32F10x
 */
 
 /*
-    Copyright (c) 2020, GigaDevice Semiconductor Inc.
+    Copyright (c) 2026, GigaDevice Semiconductor Inc.
 
     Redistribution and use in source and binary forms, with or without modification, 
 are permitted provided that the following conditions are met:
@@ -474,6 +468,10 @@ uint8_t can_message_transmit(uint32_t can_periph, can_trasnmit_message_struct* t
     }
     /* set the data length */
     CAN_TMP(can_periph, mailbox_number) &= ~CAN_TMP_DLENC;
+    /* classic CAN frame data length does not exceed 8 */
+    if(transmit_message->tx_dlen > 8U) {
+        transmit_message->tx_dlen = 8U;
+    }
     CAN_TMP(can_periph, mailbox_number) |= transmit_message->tx_dlen;
     /* set the data */
     CAN_TMDATA0(can_periph, mailbox_number) = TMDATA0_DB3(transmit_message->tx_data[3]) | \
@@ -557,25 +555,63 @@ can_transmit_state_enum can_transmit_states(uint32_t can_periph, uint8_t mailbox
                 only one parameter can be selected which is shown as below:
       \arg        CAN_MAILBOXx(x=0,1,2)
     \param[out] none
-    \retval     none
+    \retval     ErrStatus
 */
-void can_transmission_stop(uint32_t can_periph, uint8_t mailbox_number)
+ErrStatus can_transmission_stop(uint32_t can_periph, uint8_t mailbox_number)
 {
-    if(CAN_MAILBOX0 == mailbox_number){
-        CAN_TSTAT(can_periph) |= CAN_TSTAT_MST0;
-        while(CAN_TSTAT_MST0 == (CAN_TSTAT(can_periph) & CAN_TSTAT_MST0)){
+    ErrStatus reval = SUCCESS;
+    /* timeout for CAN_TSTAT_MSTx bits */
+    uint32_t timeout = CAN_TIMEOUT;
+    uint32_t reg_value0 = 0U;
+    uint32_t reg_value1 = 0U;
+
+    /* get the status of transmit FIFO order */
+    reg_value0 = CAN_CTL(can_periph) & CAN_CTL_TFO;
+
+    if(CAN_MAILBOX0 == mailbox_number) {
+        reg_value1 = CAN_TSTAT(can_periph) & (CAN_TSTAT_TMLS0 | CAN_ALL_MAILBOX_EMPTY);
+        if((CAN_CTL_TFO == reg_value0) && (CAN_TSTAT_TMLS0 == reg_value1)){
+            reval = ERROR;
+        } else {
+            CAN_TSTAT(can_periph) |= CAN_TSTAT_MST0;
+            while((CAN_TSTAT_MST0 == (CAN_TSTAT(can_periph) & CAN_TSTAT_MST0)) && (0U != timeout)) {
+                timeout--;
+            }
+            if(CAN_TSTAT_MST0 == (CAN_TSTAT(can_periph) & CAN_TSTAT_MST0)){
+                reval = ERROR;
+            }
         }
-    }else if(CAN_MAILBOX1 == mailbox_number){
-        CAN_TSTAT(can_periph) |= CAN_TSTAT_MST1;
-        while(CAN_TSTAT_MST1 == (CAN_TSTAT(can_periph) & CAN_TSTAT_MST1)){
+    } else if(CAN_MAILBOX1 == mailbox_number) {
+        reg_value1 = CAN_TSTAT(can_periph) & (CAN_TSTAT_TMLS1 | CAN_ALL_MAILBOX_EMPTY);
+        if((CAN_CTL_TFO == reg_value0) && (CAN_TSTAT_TMLS1 == reg_value1)){
+            reval = ERROR;
+        }else{
+            CAN_TSTAT(can_periph) |= CAN_TSTAT_MST1;
+            while((CAN_TSTAT_MST1 == (CAN_TSTAT(can_periph) & CAN_TSTAT_MST1)) && (0U != timeout)) {
+                timeout--;
+            }
+            if(CAN_TSTAT_MST1 == (CAN_TSTAT(can_periph) & CAN_TSTAT_MST1)){
+                reval = ERROR;
+            }
         }
-    }else if(CAN_MAILBOX2 == mailbox_number){
-        CAN_TSTAT(can_periph) |= CAN_TSTAT_MST2;
-        while(CAN_TSTAT_MST2 == (CAN_TSTAT(can_periph) & CAN_TSTAT_MST2)){
+        
+    } else if(CAN_MAILBOX2 == mailbox_number) {
+        reg_value1 = CAN_TSTAT(can_periph) & (CAN_TSTAT_TMLS2 | CAN_ALL_MAILBOX_EMPTY);
+        if((CAN_CTL_TFO == reg_value0) && (CAN_TSTAT_TMLS2 == reg_value1)){
+            reval = ERROR;
+        }else{
+            CAN_TSTAT(can_periph) |= CAN_TSTAT_MST2;
+            while((CAN_TSTAT_MST2 == (CAN_TSTAT(can_periph) & CAN_TSTAT_MST2)) && (0U != timeout)) {
+                timeout--;
+            }
+            if(CAN_TSTAT_MST2 == (CAN_TSTAT(can_periph) & CAN_TSTAT_MST2)){
+                reval = ERROR;
+            }
         }
-    }else{
+    } else {
         /* illegal parameters */
     }
+    return reval;
 }
 
 /*!

@@ -2,14 +2,11 @@
     \file    gd32f10x_fmc.c
     \brief   FMC driver
 
-    \version 2014-12-26, V1.0.0, firmware for GD32F10x
-    \version 2017-06-20, V2.0.0, firmware for GD32F10x
-    \version 2018-07-31, V2.1.0, firmware for GD32F10x
-    \version 2020-09-30, V2.2.0, firmware for GD32F10x
+    \version 2026-02-12, V2.7.0, firmware for GD32F10x
 */
 
 /*
-    Copyright (c) 2020, GigaDevice Semiconductor Inc.
+    Copyright (c) 2026, GigaDevice Semiconductor Inc.
 
     Redistribution and use in source and binary forms, with or without modification, 
 are permitted provided that the following conditions are met:
@@ -39,7 +36,7 @@ OF SUCH DAMAGE.
 
 /*!
     \brief      set the wait state counter value
-    \param[in]  wscnt£ºwait state counter value
+    \param[in]  wscntï¿½ï¿½wait state counter value
       \arg        WS_WSCNT_0: FMC 0 wait state
       \arg        WS_WSCNT_1: FMC 1 wait state
       \arg        WS_WSCNT_2: FMC 2 wait state
@@ -176,6 +173,8 @@ fmc_state_enum fmc_page_erase(uint32_t page_address)
                 FMC_CTL0 |= FMC_CTL0_PER;
                 FMC_ADDR0 = page_address;
                 FMC_CTL0 |= FMC_CTL0_START;
+                __NOP();
+                __NOP();
                 /* wait for the FMC ready */
                 fmc_state = fmc_bank0_ready_wait(FMC_TIMEOUT_COUNT);
                 /* reset the PER bit */
@@ -192,6 +191,8 @@ fmc_state_enum fmc_page_erase(uint32_t page_address)
                     FMC_ADDR0 = page_address;
                 }
                 FMC_CTL1 |= FMC_CTL1_START;
+                __NOP();
+                __NOP();
                 /* wait for the FMC ready */
                 fmc_state = fmc_bank1_ready_wait(FMC_TIMEOUT_COUNT);
                 /* reset the PER bit */
@@ -205,6 +206,8 @@ fmc_state_enum fmc_page_erase(uint32_t page_address)
             FMC_CTL0 |= FMC_CTL0_PER;
             FMC_ADDR0 = page_address;
             FMC_CTL0 |= FMC_CTL0_START;
+            __NOP();
+            __NOP();
             /* wait for the FMC ready */
             fmc_state = fmc_bank0_ready_wait(FMC_TIMEOUT_COUNT);
             /* reset the PER bit */
@@ -784,11 +787,11 @@ void fmc_interrupt_disable(uint32_t interrupt)
 */
 FlagStatus fmc_flag_get(uint32_t flag)
 {
+    FlagStatus result = RESET;
     if(RESET != (FMC_REG_VAL(flag) & BIT(FMC_BIT_POS(flag)))){
-        return SET;
-    }else{
-        return RESET;
+        result = SET;
     }
+    return result;
 }
 
 /*!
@@ -826,6 +829,7 @@ FlagStatus fmc_interrupt_flag_get(fmc_interrupt_flag_enum flag)
 {
     uint32_t ret1 = RESET;
     uint32_t ret2 = RESET;
+    FlagStatus result = RESET;
     
     if(FMC_STAT0_REG_OFFSET == FMC_REG_OFFSET_GET(flag)){
         /* get the staus of interrupt flag */
@@ -840,10 +844,12 @@ FlagStatus fmc_interrupt_flag_get(fmc_interrupt_flag_enum flag)
     }
 
     if(ret1 && ret2){
-        return SET;
+        result = SET;
     }else{
-        return RESET;
+        result = RESET;
     }
+    
+    return result;
 }
 
 /*!
