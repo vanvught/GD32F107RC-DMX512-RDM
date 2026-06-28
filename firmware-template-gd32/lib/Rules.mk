@@ -11,6 +11,7 @@ AR	= $(PREFIX)ar
 
 BOARD?=BOARD_GD32F107RC
 ENET_PHY?=DP83848
+MCU=GD32F107RC
 
 $(info $$BOARD [${BOARD}])
 $(info $$ENET_PHY [${ENET_PHY}])
@@ -36,11 +37,9 @@ COPS+=-Os -nostartfiles -ffreestanding -nostdlib
 COPS+=-fstack-usage
 COPS+=-ffunction-sections -fdata-sections
 COPS+=-Wall -Werror -Wpedantic -Wextra -Wunused -Wsign-conversion -Wduplicated-cond -Wlogical-op
-ifndef FREE_RTOS_PORTABLE
-COPS+=-Wconversion
-endif
 
 include ../common/make/CppOps.mk
+include ../common/make/gd32/Gd32FirmwareOps.mk
 
 BUILD=build_gd32/
 BUILD_DIRS:=$(addprefix build_gd32/,$(SRCDIR))
@@ -62,7 +61,7 @@ $(info $$TARGET [${TARGET}])
 define compile-objects
 $(info $1)
 $(BUILD)$1/%.o: $1/%.c
-	$(CC) -MD -MP $(COPS) -c $$< -o $$@
+	$(CC) -MD -MP $(COPS) $(GD32FIRMWAREOPS) -c $$< -o $$@
 
 $(BUILD)$1/%.o: $1/%.cpp
 	$(CPP) -MD -MP $(COPS) $(CPPOPS) -c $$< -o $$@
@@ -85,10 +84,7 @@ builddirs:
 clean:
 	rm -rf build_gd32
 	rm -rf lib_gd32
-	
-$(BUILD)%.o: %.c
-	$(CC) $(COPS) -c $< -o $@
-	
+
 $(TARGET): Makefile.GD32 $(OBJECTS)
 	$(AR) -r $(TARGET) $(OBJECTS)
 	$(PREFIX)objdump -d $(TARGET) | $(PREFIX)c++filt > lib_gd32/lib.list
