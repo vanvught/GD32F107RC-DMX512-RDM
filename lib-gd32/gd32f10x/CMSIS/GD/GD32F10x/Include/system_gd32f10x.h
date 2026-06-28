@@ -4,8 +4,8 @@
              GD32F10x Device Series
 */
 
-/*
-    Copyright (c) 2012 ARM LIMITED
+/*  Copyright (c) 2012 ARM LIMITED
+    Copyright (c) 2026, GigaDevice Semiconductor Inc.
 
     All rights reserved.
 
@@ -44,6 +44,9 @@ extern "C" {
 
 #include <stdint.h>
 
+/* firmware version can be aquired by uncommenting the macro */
+#define __FIRMWARE_VERSION_DEFINE
+
 /* system clock frequency (core clock) */
 extern uint32_t SystemCoreClock;
 
@@ -52,6 +55,10 @@ extern uint32_t SystemCoreClock;
 extern void SystemInit(void);
 /* update the SystemCoreClock with current core clock retrieved from cpu registers */
 extern void SystemCoreClockUpdate(void);
+#ifdef __FIRMWARE_VERSION_DEFINE
+/* get firmware version */
+extern uint32_t gd32f10x_firmware_version_get(void);
+#endif /* __FIRMWARE_VERSION_DEFINE */
 
 #ifdef __cplusplus
 }
