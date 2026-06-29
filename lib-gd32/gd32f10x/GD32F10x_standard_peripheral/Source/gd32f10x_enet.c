@@ -331,7 +331,7 @@ ErrStatus enet_init(enet_mediamode_enum mediamode, enet_chksumconf_enum checksum
             return enet_state;
         }  
     }
-#endif
+#endif // AvV
     /* initialize ENET peripheral with generally concerned parameters */
     enet_default_init();
   
