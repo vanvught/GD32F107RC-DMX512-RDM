@@ -2,9 +2,11 @@ name: C/C++ CI
 
 on:
   push:
-    branches: [ main ]
+    branches:  
+    - '*'
   pull_request:
-    branches: [ main ]
+    branches:  
+    - '*' 
 
 jobs:
   build:
@@ -12,42 +14,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
     - name: Install arm-none-eabi
       run: sudo apt install gcc-arm-none-eabi
-    - name: make gd32_emac_artnet_dmx
+    - name: version
+      run: arm-none-eabi-g++ --version
+    - name: build all
       run: |
-        cd gd32_emac_artnet_dmx
-        make -f Makefile.GD32 clean
-        make -f Makefile.GD32
-        cd -
-    - name: make gd32_emac_artnet_pixel
-      run: |
-        cd gd32_emac_artnet_pixel
-        make -f Makefile.GD32 clean
-        make -f Makefile.GD32
-        cd -
-    - name: make gd32_emac_e131_dmx
-      run: |
-        cd gd32_emac_e131_dmx
-        make -f Makefile.GD32 clean
-        make -f Makefile.GD32
-        cd -
-    - name: make gd32_emac_e131_pixel
-      run: |
-        cd gd32_emac_e131_pixel
-        make -f Makefile.GD32 clean
-        make -f Makefile.GD32
-        cd -
-    - name: make gd32_osc_e131_dmx
-      run: |
-        cd gd32_emac_osc_dmx
-        make -f Makefile.GD32 clean
-        make -f Makefile.GD32
-        cd -
-    - name: make gd32_emac_osc_pixel
-      run: |
-        cd gd32_emac_osc_pixel
-        make -f Makefile.GD32 clean
-        make -f Makefile.GD32
-        cd -
+        cd scripts
+        ./build_all.sh
