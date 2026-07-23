@@ -2,7 +2,7 @@
  * @file flashcode.cpp
  *
  */
-/* Copyright (C) 2021-2025 by Arjan van Vught mailto:info@gd32-dmx.org
+/* Copyright (C) 2021-2026 by Arjan van Vught mailto:info@gd32-dmx.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -39,8 +39,6 @@ fmc_state_enum fmc_bank0_state_get(void);
 fmc_state_enum fmc_bank1_state_get(void);
 }
 #endif
-
-#include "firmware/debug/debug_debug.h"
 
 namespace flashcode {
 /* Backwards compatibility with SPI FLASH */
@@ -84,8 +82,8 @@ uint32_t FlashCode::GetSectorSize() const {
 }
 
 bool FlashCode::Read(uint32_t offset, uint32_t length, uint8_t* pBuffer, flashcode::Result& result) {
-    DEBUG_ENTRY();
-    DEBUG_PRINTF("offset=%p[%d], len=%u[%d], data=%p[%d]", offset, (((uint32_t)(offset) & 0x3) == 0), length, (((uint32_t)(length) & 0x3) == 0), pBuffer, (((uint32_t)(pBuffer) & 0x3) == 0));
+    FLASHCODE_DEBUG_ENTRY();
+    FLASHCODE_DEBUG_PRINTF("offset=%x, length=%u, data=%p", static_cast<unsigned>(offset), static_cast<unsigned>(length), reinterpret_cast<void*>(pBuffer));
 
     const auto* pSrc = reinterpret_cast<uint32_t*>(offset + FLASH_BASE);
     auto* pDst = reinterpret_cast<uint32_t*>(pBuffer);
@@ -97,13 +95,13 @@ bool FlashCode::Read(uint32_t offset, uint32_t length, uint8_t* pBuffer, flashco
 
     result = Result::kOk;
 
-    DEBUG_EXIT();
+    FLASHCODE_DEBUG_EXIT();
     return true;
 }
 
 bool FlashCode::Erase(uint32_t offset, uint32_t length, flashcode::Result& result) {
-    DEBUG_ENTRY();
-    DEBUG_PRINTF("State=%d", static_cast<int>(s_state));
+    FLASHCODE_DEBUG_ENTRY();
+    FLASHCODE_DEBUG_PRINTF("State=%d", static_cast<int>(s_state));
 
     result = Result::kOk;
 
@@ -117,19 +115,19 @@ bool FlashCode::Erase(uint32_t offset, uint32_t length, flashcode::Result& resul
                 fmc_bank1_unlock();
             }
             s_state = State::ERASE_BUSY;
-            DEBUG_PRINTF("isBank0=%d", static_cast<int>(s_isBank0));
-            DEBUG_EXIT();
+            FLASHCODE_DEBUG_PRINTF("isBank0=%d", static_cast<int>(s_isBank0));
+            FLASHCODE_DEBUG_EXIT();
             return false;
             break;
         case State::ERASE_BUSY:
             if (s_isBank0) {
                 if (FMC_BUSY == fmc_bank0_state_get()) {
-                    DEBUG_EXIT();
+                    FLASHCODE_DEBUG_EXIT();
                     return false;
                 }
             } else {
                 if (FMC_BUSY == fmc_bank1_state_get()) {
-                    DEBUG_EXIT();
+                    FLASHCODE_DEBUG_EXIT();
                     return false;
                 }
             }
@@ -147,17 +145,17 @@ bool FlashCode::Erase(uint32_t offset, uint32_t length, flashcode::Result& resul
                     fmc_bank1_lock();
                 }
                 s_state = State::IDLE;
-                DEBUG_EXIT();
+                FLASHCODE_DEBUG_EXIT();
                 return true;
             }
 
             s_state = State::ERASE_PROGAM;
-            DEBUG_EXIT();
+            FLASHCODE_DEBUG_EXIT();
             return false;
             break;
         case State::ERASE_PROGAM:
             if (s_length > 0) {
-                DEBUG_PRINTF("s_page=%p", s_page);
+                FLASHCODE_DEBUG_PRINTF("s_page=%p", s_page);
 
                 if (s_isBank0) {
                     FMC_CTL0 |= FMC_CTL0_PER;
@@ -180,7 +178,7 @@ bool FlashCode::Erase(uint32_t offset, uint32_t length, flashcode::Result& resul
             }
 
             s_state = State::ERASE_BUSY;
-            DEBUG_EXIT();
+            FLASHCODE_DEBUG_EXIT();
             return false;
             break;
         case State::WRITE_BUSY:
@@ -193,7 +191,7 @@ bool FlashCode::Erase(uint32_t offset, uint32_t length, flashcode::Result& resul
             /* no break */
         case State::WRITE_PROGRAM:
             s_state = State::IDLE;
-            DEBUG_EXIT();
+            FLASHCODE_DEBUG_EXIT();
             return false;
             break;
         default:
@@ -212,7 +210,7 @@ bool FlashCode::Write(uint32_t offset, uint32_t length, const uint8_t* pBuffer, 
 
     switch (s_state) {
         case State::IDLE:
-            DEBUG_PUTS("State::IDLE");
+            FLASHCODE_DEBUG_PUTS("State::IDLE");
             s_address = offset + FLASH_BASE;
             s_data = const_cast<uint32_t*>(reinterpret_cast<const uint32_t*>(pBuffer));
             s_length = length;
@@ -222,19 +220,19 @@ bool FlashCode::Write(uint32_t offset, uint32_t length, const uint8_t* pBuffer, 
                 fmc_bank1_unlock();
             }
             s_state = State::WRITE_BUSY;
-            DEBUG_PRINTF("isBank0=%d", static_cast<int>(s_isBank0));
-            DEBUG_EXIT();
+            FLASHCODE_DEBUG_PRINTF("isBank0=%d", static_cast<int>(s_isBank0));
+            FLASHCODE_DEBUG_EXIT();
             return false;
             break;
         case State::WRITE_BUSY:
             if (s_isBank0) {
                 if (FMC_BUSY == fmc_bank0_state_get()) {
-                    DEBUG_EXIT();
+                    FLASHCODE_DEBUG_EXIT();
                     return false;
                 }
             } else {
                 if (FMC_BUSY == fmc_bank1_state_get()) {
-                    DEBUG_EXIT();
+                    FLASHCODE_DEBUG_EXIT();
                     return false;
                 }
             }
@@ -252,7 +250,7 @@ bool FlashCode::Write(uint32_t offset, uint32_t length, const uint8_t* pBuffer, 
                     fmc_bank1_lock();
                 }
                 s_state = State::IDLE;
-                DEBUG_EXIT();
+                FLASHCODE_DEBUG_EXIT();
                 return true;
             }
 
@@ -292,7 +290,7 @@ bool FlashCode::Write(uint32_t offset, uint32_t length, const uint8_t* pBuffer, 
             /* no break */
         case State::ERASE_PROGAM:
             s_state = State::IDLE;
-            DEBUG_EXIT();
+            FLASHCODE_DEBUG_EXIT();
             return false;
             break;
         default:

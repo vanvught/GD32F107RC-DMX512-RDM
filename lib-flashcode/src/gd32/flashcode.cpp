@@ -2,7 +2,7 @@
  * @file flashcode.cpp
  *
  */
-/* Copyright (C) 2021-2025 by Arjan van Vught mailto:info@gd32-dmx.org
+/* Copyright (C) 2021-2065 by Arjan van Vught mailto:info@gd32-dmx.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,28 +28,24 @@
 
 #include "flashcode.h"
 #include "gd32.h"
-#include "firmware/debug/debug_debug.h"
 
-FlashCode::FlashCode()
-{
-    DEBUG_ENTRY();
+FlashCode::FlashCode() {
+    FLASHCODE_DEBUG_ENTRY();
     assert(s_this == nullptr);
     s_this = this;
 
     detected_ = true;
 
     printf("FMC: %s %u [%u]\n", GetName(), static_cast<unsigned int>(GetSize()), static_cast<unsigned int>(GetSize() / 1024U));
-    DEBUG_EXIT();
+    FLASHCODE_DEBUG_EXIT();
 }
 
-FlashCode::~FlashCode()
-{
-    DEBUG_ENTRY();
+FlashCode::~FlashCode() {
+    FLASHCODE_DEBUG_ENTRY();
 
-    DEBUG_EXIT();
+    FLASHCODE_DEBUG_EXIT();
 }
 
-const char* FlashCode::GetName() const
-{
+const char* FlashCode::GetName() const {
     return GD32_MCU_NAME;
 }
