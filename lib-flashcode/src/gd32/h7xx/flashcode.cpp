@@ -24,12 +24,11 @@
  */
 
 #include <cstdint>
-#include <stdio.h>
 #include <cstring>
 #include <cassert>
 
 #include "flashcode.h"
-#include "gd32.h"
+#include "gd32.h" // IWYU pragma: keep
 #include "firmware/debug/debug_debug.h"
 
 namespace {
@@ -38,7 +37,7 @@ constexpr auto kFlashSectorSize = 4096U;
 // The flash page size is 4KB for bank1
 constexpr auto kBanK1FlashPage = (4U * 1024U);
 
-enum class State { kIdle, ERASE_BUSY, ERASE_PROGAM, WRITE_BUSY, WRITE_PROGRAM, ERROR };
+enum class State { kIdle, kEraseBusy, kEraseProgam, kWriteBusy, kWriteProgram, kError };
 
 State s_state = State::kIdle;
 uint32_t s_page;
@@ -60,7 +59,7 @@ uint32_t FlashCode::GetSectorSize() const {
 
 bool FlashCode::Read(uint32_t offset, uint32_t length, uint8_t* buffer, Result& result) {
     DEBUG_ENTRY();
-    DEBUG_PRINTF("offset=%p[%d], len=%u[%d], data=%p[%d]", offset, (((uint32_t)(offset) & 0x3) == 0), length, (((uint32_t)(length) & 0x3) == 0), buffer, (((uint32_t)(buffer) & 0x3) == 0));
+    DEBUG_PRINTF("offset=%x, len=%u, data=%p", static_cast<unsigned>(offset), static_cast<unsigned>(length), reinterpret_cast<void*>(buffer));
 
     const auto* src = reinterpret_cast<uint32_t*>(offset + FLASH_BASE);
     auto* dst = reinterpret_cast<uint32_t*>(buffer);
@@ -87,11 +86,11 @@ bool FlashCode::Erase(uint32_t offset, uint32_t length, flashcode::Result& resul
             s_page = offset + FLASH_BASE;
             s_length = length;
             fmc_unlock();
-            s_state = State::ERASE_BUSY;
+            s_state = State::kEraseBusy;
             DEBUG_EXIT();
             return false;
             break;
-        case State::ERASE_BUSY:
+        case State::kEraseBusy:
             if (SET == fmc_flag_get(FMC_FLAG_BUSY)) {
                 DEBUG_EXIT();
                 return false;
@@ -104,13 +103,13 @@ bool FlashCode::Erase(uint32_t offset, uint32_t length, flashcode::Result& resul
                 return true;
             }
 
-            s_state = State::ERASE_PROGAM;
+            s_state = State::kEraseProgam;
             DEBUG_EXIT();
             return false;
             break;
-        case State::ERASE_PROGAM:
+        case State::kEraseProgam:
             if (s_length > 0) {
-                DEBUG_PRINTF("s_nPage=%p", s_page);
+                DEBUG_PRINTF("s_page=%p", reinterpret_cast<void*>(s_page));
 
                 fmc_sector_erase(s_page);
 
@@ -118,7 +117,7 @@ bool FlashCode::Erase(uint32_t offset, uint32_t length, flashcode::Result& resul
                 s_page += kBanK1FlashPage;
             }
 
-            s_state = State::ERASE_BUSY;
+            s_state = State::kEraseBusy;
             DEBUG_EXIT();
             return false;
             break;
@@ -134,7 +133,7 @@ bool FlashCode::Erase(uint32_t offset, uint32_t length, flashcode::Result& resul
 }
 
 bool FlashCode::Write(uint32_t offset, uint32_t length, const uint8_t* buffer, flashcode::Result& result) {
-    if ((s_state == State::WRITE_PROGRAM) || (s_state == State::WRITE_BUSY)) {
+    if ((s_state == State::kWriteProgram) || (s_state == State::kWriteBusy)) {
     } else {
         DEBUG_ENTRY();
     }
@@ -147,11 +146,11 @@ bool FlashCode::Write(uint32_t offset, uint32_t length, const uint8_t* buffer, f
             s_data = const_cast<uint32_t*>(reinterpret_cast<const uint32_t*>(buffer));
             s_length = length;
             fmc_unlock();
-            s_state = State::WRITE_BUSY;
+            s_state = State::kWriteBusy;
             DEBUG_EXIT();
             return false;
             break;
-        case State::WRITE_BUSY:
+        case State::kWriteBusy:
             if (SET == fmc_flag_get(FMC_FLAG_BUSY)) {
                 DEBUG_EXIT();
                 return false;
@@ -171,10 +170,10 @@ bool FlashCode::Write(uint32_t offset, uint32_t length, const uint8_t* buffer, f
                 return true;
             }
 
-            s_state = State::WRITE_PROGRAM;
+            s_state = State::kWriteProgram;
             return false;
             break;
-        case State::WRITE_PROGRAM:
+        case State::kWriteProgram:
             if (s_length >= 4) {
                 if (FMC_READY == fmc_ready_wait(0xFF)) {
                     /* set the PG bit to start program */
@@ -193,7 +192,7 @@ bool FlashCode::Write(uint32_t offset, uint32_t length, const uint8_t* buffer, f
             } else if (s_length > 0) {
                 DEBUG_PUTS("Error!");
             }
-            s_state = State::WRITE_BUSY;
+            s_state = State::kWriteBusy;
             return false;
             break;
         default:
