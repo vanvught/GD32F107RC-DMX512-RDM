@@ -28,11 +28,11 @@
 
 #if !defined(BOARD_GD32F107RC)
 # error This file should not be included
-#endif
+#endif // BOARD_GD32F107RC
 
 #if defined (MCU_GD32F10X_MCU_H_)
 # error This file should be included later
-#endif
+#endif // defined (MCU_GD32F10X_MCU_H_)
 
 #include <stdint.h>
 
@@ -146,7 +146,7 @@ inline constexpr uint32_t kTcnet = 0;
 static constexpr uint32_t kPortARx = 0;
 static constexpr uint32_t kPortATx = 0;
 } // namespace panelled
-#endif
+#endif // __cplusplus
 
 /**
  * SPI flash
@@ -180,7 +180,7 @@ static constexpr uint32_t kPortATx = 0;
 #define GD32_MCU_NAME   "GD32F107RC"
 #if !defined(GD32_BOARD_NAME)
 #define GD32_BOARD_NAME "GD32F107RC"
-#endif
+#endif // GD32_BOARD_NAME
 
 #include "mcu/gd32f10x_mcu.h"
 #include "gd32_gpio.h"
@@ -226,8 +226,8 @@ static constexpr uint32_t kPortATx = 0;
 #define SPI_LCD_BL_GPIO			GPIO_EXT_22
 #if defined(SPI_LCD_HAVE_CS_GPIO)
 # define SPI_LCD_CS_GPIO		GPIO_EXT_24
-#endif
+#endif // SPI_LCD_HAVE_CS_GPIO
 
 #include "gpio_header.h"
 
-#endif /* BOARD_GD32F107RC_H_ */
+#endif // BOARD_GD32F107RC_H_

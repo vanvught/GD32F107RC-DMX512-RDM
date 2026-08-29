@@ -28,7 +28,7 @@
 
 #if !(defined(GD32F10X_HD) || defined (GD32F10X_CL))
 # error This file should not be included
-#endif
+#endif // !(defined(GD32F10X_HD) || defined (GD32F10X_CL))
 
 #include <stdint.h>
 
@@ -54,7 +54,7 @@
 # define USART0_GPIOx			GPIOA
 # define USART0_TX_GPIO_PINx	GPIO_PIN_9
 # define USART0_RX_GPIO_PINx	GPIO_PIN_10
-#endif
+#endif // defined (USART0_REMAP)
 
 #define USART1_RCU_USART1		RCU_USART1
 #if defined (USART1_REMAP)
@@ -67,7 +67,7 @@
 # define USART1_GPIOx			GPIOA
 # define USART1_TX_GPIO_PINx	GPIO_PIN_2
 # define USART1_RX_GPIO_PINx	GPIO_PIN_3
-#endif
+#endif // defined (USART1_REMAP)
 
 #define USART2_RCU_USART2		RCU_USART2
 #if defined (USART2_FULL_REMAP)
@@ -85,7 +85,7 @@
 # define USART2_GPIOx			GPIOB
 # define USART2_TX_GPIO_PINx	GPIO_PIN_10
 # define USART2_RX_GPIO_PINx	GPIO_PIN_11
-#endif
+#endif // defined (USART2_FULL_REMAP)
 
 #define UART3_RCU_UART3			RCU_UART3
 #define UART3_RCU_GPIOx			RCU_GPIOC
@@ -117,7 +117,7 @@
 #else
 # define I2C0_SCL_GPIO_PINx	GPIO_PIN_6
 # define I2C0_SDA_GPIO_PINx	GPIO_PIN_7
-#endif
+#endif // defined (I2C0_REMAP)
 
 #define I2C1_PERIPH			I2C1
 #define I2C1_RCU_I2C1		RCU_I2C1
@@ -155,7 +155,7 @@
 # define SPI0_NSS_RCU_GPIOx		RCU_GPIOA
 # define SPI0_NSS_GPIOx			GPIOA
 # define SPI0_NSS_GPIO_PINx		GPIO_PIN_4
-#endif
+#endif // defined (SPI0_REMAP)
 
 #define SPI1_PERIPH				SPI1
 #define SPI1_RCU_SPI1			RCU_SPI1
@@ -189,7 +189,7 @@
 # define SPI2_NSS_RCU_GPIOx		RCU_GPIOA
 # define SPI2_NSS_GPIOx			GPIOA
 # define SPI2_NSS_GPIO_PINx		GPIO_PIN_15
-#endif
+#endif // defined (SPI2_REMAP)
 
 /**
  * TIMER GPIO
@@ -249,7 +249,7 @@
 # define TIMER2_CH3_RCU_GPIOx	RCU_GPIOB
 # define TIMER2_CH3_GPIOx		GPIOB
 # define TIMER2_CH3_GPIO_PINx	GPIO_PIN_1
-#endif
+#endif // TIMER2_FULL_REMAP
 
 /**
  * DMA
@@ -288,4 +288,4 @@
 
 /* The USART supports DMA function for high-speed data communication, except UART4. */
 
-#endif /* MCU_GD32F10X_MCU_H_ */
+#endif // MCU_GD32F10X_MCU_H_
