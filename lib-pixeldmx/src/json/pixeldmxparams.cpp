@@ -34,6 +34,7 @@
 #include "configstore.h"
 #include "configurationstore.h"
 #include "common/utils/utils_flags.h"
+#include "common/utils/utils_string.h"
 #include "pixelconfiguration.h"
 #include "pixeldmxconfiguration.h"
 #if defined(CONFIG_PIXELDMX_ENABLE_GAMMATABLE)
@@ -94,14 +95,14 @@ void PixelDmxParams::SetGroupingCount(const char* val, uint32_t len) {
 }
 
 void PixelDmxParams::SetLowCode(const char* val, uint32_t len) {
-    store_dmxled.low_code = pixel::ConvertTxH(json::Atof(val, len));
+    store_dmxled.low_code = pixel::ConvertTxH(common::Atof(val, len));
 }
 
 void PixelDmxParams::SetHighCode(const char* val, uint32_t len) {
-    store_dmxled.high_code = pixel::ConvertTxH(json::Atof(val, len));
+    store_dmxled.high_code = pixel::ConvertTxH(common::Atof(val, len));
 }
 
-#if defined(OUTPUT_DMX_PIXEL_MULTI)
+#ifdef OUTPUT_DMX_PIXEL_MULTI
 void PixelDmxParams::SetActiveOutputs(const char* val, uint32_t len) {
     store_dmxled.active_outputs = ParseValue<uint8_t>(val, len);
 }
@@ -134,13 +135,13 @@ void PixelDmxParams::SetStartUniPort(const char* key, uint32_t key_len, const ch
     store_dmxled.start_universe[index] = ParseValue<uint16_t>(val, val_len);
 }
 
-#if defined(RDM_RESPONDER)
+#ifdef RDM_RESPONDER
 void PixelDmxParams::SetDmxStartAddress(const char* val, uint32_t len) {
     store_dmxled.dmx_start_address = ParseValue<uint16_t>(val, len);
 }
 #endif
 
-#if defined(CONFIG_PIXELDMX_ENABLE_GAMMATABLE)
+#ifdef CONFIG_PIXELDMX_ENABLE_GAMMATABLE
 void PixelDmxParams::SetGammaCorrection(const char* val, uint32_t len) {
     if (len == 1) {
         store_dmxled.flags = common::SetFlagValue(store_dmxled.flags, Flags::Flag::kEnableGamma, v[0] != '0');
@@ -157,7 +158,7 @@ void PixelDmxParams::SetGammaValue(const char* val, uint32_t len) {
         return;
     }
 
-    const auto kV = gamma::GetValidValue(static_cast<uint32_t>(json::Atof(val, 3) * 10));
+    const auto kV = gamma::GetValidValue(static_cast<uint32_t>(common::Atof(val, 3) * 10));
     store_dmxled.gamma_value = static_cast<uint8_t>(kV);
 }
 #endif
@@ -181,16 +182,16 @@ void PixelDmxParams::Set() {
     pixel_configuration.SetLowCode(store_dmxled.low_code);
     pixel_configuration.SetHighCode(store_dmxled.high_code);
     pixel_configuration.SetClockSpeedHz(store_dmxled.spi_speed_hz);
-#if defined(CONFIG_PIXELDMX_ENABLE_GAMMATABLE)
+#ifdef CONFIG_PIXELDMX_ENABLE_GAMMATABLE
     pixel_configuration.SetEnableGammaCorrection(common::IsFlagSet(store_dmxled.flags, Flags::Flag::kEnableGamma));
     pixel_configuration.SetGammaTable(store_dmxled.gamma_value);
 #endif
     auto& pixel_dmx_configuration = PixelDmxConfiguration::Get();
     pixel_dmx_configuration.SetGroupingCount(store_dmxled.grouping_count);
-#if defined(OUTPUT_DMX_PIXEL_MULTI)
+#ifdef OUTPUT_DMX_PIXEL_MULTI
     pixel_dmx_configuration.SetOutputPorts(store_dmxled.active_outputs);
 #endif
-#if !defined(OUTPUT_DMX_PIXEL_MULTI)
+#ifndef OUTPUT_DMX_PIXEL_MULTI
     pixel_dmx_configuration.SetDmxStartAddress(store_dmxled.dmx_start_address);
 #endif
 
@@ -270,16 +271,16 @@ void PixelDmxParams::Dump() {
     for (uint32_t i = 0; i < kMaxStartUniverses; i++) {
         printf(" %s=%d\n", PixelDmxParamsConst::kStartUniPort[i].name, store_dmxled.start_universe[i]);
     }
-#if defined(OUTPUT_DMX_PIXEL_MULTI)
+#ifdef OUTPUT_DMX_PIXEL_MULTI
     printf(" %s=%d\n", DmxLedParamsConst::kActiveOutputPorts.name, store_dmxled.active_outputs);
 #endif
     printf(" %s=%u\n", DmxLedParamsConst::kTestPattern.name, static_cast<unsigned>(store_dmxled.test_pattern));
     printf(" %s=%u\n", DmxLedParamsConst::kSpiSpeedHz.name, static_cast<unsigned>(store_dmxled.spi_speed_hz));
     printf(" %s=%u\n", DmxLedParamsConst::kGlobalBrightness.name, static_cast<unsigned>(store_dmxled.global_brightness));
-#if defined(RDM_RESPONDER)
+#ifdef RDM_RESPONDER
     printf(" %s=%u\n", PixelDmxParamsConst::kDmxStartAddress.name, static_cast<unsigned>(store_dmxled.dmx_start_address));
 #endif
-#if defined(CONFIG_PIXELDMX_ENABLE_GAMMATABLE)
+#ifdef CONFIG_PIXELDMX_ENABLE_GAMMATABLE
     printf(" %s=%d\n", DmxLedParamsConst::kGammaCorrection.name, common::IsFlagSet(store_dmxled.flags, Flags::Flag::kEnableGamma));
     printf(" %s=%1.1f [%u]\n", DmxLedParamsConst::kGammaValue.name, static_cast<float>(store_dmxled.gamma_value) / 10.0f, store_dmxled.gamma_value);
 #endif
