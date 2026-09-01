@@ -2,7 +2,7 @@
  * @file flashcode.h
  *
  */
-/* Copyright (C) 2021-2025 by Arjan van Vught mailto:info@gd32-dmx.org
+/* Copyright (C) 2021-2026 by Arjan van Vught mailto:info@gd32-dmx.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,6 +27,7 @@
 #define FLASHCODE_H_
 
 #include <cstdint>
+#include <span>
 
 #ifdef DEBUG_FLASHCODE
 #define FLASHCODE_DEBUG_ENTRY() DEBUG_ENTRY()
@@ -63,9 +64,9 @@ class FlashCode {
     [[nodiscard]] uint32_t GetSize() const;
     [[nodiscard]] uint32_t GetSectorSize() const;
 
-    bool Read(uint32_t offset, uint32_t length, uint8_t* buffer, flashcode::Result& result);
+    bool Read(uint32_t offset, std::span<uint8_t> buffer, flashcode::Result& result);
     bool Erase(uint32_t offset, uint32_t length, flashcode::Result& result);
-    bool Write(uint32_t offset, uint32_t length, const uint8_t* buffer, flashcode::Result& result);
+    bool Write(uint32_t offset, std::span<const uint8_t> buffer, flashcode::Result& result);
 
     static FlashCode* Get() { return s_this; }
 

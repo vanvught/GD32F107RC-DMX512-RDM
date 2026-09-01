@@ -24,7 +24,7 @@
  */
 
 #include <cstdint>
-#include <stdio.h>
+#include <span>
 #include <cassert>
 
 #include "flashcode.h"
@@ -40,38 +40,32 @@ fmc_state_enum fmc_bank1_state_get(void);
 }
 #endif
 
-namespace flashcode {
+namespace {
 /* Backwards compatibility with SPI FLASH */
-static constexpr auto kFlashSectorSize = 4096U;
+constexpr auto kFlashSectorSize = 4096U;
 /* The flash page size is 2KB for bank0 */
-static constexpr auto kBanK0FlashPage = (2U * 1024U);
+constexpr auto kBanK0FlashPage = (2U * 1024U);
 /* The flash page size is 4KB for bank1 */
-static constexpr auto kBanK1FlashPage = (4U * 1024U);
+constexpr auto kBanK1FlashPage = (4U * 1024U);
 
 enum class State { IDLE, ERASE_BUSY, ERASE_PROGAM, WRITE_BUSY, WRITE_PROGRAM, ERROR };
 
-static State s_state = State::IDLE;
-static uint32_t s_page;
-static uint32_t s_length;
-static uint32_t s_address;
-static uint32_t* s_data;
-static bool s_isBank0;
-} // namespace flashcode
+State s_state = State::IDLE;
+uint32_t s_page;
+uint32_t s_length;
+uint32_t s_address;
+const uint32_t* s_data;
+bool s_isBank0;
 
-bool static is_bank0(const uint32_t page_address) {
-    /* flash size is greater than 512k */
+bool IsBank0(uint32_t page_address) {
+    // flash size is greater than 512k
     if (FMC_BANK0_SIZE < FMC_SIZE) {
-        if (FMC_BANK0_END_ADDRESS > page_address) {
-            return true;
-        } else {
-            return false;
-        }
+        return FMC_BANK0_END_ADDRESS > page_address;
     }
 
     return true;
 }
-
-using namespace flashcode;
+} // namespace
 
 uint32_t FlashCode::GetSize() const {
     return FMC_SIZE * 1024U;
@@ -81,19 +75,21 @@ uint32_t FlashCode::GetSectorSize() const {
     return kFlashSectorSize;
 }
 
-bool FlashCode::Read(uint32_t offset, uint32_t length, uint8_t* pBuffer, flashcode::Result& result) {
+bool FlashCode::Read(uint32_t offset, std::span<uint8_t> buffer, flashcode::Result& result) {
     FLASHCODE_DEBUG_ENTRY();
-    FLASHCODE_DEBUG_PRINTF("offset=%x, length=%u, data=%p", static_cast<unsigned>(offset), static_cast<unsigned>(length), reinterpret_cast<void*>(pBuffer));
+    FLASHCODE_DEBUG_PRINTF("offset=%x, length=%u, data=%p", static_cast<unsigned>(offset), static_cast<unsigned>(buffer.size()), buffer.data());
 
-    const auto* pSrc = reinterpret_cast<uint32_t*>(offset + FLASH_BASE);
-    auto* pDst = reinterpret_cast<uint32_t*>(pBuffer);
+    const auto* src = reinterpret_cast<const uint32_t*>(offset + FLASH_BASE);
+    auto* dst = reinterpret_cast<uint32_t*>(buffer.data());
 
-    while (length > 0) {
-        *pDst++ = *pSrc++;
-        length -= 4;
+    auto length = buffer.size();
+
+    while (length >= sizeof(uint32_t)) {
+        *dst++ = *src++;
+        length -= sizeof(uint32_t);
     }
 
-    result = Result::kOk;
+    result = flashcode::Result::kOk;
 
     FLASHCODE_DEBUG_EXIT();
     return true;
@@ -103,13 +99,13 @@ bool FlashCode::Erase(uint32_t offset, uint32_t length, flashcode::Result& resul
     FLASHCODE_DEBUG_ENTRY();
     FLASHCODE_DEBUG_PRINTF("State=%d", static_cast<int>(s_state));
 
-    result = Result::kOk;
+    result = flashcode::Result::kOk;
 
     switch (s_state) {
         case State::IDLE:
             s_page = offset + FLASH_BASE;
             s_length = length;
-            if ((s_isBank0 = is_bank0(s_page))) {
+            if ((s_isBank0 = IsBank0(s_page))) {
                 fmc_bank0_unlock();
             } else {
                 fmc_bank1_unlock();
@@ -205,22 +201,27 @@ bool FlashCode::Erase(uint32_t offset, uint32_t length, flashcode::Result& resul
     return true;
 }
 
-bool FlashCode::Write(uint32_t offset, uint32_t length, const uint8_t* pBuffer, flashcode::Result& result) {
-    result = Result::kOk;
+bool FlashCode::Write(uint32_t offset, std::span<const uint8_t> buffer, flashcode::Result& result) {
+    result = flashcode::Result::kOk;
 
     switch (s_state) {
         case State::IDLE:
             FLASHCODE_DEBUG_PUTS("State::IDLE");
+
             s_address = offset + FLASH_BASE;
-            s_data = const_cast<uint32_t*>(reinterpret_cast<const uint32_t*>(pBuffer));
-            s_length = length;
-            if ((s_isBank0 = is_bank0(s_address))) {
+            s_data = reinterpret_cast<const uint32_t*>(buffer.data());
+            s_length = static_cast<uint32_t>(buffer.size());
+
+            if ((s_isBank0 = IsBank0(s_address))) {
                 fmc_bank0_unlock();
             } else {
                 fmc_bank1_unlock();
             }
+
             s_state = State::WRITE_BUSY;
+
             FLASHCODE_DEBUG_PRINTF("isBank0=%d", static_cast<int>(s_isBank0));
+
             FLASHCODE_DEBUG_EXIT();
             return false;
             break;

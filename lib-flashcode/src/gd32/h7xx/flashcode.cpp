@@ -57,16 +57,21 @@ uint32_t FlashCode::GetSectorSize() const {
     return kFlashSectorSize;
 }
 
-bool FlashCode::Read(uint32_t offset, uint32_t length, uint8_t* buffer, Result& result) {
+bool FlashCode::Read(uint32_t offset, std::span<uint8_t> buffer, Result& result) {
     DEBUG_ENTRY();
-    DEBUG_PRINTF("offset=%x, len=%u, data=%p", static_cast<unsigned>(offset), static_cast<unsigned>(length), reinterpret_cast<void*>(buffer));
+    DEBUG_PRINTF("offset=%x, len=%u, data=%p", static_cast<unsigned>(offset), static_cast<unsigned>(buffer.size()), buffer.data());
 
-    const auto* src = reinterpret_cast<uint32_t*>(offset + FLASH_BASE);
-    auto* dst = reinterpret_cast<uint32_t*>(buffer);
+    assert((buffer.size() & 0x3U) == 0);
+    assert((reinterpret_cast<uintptr_t>(buffer.data()) & 0x3U) == 0);
 
-    while (length > 0) {
+    const auto* src = reinterpret_cast<const uint32_t*>(offset + FLASH_BASE);
+    auto* dst = reinterpret_cast<uint32_t*>(buffer.data());
+
+    auto length = buffer.size();
+
+    while (length >= sizeof(uint32_t)) {
         *dst++ = *src++;
-        length -= 4;
+        length -= sizeof(uint32_t);
     }
 
     result = Result::kOk;
@@ -132,24 +137,32 @@ bool FlashCode::Erase(uint32_t offset, uint32_t length, flashcode::Result& resul
     return true;
 }
 
-bool FlashCode::Write(uint32_t offset, uint32_t length, const uint8_t* buffer, flashcode::Result& result) {
+bool FlashCode::Write(uint32_t offset, std::span<const uint8_t> buffer, flashcode::Result& result) {
     if ((s_state == State::kWriteProgram) || (s_state == State::kWriteBusy)) {
     } else {
         DEBUG_ENTRY();
     }
+
     result = Result::kOk;
 
     switch (s_state) {
         case State::kIdle:
             DEBUG_PUTS("State::IDLE");
+
+            assert((buffer.size() & 0x3U) == 0);
+            assert((reinterpret_cast<uintptr_t>(buffer.data()) & 0x3U) == 0);
+
             s_address = offset + FLASH_BASE;
-            s_data = const_cast<uint32_t*>(reinterpret_cast<const uint32_t*>(buffer));
-            s_length = length;
+            s_data = reinterpret_cast<const uint32_t*>(buffer.data());
+            s_length = static_cast<uint32_t>(buffer.size());
+
             fmc_unlock();
+
             s_state = State::kWriteBusy;
+
             DEBUG_EXIT();
             return false;
-            break;
+
         case State::kWriteBusy:
             if (SET == fmc_flag_get(FMC_FLAG_BUSY)) {
                 DEBUG_EXIT();
@@ -160,7 +173,7 @@ bool FlashCode::Write(uint32_t offset, uint32_t length, const uint8_t* buffer, f
                 fmc_lock();
                 s_state = State::kIdle;
 
-                if (memcmp(reinterpret_cast<void*>(offset + FLASH_BASE), buffer, length) == 0) {
+                if (memcmp(reinterpret_cast<void*>(offset + FLASH_BASE), buffer.data(), buffer.size()) == 0) {
                     DEBUG_PUTS("memcmp OK");
                 } else {
                     DEBUG_PUTS("memcmp failed");
@@ -172,36 +185,35 @@ bool FlashCode::Write(uint32_t offset, uint32_t length, const uint8_t* buffer, f
 
             s_state = State::kWriteProgram;
             return false;
-            break;
+
         case State::kWriteProgram:
-            if (s_length >= 4) {
+            if (s_length >= sizeof(uint32_t)) {
                 if (FMC_READY == fmc_ready_wait(0xFF)) {
-                    /* set the PG bit to start program */
                     FMC_CTL |= FMC_CTL_PG;
+
                     __ISB();
                     __DSB();
+
                     REG32(s_address) = *s_data;
+
                     __ISB();
                     __DSB();
-                    /* reset the PG bit */
+
                     FMC_CTL &= ~FMC_CTL_PG;
-                    s_data++;
-                    s_address += 4;
-                    s_length -= 4;
+
+                    ++s_data;
+                    s_address += sizeof(uint32_t);
+                    s_length -= sizeof(uint32_t);
                 }
             } else if (s_length > 0) {
                 DEBUG_PUTS("Error!");
             }
+
             s_state = State::kWriteBusy;
             return false;
-            break;
-        default:
-            assert(0);
-            __builtin_unreachable();
-            break;
-    }
 
-    assert(0);
-    __builtin_unreachable();
-    return true;
+        default:
+            assert(false);
+            __builtin_unreachable();
+    }
 }
