@@ -39,7 +39,6 @@
 #endif
 
 #include <cstdint>
-#include <algorithm>
 #include <cassert>
 
 #include "pixeloutput.h"
@@ -50,6 +49,7 @@
 #endif
 #include "dmxnode.h"
 #include "firmware/debug/debug_debug.h"
+#include "common/utils/utils_math.h"
 
 #if defined(OUTPUT_DMX_PIXEL) && defined(RDM_RESPONDER) && !defined(NODE_ARTNET)
 #include "dmxnodeoutputrdmpixel.h"
@@ -152,7 +152,7 @@ class PixelDmx final : public PixelDmxConfiguration {
         const auto kBeginIndex = port_info.begin_index_port[kSwitch];
 #endif
         const auto kChannelsPerPixel = PixelDmxConfiguration::GetLedsPerPixel();
-        const auto kEndIndex = std::min(kGroups, (kBeginIndex + (length / kChannelsPerPixel)));
+        const auto kEndIndex = common::Min(kGroups, (kBeginIndex + (length / kChannelsPerPixel)));
 
         if ((kSwitch == 0) && (kGroups < port_info.begin_index_port[1])) {
             assert(PixelDmxConfiguration::GetDmxStartAddress() != 0);

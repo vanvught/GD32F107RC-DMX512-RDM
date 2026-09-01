@@ -34,12 +34,12 @@
 
 #include <cstdint>
 #include <cstdio>
-#include <algorithm>
 #include <cassert>
 
 #include "dmxnode.h"
 #include "pixelconfiguration.h"
 #include "pixeltype.h"
+#include "common/utils/utils_math.h"
 
 namespace pixeldmxconfiguration {
 struct PortInfo {
@@ -117,7 +117,7 @@ class PixelDmxConfiguration : public PixelConfiguration {
         }
 
         groups_ = PixelConfiguration::GetCount() / grouping_count_;
-        output_ports_ = std::min(ports_max, output_ports_);
+        output_ports_ = common::Min(ports_max, output_ports_);
         universes_ = (1U + (groups_ / (1U + port_info_.begin_index_port[1])));
         dmx_footprint_ = static_cast<uint16_t>(PixelConfiguration::GetLedsPerPixel() * groups_);
         

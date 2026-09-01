@@ -25,14 +25,14 @@
 #ifndef PIXELTYPE_H_
 #define PIXELTYPE_H_
 
-#include <stdint.h>
+#include <cstdint>
 #include <cstring>
 #include <type_traits>
-#include <algorithm>
 #include <cassert>
 
 #include "common/utils/utils_string.h"
 #include "common/utils/utils_array.h"
+#include "common/utils/utils_math.h"
 
 namespace pixel {
 inline constexpr uint8_t kRtzLowCode = 0xC0;

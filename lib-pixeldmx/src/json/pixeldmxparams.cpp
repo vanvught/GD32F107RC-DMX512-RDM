@@ -24,7 +24,6 @@
  */
  
 #include <cstdint>
-#include <algorithm>
 #include <utility>
 
 #include "pixeltype.h"
@@ -46,6 +45,7 @@
 #include "dmxnode_nodetype.h"
 #include "pixeltestpattern.h"
 #include "pixeldmx_debug.h"
+#include "common/utils/utils_math.h"
 
 static constexpr uint32_t kConfigMaxPorts = CONFIG_DMXNODE_PIXEL_MAX_PORTS;
 
@@ -259,7 +259,7 @@ void PixelDmxParams::Set() {
 }
 
 void PixelDmxParams::Dump() {
-    static const auto kMaxStartUniverses = std::min(kConfigMaxPorts, common::store::dmxled::kMaxUniverses);
+    static const auto kMaxStartUniverses = common::Min(kConfigMaxPorts, common::store::dmxled::kMaxUniverses);
 
     printf("%s::%s \'%s\':\n", __FILE__, __FUNCTION__, json::DmxLedParamsConst::kFileName);
     printf(" %s=%s [%u]\n", json::DmxLedParamsConst::kType.name, pixel::GetTypeName(static_cast<pixel::LedType>(store_dmxled.type)), store_dmxled.type);

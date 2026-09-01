@@ -24,7 +24,6 @@
  */
 
 #include <cstdint>
-#include <algorithm>
 #include <utility>
 
 #include "json/pixeldmxparams.h"
@@ -35,9 +34,10 @@
 #include "configstore.h"
 #include "configurationstore.h"
 #include "json/pixeldmxparamsconst.h"
+#include "common/utils/utils_math.h"
 
 namespace json::config {
-using std::min;
+using common::Min;
 
 uint32_t GetPixelDmx(char* buffer, uint32_t length) {
     char t[8];
@@ -68,7 +68,7 @@ uint32_t GetPixelDmx(char* buffer, uint32_t length) {
 #endif
 
         static constexpr uint32_t kConfigMaxPorts = CONFIG_DMXNODE_PIXEL_MAX_PORTS;
-        static const auto kMaxStartUniverses = std::min(kConfigMaxPorts, common::store::dmxled::kMaxUniverses);
+        static const auto kMaxStartUniverses = common::Min(kConfigMaxPorts, common::store::dmxled::kMaxUniverses);
 
         for (uint32_t i = 0; i < kMaxStartUniverses; i++) {
             doc[PixelDmxParamsConst::kStartUniPort[i].name] = ConfigStore::Instance().DmxLedIndexedGetStartUniverse(i);

@@ -29,12 +29,12 @@
 #define PIXELPATTERNS_H_
 
 #include <cstdint>
-#include <algorithm>
 
 #include "pixel.h"
 #include "pixelconfiguration.h"
 #include "timing.h"
 #include "firmware/debug/debug_debug.h"
+#include "common/utils/utils_math.h"
 
 namespace pixelpatterns {
 #if defined(PIXELPATTERNS_MULTI)
@@ -72,7 +72,7 @@ class PixelPatterns {
         DEBUG_ENTRY();
         DEBUG_PRINTF("active_ports=%u", static_cast<unsigned>(active_ports));
 
-        s_active_ports = std::min(pixelpatterns::kMaxPorts, active_ports);
+        s_active_ports = common::Min(pixelpatterns::kMaxPorts, active_ports);
 
 		DEBUG_PRINTF("s_active_ports=%u", static_cast<unsigned>(s_active_ports));
         DEBUG_EXIT();
