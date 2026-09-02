@@ -29,6 +29,8 @@
 #include <cstdint>
 #include <span>
 
+#include "firmware/debug/debug_debug.h"
+
 #ifdef DEBUG_FLASHCODE
 #define FLASHCODE_DEBUG_ENTRY() DEBUG_ENTRY()
 #define FLASHCODE_DEBUG_EXIT() DEBUG_EXIT()
@@ -48,6 +50,26 @@
     do {                          \
     } while (false)
 #endif
+
+#ifdef DEBUG_FMC
+#define FMC_DEBUG_ENTRY() DEBUG_ENTRY()
+#define FMC_DEBUG_EXIT() DEBUG_EXIT()
+#define FMC_DEBUG_PRINTF(...) DEBUG_PRINTF(__VA_ARGS__)
+#define FMC_DEBUG_PUTS(...) DEBUG_PUTS(__VA_ARGS__)
+#else
+#define FMC_DEBUG_ENTRY() \
+    do {                  \
+    } while (false)
+#define FMC_DEBUG_EXIT() \
+    do {                 \
+    } while (false)
+#define FMC_DEBUG_PRINTF(...) \
+    do {                      \
+    } while (false)
+#define FMC_DEBUG_PUTS(...) \
+    do {                    \
+    } while (false)
+#endif // DEBUG_COMMON_FMC
 
 namespace flashcode {
 enum class Result { kOk, kError };
