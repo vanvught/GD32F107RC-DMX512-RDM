@@ -9,7 +9,7 @@ EXTRA_SRCDIR =src/f
 EXTRA_C_SOURCE_FILES =
 
 ifneq ($(MAKE_FLAGS),)
-	EXTRA_SRCDIR+=gd32f10x/CMSIS/GD/gd32f10x/Source
+	EXTRA_SRCDIR+=gd32f10x/CMSIS/GD/GD32F10x/Source
   	
   	EXTRA_C_SOURCE_FILES+=gd32f10x/GD32F10x_standard_peripheral/Source/gd32f10x_adc.c
   	EXTRA_C_SOURCE_FILES+=gd32f10x/GD32F10x_standard_peripheral/Source/gd32f10x_bkp.c
