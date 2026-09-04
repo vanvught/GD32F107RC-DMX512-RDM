@@ -23,11 +23,19 @@
  * THE SOFTWARE.
  */
 
-#include <cstdio>
-#include <cassert>
+ #include <cstdint>
+ #include <cassert>
+ #include <span>
 
-#include "flashcode.h"
-#include "gd32.h"
+ #include "flashcode.h"
+ #include "gd32_fmc.h"
+ #include "gd32.h" // IWYU pragma: keep
+ 
+ namespace {
+ constexpr uint32_t k1KiB = 1024;
+ // Backwards compatibility with SPI FLASH
+ constexpr auto kFlashSectorSize = 4096;
+ } // namespace
 
 FlashCode::FlashCode() {
     FLASHCODE_DEBUG_ENTRY();
@@ -36,16 +44,38 @@ FlashCode::FlashCode() {
 
     detected_ = true;
 
-    printf("FMC: %s %u [%u]\n", GetName(), static_cast<unsigned int>(GetSize()), static_cast<unsigned int>(GetSize() / 1024U));
-    FLASHCODE_DEBUG_EXIT();
-}
-
-FlashCode::~FlashCode() {
-    FLASHCODE_DEBUG_ENTRY();
-
+    printf("FMC: %s %u [%u]\n", GetName(), static_cast<unsigned>(GetSize()), static_cast<unsigned>(GetSize() / k1KiB));
     FLASHCODE_DEBUG_EXIT();
 }
 
 const char* FlashCode::GetName() const {
     return GD32_MCU_NAME;
+}
+
+uint32_t FlashCode::GetSize() const {
+    return FMC_SIZE * k1KiB;
+}
+
+uint32_t FlashCode::GetSectorSize() const {
+    return kFlashSectorSize;
+}
+
+bool FlashCode::Read(uint32_t offset, std::span<uint8_t> buffer, flashcode::Result& result) {
+    const auto kStatus = gd32::fmc::Read(offset, buffer); // Blocking
+    result = kStatus ? flashcode::Result::kOk : flashcode::Result::kError;
+    return true;
+}
+
+bool FlashCode::Erase(uint32_t offset, uint32_t length, flashcode::Result& result) {
+    gd32::fmc::Result fmc_result;
+    const auto kStatus = gd32::fmc::Erase(offset, length, fmc_result); // State-machine
+    result = (fmc_result == gd32::fmc::Result::kOk) ? flashcode::Result::kOk : flashcode::Result::kError;
+    return kStatus;
+}
+
+bool FlashCode::Write(uint32_t offset, std::span<const uint8_t> buffer, flashcode::Result& result) {
+    gd32::fmc::Result fmc_result;
+    const auto kStatus = gd32::fmc::Write(offset, buffer, fmc_result); // State-machine
+    result = (fmc_result == gd32::fmc::Result::kOk) ? flashcode::Result::kOk : flashcode::Result::kError;
+    return kStatus;
 }
