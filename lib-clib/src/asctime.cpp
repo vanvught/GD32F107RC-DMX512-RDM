@@ -35,7 +35,9 @@ static const char kWdayName[][4] = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "S
 static char s_buffer[kMaxAscTime + 1];
 
 extern "C" char* asctime(const struct tm* p_tm) {
-    if (!p_tm) return nullptr;
+    if (p_tm == nullptr) {
+        return nullptr;
+    }
 
     const char* const kWday = (p_tm->tm_wday >= 0 && p_tm->tm_wday <= 6) ? kWdayName[p_tm->tm_wday] : "???";
     const char* const kMon = (p_tm->tm_mon >= 0 && p_tm->tm_mon <= 11) ? kMonName[p_tm->tm_mon] : "???";

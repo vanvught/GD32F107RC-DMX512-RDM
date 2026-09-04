@@ -25,6 +25,8 @@ PROJECT=$(notdir $(patsubst %/,%,$(CURDIR)))
 $(info $$PROJECT [${PROJECT}])
 
 DEFINES:=$(addprefix -D,$(DEFINES))
+DEFINES+=-DCONFIG_CLIB_USE_UART0
+DEFINES+=-DPHY_TYPE=$(ENET_PHY)
 
 include ../common/make/gd32/Board.mk
 include ../common/make/gd32/Mcu.mk
@@ -52,9 +54,7 @@ LDLIBS:=$(addprefix -l,$(LIBS))
 # The variables for the dependency check
 LIBDEP=$(addprefix ../lib-,$(LIBS))
 
-DEFINES+=-DCONFIG_CLIB_USE_UART0
-
-COPS=-DGD32 -D$(FAMILY_UCA) -D$(LINE_UC) -D$(MCU) -D$(BOARD) -DPHY_TYPE=$(ENET_PHY)
+COPS=-DGD32 -D$(FAMILY_UCA) -D$(LINE_UC) -D$(MCU) -D$(BOARD)
 COPS+=$(strip $(DEFINES) $(MAKE_FLAGS) $(INCLUDES) $(LIBINCDIRS))
 COPS+=$(strip $(ARMOPS) $(CMSISOPS))
 COPS+=-Os -nostartfiles -ffreestanding -nostdlib
@@ -174,6 +174,7 @@ $(TARGET): $(BUILD)main.elf
 		-O binary \
 		$@ \
 		--remove-section=.tcmsram* \
+		--remove-section=.ram* \
 		--remove-section=.sram1* \
 		--remove-section=.sram2* \
 		--remove-section=.ramadd* \

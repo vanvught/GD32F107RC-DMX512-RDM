@@ -20,7 +20,8 @@ $(info $$ENET_PHY [${ENET_PHY}])
 
 SRCDIR=src src/gd32 $(EXTRA_SRCDIR)
 
-DEFINES:=$(addprefix -D,$(DEFINES)) -DCONFIG_NETWORK_MEMORY_BLOCKS=4
+DEFINES:=$(addprefix -D,$(DEFINES))
+DEFINES+=-DPHY_TYPE=$(ENET_PHY)
 
 include ../common/make/gd32/Board.mk
 include ../common/make/gd32/Mcu.mk
