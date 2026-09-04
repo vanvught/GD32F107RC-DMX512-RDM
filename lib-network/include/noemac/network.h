@@ -28,7 +28,7 @@
 
 #if !defined(NO_EMAC)
 #error
-#endif
+#endif // NO_EMAC
 
 #include <cassert>
 #include "firmware/debug/debug_debug.h"
