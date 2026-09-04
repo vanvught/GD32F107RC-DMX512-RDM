@@ -11,21 +11,21 @@ EXTRA_C_SOURCE_FILES =
 ifneq ($(MAKE_FLAGS),)
 	EXTRA_SRCDIR+=gd32f10x/CMSIS/GD/gd32f10x/Source
   	
-  	EXTRA_C_SOURCE_FILES+=gd32f10x/gd32f10x_standard_peripheral/Source/gd32f10x_adc.c
-  	EXTRA_C_SOURCE_FILES+=gd32f10x/gd32f10x_standard_peripheral/Source/gd32f10x_bkp.c
-  	EXTRA_C_SOURCE_FILES+=gd32f10x/gd32f10x_standard_peripheral/Source/gd32f10x_dma.c
-  	EXTRA_C_SOURCE_FILES+=gd32f10x/gd32f10x_standard_peripheral/Source/gd32f10x_enet.c
-  	EXTRA_C_SOURCE_FILES+=gd32f10x/gd32f10x_standard_peripheral/Source/gd32f10x_exti.c
-  	EXTRA_C_SOURCE_FILES+=gd32f10x/gd32f10x_standard_peripheral/Source/gd32f10x_fmc.c
-  	EXTRA_C_SOURCE_FILES+=gd32f10x/gd32f10x_standard_peripheral/Source/gd32f10x_fwdgt.c
-  	EXTRA_C_SOURCE_FILES+=gd32f10x/gd32f10x_standard_peripheral/Source/gd32f10x_gpio.c
-  	EXTRA_C_SOURCE_FILES+=gd32f10x/gd32f10x_standard_peripheral/Source/gd32f10x_i2c.c
-  	EXTRA_C_SOURCE_FILES+=gd32f10x/gd32f10x_standard_peripheral/Source/gd32f10x_pmu.c
-  	EXTRA_C_SOURCE_FILES+=gd32f10x/gd32f10x_standard_peripheral/Source/gd32f10x_rcu.c
-  	EXTRA_C_SOURCE_FILES+=gd32f10x/gd32f10x_standard_peripheral/Source/gd32f10x_rtc.c
-  	EXTRA_C_SOURCE_FILES+=gd32f10x/gd32f10x_standard_peripheral/Source/gd32f10x_spi.c
-  	EXTRA_C_SOURCE_FILES+=gd32f10x/gd32f10x_standard_peripheral/Source/gd32f10x_usart.c
-  	EXTRA_C_SOURCE_FILES+=gd32f10x/gd32f10x_standard_peripheral/Source/gd32f10x_timer.c
+  	EXTRA_C_SOURCE_FILES+=gd32f10x/GD32F10x_standard_peripheral/Source/gd32f10x_adc.c
+  	EXTRA_C_SOURCE_FILES+=gd32f10x/GD32F10x_standard_peripheral/Source/gd32f10x_bkp.c
+  	EXTRA_C_SOURCE_FILES+=gd32f10x/GD32F10x_standard_peripheral/Source/gd32f10x_dma.c
+  	EXTRA_C_SOURCE_FILES+=gd32f10x/GD32F10x_standard_peripheral/Source/gd32f10x_enet.c
+  	EXTRA_C_SOURCE_FILES+=gd32f10x/GD32F10x_standard_peripheral/Source/gd32f10x_exti.c
+  	EXTRA_C_SOURCE_FILES+=gd32f10x/GD32F10x_standard_peripheral/Source/gd32f10x_fmc.c
+  	EXTRA_C_SOURCE_FILES+=gd32f10x/GD32F10x_standard_peripheral/Source/gd32f10x_fwdgt.c
+  	EXTRA_C_SOURCE_FILES+=gd32f10x/GD32F10x_standard_peripheral/Source/gd32f10x_gpio.c
+  	EXTRA_C_SOURCE_FILES+=gd32f10x/GD32F10x_standard_peripheral/Source/gd32f10x_i2c.c
+  	EXTRA_C_SOURCE_FILES+=gd32f10x/GD32F10x_standard_peripheral/Source/gd32f10x_pmu.c
+  	EXTRA_C_SOURCE_FILES+=gd32f10x/GD32F10x_standard_peripheral/Source/gd32f10x_rcu.c
+  	EXTRA_C_SOURCE_FILES+=gd32f10x/GD32F10x_standard_peripheral/Source/gd32f10x_rtc.c
+  	EXTRA_C_SOURCE_FILES+=gd32f10x/GD32F10x_standard_peripheral/Source/gd32f10x_spi.c
+  	EXTRA_C_SOURCE_FILES+=gd32f10x/GD32F10x_standard_peripheral/Source/gd32f10x_usart.c
+  	EXTRA_C_SOURCE_FILES+=gd32f10x/GD32F10x_standard_peripheral/Source/gd32f10x_timer.c
   	
 	ifeq ($(findstring NO_EMAC,$(MAKE_FLAGS)), NO_EMAC)
 	else
