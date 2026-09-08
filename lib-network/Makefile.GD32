@@ -35,12 +35,12 @@ ifneq ($(MAKE_FLAGS),)
 
  	ifeq ($(findstring CONFIG_NET_ENABLE_PTP,$(MAKE_FLAGS)), CONFIG_NET_ENABLE_PTP)  
  		ifeq ($(findstring CONFIG_NET_ENABLE_PTP_NTP_CLIENT,$(MAKE_FLAGS)), CONFIG_NET_ENABLE_PTP_NTP_CLIENT)
-			EXTRA_SRCDIR+=src/net/apps/ntp/gd32/ptp
+			EXTRA_SRCDIR+=src/apps/ntp/gd32/ptp
   	endif
   endif
 else
 	EXTRA_SRCDIR+=src/emac/gd32
-	EXTRA_SRCDIR+=src/net/apps/ntp/gd32/ptp
+	EXTRA_SRCDIR+=src/apps/ntp/gd32/ptp
 	ENET_PHY=RTL8201F
 endif
 
