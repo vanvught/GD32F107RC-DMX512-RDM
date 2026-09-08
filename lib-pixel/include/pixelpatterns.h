@@ -30,6 +30,7 @@
 
 #include <cstdint>
 
+#include "common/utils/utils_string.h"
 #include "pixel.h"
 #include "pixelconfiguration.h"
 #include "timing.h"
@@ -85,10 +86,10 @@ class PixelPatterns {
             return pixelpatterns::kPatternName[static_cast<uint32_t>(pattern)];
         }
 
-        return "Unknown";
+        return common::kUnknown;
     }
 
-    uint32_t GetActivePorts() const { return s_active_ports; }
+    [[nodiscard]] uint32_t GetActivePorts() const { return s_active_ports; }
 
     void RainbowCycle(uint32_t port_index, uint32_t interval, pixelpatterns::Direction direction = pixelpatterns::Direction::kForward) {
         Clear(port_index);
@@ -288,8 +289,8 @@ class PixelPatterns {
     }
 
     uint32_t DimColour(uint32_t colour) {
-        const pixel::PixelColours kC(colour);
-        return pixel::GetColour(static_cast<uint8_t>(kC.Red() >> 1), static_cast<uint8_t>(kC.Green() >> 1), static_cast<uint8_t>(kC.Blue() >> 1));
+        const pixel::PixelColours kColour(colour);
+        return pixel::GetColour(static_cast<uint8_t>(kColour.Red() >> 1), static_cast<uint8_t>(kColour.Green() >> 1), static_cast<uint8_t>(kColour.Blue() >> 1));
     }
 
     void Clear(uint32_t port_index) { pixel::SetPixelColour(port_index, 0); }

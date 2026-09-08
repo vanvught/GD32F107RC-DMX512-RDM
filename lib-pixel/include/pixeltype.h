@@ -40,42 +40,42 @@ inline constexpr uint32_t kNoSpeedHz = 0;
 inline constexpr uint8_t kNoCode = 0;
 
 enum class LedType : uint8_t {
-    kWS2801,   //
-    kWS2811,   //
-    kWS2812,   //
-    kWS2812B,  //
-    kWS2813,   //
-    kWS2815,   //
-    kSK6812,   //
-    kSK6812W,  //
-    kUCS1903,  //
-    kUCS2903,  //
-    kCS8812,   //
-    kAPA102,   //
-    kSK9822,   //
-    kP9813,    //
-    kUndefined //
+    kWS2801,    //
+    kWS2811,    //
+    kWS2812,    //
+    kWS2812B,   //
+    kWS2813,    //
+    kWS2815,    //
+    kSK6812,    //
+    kSK6812W,   //
+    kUCS1903,   //
+    kUCS2903,   //
+    kCS8812,    //
+    kAPA102,    //
+    kSK9822,    //
+    kP9813,     //
+    kUndefined, //
 };
 
 enum class LedMap : uint8_t {
-    kRGB,      //
-    kRBG,      //
-    kGRB,      //
-    kGBR,      //
-    kBRG,      //
-    kBGR,      //
-    kRGBW,     //
-    kUndefined //
+    kRGB,       //
+    kRBG,       //
+    kGRB,       //
+    kGBR,       //
+    kBRG,       //
+    kBGR,       //
+    kRGBW,      //
+    kUndefined, //
 };
 
 inline constexpr char kMaps[static_cast<uint32_t>(pixel::LedMap::kUndefined)][5] = {
-    "RGB", //
-    "RBG", //
-    "GRB", //
-    "GBR", //
-    "BRG", //
-    "BGR", //
-    "RGBW" //
+    "RGB",  //
+    "RBG",  //
+    "GRB",  //
+    "GBR",  //
+    "BRG",  //
+    "BGR",  //
+    "RGBW", //
 };
 
 constexpr uint32_t kMapsCount = static_cast<uint32_t>(sizeof(kMaps) / sizeof(kMaps[0]));
@@ -186,7 +186,7 @@ constexpr const char* GetTypeName(LedType type) {
         return kTypeInfo[kIndex].name;
     }
 
-    return "Unknown";
+    return common::kUnknown;
 }
 
 inline LedType GetTypeByName(const char* string) {
@@ -208,7 +208,7 @@ inline const char* GetMapName(LedMap map) {
         return kMaps[kIndex];
     }
 
-    return "Unknown";
+    return common::kUnknown;
 }
 
 inline LedMap GetMapByName(const char* string) {

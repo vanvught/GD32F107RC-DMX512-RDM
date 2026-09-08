@@ -78,7 +78,7 @@ int main() // NOLINT
         dmxnode_node.SetOutput(&pixeldmx);
     }
 
-#ifdef ARTNET_HAVE_TRIGGER	
+#ifdef ARTNET_HAVE_TRIGGER
     ArtNetTriggerHandler trigger_handler(&pixeldmx);
 #endif
 #ifdef NODE_SHOWFILE
@@ -115,7 +115,7 @@ int main() // NOLINT
         watchdog::Feed();
         network::Run();
         dmxnode_node.Run();
-#if defined(NODE_SHOWFILE)
+#ifdef NODE_SHOWFILE
         showfile.Run();
 #endif
         pixeltest_pattern.Run();
