@@ -26,14 +26,13 @@
 #include <cstdint>
 
 #include "rdmslotinfo.h"
+#include "common/utils/utils_string.h"
 #include "pixeldmxparamsrdm.h"
 
 using pixeldmx::paramsdmx::SlotsInfo;
 
-const char* RDMSlotInfo::GetCategoryTextUndefined(uint16_t slotoffset, uint32_t& length)
-{
-    switch (static_cast<pixeldmx::paramsdmx::SlotsInfo>(slotoffset))
-    {
+const char* RDMSlotInfo::GetCategoryTextUndefined(uint16_t slotoffset, uint32_t& length) {
+    switch (static_cast<pixeldmx::paramsdmx::SlotsInfo>(slotoffset)) {
         case SlotsInfo::TYPE:
             length = 4;
             return "Type";
@@ -63,5 +62,5 @@ const char* RDMSlotInfo::GetCategoryTextUndefined(uint16_t slotoffset, uint32_t&
     }
 
     length = 9;
-    return "Undefined";
+    return common::kUndefined;
 }
