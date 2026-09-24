@@ -43,7 +43,7 @@ struct PixelDmxParamsConst {
     static constexpr json::PortKey kStartUniPort6{"start_uni_port_6", 16, Fnv1a32("start_uni_port_6", 16)};
     static constexpr json::PortKey kStartUniPort7{"start_uni_port_7", 16, Fnv1a32("start_uni_port_7", 16)};
     static constexpr json::PortKey kStartUniPort8{"start_uni_port_8", 16, Fnv1a32("start_uni_port_8", 16)};
-#endif
+#endif // (CONFIG_DMXNODE_PIXEL_MAX_PORTS > 1)
 #if CONFIG_DMXNODE_PIXEL_MAX_PORTS == 16
     static constexpr json::PortKey kStartUniPort9{"start_uni_port_9", 16, Fnv1a32("start_uni_port_9", 16)};
     static constexpr json::PortKey kStartUniPort10{"start_uni_port_10", 17, Fnv1a32("start_uni_port_10", 17)};
@@ -53,7 +53,7 @@ struct PixelDmxParamsConst {
     static constexpr json::PortKey kStartUniPort14{"start_uni_port_14", 17, Fnv1a32("start_uni_port_14", 17)};
     static constexpr json::PortKey kStartUniPort15{"start_uni_port_15", 17, Fnv1a32("start_uni_port_15", 17)};
     static constexpr json::PortKey kStartUniPort16{"start_uni_port_16", 17, Fnv1a32("start_uni_port_16", 17)};
-#endif
+#endif // CONFIG_DMXNODE_PIXEL_MAX_PORTS == 16
 
     static constexpr json::PortKey kStartUniPort[] = {kStartUniPort1,
 #if (CONFIG_DMXNODE_PIXEL_MAX_PORTS > 1)
@@ -61,8 +61,8 @@ struct PixelDmxParamsConst {
 #if CONFIG_DMXNODE_PIXEL_MAX_PORTS == 16
                                                       kStartUniPort9, kStartUniPort10, kStartUniPort11, kStartUniPort12, kStartUniPort13, kStartUniPort14, kStartUniPort15,
                                                       kStartUniPort16
-#endif
-#endif
+#endif // CONFIG_DMXNODE_PIXEL_MAX_PORTS == 16
+#endif // (CONFIG_DMXNODE_PIXEL_MAX_PORTS > 1)
     };
 };
 } // namespace json

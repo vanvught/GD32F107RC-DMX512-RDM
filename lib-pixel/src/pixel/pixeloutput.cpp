@@ -26,7 +26,7 @@
 #pragma GCC push_options
 #pragma GCC optimize("O3")
 #pragma GCC optimize("-funroll-loops")
-#endif
+#endif // defined(__GNUC__) && !defined(__clang__)
 
 #include <cstdint>
 #include <cassert>
@@ -34,9 +34,9 @@
 #include "pixeloutput.h"
 #include "pixeltype.h"
 #include "pixelconfiguration.h"
-#if defined(CONFIG_PIXELDMX_ENABLE_GAMMATABLE)
+#ifdef CONFIG_PIXELDMX_ENABLE_GAMMATABLE
 #include "gamma/gamma_tables.h"
-#endif
+#endif // CONFIG_PIXELDMX_ENABLE_GAMMATABLE
 
 void PixelOutput::SetColorWS28xx(uint32_t offset, uint8_t value) {
     auto& pixel_configuration = PixelConfiguration::Get();
@@ -63,13 +63,13 @@ void PixelOutput::SetPixel(uint32_t pixel_index, uint8_t red, uint8_t green, uin
     auto& pixel_configuration = PixelConfiguration::Get();
     assert(pixel_index < pixel_configuration.GetCount());
 
-#if defined(CONFIG_PIXELDMX_ENABLE_GAMMATABLE)
+#ifdef CONFIG_PIXELDMX_ENABLE_GAMMATABLE
     const auto* gamma_table = pixel_configuration.GetGammaTable();
 
     red = gamma_table[red];
     green = gamma_table[green];
     blue = gamma_table[blue];
-#endif
+#endif // CONFIG_PIXELDMX_ENABLE_GAMMATABLE
 
     if (pixel_configuration.IsRTZProtocol()) {
         const auto kOffset = pixel_index * 24U;
@@ -129,14 +129,14 @@ void PixelOutput::SetPixel(uint32_t pixel_index, uint8_t red, uint8_t green, uin
     assert(pixel_index < PixelConfiguration::Get().GetCount());
     assert(PixelConfiguration::Get().GetType() == pixel::LedType::kSK6812W);
 
-#if defined(CONFIG_PIXELDMX_ENABLE_GAMMATABLE)
+#ifdef CONFIG_PIXELDMX_ENABLE_GAMMATABLE
     const auto* gamma_table = PixelConfiguration::Get().GetGammaTable();
 
     red = gamma_table[red];
     green = gamma_table[green];
     blue = gamma_table[blue];
     white = gamma_table[white];
-#endif
+#endif // CONFIG_PIXELDMX_ENABLE_GAMMATABLE
 
     const auto kOffset = pixel_index * 32U;
 

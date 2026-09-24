@@ -46,6 +46,6 @@
 #define PIXELDMX_DEBUG_PUTS(...) \
     do {                         \
     } while (false)
-#endif
+#endif // DEBUG_PIXELDMX
 
-#endif // _PIXELDMX_DEBUG_H_
+#endif // PIXELDMX_DEBUG_H_

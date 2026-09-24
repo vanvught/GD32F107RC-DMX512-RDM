@@ -27,11 +27,11 @@
 
 #include <cstdint>
 
-#if defined(GD32)
+#ifdef GD32
 #include "gd32_spi.h"
 #elif defined(H3)
 #include "h3_spi.h"
-#endif
+#endif // GD32
 
 class PixelOutput
 {
@@ -46,13 +46,13 @@ class PixelOutput
 
     bool IsUpdating()
     {
-#if defined(GD32)
+#ifdef GD32
         return i2s::Gd32SpiDmaTxIsActive();
 #elif defined(H3)
         return H3SpiDmaTxIsActive();
 #else
         return false;
-#endif
+#endif // GD32
     }
 
     void Update();
@@ -80,4 +80,4 @@ class PixelOutput
 
 using PixelOutputType = PixelOutput;
 
-#endif  // PIXELOUTPUT_H_
+#endif // PIXELOUTPUT_H_

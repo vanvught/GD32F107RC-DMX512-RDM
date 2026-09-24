@@ -34,9 +34,9 @@
 #include "pixeldmxconfiguration.h"
 #include "pixeloutput.h"
 
-#if !defined(OUTPUT_DMX_PIXEL)
+#ifndef OUTPUT_DMX_PIXEL
 #error
-#endif
+#endif // OUTPUT_DMX_PIXEL
 
 using E120_MANUFACTURER_PIXEL_TYPE = rdmhandler::ManufacturerPid<0x8500>;
 using E120_MANUFACTURER_PIXEL_COUNT = rdmhandler::ManufacturerPid<0x8501>;
@@ -66,34 +66,34 @@ constexpr char PixelMap::kDescription[];
 
 const rdmhandler::ParameterDescription RDMHandler::PARAMETER_DESCRIPTIONS[] = {
     {E120_MANUFACTURER_PIXEL_TYPE::kCode, rdmhandler::kDeviceDescriptionMaxLength, E120_DS_ASCII,
-#if defined(CONFIG_RDM_MANUFACTURER_PIDS_SET)
+#ifdef CONFIG_RDM_MANUFACTURER_PIDS_SET
      E120_CC_GET_SET,
 #else
      E120_CC_GET,
-#endif
+#endif // CONFIG_RDM_MANUFACTURER_PIDS_SET
      0, E120_UNITS_NONE, E120_PREFIX_NONE, 0, 0, 0, rdmhandler::Description<PixelType, sizeof(PixelType::kDescription)>::kValue, RDMHandler::PdlParameterDescription(sizeof(PixelType::kDescription))},
     {E120_MANUFACTURER_PIXEL_COUNT::kCode, 2, E120_DS_UNSIGNED_WORD,
-#if defined(CONFIG_RDM_MANUFACTURER_PIDS_SET)
+#ifdef CONFIG_RDM_MANUFACTURER_PIDS_SET
      E120_CC_GET_SET,
 #else
      E120_CC_GET,
-#endif
+#endif // CONFIG_RDM_MANUFACTURER_PIDS_SET
      0, E120_UNITS_NONE, E120_PREFIX_NONE, 0, __builtin_bswap32(pixel::defaults::kCount), __builtin_bswap32(pixel::max::ledcount::kRgb), rdmhandler::Description<PixelCount, sizeof(PixelCount::kDescription)>::kValue,
      RDMHandler::PdlParameterDescription(sizeof(PixelCount::kDescription))},
     {E120_MANUFACTURER_PIXEL_GROUPING_COUNT::kCode, 2, E120_DS_UNSIGNED_WORD,
-#if defined(CONFIG_RDM_MANUFACTURER_PIDS_SET)
+#ifdef CONFIG_RDM_MANUFACTURER_PIDS_SET
      E120_CC_GET_SET,
 #else
      E120_CC_GET,
-#endif
+#endif // CONFIG_RDM_MANUFACTURER_PIDS_SET
      0, E120_UNITS_NONE, E120_PREFIX_NONE, 0, __builtin_bswap32(pixel::defaults::kCount), __builtin_bswap32(pixel::max::ledcount::kRgb), rdmhandler::Description<PixelGroupingCount, sizeof(PixelGroupingCount::kDescription)>::kValue,
      RDMHandler::PdlParameterDescription(sizeof(PixelGroupingCount::kDescription))},
     {E120_MANUFACTURER_PIXEL_MAP::kCode, rdmhandler::kDeviceDescriptionMaxLength, E120_DS_ASCII,
-#if defined(CONFIG_RDM_MANUFACTURER_PIDS_SET)
+#ifdef CONFIG_RDM_MANUFACTURER_PIDS_SET
      E120_CC_GET_SET,
 #else
      E120_CC_GET,
-#endif
+#endif // CONFIG_RDM_MANUFACTURER_PIDS_SET
      0, E120_UNITS_NONE, E120_PREFIX_NONE, 0, 0, 0, rdmhandler::Description<PixelMap, sizeof(PixelMap::kDescription)>::kValue, RDMHandler::PdlParameterDescription(sizeof(PixelMap::kDescription))}};
 
 uint32_t RDMHandler::GetParameterDescriptionCount() const {
@@ -141,7 +141,7 @@ bool HandleManufactureerPidGet(uint16_t pid, [[maybe_unused]] const Manufacturer
     return false;
 }
 
-#if defined(CONFIG_RDM_MANUFACTURER_PIDS_SET)
+#ifdef CONFIG_RDM_MANUFACTURER_PIDS_SET
 bool HandleManufactureerPidSet(bool is_broadcast, uint16_t pid, const ParameterDescription& parameter_description, const ManufacturerParamData* in, [[maybe_unused]] ManufacturerParamData* out, uint16_t& reason) {
     PIXELDMX_DEBUG_PRINTF("pid=%x", __builtin_bswap16(pid));
 
@@ -213,5 +213,5 @@ bool HandleManufactureerPidSet(bool is_broadcast, uint16_t pid, const ParameterD
     reason = E120_NR_UNKNOWN_PID;
     return false;
 }
-#endif
+#endif // CONFIG_RDM_MANUFACTURER_PIDS_SET
 } // namespace rdmhandler

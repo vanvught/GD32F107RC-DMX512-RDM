@@ -32,11 +32,11 @@
 #include <cstdint>
 #include <cassert>
 
-#if defined(PIXELPATTERNS_MULTI)
+#ifdef PIXELPATTERNS_MULTI
 #include "pixeloutputmulti.h"
 #else
 #include "pixeloutput.h"
-#endif
+#endif // PIXELPATTERNS_MULTI
 #include "pixeltype.h"
 #include "pixelconfiguration.h"
 
@@ -68,7 +68,7 @@ inline void SetPixelColour([[maybe_unused]] uint32_t port_index, uint32_t pixel_
 
     const pixel::PixelColours kColours(colour);
 
-#if defined(PIXELPATTERNS_MULTI)
+#ifdef PIXELPATTERNS_MULTI
     switch (PixelConfiguration::Get().GetType()) {
         case pixel::LedType::kWS2801:
             output_type->SetColourWS2801(port_index, pixel_index, kColours.Red(), kColours.Green(), kColours.Blue());

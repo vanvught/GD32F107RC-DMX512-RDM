@@ -136,4 +136,4 @@ inline uint8_t GetValue(const uint8_t* table)
 
 } // namespace gamma
 
-#endif  // GAMMA_GAMMA_TABLES_H_
+#endif // GAMMA_GAMMA_TABLES_H_

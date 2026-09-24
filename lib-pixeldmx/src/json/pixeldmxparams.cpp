@@ -36,16 +36,15 @@
 #include "common/utils/utils_string.h"
 #include "pixelconfiguration.h"
 #include "pixeldmxconfiguration.h"
-#if defined(CONFIG_PIXELDMX_ENABLE_GAMMATABLE)
+#ifdef CONFIG_PIXELDMX_ENABLE_GAMMATABLE
 #include "gamma/gamma_tables.h"
-#endif
+#endif // CONFIG_PIXELDMX_ENABLE_GAMMATABLE
 #include "dmxnode_outputtype.h"
 #include "firmware/pixeldmx/show.h"
 #include "dmxnode.h"
 #include "dmxnode_nodetype.h"
 #include "pixeltestpattern.h"
 #include "pixeldmx_debug.h"
-#include "common/utils/utils_math.h"
 
 static constexpr uint32_t kConfigMaxPorts = CONFIG_DMXNODE_PIXEL_MAX_PORTS;
 
@@ -106,7 +105,7 @@ void PixelDmxParams::SetHighCode(const char* val, uint32_t len) {
 void PixelDmxParams::SetActiveOutputs(const char* val, uint32_t len) {
     store_dmxled.active_outputs = ParseValue<uint8_t>(val, len);
 }
-#endif
+#endif // OUTPUT_DMX_PIXEL_MULTI
 
 void PixelDmxParams::SetTestPattern(const char* val, uint32_t len) {
     if (len == 1) store_dmxled.test_pattern = ParseValue<uint8_t>(val, len);
@@ -139,7 +138,7 @@ void PixelDmxParams::SetStartUniPort(const char* key, uint32_t key_len, const ch
 void PixelDmxParams::SetDmxStartAddress(const char* val, uint32_t len) {
     store_dmxled.dmx_start_address = ParseValue<uint16_t>(val, len);
 }
-#endif
+#endif // RDM_RESPONDER
 
 #ifdef CONFIG_PIXELDMX_ENABLE_GAMMATABLE
 void PixelDmxParams::SetGammaCorrection(const char* val, uint32_t len) {
@@ -161,7 +160,7 @@ void PixelDmxParams::SetGammaValue(const char* val, uint32_t len) {
     const auto kV = gamma::GetValidValue(static_cast<uint32_t>(common::Atof(val, 3) * 10));
     store_dmxled.gamma_value = static_cast<uint8_t>(kV);
 }
-#endif
+#endif // CONFIG_PIXELDMX_ENABLE_GAMMATABLE
 
 void PixelDmxParams::Store(const char* buffer, uint32_t buffer_size) {
     ParseJsonWithTable(buffer, buffer_size, kPixelDmxKeys);
@@ -169,7 +168,7 @@ void PixelDmxParams::Store(const char* buffer, uint32_t buffer_size) {
 
 #ifdef DEBUG_PIXELDMX
     Dump();
-#endif
+#endif // DEBUG_PIXELDMX
 }
 
 void PixelDmxParams::Set() {
@@ -185,15 +184,15 @@ void PixelDmxParams::Set() {
 #ifdef CONFIG_PIXELDMX_ENABLE_GAMMATABLE
     pixel_configuration.SetEnableGammaCorrection(common::IsFlagSet(store_dmxled.flags, Flags::Flag::kEnableGamma));
     pixel_configuration.SetGammaTable(store_dmxled.gamma_value);
-#endif
+#endif // CONFIG_PIXELDMX_ENABLE_GAMMATABLE
     auto& pixel_dmx_configuration = PixelDmxConfiguration::Get();
     pixel_dmx_configuration.SetGroupingCount(store_dmxled.grouping_count);
 #ifdef OUTPUT_DMX_PIXEL_MULTI
     pixel_dmx_configuration.SetOutputPorts(store_dmxled.active_outputs);
-#endif
+#endif // OUTPUT_DMX_PIXEL_MULTI
 #ifndef OUTPUT_DMX_PIXEL_MULTI
     pixel_dmx_configuration.SetDmxStartAddress(store_dmxled.dmx_start_address);
-#endif
+#endif // OUTPUT_DMX_PIXEL_MULTI
 
     DmxPixelOutputType::Get().ApplyConfiguration();
 
@@ -227,15 +226,15 @@ void PixelDmxParams::Set() {
         DmxNodeNodeType::Get()->SetDirection(protocol_port_index, dmxnode::Direction::kDisable);
         DmxNode::Instance().SetShortNameDefault(protocol_port_index);
     }
-#endif
+#endif // defined(DMXNODE_TYPE_ARTNET) || defined(DMXNODE_TYPE_E131)
 
 #ifdef DEBUG_PIXELDMX
     pixel_dmx_configuration.Print();
     Dump();
 #if defined(DMXNODE_TYPE_ARTNET) || defined(DMXNODE_TYPE_E131)
     DmxNodeNodeType::Get()->Print();
-#endif
-#endif
+#endif // defined(DMXNODE_TYPE_ARTNET) || defined(DMXNODE_TYPE_E131)
+#endif // DEBUG_PIXELDMX
     const auto kTestPattern = static_cast<pixelpatterns::Pattern>(store_dmxled.test_pattern);
 
     if (kTestPattern != PixelTestPattern::Get()->GetPattern()) {
@@ -249,7 +248,7 @@ void PixelDmxParams::Set() {
             } else {
                 DmxNodeNodeType::Get()->SetOutput(nullptr);
             }
-#endif
+#endif // defined(DMXNODE_TYPE_ARTNET) || defined(DMXNODE_TYPE_E131)
         }
     }
 
@@ -259,7 +258,7 @@ void PixelDmxParams::Set() {
 }
 
 void PixelDmxParams::Dump() {
-    static const auto kMaxStartUniverses = common::Min(kConfigMaxPorts, common::store::dmxled::kMaxUniverses);
+    static const auto kMaxStartUniverses =std::min(kConfigMaxPorts, common::store::dmxled::kMaxUniverses);
 
     printf("%s::%s \'%s\':\n", __FILE__, __FUNCTION__, json::DmxLedParamsConst::kFileName);
     printf(" %s=%s [%u]\n", json::DmxLedParamsConst::kType.name, pixel::GetTypeName(static_cast<pixel::LedType>(store_dmxled.type)), store_dmxled.type);
@@ -273,16 +272,16 @@ void PixelDmxParams::Dump() {
     }
 #ifdef OUTPUT_DMX_PIXEL_MULTI
     printf(" %s=%d\n", DmxLedParamsConst::kActiveOutputPorts.name, store_dmxled.active_outputs);
-#endif
+#endif // OUTPUT_DMX_PIXEL_MULTI
     printf(" %s=%u\n", DmxLedParamsConst::kTestPattern.name, static_cast<unsigned>(store_dmxled.test_pattern));
     printf(" %s=%u\n", DmxLedParamsConst::kSpiSpeedHz.name, static_cast<unsigned>(store_dmxled.spi_speed_hz));
     printf(" %s=%u\n", DmxLedParamsConst::kGlobalBrightness.name, static_cast<unsigned>(store_dmxled.global_brightness));
 #ifdef RDM_RESPONDER
     printf(" %s=%u\n", PixelDmxParamsConst::kDmxStartAddress.name, static_cast<unsigned>(store_dmxled.dmx_start_address));
-#endif
+#endif // RDM_RESPONDER
 #ifdef CONFIG_PIXELDMX_ENABLE_GAMMATABLE
     printf(" %s=%d\n", DmxLedParamsConst::kGammaCorrection.name, common::IsFlagSet(store_dmxled.flags, Flags::Flag::kEnableGamma));
     printf(" %s=%1.1f [%u]\n", DmxLedParamsConst::kGammaValue.name, static_cast<float>(store_dmxled.gamma_value) / 10.0f, store_dmxled.gamma_value);
-#endif
+#endif // CONFIG_PIXELDMX_ENABLE_GAMMATABLE
 }
 } // namespace json

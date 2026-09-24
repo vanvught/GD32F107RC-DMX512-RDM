@@ -107,4 +107,4 @@ class PixelTestPattern final : PixelPatterns {
     static inline PixelTestPattern* s_this;
 };
 
-#endif /* PIXELTESTPATTERN_H_ */
+#endif // PIXELTESTPATTERN_H_

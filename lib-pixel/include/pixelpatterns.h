@@ -29,40 +29,34 @@
 #define PIXELPATTERNS_H_
 
 #include <cstdint>
+#include <algorithm>
 
 #include "common/utils/utils_string.h"
 #include "pixel.h"
 #include "pixelconfiguration.h"
 #include "timing.h"
 #include "firmware/debug/debug_debug.h"
-#include "common/utils/utils_math.h"
 
 namespace pixelpatterns {
-#if defined(PIXELPATTERNS_MULTI)
-#if !defined(CONFIG_DMXNODE_PIXEL_MAX_PORTS)
+#ifdef PIXELPATTERNS_MULTI
+#ifndef CONFIG_DMXNODE_PIXEL_MAX_PORTS
 #define CONFIG_DMXNODE_PIXEL_MAX_PORTS 8U
-#endif
+#endif // CONFIG_DMXNODE_PIXEL_MAX_PORTS
 static constexpr uint32_t kMaxPorts = CONFIG_DMXNODE_PIXEL_MAX_PORTS;
 #else
 static constexpr uint32_t kMaxPorts = 1;
-#endif
+#endif // PIXELPATTERNS_MULTI
 
-enum class Pattern : uint8_t { 
-	kNone, 
-	kRainbowCycle, 
-	kTheaterChase, 
-	kColorWipe, 
-	kFade, 
-	kLast 
+enum class Pattern : uint8_t {
+    kNone,         //
+    kRainbowCycle, //
+    kTheaterChase, //
+    kColorWipe,    //
+    kFade,         //
+    kLast,         //
 };
 
-inline constexpr char kPatternName[static_cast<uint32_t>(pixelpatterns::Pattern::kLast)][14] = {
-	"None", 
-	"Rainbow cycle", 
-	"Theater chase", 
-	"Colour wipe", 
-	"Fade"
-};
+inline constexpr char kPatternName[static_cast<uint32_t>(pixelpatterns::Pattern::kLast)][14] = {"None", "Rainbow cycle", "Theater chase", "Colour wipe", "Fade"};
 
 enum class Direction { kForward, kReverse };
 } // namespace pixelpatterns
@@ -73,9 +67,9 @@ class PixelPatterns {
         DEBUG_ENTRY();
         DEBUG_PRINTF("active_ports=%u", static_cast<unsigned>(active_ports));
 
-        s_active_ports = common::Min(pixelpatterns::kMaxPorts, active_ports);
+        s_active_ports = std::min(pixelpatterns::kMaxPorts, active_ports);
 
-		DEBUG_PRINTF("s_active_ports=%u", static_cast<unsigned>(s_active_ports));
+        DEBUG_PRINTF("s_active_ports=%u", static_cast<unsigned>(s_active_ports));
         DEBUG_EXIT();
     }
 

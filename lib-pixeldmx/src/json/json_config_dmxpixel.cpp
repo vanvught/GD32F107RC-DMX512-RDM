@@ -24,6 +24,7 @@
  */
 
 #include <cstdint>
+#include <algorithm>
 #include <utility>
 
 #include "json/pixeldmxparams.h"
@@ -34,11 +35,8 @@
 #include "configstore.h"
 #include "configurationstore.h"
 #include "json/pixeldmxparamsconst.h"
-#include "common/utils/utils_math.h"
 
 namespace json::config {
-using common::Min;
-
 uint32_t GetPixelDmx(char* buffer, uint32_t length) {
     char t[8];
 
@@ -53,22 +51,22 @@ uint32_t GetPixelDmx(char* buffer, uint32_t length) {
         doc[DmxLedParamsConst::kMap.name] = pixel::GetMapName(pixel_configuration.GetMap());
         doc[DmxLedParamsConst::kSpiSpeedHz.name] = pixel_configuration.GetClockSpeedHz();
         doc[DmxLedParamsConst::kGlobalBrightness.name] = pixel_configuration.GetGlobalBrightness();
-#if defined(CONFIG_PIXELDMX_ENABLE_GAMMATABLE)
+#ifdef CONFIG_PIXELDMX_ENABLE_GAMMATABLE
         doc[DmxLedParamsConst::kGammaCorrection.name] = static_cast<uint32_t>(pixel_configuration.IsEnableGammaCorrection());
         snprintf(t, sizeof(t), "%1.1f", static_cast<float>(pixel_configuration.GetGammaTableValue()) / 10.0f);
         doc[DmxLedParamsConst::kGammaValue.name] = t;
-#endif
+#endif // CONFIG_PIXELDMX_ENABLE_GAMMATABLE
         auto& pixel_dmx_configuration = PixelDmxConfiguration::Get();
         doc[DmxLedParamsConst::kGroupingCount.name] = pixel_dmx_configuration.GetGroupingCount();
-#if defined(OUTPUT_DMX_PIXEL_MULTI)
+#ifdef OUTPUT_DMX_PIXEL_MULTI
         doc[DmxLedParamsConst::kActiveOutputPorts.name] = pixel_dmx_configuration.GetOutputPorts();
-#endif
-#if defined(RDM_RESPONDER)
+#endif // OUTPUT_DMX_PIXEL_MULTI
+#ifdef RDM_RESPONDER
         doc[PixelDmxParamsConst::kDmxStartAddress.name] = pixel_dmx_configuration.GetDmxStartAddress();
-#endif
+#endif // RDM_RESPONDER
 
         static constexpr uint32_t kConfigMaxPorts = CONFIG_DMXNODE_PIXEL_MAX_PORTS;
-        static const auto kMaxStartUniverses = common::Min(kConfigMaxPorts, common::store::dmxled::kMaxUniverses);
+        static const auto kMaxStartUniverses =std::min(kConfigMaxPorts, common::store::dmxled::kMaxUniverses);
 
         for (uint32_t i = 0; i < kMaxStartUniverses; i++) {
             doc[PixelDmxParamsConst::kStartUniPort[i].name] = ConfigStore::Instance().DmxLedIndexedGetStartUniverse(i);

@@ -25,31 +25,31 @@
 #ifndef PIXELDMX_H_
 #define PIXELDMX_H_
 
-#if defined(DEBUG_PIXELDMX)
-#if defined(NDEBUG)
+#ifdef DEBUG_PIXELDMX
+#ifdef NDEBUG
 #undef NDEBUG
 #define _NDEBUG
-#endif
-#endif
+#endif // NDEBUG
+#endif // DEBUG_PIXELDMX
 
 #if defined(__GNUC__) && !defined(__clang__)
 #pragma GCC push_options
 #pragma GCC optimize("O3")
 #pragma GCC optimize("no-tree-loop-distribute-patterns")
-#endif
+#endif // defined(__GNUC__) && !defined(__clang__)
 
 #include <cstdint>
+#include <algorithm>
 #include <cassert>
 
 #include "pixeloutput.h"
 #include "pixeldmxconfiguration.h"
 #include "pixeldmxstore.h"
-#if defined(PIXELDMXSTARTSTOP_GPIO)
+#ifdef PIXELDMXSTARTSTOP_GPIO
 #include "gpio.h"
-#endif
+#endif // PIXELDMXSTARTSTOP_GPIO
 #include "dmxnode.h"
 #include "firmware/debug/debug_debug.h"
-#include "common/utils/utils_math.h"
 
 #if defined(OUTPUT_DMX_PIXEL) && defined(RDM_RESPONDER) && !defined(NODE_ARTNET)
 #include "dmxnodeoutputrdmpixel.h"
@@ -59,7 +59,7 @@ class PixelDmx final : public DmxNodeOutputRdmPixel, public PixelDmxConfiguratio
 #define OVERRIDE
 #define SETDATA
 class PixelDmx final : public PixelDmxConfiguration {
-#endif
+#endif // defined(OUTPUT_DMX_PIXEL) && defined(RDM_RESPONDER) && !defined(NODE_ARTNET)
    public:
     PixelDmx() {
         DEBUG_ENTRY();
@@ -67,10 +67,10 @@ class PixelDmx final : public PixelDmxConfiguration {
         assert(s_this == nullptr);
         s_this = this;
 
-#if defined(PIXELDMXSTARTSTOP_GPIO)
+#ifdef PIXELDMXSTARTSTOP_GPIO
         gpio::Fsel(PIXELDMXSTARTSTOP_GPIO, gpio::Select::kOutput);
         gpio::Clr(PIXELDMXSTARTSTOP_GPIO);
-#endif
+#endif // PIXELDMXSTARTSTOP_GPIO
 
         ApplyConfiguration();
 
@@ -89,7 +89,7 @@ class PixelDmx final : public PixelDmxConfiguration {
 
 #ifndef NDEBUG
         PixelDmxConfiguration::Print();
-#endif
+#endif // NDEBUG
 
         output_type_.ApplyConfiguration();
         output_type_.Blackout();
@@ -104,9 +104,9 @@ class PixelDmx final : public PixelDmxConfiguration {
 
         started_ = true;
 
-#if defined(PIXELDMXSTARTSTOP_GPIO)
+#ifdef PIXELDMXSTARTSTOP_GPIO
         gpio::Set(PIXELDMXSTARTSTOP_GPIO);
-#endif
+#endif // PIXELDMXSTARTSTOP_GPIO
     }
 
     void Stop([[maybe_unused]] uint32_t port_index) OVERRIDE {
@@ -116,19 +116,19 @@ class PixelDmx final : public PixelDmxConfiguration {
 
         started_ = false;
 
-#if defined(PIXELDMXSTARTSTOP_GPIO)
+#ifdef PIXELDMXSTARTSTOP_GPIO
         gpio::Clr(PIXELDMXSTARTSTOP_GPIO);
-#endif
+#endif // PIXELDMXSTARTSTOP_GPIO
     }
 
-#if defined(SETDATA)
+#ifdef SETDATA
     template <bool do_update> void SetData(uint32_t port_index, const uint8_t* data, uint32_t length) { SetDataImpl<do_update>(port_index, data, length); }
 
     template <bool do_update> void SetDataImpl([[maybe_unused]] uint32_t port_index, const uint8_t* data, uint32_t length) {
 #else
     void SetDataImpl([[maybe_unused]] uint32_t port_index, const uint8_t* data, uint32_t length, bool do_update) OVERRIDE {
 
-#endif
+#endif // SETDATA
         assert(data != nullptr);
         assert(length <= dmxnode::kUniverseSize);
 
@@ -140,19 +140,19 @@ class PixelDmx final : public PixelDmxConfiguration {
         auto& port_info = PixelDmxConfiguration::GetPortInfo();
         uint32_t d = 0;
 
-#if !defined(DMXNODE_PORTS)
+#ifndef DMXNODE_PORTS
         static constexpr uint32_t kSwitch = 0;
 #else
         const auto kSwitch = port_index & 0x03;
-#endif
+#endif // DMXNODE_PORTS
         const auto kGroups = PixelDmxConfiguration::GetGroups();
-#if !defined(DMXNODE_PORTS)
+#ifndef DMXNODE_PORTS
         static constexpr uint32_t kBeginIndex = 0;
 #else
         const auto kBeginIndex = port_info.begin_index_port[kSwitch];
-#endif
+#endif // DMXNODE_PORTS
         const auto kChannelsPerPixel = PixelDmxConfiguration::GetLedsPerPixel();
-        const auto kEndIndex = common::Min(kGroups, (kBeginIndex + (length / kChannelsPerPixel)));
+        const auto kEndIndex =std::min(kGroups, (kBeginIndex + (length / kChannelsPerPixel)));
 
         if ((kSwitch == 0) && (kGroups < port_info.begin_index_port[1])) {
             assert(PixelDmxConfiguration::GetDmxStartAddress() != 0);
@@ -233,7 +233,7 @@ class PixelDmx final : public PixelDmxConfiguration {
             }
         }
 
-#if !defined(DMXNODE_PORTS)
+#ifndef DMXNODE_PORTS
         if (do_update) {
             if (__builtin_expect((blackout_), 0)) {
                 return;
@@ -241,9 +241,9 @@ class PixelDmx final : public PixelDmxConfiguration {
             output_type_.Update();
         }
 #else
-#if !defined(SETDATA)
+#ifndef SETDATA
 #error
-#endif
+#endif // SETDATA
         if constexpr (do_update) {
             if (port_index == port_info.protocol_port_index_last) {
                 if (__builtin_expect((blackout_), 0)) {
@@ -252,17 +252,17 @@ class PixelDmx final : public PixelDmxConfiguration {
                 output_type_.Update();
             }
         }
-#endif
+#endif // DMXNODE_PORTS
     }
 
     void Sync([[maybe_unused]] uint32_t port_index) {}
 
     void Sync() { output_type_.Update(); }
 
-#if defined(OUTPUT_HAVE_STYLESWITCH)
+#ifdef OUTPUT_HAVE_STYLESWITCH
     void SetOutputStyle([[maybe_unused]] uint32_t port_index, [[maybe_unused]] dmxnode::OutputStyle output_style) {}
     dmxnode::OutputStyle GetOutputStyle([[maybe_unused]] uint32_t port_index) const { return dmxnode::OutputStyle::kDelta; }
-#endif
+#endif // OUTPUT_HAVE_STYLESWITCH
 
     void Blackout(bool blackout = true) {
         blackout_ = blackout;
@@ -363,10 +363,10 @@ class PixelDmx final : public PixelDmxConfiguration {
 #undef SETDATA
 #if defined(__GNUC__) && !defined(__clang__)
 #pragma GCC pop_options
-#endif
-#if defined(_NDEBUG)
+#endif // defined(__GNUC__) && !defined(__clang__)
+#ifdef _NDEBUG
 #undef _NDEBUG
 #define NDEBUG
-#endif
+#endif // _NDEBUG
 
 #endif // PIXELDMX_H_

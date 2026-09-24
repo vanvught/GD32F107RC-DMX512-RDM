@@ -63,4 +63,4 @@ inline void SaveDmxStartAddress(uint16_t dmx_start_address)
 }
 } // namespace dmxled_store
 
-#endif  // PIXELDMXSTORE_H_
+#endif // PIXELDMXSTORE_H_

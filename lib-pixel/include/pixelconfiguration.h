@@ -32,9 +32,9 @@
 #include <cassert>
 
 #include "pixeltype.h"
-#if defined(CONFIG_PIXELDMX_ENABLE_GAMMATABLE)
+#ifdef CONFIG_PIXELDMX_ENABLE_GAMMATABLE
 #include "gamma/gamma_tables.h"
-#endif
+#endif // CONFIG_PIXELDMX_ENABLE_GAMMATABLE
 #include "firmware/debug/debug_debug.h"
 
 class PixelConfiguration {
@@ -102,7 +102,7 @@ class PixelConfiguration {
 
     uint32_t GetRefreshRate() const { return refresh_rate_; }
 
-#if defined(CONFIG_PIXELDMX_ENABLE_GAMMATABLE)
+#ifdef CONFIG_PIXELDMX_ENABLE_GAMMATABLE
     void SetEnableGammaCorrection(bool do_enable) { enable_gamma_correction_ = do_enable; }
 
     bool IsEnableGammaCorrection() const { return enable_gamma_correction_; }
@@ -111,7 +111,7 @@ class PixelConfiguration {
     uint8_t GetGammaTableValue() const { return gamma_value_; }
 
     const uint8_t* GetGammaTable() const { return gamma_table_; }
-#endif
+#endif // CONFIG_PIXELDMX_ENABLE_GAMMATABLE
 
     void Validate() {
         DEBUG_ENTRY();
@@ -186,7 +186,7 @@ class PixelConfiguration {
             }
         }
 
-#if defined(CONFIG_PIXELDMX_ENABLE_GAMMATABLE)
+#ifdef CONFIG_PIXELDMX_ENABLE_GAMMATABLE
         if (enable_gamma_correction_) {
             if (gamma_value_ == 0) {
                 gamma_table_ = gamma::GetTableDefault(type_);
@@ -198,7 +198,7 @@ class PixelConfiguration {
         }
 
         gamma_value_ = gamma::GetValue(gamma_table_);
-#endif
+#endif // CONFIG_PIXELDMX_ENABLE_GAMMATABLE
 
         DEBUG_EXIT();
     }
@@ -225,12 +225,12 @@ class PixelConfiguration {
         printf(" Clock   : %u Hz\n", static_cast<unsigned int>(clock_speed_hz_));
         printf(" Refresh : %u Hz\n", static_cast<unsigned int>(refresh_rate_));
 
-#if defined(CONFIG_PIXELDMX_ENABLE_GAMMATABLE)
+#ifdef CONFIG_PIXELDMX_ENABLE_GAMMATABLE
         printf(" Gamma correction %s\n", enable_gamma_correction_ ? "Yes" : "No");
         if (enable_gamma_correction_) {
             printf("   Value = %u\n", static_cast<unsigned>(gamma_value_));
         }
-#endif
+#endif // CONFIG_PIXELDMX_ENABLE_GAMMATABLE
     }
 
     static PixelConfiguration& Get() {
@@ -250,11 +250,11 @@ class PixelConfiguration {
     uint8_t global_brightness_{0xFF};
     uint32_t refresh_rate_{0};
     bool refresh_needed_{true};
-#if defined(CONFIG_PIXELDMX_ENABLE_GAMMATABLE)
+#ifdef CONFIG_PIXELDMX_ENABLE_GAMMATABLE
     uint8_t gamma_value_{0};
     bool enable_gamma_correction_{false};
     const uint8_t* gamma_table_{gamma10_0};
-#endif
+#endif // CONFIG_PIXELDMX_ENABLE_GAMMATABLE
 
     static inline PixelConfiguration* s_this{nullptr};
 };

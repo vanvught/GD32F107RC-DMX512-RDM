@@ -26,11 +26,11 @@
 #include <cstdint>
 #include <cstdio>
 
-#if defined(OUTPUT_DMX_PIXEL)
+#ifdef OUTPUT_DMX_PIXEL
 #include "pixeloutput.h"
 #elif defined(OUTPUT_DMX_PIXEL_MULTI)
 #include "pixeloutputmulti.h"
-#endif
+#endif // OUTPUT_DMX_PIXEL
 
 #if defined(OUTPUT_DMX_PIXEL) || defined(OUTPUT_DMX_PIXEL_MULTI)
 #include "pixelconfiguration.h"
@@ -47,4 +47,4 @@ uint32_t Pixel(char* out_buffer, uint32_t out_buffer_size) {
 	);
 }
 } // namespace json::status
-#endif
+#endif // defined(OUTPUT_DMX_PIXEL) || defined(OUTPUT_DMX_PIXEL_MULTI)
