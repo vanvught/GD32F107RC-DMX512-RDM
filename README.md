@@ -8,7 +8,9 @@
 # GD32F107RC DMX512 RDM Pixel Ethernet
 The master source code is available here -> [https://github.com/vanvught/rpidmx512](https://github.com/vanvught/rpidmx512)
 
-A development board is available here -> [https://github.com/vanvught/GD32FxxxR-dev-board](https://github.com/vanvught/GD32FxxxR-dev-board)
+A development board is available here -> [https://github.com/vanvught/KiCad-GD32FxxxRx-no-PHY](https://github.com/vanvught/KiCad-GD32FxxxRx-no-PHY)
+
+A DMX/RDM Pixel development board is available here -> [https://github.com/vanvught/KiCad-DMX-Pixel-1](https://github.com/vanvught/KiCad-DMX-Pixel-1)
 
 Full documentation will be available here -> [https://www.gd32-dmx.org](https://www.gd32-dmx.org)
 
