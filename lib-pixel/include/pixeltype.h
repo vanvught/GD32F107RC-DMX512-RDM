@@ -29,6 +29,7 @@
 #include <cstring>
 #include <type_traits>
 #include <cassert>
+#include <string_view>
 
 #include "common/utils/utils_string.h"
 #include "common/utils/utils_array.h"
@@ -67,7 +68,7 @@ enum class LedMap : uint8_t {
     kUndefined, //
 };
 
-inline constexpr char kMaps[static_cast<uint32_t>(pixel::LedMap::kUndefined)][5] = {
+inline constexpr std::string_view kMaps[] = {
     "RGB",  //
     "RBG",  //
     "GRB",  //
@@ -91,7 +92,7 @@ enum class LedCount : uint8_t {
 };
 
 struct TypeInfo {
-    const char* name;           // 4 bytes on Cortex-M32
+    std::string_view name;
     uint32_t default_hz;        // SPI only, 0 for RTZ
     uint32_t max_hz;            // SPI only, 0 for RTZ
     ProtocolType protocol_type; // 1 byte
@@ -104,14 +105,14 @@ struct TypeInfo {
     [[nodiscard]] constexpr bool IsSpi() const { return protocol_type == ProtocolType::kSpi; }
 };
 
-static_assert(sizeof(TypeInfo) == 20, "TypeInfo must remain compact");
+static_assert(sizeof(TypeInfo) == 24, "TypeInfo must remain compact");
 static_assert(alignof(TypeInfo) == 4, "Unexpected TypeInfo alignment");
 
-constexpr TypeInfo MakeSpiTypeInfo(const char* name, LedCount led_count, uint32_t default_hz, uint32_t max_hz) {
+constexpr TypeInfo MakeSpiTypeInfo(std::string_view name, LedCount led_count, uint32_t default_hz, uint32_t max_hz) {
     return TypeInfo{.name = name, .default_hz = default_hz, .max_hz = max_hz, .protocol_type = ProtocolType::kSpi, .led_count = led_count, .low_code = kNoCode, .high_code = kNoCode, .led_map = LedMap::kRGB};
 }
 
-constexpr TypeInfo MakeRtzTypeInfo(const char* name, LedMap led_map, LedCount led_count, uint8_t high_code) {
+constexpr TypeInfo MakeRtzTypeInfo(std::string_view name, LedMap led_map, LedCount led_count, uint8_t high_code) {
     return TypeInfo{.name = name, .default_hz = kNoSpeedHz, .max_hz = kNoSpeedHz, .protocol_type = ProtocolType::kRtz, .led_count = led_count, .low_code = kRtzLowCode, .high_code = high_code, .led_map = led_map};
 }
 
@@ -139,7 +140,7 @@ constexpr uint32_t GetMaxTypeNameLength() {
     uint32_t max_len = 0;
 
     for (const auto& type_info : kTypeInfo) {
-        const uint32_t kLength = common::ConstStrLen(type_info.name);
+        const auto kLength = type_info.name.size();
 
         if (kLength > max_len) {
             max_len = kLength;
@@ -154,11 +155,11 @@ constexpr auto kTypesMaxNameLength = GetMaxTypeNameLength();
 constexpr uint32_t GetMaxLedMapNameLength() {
     uint32_t max_len = 0;
 
-    for (const auto* map : kMaps) {
-        const uint32_t kLength = common::ConstStrLen(map);
+    for (const auto kMap : kMaps) {
+        const auto kLength = kMap.size();
 
         if (kLength > max_len) {
-            max_len = kLength;
+            max_len = static_cast<uint32_t>(kLength);
         }
     }
 
@@ -182,17 +183,15 @@ constexpr const char* GetTypeName(LedType type) {
     const auto kIndex = static_cast<uint32_t>(type);
 
     if (kIndex < kTypeInfoCount) {
-        return kTypeInfo[kIndex].name;
+        return kTypeInfo[kIndex].name.data();
     }
 
     return common::kUnknown;
 }
 
-inline LedType GetTypeByName(const char* string) {
-    assert(string != nullptr);
-
+inline LedType GetTypeByName(std::string_view name) {
     for (size_t i = 0; i < kTypeInfoCount; ++i) {
-        if (strcasecmp(kTypeInfo[i].name, string) == 0) {
+        if (kTypeInfo[i].name == name) {
             return static_cast<LedType>(static_cast<std::underlying_type_t<LedType>>(i));
         }
     }
@@ -204,17 +203,15 @@ inline const char* GetMapName(LedMap map) {
     const auto kIndex = static_cast<uint32_t>(map);
 
     if (kIndex < kMapsCount) {
-        return kMaps[kIndex];
+        return kMaps[kIndex].data();
     }
 
     return common::kUnknown;
 }
 
-inline LedMap GetMapByName(const char* string) {
-    assert(string != nullptr);
-
+inline LedMap GetMapByName(std::string_view name) {
     for (size_t i = 0; i < kMapsCount; ++i) {
-        if (strcasecmp(kMaps[i], string) == 0) {
+        if (kMaps[i] == name) {
             return static_cast<LedMap>(static_cast<std::underlying_type_t<LedMap>>(i));
         }
     }
