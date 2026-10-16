@@ -26,13 +26,13 @@
 #ifndef BOARD_GD32F103RC_H_
 #define BOARD_GD32F103RC_H_
 
-#if !defined(BOARD_GD32F103RC)
+#ifndef BOARD_GD32F103RC
 # error This file should not be included
 #endif // BOARD_GD32F103RC
 
-#if defined (MCU_GD32F10X_MCU_H_)
+#ifdef MCU_GD32F10X_MCU_H_
 # error This file should be included later
-#endif // defined (MCU_GD32F10X_MCU_H_)
+#endif // MCU_GD32F10X_MCU_H_
 
 #include <stdint.h>
 
@@ -157,7 +157,7 @@ static constexpr uint32_t kPortATx = 0;
  */
 
 #define GD32_MCU_NAME   "GD32F103RC"
-#if !defined(GD32_BOARD_NAME)
+#ifndef GD32_BOARD_NAME
 #define GD32_BOARD_NAME "GD32F103RC"
 #endif // GD32_BOARD_NAME
 

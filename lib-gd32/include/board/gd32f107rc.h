@@ -26,13 +26,13 @@
 #ifndef BOARD_GD32F107RC_H_
 #define BOARD_GD32F107RC_H_
 
-#if !defined(BOARD_GD32F107RC)
+#ifndef BOARD_GD32F107RC
 # error This file should not be included
 #endif // BOARD_GD32F107RC
 
-#if defined (MCU_GD32F10X_MCU_H_)
+#ifdef MCU_GD32F10X_MCU_H_
 # error This file should be included later
-#endif // defined (MCU_GD32F10X_MCU_H_)
+#endif // MCU_GD32F10X_MCU_H_
 
 #include <stdint.h>
 
@@ -178,7 +178,7 @@ static constexpr uint32_t kPortATx = 0;
  */
 
 #define GD32_MCU_NAME   "GD32F107RC"
-#if !defined(GD32_BOARD_NAME)
+#ifndef GD32_BOARD_NAME
 #define GD32_BOARD_NAME "GD32F107RC"
 #endif // GD32_BOARD_NAME
 
@@ -224,7 +224,7 @@ static constexpr uint32_t kPortATx = 0;
 #define SPI_LCD_RST_PIN			GPIO_EXT_7
 #define SPI_LCD_DC_GPIO 		GPIO_EXT_26
 #define SPI_LCD_BL_GPIO			GPIO_EXT_22
-#if defined(SPI_LCD_HAVE_CS_GPIO)
+#ifdef SPI_LCD_HAVE_CS_GPIO
 # define SPI_LCD_CS_GPIO		GPIO_EXT_24
 #endif // SPI_LCD_HAVE_CS_GPIO
 

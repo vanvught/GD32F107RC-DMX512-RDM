@@ -44,7 +44,7 @@
  */
 
 #define USART0_RCU_USART0		RCU_USART0
-#if defined (USART0_REMAP)
+#ifdef USART0_REMAP
 # define USART0_RCU_GPIOx		RCU_GPIOB
 # define USART0_GPIOx			GPIOB
 # define USART0_TX_GPIO_PINx	GPIO_PIN_6
@@ -54,10 +54,10 @@
 # define USART0_GPIOx			GPIOA
 # define USART0_TX_GPIO_PINx	GPIO_PIN_9
 # define USART0_RX_GPIO_PINx	GPIO_PIN_10
-#endif // defined (USART0_REMAP)
+#endif // USART0_REMAP
 
 #define USART1_RCU_USART1		RCU_USART1
-#if defined (USART1_REMAP)
+#ifdef USART1_REMAP
 # define USART1_RCU_GPIOx		RCU_GPIOD
 # define USART1_GPIOx			GPIOD
 # define USART1_TX_GPIO_PINx	GPIO_PIN_5
@@ -67,10 +67,10 @@
 # define USART1_GPIOx			GPIOA
 # define USART1_TX_GPIO_PINx	GPIO_PIN_2
 # define USART1_RX_GPIO_PINx	GPIO_PIN_3
-#endif // defined (USART1_REMAP)
+#endif // USART1_REMAP
 
 #define USART2_RCU_USART2		RCU_USART2
-#if defined (USART2_FULL_REMAP)
+#ifdef USART2_FULL_REMAP
 # define USART2_RCU_GPIOx		RCU_GPIOD
 # define USART2_GPIOx			GPIOD
 # define USART2_TX_GPIO_PINx	GPIO_PIN_8
@@ -85,7 +85,7 @@
 # define USART2_GPIOx			GPIOB
 # define USART2_TX_GPIO_PINx	GPIO_PIN_10
 # define USART2_RX_GPIO_PINx	GPIO_PIN_11
-#endif // defined (USART2_FULL_REMAP)
+#endif // USART2_FULL_REMAP
 
 #define UART3_RCU_UART3			RCU_UART3
 #define UART3_RCU_GPIOx			RCU_GPIOC
@@ -111,13 +111,13 @@
 #define I2C0_SCL_GPIOx		GPIOB
 #define I2C0_SDA_RCU_GPIOx	RCU_GPIOB
 #define I2C0_SDA_GPIOx		GPIOB
-#if defined (I2C0_REMAP)
+#ifdef I2C0_REMAP
 # define I2C0_SCL_GPIO_PINx	GPIO_PIN_8
 # define I2C0_SDA_GPIO_PINx	GPIO_PIN_9
 #else
 # define I2C0_SCL_GPIO_PINx	GPIO_PIN_6
 # define I2C0_SDA_GPIO_PINx	GPIO_PIN_7
-#endif // defined (I2C0_REMAP)
+#endif // I2C0_REMAP
 
 #define I2C1_PERIPH			I2C1
 #define I2C1_RCU_I2C1		RCU_I2C1
@@ -136,7 +136,7 @@
 
 #define SPI0_PERIPH				SPI0
 #define SPI0_RCU_SPI0			RCU_SPI0
-#if defined (SPI0_REMAP)
+#ifdef SPI0_REMAP
 # define SPI0_REMAP_GPIO		GPIO_SPI0_REMAP
 # define SPI0_GPIOx				GPIOB
 # define SPI0_RCU_GPIOx			RCU_GPIOB
@@ -155,7 +155,7 @@
 # define SPI0_NSS_RCU_GPIOx		RCU_GPIOA
 # define SPI0_NSS_GPIOx			GPIOA
 # define SPI0_NSS_GPIO_PINx		GPIO_PIN_4
-#endif // defined (SPI0_REMAP)
+#endif // SPI0_REMAP
 
 #define SPI1_PERIPH				SPI1
 #define SPI1_RCU_SPI1			RCU_SPI1
@@ -170,7 +170,7 @@
 
 #define SPI2_PERIPH				SPI2
 #define SPI2_RCU_SPI2			RCU_SPI2
-#if defined (SPI2_REMAP)
+#ifdef SPI2_REMAP
 # define SPI2_REMAP_GPIO		GPIO_SPI2_REMAP
 # define SPI2_GPIOx				GPIOC
 # define SPI2_RCU_GPIOx			RCU_GPIOC
@@ -189,7 +189,7 @@
 # define SPI2_NSS_RCU_GPIOx		RCU_GPIOA
 # define SPI2_NSS_GPIOx			GPIOA
 # define SPI2_NSS_GPIO_PINx		GPIO_PIN_15
-#endif // defined (SPI2_REMAP)
+#endif // SPI2_REMAP
 
 /**
  * TIMER GPIO
@@ -199,7 +199,7 @@
 #define TIMER2CH0_GPIOx		GPIOA
 #define TIMER2CH0_GPIO_PINx	GPIO_PIN_6
 
-#if defined(TIMER2_FULL_REMAP)
+#ifdef TIMER2_FULL_REMAP
 # define TIMER2_REMAP 			GPIO_TIMER2_FULL_REMAP
 # define TIMER2_CH0_RCU_GPIOx	RCU_GPIOC
 # define TIMER2_CH0_GPIOx		GPIOC
