@@ -39,9 +39,8 @@ Pca9685DmxParams::Pca9685DmxParams() {
     ConfigStore::Instance().Copy(&store_dmxpwm, &ConfigurationStore::dmx_pwm);
 }
 
-void Pca9685DmxParams::SetMode(const char* val, [[maybe_unused]] uint32_t len) {
-    const auto kV = static_cast<uint8_t>(pca9685dmx::GetMode(val));
-
+void Pca9685DmxParams::SetMode(std::string_view value) {
+    const auto kV = static_cast<uint8_t>(pca9685dmx::GetMode(value));
     store_dmxpwm.flags = common::SetFlagValue(store_dmxpwm.flags, Flags::Flag::kModeServo, kV != 0);
 }
 

@@ -189,7 +189,7 @@ constexpr const char* GetTypeName(LedType type) {
     return common::kUnknown;
 }
 
-inline LedType GetTypeByName(std::string_view name) {
+[[nodiscard]] inline LedType GetTypeByName(std::string_view name) {
     for (size_t i = 0; i < kTypeInfoCount; ++i) {
         if (kTypeInfo[i].name == name) {
             return static_cast<LedType>(static_cast<std::underlying_type_t<LedType>>(i));

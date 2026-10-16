@@ -31,18 +31,18 @@ namespace json {
 struct DmxLedParamsConst {
     static constexpr char kFileName[] = "dmxled.json";
 
-    static constexpr auto kType = json::MakeSimpleKey("type");
-    static constexpr auto kMap = json::MakeSimpleKey("map");
-    static constexpr auto kCount = json::MakeSimpleKey("count");
-    static constexpr auto kGroupingCount = json::MakeSimpleKey("group_count");
-    static constexpr auto kT0H = json::MakeSimpleKey("t0h");
-    static constexpr auto kT1H = json::MakeSimpleKey("t1h");
-    static constexpr auto kActiveOutputPorts = json::MakeSimpleKey("active_out");
-    static constexpr auto kTestPattern = json::MakeSimpleKey("test_pattern");
-    static constexpr auto kSpiSpeedHz = json::MakeSimpleKey("clock_speed_hz");
-    static constexpr auto kGlobalBrightness = json::MakeSimpleKey("global_brightness");
-    static constexpr auto kGammaCorrection = json::MakeSimpleKey("gamma_correction");
-    static constexpr auto kGammaValue = json::MakeSimpleKey("gamma_value");
+    static constexpr auto kType = json::MakeKey("type");
+    static constexpr auto kMap = json::MakeKey("map");
+    static constexpr auto kCount = json::MakeKey("count");
+    static constexpr auto kGroupingCount = json::MakeKey("group_count");
+    static constexpr auto kT0H = json::MakeKey("t0h");
+    static constexpr auto kT1H = json::MakeKey("t1h");
+    static constexpr auto kActiveOutputPorts = json::MakeKey("active_out");
+    static constexpr auto kTestPattern = json::MakeKey("test_pattern");
+    static constexpr auto kSpiSpeedHz = json::MakeKey("clock_speed_hz");
+    static constexpr auto kGlobalBrightness = json::MakeKey("global_brightness");
+    static constexpr auto kGammaCorrection = json::MakeKey("gamma_correction");
+    static constexpr auto kGammaValue = json::MakeKey("gamma_value");
 };
 } // namespace json
 

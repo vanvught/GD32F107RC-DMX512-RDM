@@ -22,7 +22,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
- 
+
 #include <cstdint>
 #include <utility>
 
@@ -55,105 +55,95 @@ PixelDmxParams::PixelDmxParams() {
     ConfigStore::Instance().Copy(&store_dmxled, &ConfigurationStore::dmx_led);
 }
 
-void PixelDmxParams::SetType(const char* val, uint32_t len) {
-    if (len == 0) {
+void PixelDmxParams::SetType(std::string_view value) {
+    if (value.empty()) {
         store_dmxled.type = std::to_underlying(pixel::LedType::kUndefined);
         return;
     }
 
-    if (len <= pixel::kTypesMaxNameLength) {
-        char type[pixel::kTypesMaxNameLength + 1];
-        memcpy(type, val, len);
-        type[len] = '\0';
-
-        store_dmxled.type = std::to_underlying(pixel::GetTypeByName(type));
-    }
+    store_dmxled.type = std::to_underlying(pixel::GetTypeByName(value));
 }
 
-void PixelDmxParams::SetMap(const char* val, uint32_t len) {
-    if (len == 0) {
+void PixelDmxParams::SetMap(std::string_view value) {
+    if (value.empty()) {
         store_dmxled.map = std::to_underlying(pixel::LedMap::kUndefined);
         return;
     }
 
-    if (len <= pixel::kLedMapMaxNameLength) {
-        char map[pixel::kLedMapMaxNameLength + 1];
-        memcpy(map, val, len);
-        map[len] = '\0';
-
-        store_dmxled.map = std::to_underlying(pixel::GetMapByName(map));
-    }
+    store_dmxled.map = std::to_underlying(pixel::GetMapByName(value));
 }
 
-void PixelDmxParams::SetCount(const char* val, uint32_t len) {
-    store_dmxled.count = ParseValue<uint16_t>(val, len);
+void PixelDmxParams::SetCount(std::string_view value) {
+    store_dmxled.count = ParseValue<uint16_t>(value);
 }
 
-void PixelDmxParams::SetGroupingCount(const char* val, uint32_t len) {
-    store_dmxled.grouping_count = ParseValue<uint16_t>(val, len);
+void PixelDmxParams::SetGroupingCount(std::string_view value) {
+    store_dmxled.grouping_count = ParseValue<uint16_t>(value);
 }
 
-void PixelDmxParams::SetLowCode(const char* val, uint32_t len) {
-    store_dmxled.low_code = pixel::ConvertTxH(common::Atof(val, len));
+void PixelDmxParams::SetLowCode(std::string_view value) {
+    store_dmxled.low_code = pixel::ConvertTxH(common::Atof(value));
 }
 
-void PixelDmxParams::SetHighCode(const char* val, uint32_t len) {
-    store_dmxled.high_code = pixel::ConvertTxH(common::Atof(val, len));
+void PixelDmxParams::SetHighCode(std::string_view value) {
+    store_dmxled.high_code = pixel::ConvertTxH(common::Atof(value));
 }
 
 #ifdef OUTPUT_DMX_PIXEL_MULTI
-void PixelDmxParams::SetActiveOutputs(const char* val, uint32_t len) {
-    store_dmxled.active_outputs = ParseValue<uint8_t>(val, len);
+void PixelDmxParams::SetActiveOutputs(std::string_view value) {
+    store_dmxled.active_outputs = ParseValue<uint8_t>(value);
 }
 #endif // OUTPUT_DMX_PIXEL_MULTI
 
-void PixelDmxParams::SetTestPattern(const char* val, uint32_t len) {
-    if (len == 1) store_dmxled.test_pattern = ParseValue<uint8_t>(val, len);
-}
-
-void PixelDmxParams::SetSpiSpeedHz(const char* val, uint32_t len) {
-    store_dmxled.spi_speed_hz = ParseValue<uint32_t>(val, len);
-}
-
-void PixelDmxParams::SetGlobalBrightness(const char* val, uint32_t len) {
-    uint8_t value;
-
-    if (ParseInRange<uint16_t, uint8_t>(val, len, 0U, 255U, &value)) {
-        store_dmxled.global_brightness = value;
+void PixelDmxParams::SetTestPattern(std::string_view value) {
+    if (value.size() == 1) {
+        store_dmxled.test_pattern = ParseValue<uint8_t>(value);
     }
 }
 
-void PixelDmxParams::SetStartUniPort(const char* key, uint32_t key_len, const char* val, uint32_t val_len) {
-    const char kSuffix = key[key_len - 1];
+void PixelDmxParams::SetSpiSpeedHz(std::string_view value) {
+    store_dmxled.spi_speed_hz = ParseValue<uint32_t>(value);
+}
+
+void PixelDmxParams::SetGlobalBrightness(std::string_view value) {
+    uint8_t global_brightness;
+
+    if (ParseInRange<uint16_t, uint8_t>(value, 0U, 255U, &global_brightness)) {
+        store_dmxled.global_brightness = global_brightness;
+    }
+}
+
+void PixelDmxParams::SetStartUniPort(std::string_view key, std::string_view value) {
+    const auto kSuffix = key.back();
     auto index = static_cast<uint32_t>(kSuffix - '1');
 
-    if (key_len == 17) {
+    if (key.size() == 17) {
         index += 10;
     }
 
-    store_dmxled.start_universe[index] = ParseValue<uint16_t>(val, val_len);
+    store_dmxled.start_universe[index] = ParseValue<uint16_t>(value);
 }
 
 #ifdef RDM_RESPONDER
-void PixelDmxParams::SetDmxStartAddress(const char* val, uint32_t len) {
-    store_dmxled.dmx_start_address = ParseValue<uint16_t>(val, len);
+void PixelDmxParams::SetDmxStartAddress(std::string_view value) {
+    store_dmxled.dmx_start_address = ParseValue<uint16_t>(value);
 }
 #endif // RDM_RESPONDER
 
 #ifdef CONFIG_PIXELDMX_ENABLE_GAMMATABLE
-void PixelDmxParams::SetGammaCorrection(const char* val, uint32_t len) {
-    if (len == 1) {
+void PixelDmxParams::SetGammaCorrection(std::string_view value) {
+    if (value.size() == 1) {
         store_dmxled.flags = common::SetFlagValue(store_dmxled.flags, Flags::Flag::kEnableGamma, v[0] != '0');
     }
 }
 
-void PixelDmxParams::SetGammaValue(const char* val, uint32_t len) {
-    if ((len == 1) && (val[0] == '0')) {
+void PixelDmxParams::SetGammaValue(std::string_view value) {
+    if ((value.size() == 1) && (value.front() == '0')) {
         store_dmxled.gamma_value = 0;
         return;
     }
 
-    if (len != 3) {
+    if (value.size() != 3) {
         return;
     }
 
@@ -166,13 +156,11 @@ void PixelDmxParams::Store(const char* buffer, uint32_t buffer_size) {
     ParseJsonWithTable(buffer, buffer_size, kPixelDmxKeys);
     ConfigStore::Instance().Store(&store_dmxled, &ConfigurationStore::dmx_led);
 
-#ifdef DEBUG_PIXELDMX
     Dump();
-#endif // DEBUG_PIXELDMX
 }
 
 void PixelDmxParams::Set() {
-	PIXELDMX_DEBUG_ENTRY();
+    PIXELDMX_DEBUG_ENTRY();
     auto& pixel_configuration = PixelConfiguration::Get();
 
     pixel_configuration.SetType(static_cast<pixel::LedType>(store_dmxled.type));
@@ -211,11 +199,7 @@ void PixelDmxParams::Set() {
                 DmxNodeNodeType::Get()->SetDirection(protocol_port_index, dmxnode::Direction::kOutput);
 
                 char label[dmxnode::kPortNameLength];
-                snprintf(label, dmxnode::kPortNameLength - 1, "Pixel %c -> %u:%u", 
-					static_cast<char>('A' + pixel_port_index), 
-					static_cast<unsigned>(protocol_port_index), 
-					static_cast<unsigned>(kStartUniverse + universe)
-				);
+                snprintf(label, dmxnode::kPortNameLength - 1, "Pixel %c -> %u:%u", static_cast<char>('A' + pixel_port_index), static_cast<unsigned>(protocol_port_index), static_cast<unsigned>(kStartUniverse + universe));
                 DmxNode::Instance().SetShortName(protocol_port_index, label);
             }
             protocol_port_index++;
@@ -228,13 +212,14 @@ void PixelDmxParams::Set() {
     }
 #endif // defined(DMXNODE_TYPE_ARTNET) || defined(DMXNODE_TYPE_E131)
 
-#ifdef DEBUG_PIXELDMX
-    pixel_dmx_configuration.Print();
-    Dump();
+    if constexpr (kDebugPixelDmxEnabled) {
+        pixel_dmx_configuration.Print();
+        Dump();
 #if defined(DMXNODE_TYPE_ARTNET) || defined(DMXNODE_TYPE_E131)
-    DmxNodeNodeType::Get()->Print();
+        DmxNodeNodeType::Get()->Print();
 #endif // defined(DMXNODE_TYPE_ARTNET) || defined(DMXNODE_TYPE_E131)
-#endif // DEBUG_PIXELDMX
+    }
+
     const auto kTestPattern = static_cast<pixelpatterns::Pattern>(store_dmxled.test_pattern);
 
     if (kTestPattern != PixelTestPattern::Get()->GetPattern()) {
@@ -253,35 +238,37 @@ void PixelDmxParams::Set() {
     }
 
     common::firmware::pixeldmx::Show(7, kTestPattern);
-	
-	PIXELDMX_DEBUG_EXIT();
+
+    PIXELDMX_DEBUG_EXIT();
 }
 
 void PixelDmxParams::Dump() {
-    static const auto kMaxStartUniverses =std::min(kConfigMaxPorts, common::store::dmxled::kMaxUniverses);
+    if constexpr (kDebugPixelDmxEnabled) {
+        static const auto kMaxStartUniverses = std::min(kConfigMaxPorts, common::store::dmxled::kMaxUniverses);
 
-    printf("%s::%s \'%s\':\n", __FILE__, __FUNCTION__, json::DmxLedParamsConst::kFileName);
-    printf(" %s=%s [%u]\n", json::DmxLedParamsConst::kType.name, pixel::GetTypeName(static_cast<pixel::LedType>(store_dmxled.type)), store_dmxled.type);
-    printf(" %s=%.2f [0x%X]\n", DmxLedParamsConst::kT0H.name, pixel::ConvertTxH(store_dmxled.low_code), store_dmxled.low_code);
-    printf(" %s=%.2f [0x%X]\n", DmxLedParamsConst::kT1H.name, pixel::ConvertTxH(store_dmxled.high_code), store_dmxled.high_code);
-    printf(" %s=%s\n", DmxLedParamsConst::kMap.name, pixel::GetMapName(static_cast<pixel::LedMap>(store_dmxled.map)));
-    printf(" %s=%u\n", DmxLedParamsConst::kCount.name, static_cast<unsigned>(store_dmxled.count));
-    printf(" %s=%u\n", DmxLedParamsConst::kGroupingCount.name, static_cast<unsigned>(store_dmxled.grouping_count));
-    for (uint32_t i = 0; i < kMaxStartUniverses; i++) {
-        printf(" %s=%d\n", PixelDmxParamsConst::kStartUniPort[i].name, store_dmxled.start_universe[i]);
-    }
+        printf("%s::%s \'%s\':\n", __FILE__, __FUNCTION__, json::DmxLedParamsConst::kFileName);
+        printf(" %s=%s [%u]\n", json::DmxLedParamsConst::kType.name, pixel::GetTypeName(static_cast<pixel::LedType>(store_dmxled.type)), store_dmxled.type);
+        printf(" %s=%.2f [0x%X]\n", DmxLedParamsConst::kT0H.name, pixel::ConvertTxH(store_dmxled.low_code), store_dmxled.low_code);
+        printf(" %s=%.2f [0x%X]\n", DmxLedParamsConst::kT1H.name, pixel::ConvertTxH(store_dmxled.high_code), store_dmxled.high_code);
+        printf(" %s=%s\n", DmxLedParamsConst::kMap.name, pixel::GetMapName(static_cast<pixel::LedMap>(store_dmxled.map)));
+        printf(" %s=%u\n", DmxLedParamsConst::kCount.name, static_cast<unsigned>(store_dmxled.count));
+        printf(" %s=%u\n", DmxLedParamsConst::kGroupingCount.name, static_cast<unsigned>(store_dmxled.grouping_count));
+        for (uint32_t i = 0; i < kMaxStartUniverses; i++) {
+            printf(" %s=%d\n", PixelDmxParamsConst::kStartUniPort[i].name, store_dmxled.start_universe[i]);
+        }
 #ifdef OUTPUT_DMX_PIXEL_MULTI
-    printf(" %s=%d\n", DmxLedParamsConst::kActiveOutputPorts.name, store_dmxled.active_outputs);
+        printf(" %s=%d\n", DmxLedParamsConst::kActiveOutputPorts.name, store_dmxled.active_outputs);
 #endif // OUTPUT_DMX_PIXEL_MULTI
-    printf(" %s=%u\n", DmxLedParamsConst::kTestPattern.name, static_cast<unsigned>(store_dmxled.test_pattern));
-    printf(" %s=%u\n", DmxLedParamsConst::kSpiSpeedHz.name, static_cast<unsigned>(store_dmxled.spi_speed_hz));
-    printf(" %s=%u\n", DmxLedParamsConst::kGlobalBrightness.name, static_cast<unsigned>(store_dmxled.global_brightness));
+        printf(" %s=%u\n", DmxLedParamsConst::kTestPattern.name, static_cast<unsigned>(store_dmxled.test_pattern));
+        printf(" %s=%u\n", DmxLedParamsConst::kSpiSpeedHz.name, static_cast<unsigned>(store_dmxled.spi_speed_hz));
+        printf(" %s=%u\n", DmxLedParamsConst::kGlobalBrightness.name, static_cast<unsigned>(store_dmxled.global_brightness));
 #ifdef RDM_RESPONDER
-    printf(" %s=%u\n", PixelDmxParamsConst::kDmxStartAddress.name, static_cast<unsigned>(store_dmxled.dmx_start_address));
+        printf(" %s=%u\n", PixelDmxParamsConst::kDmxStartAddress.name, static_cast<unsigned>(store_dmxled.dmx_start_address));
 #endif // RDM_RESPONDER
 #ifdef CONFIG_PIXELDMX_ENABLE_GAMMATABLE
-    printf(" %s=%d\n", DmxLedParamsConst::kGammaCorrection.name, common::IsFlagSet(store_dmxled.flags, Flags::Flag::kEnableGamma));
-    printf(" %s=%1.1f [%u]\n", DmxLedParamsConst::kGammaValue.name, static_cast<float>(store_dmxled.gamma_value) / 10.0f, store_dmxled.gamma_value);
+        printf(" %s=%d\n", DmxLedParamsConst::kGammaCorrection.name, common::IsFlagSet(store_dmxled.flags, Flags::Flag::kEnableGamma));
+        printf(" %s=%1.1f [%u]\n", DmxLedParamsConst::kGammaValue.name, static_cast<float>(store_dmxled.gamma_value) / 10.0f, store_dmxled.gamma_value);
 #endif // CONFIG_PIXELDMX_ENABLE_GAMMATABLE
+    }
 }
 } // namespace json

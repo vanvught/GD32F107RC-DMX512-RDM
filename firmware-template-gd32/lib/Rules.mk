@@ -21,6 +21,7 @@ $(info $$ENET_PHY [${ENET_PHY}])
 SRCDIR=src src/gd32 $(EXTRA_SRCDIR)
 
 DEFINES:=$(addprefix -D,$(DEFINES))
+DEFINES+=-DCONFIG_CLIB_USE_UART0 -DCONFIG_TCP_NO_OPTIMIZE
 DEFINES+=-DPHY_TYPE=$(ENET_PHY)
 
 include ../common/make/gd32/Board.mk

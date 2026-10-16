@@ -32,8 +32,8 @@
 
 class PCA9685DmxSet {
    public:
-    PCA9685DmxSet() {}
-    virtual ~PCA9685DmxSet() {}
+    PCA9685DmxSet() = default;
+    virtual ~PCA9685DmxSet() = default;
 
     virtual void Start(uint32_t port_index) = 0;
     virtual void Stop(uint32_t port_index) = 0;
@@ -52,7 +52,10 @@ class PCA9685DmxSet {
 
     virtual void Print() = 0;
 
-    template <bool doUpdate> void SetData(uint32_t port_index, const uint8_t* data, uint32_t length) { SetDataImpl(port_index, data, length); }
+    template <bool kDoUpdate>
+    void SetData(uint32_t port_index, const uint8_t* data, uint32_t length) {
+        SetDataImpl(port_index, data, length);
+    }
 
     uint32_t GetUserData() { return 0; }    ///< Art-Net ArtPollReply
     uint32_t GetRefreshRate() { return 0; } ///< Art-Net ArtPollReply

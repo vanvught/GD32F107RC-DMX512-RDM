@@ -29,11 +29,13 @@
 #include "firmware/debug/debug_debug.h"
 
 #ifdef DEBUG_PIXELDMX
+inline constexpr bool kDebugPixelDmxEnabled = true;
 #define PIXELDMX_DEBUG_ENTRY() DEBUG_ENTRY()
 #define PIXELDMX_DEBUG_EXIT() DEBUG_EXIT()
 #define PIXELDMX_DEBUG_PRINTF(...) DEBUG_PRINTF(__VA_ARGS__)
 #define PIXELDMX_DEBUG_PUTS(...) DEBUG_PUTS(__VA_ARGS__)
 #else
+inline constexpr bool kDebugPixelDmxEnabled = false;
 #define PIXELDMX_DEBUG_ENTRY() \
     do {                       \
     } while (false)

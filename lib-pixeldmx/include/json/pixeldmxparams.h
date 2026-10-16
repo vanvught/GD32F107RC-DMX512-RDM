@@ -22,7 +22,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
- 
 
 #ifndef JSON_PIXELDMXPARAMS_H_
 #define JSON_PIXELDMXPARAMS_H_
@@ -34,10 +33,8 @@
 #include "json/json_params_base.h"
 #include "pixeldmxparamsconst.h"
 
-namespace json
-{
-class PixelDmxParams : public JsonParamsBase<PixelDmxParams>
-{
+namespace json {
+class PixelDmxParams : public JsonParamsBase<PixelDmxParams> {
    public:
     PixelDmxParams();
 
@@ -55,66 +52,66 @@ class PixelDmxParams : public JsonParamsBase<PixelDmxParams>
     void Dump();
 
    private:
-    static void SetType(const char* val, uint32_t len);
-    static void SetMap(const char* val, uint32_t len);
-    static void SetCount(const char* val, uint32_t len);
-    static void SetGroupingCount(const char* val, uint32_t len);
-    static void SetLowCode(const char* val, uint32_t len);
-    static void SetHighCode(const char* val, uint32_t len);
+    static void SetType(std::string_view value);
+    static void SetMap(std::string_view value);
+    static void SetCount(std::string_view value);
+    static void SetGroupingCount(std::string_view value);
+    static void SetLowCode(std::string_view value);
+    static void SetHighCode(std::string_view value);
 #ifdef OUTPUT_DMX_PIXEL_MULTI
-    static void SetActiveOutputs(const char* val, uint32_t len);
+    static void SetActiveOutputs(std::string_view value);
 #endif // OUTPUT_DMX_PIXEL_MULTI
-    static void SetTestPattern(const char* val, uint32_t len);
-    static void SetSpiSpeedHz(const char* val, uint32_t len);
-    static void SetGlobalBrightness(const char* val, uint32_t len);
-    static void SetStartUniPort(const char* key, uint32_t key_len, const char* val, uint32_t val_len);
+    static void SetTestPattern(std::string_view value);
+    static void SetSpiSpeedHz(std::string_view value);
+    static void SetGlobalBrightness(std::string_view value);
+    static void SetStartUniPort(std::string_view key, std::string_view value);
 #ifndef OUTPUT_DMX_PIXEL_MULTI
-	static void SetDmxStartAddress(const char* val, uint32_t len);
+    static void SetDmxStartAddress(std::string_view value);
 #endif // OUTPUT_DMX_PIXEL_MULTI
-#ifdef CONFIG_PIXELDMX_ENABLE_GAMMATABLE    
-    static void SetGammaCorrection(const char* val, uint32_t len);
-    static void SetGammaValue(const char* val, uint32_t len);
+#ifdef CONFIG_PIXELDMX_ENABLE_GAMMATABLE
+    static void SetGammaCorrection(std::string_view value);
+    static void SetGammaValue(std::string_view value);
 #endif // CONFIG_PIXELDMX_ENABLE_GAMMATABLE
 
-    static constexpr json::Key kPixelDmxKeys[] = {
-	MakeKey(SetType, DmxLedParamsConst::kType), 
-	MakeKey(SetMap, DmxLedParamsConst::kMap), 
-	MakeKey(SetCount, DmxLedParamsConst::kCount),
-	MakeKey(SetGroupingCount, DmxLedParamsConst::kGroupingCount),
-	MakeKey(SetLowCode, DmxLedParamsConst::kT0H),
-	MakeKey(SetHighCode, DmxLedParamsConst::kT1H),
+    static constexpr json::Key kPixelDmxKeys[] = {                                                              //
+                                                  MakeKey(SetType, DmxLedParamsConst::kType),                   //
+                                                  MakeKey(SetMap, DmxLedParamsConst::kMap),                     //
+                                                  MakeKey(SetCount, DmxLedParamsConst::kCount),                 //
+                                                  MakeKey(SetGroupingCount, DmxLedParamsConst::kGroupingCount), //
+                                                  MakeKey(SetLowCode, DmxLedParamsConst::kT0H),                 //
+                                                  MakeKey(SetHighCode, DmxLedParamsConst::kT1H),
 #ifdef OUTPUT_DMX_PIXEL_MULTI
-	MakeKey(SetActiveOutputs, DmxLedParamsConst::kActiveOutputPorts),
+                                                  MakeKey(SetActiveOutputs, DmxLedParamsConst::kActiveOutputPorts),
 #endif // OUTPUT_DMX_PIXEL_MULTI
-	MakeKey(SetTestPattern, DmxLedParamsConst::kTestPattern),
-	MakeKey(SetSpiSpeedHz, DmxLedParamsConst::kSpiSpeedHz),
-	MakeKey(SetGlobalBrightness, DmxLedParamsConst::kGlobalBrightness),
-	MakeKey(SetStartUniPort, PixelDmxParamsConst::kStartUniPort[0]),
+                                                  MakeKey(SetTestPattern, DmxLedParamsConst::kTestPattern),
+                                                  MakeKey(SetSpiSpeedHz, DmxLedParamsConst::kSpiSpeedHz),             //
+                                                  MakeKey(SetGlobalBrightness, DmxLedParamsConst::kGlobalBrightness), //
+                                                  MakeKey(SetStartUniPort, PixelDmxParamsConst::kStartUniPort[0]),    //
 #if (CONFIG_DMXNODE_PIXEL_MAX_PORTS > 1)
-	MakeKey(SetStartUniPort, PixelDmxParamsConst::kStartUniPort[1]),
-	MakeKey(SetStartUniPort, PixelDmxParamsConst::kStartUniPort[2]),
-	MakeKey(SetStartUniPort, PixelDmxParamsConst::kStartUniPort[3]),
-	MakeKey(SetStartUniPort, PixelDmxParamsConst::kStartUniPort[4]),
-	MakeKey(SetStartUniPort, PixelDmxParamsConst::kStartUniPort[5]),
-	MakeKey(SetStartUniPort, PixelDmxParamsConst::kStartUniPort[6]),
-	MakeKey(SetStartUniPort, PixelDmxParamsConst::kStartUniPort[7]),
+                                                  MakeKey(SetStartUniPort, PixelDmxParamsConst::kStartUniPort[1]), //
+                                                  MakeKey(SetStartUniPort, PixelDmxParamsConst::kStartUniPort[2]), //
+                                                  MakeKey(SetStartUniPort, PixelDmxParamsConst::kStartUniPort[3]), //
+                                                  MakeKey(SetStartUniPort, PixelDmxParamsConst::kStartUniPort[4]), //
+                                                  MakeKey(SetStartUniPort, PixelDmxParamsConst::kStartUniPort[5]), //
+                                                  MakeKey(SetStartUniPort, PixelDmxParamsConst::kStartUniPort[6]), //
+                                                  MakeKey(SetStartUniPort, PixelDmxParamsConst::kStartUniPort[7]),
 #endif // (CONFIG_DMXNODE_PIXEL_MAX_PORTS > 1)
 #if CONFIG_DMXNODE_PIXEL_MAX_PORTS == 16
-	MakeKey(SetStartUniPort, PixelDmxParamsConst::kStartUniPort[8]),
-	MakeKey(SetStartUniPort, PixelDmxParamsConst::kStartUniPort[9]),
-	MakeKey(SetStartUniPort, PixelDmxParamsConst::kStartUniPort[10]),
-	MakeKey(SetStartUniPort, PixelDmxParamsConst::kStartUniPort[11]),
-	MakeKey(SetStartUniPort, PixelDmxParamsConst::kStartUniPort[12]),
-	MakeKey(SetStartUniPort, PixelDmxParamsConst::kStartUniPort[13]),
-	MakeKey(SetStartUniPort, PixelDmxParamsConst::kStartUniPort[14]),
-	MakeKey(SetStartUniPort, PixelDmxParamsConst::kStartUniPort[15]),
+                                                  MakeKey(SetStartUniPort, PixelDmxParamsConst::kStartUniPort[8]),  //
+                                                  MakeKey(SetStartUniPort, PixelDmxParamsConst::kStartUniPort[9]),  //
+                                                  MakeKey(SetStartUniPort, PixelDmxParamsConst::kStartUniPort[10]), //
+                                                  MakeKey(SetStartUniPort, PixelDmxParamsConst::kStartUniPort[11]), //
+                                                  MakeKey(SetStartUniPort, PixelDmxParamsConst::kStartUniPort[12]), //
+                                                  MakeKey(SetStartUniPort, PixelDmxParamsConst::kStartUniPort[13]), //
+                                                  MakeKey(SetStartUniPort, PixelDmxParamsConst::kStartUniPort[14]), //
+                                                  MakeKey(SetStartUniPort, PixelDmxParamsConst::kStartUniPort[15]),
 #endif // CONFIG_DMXNODE_PIXEL_MAX_PORTS == 16
 #ifdef RDM_RESPONDER
-	MakeKey(SetDmxStartAddress, PixelDmxParamsConst::kDmxStartAddress),
+                                                  MakeKey(SetDmxStartAddress, PixelDmxParamsConst::kDmxStartAddress),
 #endif // RDM_RESPONDER
 #ifdef CONFIG_PIXELDMX_ENABLE_GAMMATABLE
-   MakeKey(SetGammaCorrection, DmxLedParamsConst::kGammaCorrection),
-   MakeKey(SetGammaValue, DmxLedParamsConst::kGammaValue)
+                                                  MakeKey(SetGammaCorrection, DmxLedParamsConst::kGammaCorrection),
+                                                  MakeKey(SetGammaValue, DmxLedParamsConst::kGammaValue)
 #endif // CONFIG_PIXELDMX_ENABLE_GAMMATABLE
     };
 

@@ -32,17 +32,17 @@ namespace json {
 struct Pca9685DmxParamsConst {
     static constexpr char kFileName[] = "dmxpca9685.json";
 
-    static constexpr auto kI2cAddres = json::MakeSimpleKey("i2c_address");
-    static constexpr auto kDmxStartAddress = json::MakeSimpleKey("dmx_start_address");
-    static constexpr auto kMode = json::MakeSimpleKey("mode");
-    static constexpr auto kChannelCount = json::MakeSimpleKey("channel_count");
-    static constexpr auto kUse8Bit = json::MakeSimpleKey("use_8bit");
-    static constexpr auto kLedPwmFrequency = json::MakeSimpleKey("led_pwm_frequency");
-    static constexpr auto kLedOutputInvert = json::MakeSimpleKey("led_output_invert");
-    static constexpr auto kLedOutputOpendrain = json::MakeSimpleKey("led_output_opendrain");
-    static constexpr auto kServoLeftUs = json::MakeSimpleKey("servo_left_us");
-    static constexpr auto kServoCenterUs = json::MakeSimpleKey("servo_center_us");
-    static constexpr auto kServoRightUs = json::MakeSimpleKey("servo_right_us");
+    static constexpr auto kI2cAddres = json::MakeKey("i2c_address");
+    static constexpr auto kDmxStartAddress = json::MakeKey("dmx_start_address");
+    static constexpr auto kMode = json::MakeKey("mode");
+    static constexpr auto kChannelCount = json::MakeKey("channel_count");
+    static constexpr auto kUse8Bit = json::MakeKey("use_8bit");
+    static constexpr auto kLedPwmFrequency = json::MakeKey("led_pwm_frequency");
+    static constexpr auto kLedOutputInvert = json::MakeKey("led_output_invert");
+    static constexpr auto kLedOutputOpendrain = json::MakeKey("led_output_opendrain");
+    static constexpr auto kServoLeftUs = json::MakeKey("servo_left_us");
+    static constexpr auto kServoCenterUs = json::MakeKey("servo_center_us");
+    static constexpr auto kServoRightUs = json::MakeKey("servo_right_us");
 };
 } // namespace json
 

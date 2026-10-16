@@ -49,11 +49,10 @@ class Pca9685DmxParams : public JsonParamsBase<Pca9685DmxParams> {
     void Dump();
 
    private:
-    static void SetMode(const char* val, uint32_t len);
+    static void SetMode(std::string_view value);
 
     static constexpr json::Key kPca9685DmxKeys[] = {
         MakeKey(SetMode, Pca9685DmxParamsConst::kMode),
-
     };
 
     inline static common::store::DmxPwm store_dmxpwm;
