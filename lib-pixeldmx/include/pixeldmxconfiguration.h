@@ -65,14 +65,14 @@ class PixelDmxConfiguration : public PixelConfiguration {
     PixelDmxConfiguration& operator=(const PixelDmxConfiguration&) = delete;
 
     void SetOutputPorts(uint16_t output_ports) { output_ports_ = output_ports; }
-    uint32_t GetOutputPorts() const { return output_ports_; }
+    [[nodiscard]] uint32_t GetOutputPorts() const { return output_ports_; }
 
     void SetGroupingCount(uint16_t grouping_count) { grouping_count_ = grouping_count; }
-    uint32_t GetGroupingCount() const { return grouping_count_; }
+    [[nodiscard]] uint32_t GetGroupingCount() const { return grouping_count_; }
 
-    uint32_t GetGroups() const { return groups_; }
+    [[nodiscard]] uint32_t GetGroups() const { return groups_; }
 
-    uint32_t GetUniverses() const { return universes_; }
+    [[nodiscard]] uint32_t GetUniverses() const { return universes_; }
 
     pixeldmxconfiguration::PortInfo& GetPortInfo() { return port_info_; }
 
@@ -83,9 +83,9 @@ class PixelDmxConfiguration : public PixelConfiguration {
         }
         dmx_start_address_ = dmxnode::kStartAddressDefault;
     }
-    uint16_t GetDmxStartAddress() const { return dmx_start_address_; }
+    [[nodiscard]] uint16_t GetDmxStartAddress() const { return dmx_start_address_; }
 
-    uint16_t GetDmxFootprint() const { return dmx_footprint_; }
+    [[nodiscard]] uint16_t GetDmxFootprint() const { return dmx_footprint_; }
 
     void Validate(uint32_t ports_max) {
         DEBUG_ENTRY();
@@ -117,11 +117,11 @@ class PixelDmxConfiguration : public PixelConfiguration {
         }
 
         groups_ = PixelConfiguration::GetCount() / grouping_count_;
-        output_ports_ =std::min(ports_max, output_ports_);
+        output_ports_ = std::min(ports_max, output_ports_);
         universes_ = (1U + (groups_ / (1U + port_info_.begin_index_port[1])));
         dmx_footprint_ = static_cast<uint16_t>(PixelConfiguration::GetLedsPerPixel() * groups_);
-        
-		if (dmx_start_address_ == 0) {
+
+        if (dmx_start_address_ == 0) {
             dmx_start_address_ = dmxnode::kStartAddressDefault;
         }
 
@@ -148,12 +148,8 @@ class PixelDmxConfiguration : public PixelConfiguration {
 
 #ifndef NDEBUG
         const auto& begin_index_port = port_info_.begin_index_port;
-        printf(" %u:%u:%u:%u -> %u\n", 
-			static_cast<unsigned>(begin_index_port[0]), 
-			static_cast<unsigned>(begin_index_port[1]), 
-			static_cast<unsigned>(begin_index_port[2]), 
-			static_cast<unsigned>(begin_index_port[3]),
-			static_cast<unsigned>(port_info_.protocol_port_index_last));
+        printf(" %u:%u:%u:%u -> %u\n", static_cast<unsigned>(begin_index_port[0]), static_cast<unsigned>(begin_index_port[1]), static_cast<unsigned>(begin_index_port[2]), static_cast<unsigned>(begin_index_port[3]),
+               static_cast<unsigned>(port_info_.protocol_port_index_last));
 #endif // NDEBUG
     }
 
