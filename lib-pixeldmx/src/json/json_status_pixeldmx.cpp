@@ -24,28 +24,25 @@
 */
 
 #include <cstdint>
-#include <cstdio>
 
+#include "common/utils/utils_string.h"
 #include "dmxnode.h"
+#include "json/json_helpers.h"
 
 namespace json::status {
-uint32_t PixelDmx(char* out_buffer, uint32_t out_buffer_size) {
-    const auto kBufferSize = out_buffer_size - 2U;
-    out_buffer[0] = '{';
-    uint32_t length = 1;
+uint32_t PixelDmx(char* buffer, uint32_t length) {
+    return json::helpers::Serialize(buffer, length, [&](JsonDoc& doc) {
+        doc.BeginObject("PortName");
 
-    static_assert(dmxnode::kMaxPorts != 0);
+        static_assert(dmxnode::kMaxPorts <= 99);
 
-    for (uint32_t i = 0; i < dmxnode::kMaxPorts; i++) {
-        length += static_cast<uint32_t>(snprintf(&out_buffer[length], kBufferSize - length, 
-			"\"Dmx Output %u\":\"%s\",", 
-			static_cast<unsigned>(i + 1), 
-			DmxNode::Instance().GetPortName(i))
-		);
-    }
+        for (uint32_t i = 0; i < dmxnode::kMaxPorts; i++) {
+          char key[2];
+          const auto* end = common::AppendUnsigned(key, i + 1U);
+          doc[std::string_view{key, static_cast<size_t>(end - key)}] =
+              DmxNode::Instance().GetPortName(i);        }
 
-    out_buffer[length - 1] = '}';
-
-    return length;
+        doc.EndObject();
+    });
 }
 } // namespace json::status

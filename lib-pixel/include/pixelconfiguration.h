@@ -76,31 +76,31 @@ class PixelConfiguration {
         refresh_needed_ = true;
     }
 
-    uint8_t GetLowCode() const { return low_code_; }
+    [[nodiscard]] uint8_t GetLowCode() const { return low_code_; }
 
     void SetHighCode(uint8_t high_code) {
         high_code_ = high_code;
         refresh_needed_ = true;
     }
 
-    uint8_t GetHighCode() const { return high_code_; }
+    [[nodiscard]] uint8_t GetHighCode() const { return high_code_; }
 
     void SetClockSpeedHz(uint32_t clock_speed_hz) {
         clock_speed_hz_ = clock_speed_hz;
         refresh_needed_ = true;
     }
 
-    uint32_t GetClockSpeedHz() const { return clock_speed_hz_; }
+    [[nodiscard]] uint32_t GetClockSpeedHz() const { return clock_speed_hz_; }
 
     void SetGlobalBrightness(uint8_t global_brightness) { global_brightness_ = global_brightness; }
 
-    uint8_t GetGlobalBrightness() const { return global_brightness_; }
+    [[nodiscard]] uint8_t GetGlobalBrightness() const { return global_brightness_; }
 
-    bool IsRTZProtocol() const { return is_rtz_protocol_; }
+    [[nodiscard]] bool IsRTZProtocol() const { return is_rtz_protocol_; }
 
-    uint32_t GetLedsPerPixel() const { return leds_per_pixel_; }
+    [[nodiscard]] uint32_t GetLedsPerPixel() const { return leds_per_pixel_; }
 
-    uint32_t GetRefreshRate() const { return refresh_rate_; }
+    [[nodiscard]] uint32_t GetRefreshRate() const { return refresh_rate_; }
 
 #ifdef CONFIG_PIXELDMX_ENABLE_GAMMATABLE
     void SetEnableGammaCorrection(bool do_enable) { enable_gamma_correction_ = do_enable; }
@@ -214,8 +214,15 @@ class PixelConfiguration {
 
         if (is_rtz_protocol_) {
             printf(" Mapping : %s [%u]\n", pixel::GetMapName(map_), static_cast<unsigned>(map_));
-            printf(" T0H     : %.2f [0x%X]\n", pixel::ConvertTxH(low_code_), low_code_);
-            printf(" T1H     : %.2f [0x%X]\n", pixel::ConvertTxH(high_code_), high_code_);
+            char t[16];
+
+            auto* end = common::AppendFixed(t, pixel::ConvertTxH(low_code_), 2U);
+            *end = '\0';
+            printf(" T0H     : %s [0x%X]\n", t, low_code_);
+
+            end = common::AppendFixed(t, pixel::ConvertTxH(high_code_), 2U);
+            *end = '\0';
+            printf(" T1H     : %s [0x%X]\n", t, high_code_);
         } else {
             if ((type_ == pixel::LedType::kAPA102) || (type_ == pixel::LedType::kSK9822)) {
                 printf(" GlobalBrightness: %u\n", global_brightness_);

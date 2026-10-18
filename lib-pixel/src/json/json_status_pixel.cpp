@@ -24,7 +24,6 @@
 */
 
 #include <cstdint>
-#include <cstdio>
 
 #ifdef OUTPUT_DMX_PIXEL
 #include "pixeloutput.h"
@@ -34,17 +33,17 @@
 
 #if defined(OUTPUT_DMX_PIXEL) || defined(OUTPUT_DMX_PIXEL_MULTI)
 #include "pixelconfiguration.h"
+#include "json/json_helpers.h"
 
 namespace json::status {
-uint32_t Pixel(char* out_buffer, uint32_t out_buffer_size) {
+uint32_t Pixel(char* buffer, uint32_t length) {
     auto& configuration = PixelConfiguration::Get();
     const auto kUserData = PixelOutputType::Get()->GetUserData();
 
-    return static_cast<uint32_t>(snprintf(out_buffer, out_buffer_size, 
-		"{\"refresh_rate\":\"%u\",\"frame_rate\":\"%u\"}", 
-		static_cast<unsigned>(configuration.GetRefreshRate()), 
-		static_cast<unsigned>(kUserData))
-	);
+    return json::helpers::Serialize(buffer, length, [&](JsonDoc& doc) {
+        doc["refresh_rate"] = configuration.GetRefreshRate();
+        doc["frame_rate"] = kUserData;
+    });
 }
 } // namespace json::status
 #endif // defined(OUTPUT_DMX_PIXEL) || defined(OUTPUT_DMX_PIXEL_MULTI)
