@@ -25,7 +25,6 @@
 
 #include <cstdint>
 #include <algorithm>
-#include <utility>
 
 #include "json/pixeldmxparams.h"
 #include "json/json_helpers.h"
@@ -53,7 +52,7 @@ uint32_t GetPixelDmx(char* buffer, uint32_t length) {
         kWriteFixed(DmxLedParamsConst::kT1H.name, pixel::ConvertTxH(pixel_configuration.GetHighCode()), 2U);
         doc[DmxLedParamsConst::kMap.name] = pixel::GetMapName(pixel_configuration.GetMap());
         doc[DmxLedParamsConst::kSpiSpeedHz.name] = pixel_configuration.GetClockSpeedHz();
-        doc[DmxLedParamsConst::kGlobalBrightness.name] = pixel_configuration.GetGlobalBrightness();
+        doc[DmxLedParamsConst::kGlobalBrightness.name] = static_cast<uint32_t>(pixel_configuration.GetGlobalBrightness());
 #ifdef CONFIG_PIXELDMX_ENABLE_GAMMATABLE
         doc[DmxLedParamsConst::kGammaCorrection.name] = static_cast<uint32_t>(pixel_configuration.IsEnableGammaCorrection());
         kWriteFixed(DmxLedParamsConst::kGammaValue.name, static_cast<float>(pixel_configuration.GetGammaTableValue()) / 10.0F, 1U);
@@ -64,17 +63,17 @@ uint32_t GetPixelDmx(char* buffer, uint32_t length) {
         doc[DmxLedParamsConst::kActiveOutputPorts.name] = pixel_dmx_configuration.GetOutputPorts();
 #endif // OUTPUT_DMX_PIXEL_MULTI
 #ifdef RDM_RESPONDER
-        doc[PixelDmxParamsConst::kDmxStartAddress.name] = pixel_dmx_configuration.GetDmxStartAddress();
+        doc[PixelDmxParamsConst::kDmxStartAddress.name] = static_cast<uint32_t>(pixel_dmx_configuration.GetDmxStartAddress());
 #endif // RDM_RESPONDER
 
         static constexpr uint32_t kConfigMaxPorts = CONFIG_DMXNODE_PIXEL_MAX_PORTS;
         static const auto kMaxStartUniverses = std::min(kConfigMaxPorts, common::store::dmxled::kMaxUniverses);
 
         for (uint32_t i = 0; i < kMaxStartUniverses; i++) {
-            doc[PixelDmxParamsConst::kStartUniPort[i].name] = ConfigStore::Instance().DmxLedIndexedGetStartUniverse(i);
+            doc[PixelDmxParamsConst::kStartUniPort[i].name] = static_cast<uint32_t>(ConfigStore::Instance().DmxLedIndexedGetStartUniverse(i));
         }
 
-        doc[DmxLedParamsConst::kTestPattern.name] = std::to_underlying(PixelTestPattern::Get()->GetPattern());
+        doc[DmxLedParamsConst::kTestPattern.name] = static_cast<uint32_t>(PixelTestPattern::Get()->GetPattern());
     });
 }
 

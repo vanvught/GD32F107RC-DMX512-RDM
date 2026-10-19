@@ -37,17 +37,17 @@ uint32_t GetPca9685Dmx(char* buffer, uint32_t length) {
 
     return json::helpers::Serialize(buffer, length, [&](JsonDoc& doc) {
         doc[json::Pca9685DmxParamsConst::kMode.name] = pca9685dmx::GetMode(pca9685_dmx.GetMode());
-        doc[json::Pca9685DmxParamsConst::kChannelCount.name] = pca9685_dmx.GetChannelCount();
-        doc[json::Pca9685DmxParamsConst::kDmxStartAddress.name] = pca9685_dmx.GetDmxStartAddress();
+        doc[json::Pca9685DmxParamsConst::kChannelCount.name] = static_cast<uint32_t>(pca9685_dmx.GetChannelCount());
+        doc[json::Pca9685DmxParamsConst::kDmxStartAddress.name] = static_cast<uint32_t>(pca9685_dmx.GetDmxStartAddress());
         // Led
-        doc[json::Pca9685DmxParamsConst::kLedPwmFrequency.name] = pca9685_dmx.GetLedPwmFrequency();
+        doc[json::Pca9685DmxParamsConst::kLedPwmFrequency.name] = static_cast<uint32_t>(pca9685_dmx.GetLedPwmFrequency());
         doc[json::Pca9685DmxParamsConst::kUse8Bit.name] = static_cast<uint32_t>(pca9685_dmx.IsUse8Bit());
         doc[json::Pca9685DmxParamsConst::kLedOutputInvert.name] = static_cast<uint32_t>(pca9685_dmx.GetLedOutputInvert() == pca9685::Invert::kOutputInverted);
         doc[json::Pca9685DmxParamsConst::kLedOutputOpendrain.name] = static_cast<uint32_t>(pca9685_dmx.GetLedOutputDriver() == pca9685::Output::kDriverOpendrain);
         // Servo
-        doc[json::Pca9685DmxParamsConst::kServoLeftUs.name] = pca9685_dmx.GetServoLeftUs();
-        doc[json::Pca9685DmxParamsConst::kServoCenterUs.name] = pca9685_dmx.GetServoCenterUs();
-        doc[json::Pca9685DmxParamsConst::kServoRightUs.name] = pca9685_dmx.GetServoRightUs();
+        doc[json::Pca9685DmxParamsConst::kServoLeftUs.name] = static_cast<uint32_t>(pca9685_dmx.GetServoLeftUs());
+        doc[json::Pca9685DmxParamsConst::kServoCenterUs.name] = static_cast<uint32_t>(pca9685_dmx.GetServoCenterUs());
+        doc[json::Pca9685DmxParamsConst::kServoRightUs.name] = static_cast<uint32_t>(pca9685_dmx.GetServoRightUs());
     });
 }
 
