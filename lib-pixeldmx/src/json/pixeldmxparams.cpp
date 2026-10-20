@@ -152,8 +152,8 @@ void PixelDmxParams::SetGammaValue(std::string_view value) {
 }
 #endif // CONFIG_PIXELDMX_ENABLE_GAMMATABLE
 
-void PixelDmxParams::Store(const char* buffer, uint32_t buffer_size) {
-    ParseJsonWithTable(buffer, buffer_size, kPixelDmxKeys);
+void PixelDmxParams::Store(std::string_view buffer) {
+    ParseJsonWithTable(buffer,kPixelDmxKeys);
     ConfigStore::Instance().Store(&store_dmxled, &ConfigurationStore::dmx_led);
 
     Dump();

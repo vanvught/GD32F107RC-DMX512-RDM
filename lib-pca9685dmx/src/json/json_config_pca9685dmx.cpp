@@ -24,6 +24,7 @@
  */
 
 #include <cstdint>
+#include <string_view>
 
 #include "json/json_helpers.h"
 #include "json/pca9685dmxparams.h"
@@ -51,9 +52,9 @@ uint32_t GetPca9685Dmx(char* buffer, uint32_t length) {
     });
 }
 
-void SetPca9685Dmx(const char* buffer, uint32_t buffer_size) {
+void SetPca9685Dmx(const char* buffer, uint32_t size) {
     ::json::Pca9685DmxParams pca9685dmx_params;
-    pca9685dmx_params.Store(buffer, buffer_size);
+    pca9685dmx_params.Store(std::string_view{buffer, size});
     pca9685dmx_params.Set();
 }
 } // namespace json::config

@@ -42,7 +42,7 @@ class Pca9685DmxParams : public JsonParamsBase<Pca9685DmxParams> {
     Pca9685DmxParams& operator=(Pca9685DmxParams&&) = delete;
 
     void Load() { JsonParamsBase::Load(Pca9685DmxParamsConst::kFileName); }
-    void Store(const char* buffer, uint32_t buffer_size);
+    void Store(std::string_view buffer);
     void Set();
 
    protected:

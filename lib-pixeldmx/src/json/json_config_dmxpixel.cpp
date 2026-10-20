@@ -24,6 +24,7 @@
  */
 
 #include <cstdint>
+#include <string_view>
 #include <algorithm>
 
 #include "json/pixeldmxparams.h"
@@ -77,9 +78,9 @@ uint32_t GetPixelDmx(char* buffer, uint32_t length) {
     });
 }
 
-void SetPixelDmx(const char* buffer, uint32_t buffer_size) {
+void SetPixelDmx(const char* buffer, uint32_t size) {
     ::json::PixelDmxParams pixel_dmx_params;
-    pixel_dmx_params.Store(buffer, buffer_size);
+    pixel_dmx_params.Store(std::string_view{buffer, size});
     pixel_dmx_params.Set();
 }
 } // namespace json::config

@@ -44,8 +44,8 @@ void Pca9685DmxParams::SetMode(std::string_view value) {
     store_dmxpwm.flags = common::SetFlagValue(store_dmxpwm.flags, Flags::Flag::kModeServo, kV != 0);
 }
 
-void Pca9685DmxParams::Store(const char* buffer, uint32_t buffer_size) {
-    ParseJsonWithTable(buffer, buffer_size, kPca9685DmxKeys);
+void Pca9685DmxParams::Store(std::string_view buffer) {
+    ParseJsonWithTable(buffer,kPca9685DmxKeys);
     ConfigStore::Instance().Store(&store_dmxpwm, &ConfigurationStore::dmx_pwm);
 }
 
