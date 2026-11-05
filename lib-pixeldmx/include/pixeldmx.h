@@ -42,6 +42,9 @@
 #include "gpio.h"
 #endif // PIXELDMXSTARTSTOP_GPIO
 #include "dmxnode.h"
+#ifdef RDM_RESPONDER
+#include "rdm_slotinfo.h"
+#endif
 #include "pixeldmx_debug.h"
 
 #if defined(OUTPUT_DMX_PIXEL) && defined(RDM_RESPONDER) && !defined(NODE_ARTNET)
@@ -303,31 +306,32 @@ class PixelDmx final : public PixelDmxConfiguration {
         return false;
     }
 
+#ifdef RDM_RESPONDER
     uint16_t GetDmxStartAddress() OVERRIDE { return PixelDmxConfiguration::Get().GetDmxStartAddress(); }
 
     uint16_t GetDmxFootprint() OVERRIDE { return PixelDmxConfiguration::Get().GetDmxFootprint(); }
 
-    bool GetSlotInfo(uint16_t slotoffset, dmxnode::SlotInfo& slotinfo) OVERRIDE {
+    bool GetSlotInfo(uint16_t slotoffset, rdm::slotinfo::SlotInfo& slot_info) OVERRIDE {
         auto& pixeldmx_configuration = PixelDmxConfiguration::Get();
 
-        if (slotoffset > pixeldmx_configuration.GetDmxFootprint()) {
+        if (slotoffset >= pixeldmx_configuration.GetDmxFootprint()) {
             return false;
         }
 
-        slotinfo.type = 0x00; // ST_PRIMARY
+        slot_info.type = rdm::slotinfo::SlotType::kStPrimary;
 
         switch (slotoffset % pixeldmx_configuration.GetLedsPerPixel()) {
             case 0:
-                slotinfo.category = 0x0205; // SD_COLOR_ADD_RED
+                slot_info.category = rdm::slotinfo::SlotDefinition::kSdColorAddRed;
                 break;
             case 1:
-                slotinfo.category = 0x0206; // SD_COLOR_ADD_GREEN
+                slot_info.category = rdm::slotinfo::SlotDefinition::kSdColorAddGreen;
                 break;
             case 2:
-                slotinfo.category = 0x0207; // SD_COLOR_ADD_BLUE
+                slot_info.category = rdm::slotinfo::SlotDefinition::kSdColorAddBlue;
                 break;
             case 3:
-                slotinfo.category = 0x0212; // SD_COLOR_ADD_WHITE
+                slot_info.category = rdm::slotinfo::SlotDefinition::kSdColorAddWhite;
                 break;
             default:
                 __builtin_unreachable();
@@ -336,6 +340,7 @@ class PixelDmx final : public PixelDmxConfiguration {
 
         return true;
     }
+#endif
 
     // Art-Net ArtPollReply
     uint32_t GetUserData() { return 0; }

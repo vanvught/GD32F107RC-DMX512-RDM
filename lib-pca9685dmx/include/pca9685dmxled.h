@@ -63,7 +63,7 @@ class PCA9685DmxLed final : public PCA9685DmxSet {
 
     uint16_t GetDmxFootprint() override { return dmx_footprint_; }
 
-    bool GetSlotInfo(uint16_t slot_offset, dmxnode::SlotInfo& slot_info) override;
+    bool GetSlotInfo(uint16_t slot_offset, rdm::slotinfo::SlotInfo& slot_info) override;
 
     void Print() override;
 

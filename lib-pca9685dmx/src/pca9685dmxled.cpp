@@ -158,13 +158,13 @@ void PCA9685DmxLed::SetDataImpl([[maybe_unused]] uint32_t port_index, const uint
     }
 }
 
-bool PCA9685DmxLed::GetSlotInfo(uint16_t slot_offset, dmxnode::SlotInfo& slot_info) {
-    if (slot_offset > dmx_footprint_) {
+bool PCA9685DmxLed::GetSlotInfo(uint16_t slot_offset, rdm::slotinfo::SlotInfo& slot_info) {
+    if (slot_offset >= dmx_footprint_) {
         return false;
     }
 
-    slot_info.type = 0;
-    slot_info.category = 0;
+    slot_info.type = rdm::slotinfo::SlotType::kStPrimary;
+    slot_info.category = rdm::slotinfo::SlotDefinition::kSdIntensity;
 
     return true;
 }

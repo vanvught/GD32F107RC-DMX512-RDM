@@ -1,7 +1,7 @@
 /**
  * @file dmxnodeoutputrdmpixel.h
  */
-/* Copyright (C) 2025 by Arjan van Vught mailto:info@gd32-dmx.org
+/* Copyright (C) 2025-2026 by Arjan van Vught mailto:info@gd32-dmx.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,6 +28,7 @@
 #include <cstdint>
 
 #include "dmxnode.h"
+#include "rdm_slotinfo.h"
 
 class DmxNodeOutputRdmPixel {
    public:
@@ -37,7 +38,10 @@ class DmxNodeOutputRdmPixel {
     virtual void Start(uint32_t port_index) = 0;
     virtual void Stop(uint32_t port_index) = 0;
 
-    template <bool kDoUpdate> void SetData(uint32_t port_index, const uint8_t* data, uint32_t length) { SetDataImpl(port_index, data, length, kDoUpdate); }
+    template <bool kDoUpdate>
+    void SetData(uint32_t port_index, const uint8_t* data, uint32_t length) {
+        SetDataImpl(port_index, data, length, kDoUpdate);
+    }
 
     virtual bool SetDmxStartAddress([[maybe_unused]] uint16_t dmx_start_address) { return false; }
 
@@ -45,9 +49,9 @@ class DmxNodeOutputRdmPixel {
 
     virtual uint16_t GetDmxFootprint() { return dmxnode::kUniverseSize; }
 
-    virtual bool GetSlotInfo([[maybe_unused]] uint16_t slot_offset, dmxnode::SlotInfo& slot_info) {
-        slot_info.type = 0x00;       // ST_PRIMARY
-        slot_info.category = 0x0001; // SD_INTENSITY
+    virtual bool GetSlotInfo([[maybe_unused]] uint16_t slot_offset, rdm::slotinfo::SlotInfo& slot_info) {
+        slot_info.type = rdm::slotinfo::SlotType::kStPrimary;
+        slot_info.category = rdm::slotinfo::SlotDefinition::kSdIntensity;
         return true;
     }
 

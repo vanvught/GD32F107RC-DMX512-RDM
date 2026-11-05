@@ -29,30 +29,27 @@
 #include <cstdint>
 #include <cstdio>
 
-#include "dmxnode.h"
+#include "rdm_slotinfo.h"
 #include "dmxnodeoutputrdmpixel.h"
 #include "firmware/debug/debug_debug.h"
 #include "rdmpersonality.h"
 
 namespace pixeldmx::paramsdmx {
-enum class SlotsInfo { 
-	TYPE, 
-	COUNT, 
-	GROUPING_COUNT, 
-	MAP, 
-	TEST_PATTERN, 
-	PROGRAM, 
-	LAST 
+enum class SlotsInfo {
+    TYPE,
+    COUNT,
+    GROUPING_COUNT,
+    MAP,
+    TEST_PATTERN,
+    PROGRAM,
+    LAST, //
 };
 inline constexpr auto kDmxFootprint = static_cast<uint16_t>(SlotsInfo::LAST);
 
 inline void SetPersonalityDescription(char description[rdm::personality::kDescriptionMaxLength]) {
     auto& configuration = PixelDmxConfiguration::Get();
-    snprintf(description, rdm::personality::kDescriptionMaxLength - 1U, "%s:%u G%u [%s]", 
-		pixel::GetTypeName(configuration.GetType()), 
-		static_cast<unsigned>(configuration.GetCount()), 
-		static_cast<unsigned>(configuration.GetGroupingCount()), 
-		pixel::GetMapName(configuration.GetMap()));
+    snprintf(description, rdm::personality::kDescriptionMaxLength - 1U, "%s:%u G%u [%s]", pixel::GetTypeName(configuration.GetType()), static_cast<unsigned>(configuration.GetCount()), static_cast<unsigned>(configuration.GetGroupingCount()),
+             pixel::GetMapName(configuration.GetMap()));
 }
 
 void Display(const uint8_t data[kDmxFootprint]);
@@ -72,13 +69,13 @@ class PixelDmxParamsRdm final : public DmxNodeOutputRdmPixel {
 
     uint16_t GetDmxFootprint() override { return pixeldmx::paramsdmx::kDmxFootprint; }
 
-    bool GetSlotInfo(uint16_t slot_offset, dmxnode::SlotInfo& slot_info) override {
+    bool GetSlotInfo(uint16_t slot_offset, rdm::slotinfo::SlotInfo& slot_info) override {
         if (slot_offset >= pixeldmx::paramsdmx::kDmxFootprint) {
             return false;
         }
 
-        slot_info.type = 0x00;       // ST_PRIMARY
-        slot_info.category = 0xFFFF; // SD_UNDEFINED;
+        slot_info.type = rdm::slotinfo::SlotType::kStPrimary;
+        slot_info.category = rdm::slotinfo::SlotDefinition::kSdUndefined;
 
         return true;
     }

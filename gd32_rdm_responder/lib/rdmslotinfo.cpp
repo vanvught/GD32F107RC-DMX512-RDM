@@ -2,7 +2,7 @@
  * @file rdmslotinfo.cpp
  *
  */
-/* Copyright (C) 2021-2025 by Arjan van Vught mailto:info@gd32-dmx.org
+/* Copyright (C) 2021-2026 by Arjan van Vught mailto:info@gd32-dmx.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,43 +24,38 @@
  */
 
 #include <cstdint>
+#include <string_view>
 
-#include "rdmslotinfo.h"
-#include "common/utils/utils_string.h"
+#include "rdm_slotinfo.h"
 #include "pixeldmxparamsrdm.h"
 
 using pixeldmx::paramsdmx::SlotsInfo;
 
-const char* RDMSlotInfo::GetCategoryTextUndefined(uint16_t slotoffset, uint32_t& length) {
-    switch (static_cast<pixeldmx::paramsdmx::SlotsInfo>(slotoffset)) {
+namespace rdm::slotinfo {
+std::string_view GetCategoryTextUndefined(uint16_t slot_offset) {
+    switch (static_cast<pixeldmx::paramsdmx::SlotsInfo>(slot_offset)) {
         case SlotsInfo::TYPE:
-            length = 4;
             return "Type";
             break;
         case SlotsInfo::COUNT:
-            length = 5;
             return "Count";
             break;
         case SlotsInfo::GROUPING_COUNT:
-            length = 14;
             return "Grouping Count";
             break;
         case SlotsInfo::MAP:
-            length = 3;
             return "Map";
             break;
         case SlotsInfo::TEST_PATTERN:
-            length = 12;
             return "Test Pattern";
             break;
         case SlotsInfo::PROGRAM:
-            length = 7;
             return "Program";
             break;
         default:
             break;
     }
 
-    length = 9;
     return common::kUndefined;
 }
+} // namespace rdm::slotinfo

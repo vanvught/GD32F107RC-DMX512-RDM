@@ -34,6 +34,7 @@
 #include "pca9685pwmled.h"
 #include "pca9685servo.h"
 #include "pca9685dmxset.h"
+#include "dmxnode.h"
 
 namespace pca9685dmx {
 inline constexpr uint8_t kBoardInstancesDefault = 1;

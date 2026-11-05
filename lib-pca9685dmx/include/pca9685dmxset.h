@@ -28,7 +28,7 @@
 
 #include <cstdint>
 
-#include "dmxnode.h"
+#include "rdm_slotinfo.h"
 
 class PCA9685DmxSet {
    public:
@@ -44,9 +44,9 @@ class PCA9685DmxSet {
     virtual bool SetDmxStartAddress(uint16_t dmx_start_address) = 0;
     virtual uint16_t GetDmxStartAddress() = 0;
     virtual uint16_t GetDmxFootprint() = 0;
-    virtual bool GetSlotInfo([[maybe_unused]] uint16_t slot_offset, dmxnode::SlotInfo& slot_info) {
-        slot_info.type = 0x00;       // ST_PRIMARY
-        slot_info.category = 0x0001; // SD_INTENSITY
+    virtual bool GetSlotInfo([[maybe_unused]] uint16_t slot_offset, rdm::slotinfo::SlotInfo& slot_info) {
+        slot_info.type = rdm::slotinfo::SlotType::kStPrimary;
+        slot_info.category = rdm::slotinfo::SlotDefinition::kSdIntensity;
         return true;
     }
 
