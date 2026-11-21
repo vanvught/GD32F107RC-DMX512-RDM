@@ -36,9 +36,9 @@
 #include "dmxnodemsgconst.h"
 
 #include "../../lib-board/include/board.h"
-#if defined(NODE_SHOWFILE)
+#ifdef NODE_SHOWFILE
 #include "showfile.h"
-#endif
+#endif // NODE_SHOWFILE
 #include "remoteconfig.h"
 #include "configstore.h"
 #include "firmware/firmwareversion.h"
@@ -78,10 +78,10 @@ int main() // NOLINT
     const auto kPortDirection = (dmxnode_node.PortDirection(kPortIndex) == dmxnode::Direction::kOutput ? dmx::Direction::kOutput : dmx::Direction::kInput);
     const auto kActivePorts = dmxnode_node.GetActiveInputPorts() + dmxnode_node.GetActiveOutputPorts();
 
-#if defined(NODE_SHOWFILE)
+#ifdef NODE_SHOWFILE
     ShowFile showfile;
     showfile.Print();
-#endif
+#endif // NODE_SHOWFILE
 
     dmxnode_node.Print();
 
@@ -97,11 +97,11 @@ int main() // NOLINT
 
     RemoteConfig remote_config(remoteconfig::Output::DMX, kActivePorts);
 
-    display.TextStatus(DmxNodeMsgConst::START, ansi::Colours::Colour::kYellow);
+    display.TextStatus(DmxNodeMsgConst::kStart, ansi::Colours::Colour::kYellow);
 
     dmxnode_node.Start();
 
-    display.TextStatus(DmxNodeMsgConst::STARTED, ansi::Colours::Colour::kGreen);
+    display.TextStatus(DmxNodeMsgConst::kStarted, ansi::Colours::Colour::kGreen);
 
     watchdog::Init();
 
@@ -109,9 +109,9 @@ int main() // NOLINT
         watchdog::Feed();
         network::Run();
         dmxnode_node.Run();
-#if defined(NODE_SHOWFILE)
+#ifdef NODE_SHOWFILE
         showfile.Run();
-#endif
+#endif // NODE_SHOWFILE
         board::Run();
     }
 }

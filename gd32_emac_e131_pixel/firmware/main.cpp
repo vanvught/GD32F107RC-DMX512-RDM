@@ -34,9 +34,9 @@
 #include "pixeltestpattern.h"
 #include "pixeldmx.h"
 #include "json/pixeldmxparams.h"
-#if defined(NODE_SHOWFILE)
+#ifdef NODE_SHOWFILE
 #include "showfile.h"
-#endif
+#endif // NODE_SHOWFILE
 #include "remoteconfig.h"
 #include "configstore.h"
 #include "firmware/firmwareversion.h"
@@ -75,10 +75,10 @@ int main() // NOLINT
         dmxnode_node.SetOutput(&pixeldmx);
     }
 
-#if defined(NODE_SHOWFILE)
+#ifdef NODE_SHOWFILE
     ShowFile showfile;
     showfile.Print();
-#endif
+#endif // NODE_SHOWFILE
 
     dmxnode_node.Print();
     pixeldmx.Print();
@@ -96,11 +96,11 @@ int main() // NOLINT
 
     RemoteConfig remote_config(remoteconfig::Output::PIXEL, dmxnode_node.GetActiveOutputPorts());
 
-    display.TextStatus(DmxNodeMsgConst::START, ansi::Colours::Colour::kYellow);
+    display.TextStatus(DmxNodeMsgConst::kStart, ansi::Colours::Colour::kYellow);
 
     dmxnode_node.Start();
 
-    display.TextStatus(DmxNodeMsgConst::STARTED, ansi::Colours::Colour::kGreen);
+    display.TextStatus(DmxNodeMsgConst::kStarted, ansi::Colours::Colour::kGreen);
 
     watchdog::Init();
 
@@ -108,9 +108,9 @@ int main() // NOLINT
         watchdog::Feed();
         network::Run();
         dmxnode_node.Run();
-#if defined(NODE_SHOWFILE)
+#ifdef NODE_SHOWFILE
         showfile.Run();
-#endif
+#endif // NODE_SHOWFILE
         pixeltest_pattern.Run();
         board::Run();
     }

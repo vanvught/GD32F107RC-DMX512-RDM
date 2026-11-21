@@ -25,7 +25,7 @@
 
 #if !defined(NODE_RDMNET_LLRP_ONLY)
 #error
-#endif
+#endif // NODE_RDMNET_LLRP_ONLY
 
 #include <cstdio>
 #include <time.h>

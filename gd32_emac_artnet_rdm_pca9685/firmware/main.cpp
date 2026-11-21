@@ -36,9 +36,9 @@
 #include "artnetrdmresponder.h"
 #include "json/pca9685dmxparams.h"
 #include "pca9685dmx.h"
-#if defined(NODE_SHOWFILE)
+#ifdef NODE_SHOWFILE
 #include "showfile.h"
-#endif
+#endif // NODE_SHOWFILE
 #include "remoteconfig.h"
 #include "configstore.h"
 #include "firmware/firmwareversion.h"
@@ -79,10 +79,10 @@ int main() // NOLINT
 
     node.SetRdmResponder(&rdm_responder);
 
-#if defined(NODE_SHOWFILE)
+#ifdef NODE_SHOWFILE
     ShowFile showfile;
     showfile.Print();
-#endif
+#endif // NODE_SHOWFILE
 
     node.Print();
     pca9685_dmx.Print();
@@ -99,11 +99,11 @@ int main() // NOLINT
 
     RemoteConfig remote_config(remoteconfig::Output::PWM, node.GetActiveOutputPorts());
 
-    display.TextStatus(DmxNodeMsgConst::START, ansi::Colours::Colour::kYellow);
+    display.TextStatus(DmxNodeMsgConst::kStart, ansi::Colours::Colour::kYellow);
 
     node.Start();
 
-    display.TextStatus(DmxNodeMsgConst::STARTED, ansi::Colours::Colour::kGreen);
+    display.TextStatus(DmxNodeMsgConst::kStarted, ansi::Colours::Colour::kGreen);
 
     watchdog::Init();
 
@@ -111,9 +111,9 @@ int main() // NOLINT
         watchdog::Feed();
         network::Run();
         node.Run();
-#if defined(NODE_SHOWFILE)
+#ifdef NODE_SHOWFILE
         showfile.Run();
-#endif
+#endif // NODE_SHOWFILE
         board::Run();
     }
 }

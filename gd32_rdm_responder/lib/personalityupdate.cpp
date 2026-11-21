@@ -76,5 +76,5 @@ void RDMResponder::PersonalityUpdate(uint32_t personality) {
         DisplayUdf::Get()->Write(4, "Config Mode");
         DisplayUdf::Get()->ClearLine(5);
     }
-#endif
+#endif // CONFIG_RDM_MANUFACTURER_PIDS_SET
 }

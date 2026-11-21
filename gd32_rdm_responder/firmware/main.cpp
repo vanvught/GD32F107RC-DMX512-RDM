@@ -46,7 +46,7 @@
 #if !defined(NO_EMAC)
 #include "network.h"
 #include "remoteconfig.h"
-#endif
+#endif // NO_EMAC
 
 namespace board {
 void RebootHandler() {
@@ -61,7 +61,7 @@ int main() // NOLINT
     ConfigStore config_store;
 #if !defined(NO_EMAC)
     network::Init();
-#endif
+#endif // NO_EMAC
     FirmwareVersion fw(kSoftwareVersion, __DATE__, __TIME__);
 
     const auto kIsConfigMode = IsConfigMode();
@@ -95,7 +95,7 @@ int main() // NOLINT
 
     RdmPersonality* personalities[2] = {new RdmPersonality(description, &pixeldmx), new RdmPersonality("Config mode", &pixeldmx_paramsrdm)};
     RDMResponder rdm_responder(personalities, 2);
-#endif
+#endif // CONFIG_RDM_MANUFACTURER_PIDS_SET
     rdm_responder.Init();
     rdm_responder.Start();
     rdm_responder.DmxDisableOutput(!kIsConfigMode && (kTestPattern != pixelpatterns::Pattern::kNone));
@@ -113,7 +113,7 @@ int main() // NOLINT
 
 #if !defined(NO_EMAC)
     RemoteConfig remote_config(remoteconfig::Output::PIXEL);
-#endif
+#endif // NO_EMAC
 
     display.SetTitle("RDM Responder Pixel 1");
     display.Set(2, displayudf::Labels::kVersion);
@@ -140,7 +140,7 @@ int main() // NOLINT
         rdm_responder.Run();
 #if !defined(NO_EMAC)
         network::Run();
-#endif
+#endif // NO_EMAC
         pixel_test_pattern.Run();
         display.Run();
         board::Run();
