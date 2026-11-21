@@ -338,7 +338,7 @@ void PCA9685::Dump() {
     Read(16, &on, &off);
     printf("ALL_LED_ON  : %04x\n", on);
     printf("ALL_LED_OFF : %04x\n", off);
-#endif
+#endif // NDEBUG
 }
 
 void PCA9685::AutoIncrement(bool mode) {

@@ -67,7 +67,7 @@ PCA9685DmxServo::PCA9685DmxServo(const pca9685dmx::Configuration& configuration)
         printf("Instance %d [%X]\n", i, configuration.address + i);
         m_pServo[i]->Dump();
         puts("");
-#endif
+#endif // NDEBUG
     }
 
     DEBUG_EXIT();
@@ -108,7 +108,7 @@ void PCA9685DmxServo::SetDataImpl([[maybe_unused]] uint32_t port_index, const ui
                     const auto kValue = *current_data;
 #ifndef NDEBUG
                     printf("m_pServo[%u]->SetDmx(CHANNEL(%u), %u)\n", j, i, static_cast<uint32_t>(kValue));
-#endif
+#endif // NDEBUG
                     servo_[j]->Set(i, kValue);
                 }
                 current_data++;
@@ -133,7 +133,7 @@ void PCA9685DmxServo::SetDataImpl([[maybe_unused]] uint32_t port_index, const ui
                     const auto kValue = static_cast<uint16_t>((static_cast<uint32_t>(data[0]) << 4) | static_cast<uint32_t>(data[1]));
 #ifndef NDEBUG
                     printf("m_pServo[%u]->SetDmx(CHANNEL(%u), %u)\n", j, i, static_cast<uint32_t>(value));
-#endif
+#endif // NDEBUG
                     servo_[j]->Set(i, kValue);
                 }
                 current_data++;

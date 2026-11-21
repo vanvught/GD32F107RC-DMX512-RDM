@@ -52,7 +52,7 @@ void Pca9685DmxParams::Store(std::string_view buffer) {
 void Pca9685DmxParams::Set() {
 #ifndef NDEBUG
     Dump();
-#endif
+#endif // NDEBUG
 }
 
 void Pca9685DmxParams::Dump() {

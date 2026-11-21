@@ -71,7 +71,7 @@ PCA9685DmxLed::PCA9685DmxLed(const pca9685dmx::Configuration& configuration) {
         printf("Instance %d [%X]\n", i, configuration.address + i);
         pwmled_[i]->Dump();
         puts("");
-#endif
+#endif // NDEBUG
     }
 
     DEBUG_EXIT();
@@ -122,7 +122,7 @@ void PCA9685DmxLed::SetDataImpl([[maybe_unused]] uint32_t port_index, const uint
                     const auto kValue = *current_data;
 #ifndef NDEBUG
                     printf("pwmled_[%u]->SetDmx(CHANNEL(%u), %u)\n", j, i, static_cast<uint32_t>(kValue));
-#endif
+#endif // NDEBUG
                     pwm_led_[j]->Set(i, kValue);
                 }
                 current_data++;
@@ -147,7 +147,7 @@ void PCA9685DmxLed::SetDataImpl([[maybe_unused]] uint32_t port_index, const uint
                     const auto kValue = static_cast<uint16_t>((static_cast<uint32_t>(data[0]) << 4) | static_cast<uint32_t>(data[1]));
 #ifndef NDEBUG
                     printf("pwmled_[%u]->SetDmx(CHANNEL(%u), %u)\n", j, i, static_cast<uint32_t>(kValue));
-#endif
+#endif // NDEBUG
                     pwm_led_[j]->Set(i, kValue);
                 }
                 current_data++;

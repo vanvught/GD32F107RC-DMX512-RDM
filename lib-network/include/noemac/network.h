@@ -26,7 +26,7 @@
 #ifndef NOEMAC_NETWORK_H_
 #define NOEMAC_NETWORK_H_
 
-#if !defined(NO_EMAC)
+#ifndef NO_EMAC
 #error
 #endif // NO_EMAC
 
