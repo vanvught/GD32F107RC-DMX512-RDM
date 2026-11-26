@@ -29,11 +29,13 @@
 #include "firmware/debug/debug_debug.h"
 
 #ifdef DEBUG_PIXEL
+inline constexpr bool kDebugPixelEnabled = true;
 #define PIXEL_DEBUG_ENTRY() DEBUG_ENTRY()
 #define PIXEL_DEBUG_EXIT() DEBUG_EXIT()
 #define PIXEL_DEBUG_PRINTF(...) DEBUG_PRINTF(__VA_ARGS__)
 #define PIXEL_DEBUG_PUTS(...) DEBUG_PUTS(__VA_ARGS__)
 #else
+inline constexpr bool kDebugPixelEnabled = false;
 #define PIXEL_DEBUG_ENTRY() \
     do {                         \
     } while (false)
