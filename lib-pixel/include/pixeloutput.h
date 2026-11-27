@@ -33,8 +33,7 @@
 #include "h3_spi.h"
 #endif // GD32
 
-class PixelOutput
-{
+class PixelOutput {
    public:
     PixelOutput();
     ~PixelOutput();
@@ -44,11 +43,10 @@ class PixelOutput
     void SetPixel(uint32_t index, uint8_t red, uint8_t green, uint8_t blue);
     void SetPixel(uint32_t index, uint8_t red, uint8_t green, uint8_t blue, uint8_t white);
 
-    bool IsUpdating()
-    {
+    bool IsUpdating() {
 #ifdef GD32
         return i2s::Gd32SpiDmaTxIsActive();
-#elif defined(H3)
+#elifdef H3
         return H3SpiDmaTxIsActive();
 #else
         return false;
@@ -59,8 +57,7 @@ class PixelOutput
     void Blackout();
     void FullOn();
 
-    uint32_t GetUserData()
-    { // TODO(a): implement GetUserData
+    uint32_t GetUserData() { // TODO(a): implement GetUserData
         return 0;
     }
 
@@ -70,7 +67,6 @@ class PixelOutput
     void SetupBuffers();
     void SetColorWS28xx(uint32_t offset, uint8_t value);
 
-   private:
     uint32_t buf_size_;
     uint8_t* buffer_{nullptr};
     uint8_t* blackout_buffer_{nullptr};

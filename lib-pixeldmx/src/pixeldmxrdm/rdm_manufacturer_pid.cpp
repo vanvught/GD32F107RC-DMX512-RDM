@@ -109,28 +109,28 @@ bool HandleManufactureerPidGet(uint16_t pid, [[maybe_unused]] const Manufacturer
     switch (pid) {
         case E120_MANUFACTURER_PIXEL_TYPE::kCode: {
             const auto* string = ::pixel::GetTypeName(pixeldmx_configuration.GetType());
-            out->nPdl = static_cast<uint8_t>(strlen(string));
-            memcpy(out->pParamData, string, out->nPdl);
+            out->pdl = static_cast<uint8_t>(strlen(string));
+            memcpy(out->param_data, string, out->pdl);
             return true;
         }
         case E120_MANUFACTURER_PIXEL_COUNT::kCode: {
             const auto kCount = pixeldmx_configuration.GetCount();
-            out->nPdl = 2;
-            out->pParamData[0] = static_cast<uint8_t>(kCount >> 8);
-            out->pParamData[1] = static_cast<uint8_t>(kCount);
+            out->pdl = 2;
+            out->param_data[0] = static_cast<uint8_t>(kCount >> 8);
+            out->param_data[1] = static_cast<uint8_t>(kCount);
             return true;
         }
         case E120_MANUFACTURER_PIXEL_GROUPING_COUNT::kCode: {
             const auto kGrouingCount = pixeldmx_configuration.GetGroupingCount();
-            out->nPdl = 2;
-            out->pParamData[0] = static_cast<uint8_t>(kGrouingCount >> 8);
-            out->pParamData[1] = static_cast<uint8_t>(kGrouingCount);
+            out->pdl = 2;
+            out->param_data[0] = static_cast<uint8_t>(kGrouingCount >> 8);
+            out->param_data[1] = static_cast<uint8_t>(kGrouingCount);
             return true;
         }
         case E120_MANUFACTURER_PIXEL_MAP::kCode: {
             const auto* string = ::pixel::GetMapName(pixeldmx_configuration.GetMap());
-            out->nPdl = static_cast<uint8_t>(strlen(string));
-            memcpy(out->pParamData, string, out->nPdl);
+            out->pdl = static_cast<uint8_t>(strlen(string));
+            memcpy(out->param_data, string, out->pdl);
             return true;
         }
         default:
@@ -153,8 +153,8 @@ bool HandleManufactureerPidSet(bool is_broadcast, uint16_t pid, const ParameterD
 
     switch (pid) {
         case E120_MANUFACTURER_PIXEL_COUNT::kCode: {
-            if (in->nPdl == 2) {
-                const uint16_t kCount = in->pParamData[1] | in->pParamData[0] << 8;
+            if (in->pdl == 2) {
+                const uint16_t kCount = in->param_data[1] | in->param_data[0] << 8;
 
                 if ((kCount < parameter_description.min_value) && (kCount > parameter_description.max_value)) {
                     reason = E120_NR_DATA_OUT_OF_RANGE;
@@ -171,8 +171,8 @@ bool HandleManufactureerPidSet(bool is_broadcast, uint16_t pid, const ParameterD
             return false;
         }
         case E120_MANUFACTURER_PIXEL_GROUPING_COUNT::kCode: {
-            if (in->nPdl == 2) {
-                const uint16_t kGrouingCount = in->pParamData[1] | in->pParamData[0] << 8;
+            if (in->pdl == 2) {
+                const uint16_t kGrouingCount = in->param_data[1] | in->param_data[0] << 8;
 
                 if ((kGrouingCount < parameter_description.min_value) && (kGrouingCount > parameter_description.max_value)) {
                     reason = E120_NR_DATA_OUT_OF_RANGE;
@@ -189,8 +189,8 @@ bool HandleManufactureerPidSet(bool is_broadcast, uint16_t pid, const ParameterD
             return false;
         }
         case E120_MANUFACTURER_PIXEL_MAP::kCode: {
-            if (in->nPdl == 3) {
-                const auto kMap = ::pixel::GetMapByName(reinterpret_cast<const char*>(in->pParamData));
+            if (in->pdl == 3) {
+                const auto kMap = ::pixel::GetMapByName(reinterpret_cast<const char*>(in->param_data));
 
                 if (kMap == pixel::LedMap::kUndefined) {
                     reason = E120_NR_DATA_OUT_OF_RANGE;
