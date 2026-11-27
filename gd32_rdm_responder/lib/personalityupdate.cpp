@@ -36,9 +36,9 @@
 #include "firmware/debug/debug_debug.h"
 
 void RDMResponder::PersonalityUpdate(uint32_t personality) {
-    DEBUG_PRINTF("personality=%u", personality);
+    DEBUG_PRINTF("personality=%u", static_cast<unsigned>(personality));
 
-#if defined(CONFIG_RDM_MANUFACTURER_PIDS_SET)
+#ifdef CONFIG_RDM_MANUFACTURER_PIDS_SET
     assert(personality != 0);
     assert((personality - 1U) < static_cast<uint32_t>(pixel::LedType::kUndefined));
 

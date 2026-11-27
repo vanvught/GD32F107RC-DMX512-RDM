@@ -32,13 +32,11 @@
 static bool s_is_on = false;
 static pixelpatterns::Pattern s_pattern;
 
-void RDMIdentify::On(Mode mode)
-{
+void RDMIdentify::On(Mode mode) {
     DEBUG_ENTRY();
-    DEBUG_PRINTF("Mode=%u, s_isOn=%d", static_cast<uint32_t>(mode), s_is_on);
+    DEBUG_PRINTF("Mode=%u, s_is_on=%s", static_cast<unsigned>(mode), s_is_on ? "true" : "false");
 
-    if ((mode == Mode::kLoud) && (!s_is_on))
-    {
+    if ((mode == Mode::kLoud) && (!s_is_on)) {
         s_is_on = true;
         s_pattern = PixelTestPattern::Get()->GetPattern();
         PixelTestPattern::Get()->SetPattern(pixelpatterns::Pattern::kFade);
@@ -48,13 +46,11 @@ void RDMIdentify::On(Mode mode)
     DEBUG_EXIT();
 }
 
-void RDMIdentify::Off([[maybe_unused]] Mode mode)
-{
+void RDMIdentify::Off([[maybe_unused]] Mode mode) {
     DEBUG_ENTRY();
-    DEBUG_PRINTF("Mode=%u, s_isOn=%d", static_cast<uint32_t>(mode), s_is_on);
+    DEBUG_PRINTF("Mode=%u, s_is_on=%s", static_cast<unsigned>(mode), s_is_on ? "true" : "false");
 
-    if (s_is_on)
-    {
+    if (s_is_on) {
         s_is_on = false;
         PixelTestPattern::Get()->SetPattern(s_pattern);
         RDMResponder::Get()->DmxDisableOutput(pixelpatterns::Pattern::kNone != s_pattern);
